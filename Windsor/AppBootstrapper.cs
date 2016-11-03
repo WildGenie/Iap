@@ -83,7 +83,7 @@ namespace Iap.Windsor
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 
-            DisplayRootViewFor<ShellViewModel>();
+            DisplayRootViewFor<AppViewModel>();
 
 
             base.OnStartup(sender, e);

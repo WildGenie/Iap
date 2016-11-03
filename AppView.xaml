@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="Iap.AppView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Width="1920" Height="1080">
+    <UserControl.Resources>
+        <Style
+            TargetType="{x:Type Button}">
+            <Setter
+                Property="Template">
+                <Setter.Value>
+                    <ControlTemplate
+                        TargetType="{x:Type Button}">
+                        <Border
+                            Background="Transparent"
+                            BorderBrush="Transparent" />
+                        <ControlTemplate.Triggers>
+                            <Trigger
+                                Property="IsMouseOver"
+                                Value="true">
+                                <Setter
+                                    Property="Background"
+                                    Value="Transparent" />
+                            </Trigger>
+                            <Trigger
+                                Property="IsPressed"
+                                Value="true">
+                                <Setter
+                                    Property="Background"
+                                    Value="Transparent" />
+                                <Setter
+                                    Property="BorderBrush"
+                                    Value="Transparent" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Border
+                Width="1920"
+                Height="1080"
+                HorizontalAlignment="Left"
+                Margin="0,0,0,0"
+                VerticalAlignment="Top">
+            <ContentControl
+                    x:Name="ActiveItem" />
+            <Border.Background>
+                <ImageBrush
+                        ImageSource="{Binding SlideshowImage}" />
+            </Border.Background>
+        </Border>
+    </Grid>
+</UserControl>

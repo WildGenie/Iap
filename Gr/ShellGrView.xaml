@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="Iap.Gr.ShellGrView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Iap.Gr"
+             xmlns:i="clr-namespace:Iap">
+    <Grid Width="1920" Height="1080">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/AIA_FOR PNG-24.png"/>
+        </Grid.Background>
+
+        <Button
+            x:Name="ViewEnglish"
+            Background="Transparent"
+            HorizontalAlignment="Left"
+            Margin="1784,28,0,0"
+            VerticalAlignment="Top"
+            Width="126" 
+            Height="86"/>
+
+        <i:SelectButtonEn 
+            x:Name="BuyWifi"
+            EnabledChecked="/Images/AIA_FOR PNG-29.png"
+            EnabledUnchecked="/Images/AIA_FOR PNG-25.png"
+            Width="320" Height="425" Margin="276,246,1324,410"
+            />
+        <i:SelectButtonEn
+            x:Name="PrintBoardingPass"
+            EnabledChecked="/Images/AIA_FOR PNG-30.png"
+            EnabledUnchecked="/Images/AIA_FOR PNG-26.png"
+            Width="320" Height="425" Margin="670,246,930,409"
+           />
+        <i:SelectButtonEn
+            x:Name="InternetAccess"
+            EnabledChecked="/Images/AIA_FOR PNG-31.png"
+            EnabledUnchecked="/Images/AIA_FOR PNG-27.png"
+            Width="320" Height="425" Margin="1070,246,530,409"
+            />
+        <i:SelectButtonEn 
+            x:Name="TravelAuthorization"
+            EnabledChecked="/Images/AIA_FOR PNG-32.png"
+            EnabledUnchecked="/Images/AIA_FOR PNG-28.png"
+            Width="320" Height="425" Margin="1486,246,114,409"
+           />
+    </Grid>
+</UserControl>
