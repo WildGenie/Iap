@@ -11,7 +11,8 @@ namespace Iap
    public class AppViewModel:Conductor<Screen>,
         IHandle<ViewGreekCommand>,
         IHandle<ViewEnglishCommand>,
-        IHandle<ViewInternetAccessCommand>
+        IHandle<ViewInternetAccessCommand>,
+        IHandle<ViewBuyWifiCommand>
     {
         public IEventAggregator events;
 
@@ -49,6 +50,11 @@ namespace Iap
         public void Handle(ViewInternetAccessCommand message)
         {
             base.ActivateItem(new InternetAccessViewModel(events));
+        }
+
+        public void Handle(ViewBuyWifiCommand message)
+        {
+            base.ActivateItem(new BuyWifiViewModel(events));
         }
     }
 }

@@ -108,6 +108,11 @@
       <DependentUpon>AppView.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppViewModel.cs" />
+    <Compile Include="BuyWifiView.xaml.cs">
+      <DependentUpon>BuyWifiView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BuyWifiViewModel.cs" />
+    <Compile Include="Commands\ViewBuyWifiCommand.cs" />
     <Compile Include="Commands\ViewEnglishCommand.cs" />
     <Compile Include="Commands\ViewGreekCommand.cs" />
     <Compile Include="Commands\ViewInternetAccessCommand.cs" />
@@ -115,6 +120,8 @@
       <DependentUpon>ShellGrView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Gr\ShellGrViewModel.cs" />
+    <Compile Include="Handler\BrowserProcessHandler.cs" />
+    <Compile Include="Handler\WpfBrowserProcessHandler.cs" />
     <Compile Include="InternetAccessView.xaml.cs">
       <DependentUpon>InternetAccessView.xaml</DependentUpon>
     </Compile>
@@ -165,6 +172,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="AppView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BuyWifiView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

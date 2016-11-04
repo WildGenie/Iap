@@ -27,7 +27,7 @@ namespace Iap
 
         public void BuyWifi()
         {
-
+            this.events.PublishOnBackgroundThread(new ViewBuyWifiCommand());
         }
 
         public void PrintBoardingPass()
@@ -37,10 +37,10 @@ namespace Iap
 
         public void InternetAccess()
         {
-            // this.events.PublishOnCurrentThread(new ViewInternetAccessCommand());
+             this.events.PublishOnCurrentThread(new ViewInternetAccessCommand());
             //this.events.BeginPublishOnUIThread(new ViewInternetAccessCommand());
             //  this.events.PublishOnUIThread(new ViewInternetAccessCommand());
-            this.events.PublishOnBackgroundThread(new ViewInternetAccessCommand());
+           // this.events.PublishOnBackgroundThread(new ViewInternetAccessCommand());
         }
 
         public void TravelAuthorization()
