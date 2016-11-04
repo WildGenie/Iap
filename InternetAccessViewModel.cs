@@ -27,7 +27,10 @@ namespace Iap
                 Address = "http://www.google.com",
             };
 
-
+            _internetAccessBrowser.BrowserSettings = new CefSharp.BrowserSettings()
+            {
+                OffScreenTransparentBackground = false,
+            };
 
             _internetAccessBrowser.Load("http://www.google.com");
 
