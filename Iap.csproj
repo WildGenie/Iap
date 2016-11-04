@@ -144,6 +144,9 @@
       <DependentUpon>InternetAccessView.xaml</DependentUpon>
     </Compile>
     <Compile Include="InternetAccessViewModel.cs" />
+    <Compile Include="Keyboards\Keyboard.xaml.cs">
+      <DependentUpon>Keyboard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NoBorderWindowManager.cs" />
     <Compile Include="SelectButtonEn.xaml.cs">
       <DependentUpon>SelectButtonEn.xaml</DependentUpon>
@@ -202,6 +205,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="InternetAccessView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Keyboards\Keyboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

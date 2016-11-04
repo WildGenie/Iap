@@ -42,6 +42,9 @@ namespace Iap
             _internetAccessBrowser.TouchMove += _internetAccessBrowser_TouchMove;
 
             _internetAccessBrowser.RequestContext = new RequestContext();
+
+            _internetAccessBrowser.Focus();
+
             base.OnViewLoaded(view);
         }
 
