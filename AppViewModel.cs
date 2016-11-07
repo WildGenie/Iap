@@ -33,10 +33,16 @@ namespace Iap
         public TravelAuthorizationViewModel TravelAuthorization { get; set; }
         public TravelAuthorizationGrViewModel TravelAuthorizationGr { get; set; }
 
+        public ScreenSaverViewModel ScreenSaver { get; set; }
+
         protected override void OnViewLoaded(object view)
         {
             base.ActivateItem(this.Shell);
-            this.Shell.Parent = this;
+             this.Shell.Parent = this;
+
+           // base.ActivateItem(this.ScreenSaver);
+            //this.ScreenSaver.Parent = this;
+
             base.OnViewLoaded(view);
         }
 
@@ -48,7 +54,8 @@ namespace Iap
 
         public void Handle(ViewGreekCommand message)
         {
-            base.ActivateItem(new ShellGrViewModel(events));
+            //  base.ActivateItem(new ShellGrViewModel(events));
+            base.ActivateItem(new ScreenSaverViewModel(events));
         }
 
         public void Handle(ViewEnglishCommand message)
