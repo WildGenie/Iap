@@ -37,10 +37,10 @@ namespace Iap.Keyboards
         #region Keyboard Constants
 
         private const uint KEYEVENTF_KEYUP = 0x2;  // Release key
+        private const int WM_KEYDOWN = 0x0100;
         private const byte VK_BACK = 0x8;          // back space
         private const byte VK_LEFT = 0x25;
         private const byte VK_RIGHT = 0x27;
-        private const byte VK_CAPS = 0xF9;
         private const byte VK_0 = 0x30;
         private const byte VK_1 = 0x31;
         private const byte VK_2 = 0x32;
@@ -51,6 +51,9 @@ namespace Iap.Keyboards
         private const byte VK_7 = 0x37;
         private const byte VK_8 = 0x38;
         private const byte VK_9 = 0x39;
+        private const byte VK_CAPITAL = 0x14;
+        private const byte VK_LSHIFT = 0xA0;
+        private const byte VK_LALT = 0xA4;
 
         #endregion
 
@@ -91,6 +94,9 @@ namespace Iap.Keyboards
         private const byte VK_COMMA = 0xBC;
         private const byte VK_DOT = 0xBE;
         private const byte VK_FORSLASH = 0xBF;
+        private const byte VK_SPACE = 0x20;
+        private const byte VK_ENTER = 0x0D;
+        private const byte VK_APOSTROPHE = 0xDE;
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -102,7 +108,64 @@ namespace Iap.Keyboards
 
         private void cmdNumericButton_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                Button key = (Button)sender;
+                switch (key.Name)
+                {
+                    case "One":
+                        keybd_event(VK_1, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_1, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "Two":
+                        keybd_event(VK_2, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_2, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "Three":
+                        keybd_event(VK_3, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_3, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "Four":
+                        keybd_event(VK_4, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_4, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "Five":
+                        keybd_event(VK_5, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_5, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "Six":
+                        keybd_event(VK_6, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_6, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "Seven":
+                        keybd_event(VK_7, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_7, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "Eight":
+                        keybd_event(VK_8, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_8, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "Nine":
+                        keybd_event(VK_9, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_9, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "Zero":
+                        keybd_event(VK_0, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_0, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                }
+            }
+            catch { }
         }
 
         private void cmdCharButton_Click(object sender, RoutedEventArgs e)
@@ -133,48 +196,114 @@ namespace Iap.Keyboards
                         e.Handled = true;
                         break;
                     case "E":
+                        keybd_event(VK_E, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_E, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "F":
+                        keybd_event(VK_F, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_F, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "G":
+                        keybd_event(VK_G, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_G, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "H":
+                        keybd_event(VK_H, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_H, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "I":
+                        keybd_event(VK_I, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_I, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "J":
+                        keybd_event(VK_J, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_J, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "K":
+                        keybd_event(VK_K, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_K, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "L":
+                        keybd_event(VK_L, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_L, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "M":
+                        keybd_event(VK_M, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_M, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "N":
+                        keybd_event(VK_N, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_N, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "O":
+                        keybd_event(VK_O, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_O, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "P":
+                        keybd_event(VK_P, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_P, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "Q":
+                        keybd_event(VK_Q, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_Q, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "R":
+                        keybd_event(VK_R, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_R, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "S":
+                        keybd_event(VK_S, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_S, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "T":
+                        keybd_event(VK_T, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_T, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "U":
+                        keybd_event(VK_U, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_U, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "V":
+                        keybd_event(VK_V, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_V, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "W":
+                        keybd_event(VK_W, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_W, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "X":
+                        keybd_event(VK_X, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_X, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "Y":
+                        keybd_event(VK_Y, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_Y, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                     case "Z":
+                        keybd_event(VK_Z, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_Z, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
                         break;
                 }
             }
@@ -184,46 +313,119 @@ namespace Iap.Keyboards
 
         private void cmdSymbolButtonClick(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                Button key = (Button)sender;
+                switch (key.Name)
+                {
+                    case "Backspace":
+                        keybd_event(VK_BACK, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "LeftBracket":
+                        keybd_event(VK_LEFT_BRACKET, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_LEFT_BRACKET, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "RightBracket":
+                        keybd_event(VK_RIGHT_BRACKET, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_RIGHT_BRACKET, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "Slash":
+                        keybd_event(VK_SLASH, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_SLASH, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "semicolon":
+                        keybd_event(VK_SEMICOLON, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_SEMICOLON, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "apostrophe":
+                        keybd_event(VK_APOSTROPHE, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_APOSTROPHE, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "enter":
+                        keybd_event(VK_ENTER, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_ENTER, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "comma":
+                        keybd_event(VK_COMMA, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_COMMA, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "Dot":
+                        keybd_event(VK_DOT, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_DOT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "forwslash":
+                        keybd_event(VK_FORSLASH, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_FORSLASH, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                    case "Space":
+                        keybd_event(VK_SPACE, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_SPACE, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        e.Handled = true;
+                        break;
+                }
+            }
+            catch { }
         }
 
         private void changelang_Click(object sender, RoutedEventArgs e)
         {
+            keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+            keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+            keybd_event(VK_LALT, 0, 0, (UIntPtr)0);
+            keybd_event(VK_LALT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+            keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
             ImageBrush myBrush = new ImageBrush();
             if (isEnghlish)
             {
-                myBrush.ImageSource = new BitmapImage
+                if (isCaps)
+                {
+                    myBrush.ImageSource = new BitmapImage
                 (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-42.png"));
+                }
+                else
+                {
+                    myBrush.ImageSource = new BitmapImage
+                (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-43.png"));
+                }
+
                 isEnghlish = false;
+                
             }
             else
             {
-                myBrush.ImageSource = new BitmapImage
-                (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-22.png"));
+                if (isCaps)
+                {
+                    myBrush.ImageSource = new BitmapImage
+                    (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-22.png"));
+                }
+                else
+                {
+                    myBrush.ImageSource = new BitmapImage
+                    (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-23.png"));
+                }
                 isEnghlish = true;
             }
+
             this.KeyboardGrid.Background = myBrush;
         }
 
 
         public bool isEnghlish = true;
-
-        private string GridBackground
-        {
-            get
-            {
-                if (isEnghlish)
-                {
-                    return "/Images/AIA_FOR PNG-22.png";
-                }
-                else
-                {
-                    return "/Images/AIA_FOR PNG-42.png";
-                }
-            }
-        }
-
-        public bool isCaps = true;
+        public bool isCaps = false;
 
         private void Caps_Click(object sender, RoutedEventArgs e)
         {
@@ -245,8 +447,6 @@ namespace Iap.Keyboards
             }
             else
             {
-                keybd_event(VK_CAPS, 0, 0, (UIntPtr)0);
-                keybd_event(VK_CAPS, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
                 if (isEnghlish)
                 {
                     myBrush.ImageSource = new BitmapImage
@@ -259,6 +459,45 @@ namespace Iap.Keyboards
                 }
                 isCaps = true;
             }
+            keybd_event(VK_CAPITAL, 0, 0, (UIntPtr)0);
+            keybd_event(VK_CAPITAL, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+            this.KeyboardGrid.Background = myBrush;
+        }
+
+        private void Caps2_Click(object sender, RoutedEventArgs e)
+        {
+            ImageBrush myBrush = new ImageBrush();
+            if (isCaps)
+            {
+                if (isEnghlish)
+                {
+                    myBrush.ImageSource = new BitmapImage
+                (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-23.png"));
+                }
+                else
+                {
+                    myBrush.ImageSource = new BitmapImage
+                (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-43.png"));
+                }
+
+                isCaps = false;
+            }
+            else
+            {
+                if (isEnghlish)
+                {
+                    myBrush.ImageSource = new BitmapImage
+                    (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-22.png"));
+                }
+                else
+                {
+                    myBrush.ImageSource = new BitmapImage
+                    (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-42.png"));
+                }
+                isCaps = true;
+            }
+            keybd_event(VK_CAPITAL, 0, 0, (UIntPtr)0);
+            keybd_event(VK_CAPITAL, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
             this.KeyboardGrid.Background = myBrush;
         }
     }

@@ -7,7 +7,7 @@
     </UserControl.Resources>
     <Grid x:Name="KeyboardGrid" Width="996" Height="390">
         <Grid.Background>
-            <ImageBrush ImageSource="/Images/AIA_FOR PNG-22.png"/>
+            <ImageBrush ImageSource="/Images/AIA_FOR PNG-23.png"/>
         </Grid.Background>
         <Button
             x:Name="One"
@@ -46,7 +46,7 @@
             />
         <Button x:Name="Four"
             HorizontalAlignment="Left"
-            Margin="296,27,0,0"
+            Margin="301,27,0,0"
             VerticalAlignment="Top"
             Width="66"
             Height="61"
@@ -317,7 +317,7 @@
             Focusable="False"
             />
         <Button 
-            x:Name="Ε"
+            x:Name="D"
             HorizontalAlignment="Left"
             Margin="192,161,0,0"
             VerticalAlignment="Top"
@@ -413,7 +413,7 @@
             Focusable="False"
             />
         <Button
-            x:Name="backquote"
+            x:Name="apostrophe"
             HorizontalAlignment="Left"
             Margin="755,161,0,0"
             VerticalAlignment="Top"
@@ -447,9 +447,9 @@
             Click="Caps_Click"
             />
         <Button 
-            x:Name="Ζ"
+            x:Name="Z"
             HorizontalAlignment="Left"
-            Margin="148,231,0,0"
+            Margin="147,231,0,0"
             VerticalAlignment="Top"
             Width="65"
             Height="65"
@@ -569,12 +569,12 @@
         <Button 
             x:Name="Caps2"
             HorizontalAlignment="Left"
-            Margin="853,231,0,0"
+            Margin="860,231,0,0"
             VerticalAlignment="Top"
-            Width="133"
+            Width="120"
             Height="63"
             Background="Transparent"
-            Focusable="False"
+            Focusable="False" Click="Caps2_Click"
             />
         <Button 
             x:Name="Space" 
@@ -583,6 +583,8 @@
             VerticalAlignment="Top"
             Width="498"
             Height="65"
+            Click="cmdSymbolButtonClick"
+            ClickMode="Release"
             Background="Transparent"
             Focusable="False"
             />
