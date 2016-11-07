@@ -64,7 +64,20 @@
             Height="80"
             Background="Transparent"
             Margin="32,8,1718,10"/>
-
+        <TextBlock 
+            x:Name="RemainingTime"
+            HorizontalAlignment="Left"
+            Margin="1790,27,0,0"
+            Height="60"
+            Width="60"
+            TextWrapping="Wrap" 
+            TextAlignment="Center"
+            VerticalAlignment="Top"
+            FontSize="30"
+            FontWeight="SemiBold"
+            Foreground="White"
+            
+            />
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30"/>
@@ -167,7 +180,6 @@
                 </Popup>
             </Grid>
         </Grid>
-        
     </Grid>
     
 </UserControl>

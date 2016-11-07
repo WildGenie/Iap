@@ -7,12 +7,14 @@ using Caliburn.Micro;
 using Iap.Commands;
 using CefSharp.Wpf;
 using CefSharp;
+using System.Windows.Threading;
 
 namespace Iap
 {
    public class InternetAccessViewModel:Screen
     {
         private readonly IEventAggregator events;
+        private string remainingTime;
 
         public static ChromiumWebBrowser _internetAccessBrowser;
 
@@ -45,8 +47,49 @@ namespace Iap
 
             _internetAccessBrowser.Focus();
 
+            this.RemainingTime = "30";
+
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMinutes(1);
+            timer.Tick += TimerTick;
+            timer.Start();
+
             base.OnViewLoaded(view);
         }
+
+        private void TimerTick(object sender, EventArgs e)
+        {
+            DispatcherTimer timer = (DispatcherTimer)sender;
+            timeElapsed--;
+            this.RemainingTime = timeElapsed.ToString();
+            if (timeElapsed == 0)
+            {
+                this.RemainingTime = "0";
+                timer.Stop();
+                System.Threading.Thread.Sleep(1000);
+                timer.Tick -= TimerTick;
+                if (_internetAccessBrowser != null)
+                {
+                    _internetAccessBrowser.Dispose();
+                }
+                this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+            }
+        }
+
+        public string RemainingTime
+        {
+            set
+            {
+                this.remainingTime = value;
+                NotifyOfPropertyChange(() => this.remainingTime);
+            }
+            get
+            {
+                return this.remainingTime +"'";
+            }
+        }
+
+        public int timeElapsed = 30;
 
         public int lastMousePositionX;
         public int lastMousePositionY;
