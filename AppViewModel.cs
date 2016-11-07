@@ -54,8 +54,8 @@ namespace Iap
 
         public void Handle(ViewGreekCommand message)
         {
-            //  base.ActivateItem(new ShellGrViewModel(events));
-            base.ActivateItem(new ScreenSaverViewModel(events));
+              base.ActivateItem(new ShellGrViewModel(events));
+           // base.ActivateItem(new ScreenSaverViewModel(events));
         }
 
         public void Handle(ViewEnglishCommand message)

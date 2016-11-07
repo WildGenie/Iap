@@ -30,19 +30,19 @@ namespace Iap
             try
             {
 
-                string videoPath =
+               /* string videoPath =
                     Path.Combine(
                     Path.GetDirectoryName(
                         this.GetType().Assembly.Location),
                     "Media",
-                    "AIAnoloopyellow.mov").ToString();
+                    "AIAnoloopyellow.mov").ToString();*/
 
                // string path = @"C:\Users\Σεραφειμ\Documents\Visual Studio 2015\Projects\Iap\Iap\bin\x64\Debug\Media\SampleVideo_1280x720_1mb.mp4";
 
                // ((ScreenSaverView)view).ScreensaverVideo.Source = new Uri(path);
 
-                ((ScreenSaverView)view).ScreensaverVideo.ScrubbingEnabled = true;
-                ((ScreenSaverView)view).ScreensaverVideo.Play();
+               /* ((ScreenSaverView)view).ScreensaverVideo.ScrubbingEnabled = true;
+                ((ScreenSaverView)view).ScreensaverVideo.Play();*/
             }
             catch (Exception ex)
             {
