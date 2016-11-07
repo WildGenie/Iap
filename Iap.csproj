@@ -133,13 +133,32 @@
     </Compile>
     <Compile Include="BuyWifiViewModel.cs" />
     <Compile Include="Commands\ViewBuyWifiCommand.cs" />
+    <Compile Include="Commands\ViewChangeLanguageCommand.cs" />
     <Compile Include="Commands\ViewEnglishCommand.cs" />
     <Compile Include="Commands\ViewGreekCommand.cs" />
     <Compile Include="Commands\ViewInternetAccessCommand.cs" />
+    <Compile Include="Commands\ViewPrintBoardingPassCommand.cs" />
+    <Compile Include="Commands\ViewTravelAuthorizationCommand.cs" />
+    <Compile Include="Gr\BuyWifiGrView.xaml.cs">
+      <DependentUpon>BuyWifiGrView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Gr\BuyWifiGrViewModel.cs" />
+    <Compile Include="Gr\InternetAccessGrView.xaml.cs">
+      <DependentUpon>InternetAccessGrView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Gr\InternetAccessGrViewModel.cs" />
+    <Compile Include="Gr\PrintBoardingPassGrView.xaml.cs">
+      <DependentUpon>PrintBoardingPassGrView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Gr\PrintBoardingPassGrViewModel.cs" />
     <Compile Include="Gr\ShellGrView.xaml.cs">
       <DependentUpon>ShellGrView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Gr\ShellGrViewModel.cs" />
+    <Compile Include="Gr\TravelAuthorizationGrView.xaml.cs">
+      <DependentUpon>TravelAuthorizationGrView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Gr\TravelAuthorizationGrViewModel.cs" />
     <Compile Include="InternetAccessView.xaml.cs">
       <DependentUpon>InternetAccessView.xaml</DependentUpon>
     </Compile>
@@ -147,7 +166,14 @@
     <Compile Include="Keyboards\Keyboard.xaml.cs">
       <DependentUpon>Keyboard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Keyboards\Keyboard2.xaml.cs">
+      <DependentUpon>Keyboard2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NoBorderWindowManager.cs" />
+    <Compile Include="PrintBoardingPassView.xaml.cs">
+      <DependentUpon>PrintBoardingPassView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PrintBoardingPassViewModel.cs" />
     <Compile Include="SelectButtonEn.xaml.cs">
       <DependentUpon>SelectButtonEn.xaml</DependentUpon>
     </Compile>
@@ -155,6 +181,10 @@
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ShellViewModel.cs" />
+    <Compile Include="TravelAuthorizationView.xaml.cs">
+      <DependentUpon>TravelAuthorizationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TravelAuthorizationViewModel.cs" />
     <Compile Include="Windsor\AppBootstrapper.cs" />
     <Compile Include="Windsor\AppSettingsConvention.cs" />
     <Compile Include="Windsor\EventRegistrationFacility.cs" />
@@ -200,7 +230,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Gr\BuyWifiGrView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Gr\InternetAccessGrView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Gr\PrintBoardingPassGrView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Gr\ShellGrView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Gr\TravelAuthorizationGrView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -212,11 +258,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Keyboards\Keyboard2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PrintBoardingPassView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SelectButtonEn.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TravelAuthorizationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

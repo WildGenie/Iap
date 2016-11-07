@@ -12,9 +12,13 @@ namespace Iap
         IHandle<ViewGreekCommand>,
         IHandle<ViewEnglishCommand>,
         IHandle<ViewInternetAccessCommand>,
-        IHandle<ViewBuyWifiCommand>
+        IHandle<ViewBuyWifiCommand>,
+        IHandle<ViewPrintBoardingPassCommand>,
+        IHandle<ViewTravelAuthorizationCommand>,
+        IHandle<ViewChangeLanguageCommand>
     {
         public IEventAggregator events;
+        private bool isGreekSelected;
 
         public AppViewModel(IEventAggregator events)
         {
@@ -23,6 +27,11 @@ namespace Iap
 
         public ShellViewModel Shell { get; set; }
         public ShellGrViewModel ShellGr {get;set;}
+
+        public PrintBoardingPassViewModel PrintBoardingPass { get; set; }
+        public PrintBoardingPassGrViewModel PrintBoardingPassGr { get; set; }
+        public TravelAuthorizationViewModel TravelAuthorization { get; set; }
+        public TravelAuthorizationGrViewModel TravelAuthorizationGr { get; set; }
 
         protected override void OnViewLoaded(object view)
         {
@@ -47,14 +56,73 @@ namespace Iap
             base.ActivateItem(this.Shell);
         }
 
-        public void Handle(ViewInternetAccessCommand message)
-        {
-            base.ActivateItem(new InternetAccessViewModel(events));
-        }
-
         public void Handle(ViewBuyWifiCommand message)
         {
-            base.ActivateItem(new BuyWifiViewModel(events));
+            if (this.isGreekSelected)
+            {
+                base.ActivateItem(new BuyWifiGrViewModel(events));
+            }
+            else
+            {
+                base.ActivateItem(new BuyWifiViewModel(events));
+            }
+        }
+
+        public void Handle(ViewPrintBoardingPassCommand message)
+        {
+            /* if (this.isGreekSelected)
+             {
+                 base.ActivateItem(new PrintBoardingPassGrViewModel(events,this.boardingPassGrApi));
+             }
+             else
+             {
+                 base.ActivateItem(new PrintBoardingPassViewModel(events,this.boardingPassApi));
+             }*/
+            if (this.isGreekSelected)
+            {
+                base.ChangeActiveItem(PrintBoardingPassGr, true);
+            }
+            else
+            {
+                base.ChangeActiveItem(PrintBoardingPass, true);
+            }
+        }
+
+        public void Handle(ViewInternetAccessCommand message)
+        {
+            if (this.isGreekSelected)
+            {
+                base.ActivateItem(new InternetAccessGrViewModel(events));
+            }
+            else
+            {
+                base.ActivateItem(new InternetAccessViewModel(events));
+            }
+        }
+
+        public void Handle(ViewTravelAuthorizationCommand message)
+        {
+            /*if (this.isGreekSelected)
+            {
+                base.ActivateItem(new TravelAuthorizationGrViewModel(events,this.travelAuthorizationGrApi));
+            }
+            else
+            {
+                base.ActivateItem(new TravelAuthorizationViewModel(events,this.travelAuthorizationApi));
+            }*/
+            if (this.isGreekSelected)
+            {
+                base.ChangeActiveItem(this.TravelAuthorizationGr, true);
+            }
+            else
+            {
+                base.ChangeActiveItem(this.TravelAuthorization, true);
+            }
+        }
+
+        public void Handle(ViewChangeLanguageCommand message)
+        {
+            this.isGreekSelected = message.GreekSelected;
         }
     }
 }

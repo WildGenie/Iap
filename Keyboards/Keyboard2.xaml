@@ -1,10 +1,10 @@
-﻿<UserControl x:Class="Iap.Keyboards.Keyboard"
+﻿<UserControl x:Class="Iap.Keyboards.Keyboard2"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Iap.Keyboards">
     <Grid x:Name="KeyboardGrid" Width="996" Height="390">
         <Grid.Background>
-            <ImageBrush ImageSource="/Images/AIA_FOR PNG-23.png"/>
+            <ImageBrush ImageSource="/Images/AIA_FOR PNG-43.png"/>
         </Grid.Background>
         <Button
             x:Name="One"

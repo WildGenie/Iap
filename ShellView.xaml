@@ -2,31 +2,34 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Iap">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
     <Grid Width="1920"
           Height="1080">
         <Grid.Background>
             <ImageBrush ImageSource="/Images/AIA_FOR PNG-01.png"/>
         </Grid.Background>
         <local:SelectButtonEn 
-            x:Name="BuyWifi"
+            x:Name="ViewBuyWifi"
             EnabledChecked="/Images/AIA_FOR PNG-07.png"
             EnabledUnchecked="/Images/AIA_FOR PNG-03.png"
             Width="320" Height="425" Margin="276,246,1324,410"
             />
         <local:SelectButtonEn
-            x:Name="PrintBoardingPass"
+            x:Name="ViewPrintBoardingPass"
             EnabledChecked="/Images/AIA_FOR PNG-08.png"
             EnabledUnchecked="/Images/AIA_FOR PNG-04.png"
             Width="320" Height="425" Margin="670,246,930,409"
            />
         <local:SelectButtonEn
-            x:Name="InternetAccess"
+            x:Name="ViewInternetAccess"
             EnabledChecked="/Images/AIA_FOR PNG-09.png"
             EnabledUnchecked="/Images/AIA_FOR PNG-05.png"
             Width="320" Height="425" Margin="1070,246,530,409"
             />
         <local:SelectButtonEn 
-            x:Name="TravelAuthorization"
+            x:Name="ViewTravelAuthorization"
             EnabledChecked="/Images/AIA_FOR PNG-10.png"
             EnabledUnchecked="/Images/AIA_FOR PNG-06.png"
             Width="320" Height="425" Margin="1486,246,114,409"
@@ -39,5 +42,52 @@
             VerticalAlignment="Top"
             Width="126" 
             Height="86"/>
+
+        <Grid Margin="478 785 478 0">
+            <Grid.Background>
+                <ImageBrush ImageSource="{Binding Path=BannerBackground}"/>
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="68"/>
+            </Grid.RowDefinitions>
+            <Button
+                x:Name="CloseBanner"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Grid.Row="0"
+                Margin="920,30,0,0"
+                Visibility="{Binding Path=IsBannerVisible,Converter={StaticResource BoolToVis}}"
+                Width="17" Height="19">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
+                                        <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
+                                    </StackPanel>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsPressed" Value="true">
+                                            <Setter Property="Background" Value="Transparent" TargetName="panel" />
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="true">
+                                            <Setter Property="Background" Value="Transparent" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+                <Image Source="/Images/AIA_FOR PNG-12.png"/>
+            </Button>
+            <Grid Grid.Row="1">
+                <Grid.Background>
+                    <ImageBrush ImageSource="/Images/AIA_FOR PNG-02.png"/>
+                </Grid.Background>
+                <Button x:Name="OpenBanner" Margin="430 00 430 15" Background="Transparent"></Button>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

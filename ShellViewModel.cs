@@ -11,6 +11,8 @@ namespace Iap
    public class ShellViewModel:Screen
     {
         private readonly IEventAggregator events;
+        private string bannerBackground;
+        private bool isBannerVisible;
 
         public ShellViewModel(IEventAggregator events)
         {
@@ -25,32 +27,68 @@ namespace Iap
             }
         }
 
-        public void BuyWifi()
+        public string BannerBackground
+        {
+            set
+            {
+                this.bannerBackground = value;
+                NotifyOfPropertyChange(() => this.BannerBackground);
+            }
+            get
+            {
+                return this.bannerBackground;
+            }
+        }
+
+        public bool IsBannerVisible
+        {
+            set
+            {
+                this.isBannerVisible = value;
+                NotifyOfPropertyChange(() => this.IsBannerVisible);
+            }
+            get
+            {
+                return this.isBannerVisible;
+            }
+        }
+
+        public void OpenBanner()
+        {
+            this.BannerBackground = "/Images/AIA_FOR PNG-11.png";
+            this.IsBannerVisible = true;
+        }
+
+        public void CloseBanner()
+        {
+            this.BannerBackground = "";
+            this.IsBannerVisible = false;
+        }
+
+        public void ViewBuyWifi()
         {
             this.events.PublishOnBackgroundThread(new ViewBuyWifiCommand());
         }
 
-        public void PrintBoardingPass()
+        public void ViewPrintBoardingPass()
         {
-
+            this.events.PublishOnBackgroundThread(new ViewPrintBoardingPassCommand());
         }
 
-        public void InternetAccess()
+        public void ViewInternetAccess()
         {
-            // this.events.PublishOnCurrentThread(new ViewInternetAccessCommand());
-            //this.events.BeginPublishOnUIThread(new ViewInternetAccessCommand());
-            //  this.events.PublishOnUIThread(new ViewInternetAccessCommand());
             this.events.PublishOnBackgroundThread(new ViewInternetAccessCommand());
         }
 
-        public void TravelAuthorization()
+        public void ViewTravelAuthorization()
         {
-
+            this.events.PublishOnBackgroundThread(new ViewTravelAuthorizationCommand());
         }
 
         public void ViewGreek()
         {
             this.events.PublishOnCurrentThread(new ViewGreekCommand());
+            this.events.PublishOnCurrentThread(new ViewChangeLanguageCommand(true));
         }
     }
 }

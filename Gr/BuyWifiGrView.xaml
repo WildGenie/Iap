@@ -1,7 +1,6 @@
-﻿<UserControl x:Class="Iap.BuyWifiView"
+﻿<UserControl x:Class="Iap.Gr.BuyWifiGrView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
              xmlns:keyboards="clr-namespace:Iap.Keyboards">
     <UserControl.Resources>
         <Style x:Key="MenuButton" TargetType="Button">
@@ -32,7 +31,7 @@
     </UserControl.Resources>
     <Grid x:Name="Main" Width="1920" Height="1080">
         <Grid.Background>
-            <ImageBrush ImageSource="/Images/AIA_FOR PNG-13.png"/>
+            <ImageBrush ImageSource="/Images/AIA_FOR PNG-33.png"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="98"/>
@@ -77,33 +76,9 @@
                     <RowDefinition Height="15"/>
                     <RowDefinition Height="177"/>
                 </Grid.RowDefinitions>
-                <Image Grid.Row="1" Source="/Images/AIA_FOR PNG-18.png"/>
+                <Image Grid.Row="1" Source="/Images/AIA_FOR PNG-38.png"/>
                 <Button x:Name="ViewPrintBoardingPass" Grid.Row="3">
-                    <Image Source="/Images/AIA_FOR PNG-15.png"/>
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
-                                            <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
-                                        </StackPanel>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsPressed" Value="true">
-                                                <Setter Property="Background" Value="Transparent" TargetName="panel" />
-                                            </Trigger>
-                                            <Trigger Property="IsMouseOver" Value="true">
-                                                <Setter Property="Background" Value="Transparent" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Button.Style>
-                </Button>
-                <Button x:Name="ViewInternetAccess" Grid.Row="5">
-                    <Image Source="/Images/AIA_FOR PNG-16.png"/>
+                    <Image Source="/Images/AIA_FOR PNG-35.png"/>
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Template">
@@ -127,7 +102,31 @@
                     </Button.Style>
                 </Button>
                 <Button x:Name="ViewTravelAuthorization" Grid.Row="7">
-                    <Image Source="/Images/AIA_FOR PNG-17.png"/>
+                    <Image Source="/Images/AIA_FOR PNG-37.png"/>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
+                                            <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
+                                        </StackPanel>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsPressed" Value="true">
+                                                <Setter Property="Background" Value="Transparent" TargetName="panel" />
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="true">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button x:Name="ViewInternetAccess" Grid.Row="5">
+                    <Image Source="/Images/AIA_FOR PNG-36.png"/>
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Template">

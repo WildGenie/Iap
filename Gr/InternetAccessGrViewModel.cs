@@ -4,23 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-using Iap.Commands;
-using CefSharp.Wpf;
 using CefSharp;
+using CefSharp.Wpf;
+using Iap.Commands;
 using System.Windows.Threading;
 
-namespace Iap
+namespace Iap.Gr
 {
-   public class InternetAccessViewModel:Screen
+   public class InternetAccessGrViewModel:Screen
     {
         private readonly IEventAggregator events;
+
         private string remainingTime;
 
         public static ChromiumWebBrowser _internetAccessBrowser;
 
-        public InternetAccessViewModel(IEventAggregator events)
+        public InternetAccessGrViewModel(IEventAggregator events)
         {
             this.events = events;
+        }
+
+        public IEventAggregator Events
+        {
+            get
+            {
+                return this.events;
+            }
         }
 
         protected override void OnViewLoaded(object view)
@@ -37,7 +46,7 @@ namespace Iap
 
             _internetAccessBrowser.Load("http://www.google.com");
 
-            ((InternetAccessView)view).InternetAccessBrowser.Children.Add(_internetAccessBrowser);
+            ((InternetAccessGrView)view).InternetAccessBrowser.Children.Add(_internetAccessBrowser);
 
             _internetAccessBrowser.TouchDown += _internetAccessBrowser_TouchDown;
 
@@ -72,7 +81,7 @@ namespace Iap
                 {
                     _internetAccessBrowser.Dispose();
                 }
-                this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+                this.events.PublishOnCurrentThread(new ViewGreekCommand());
             }
         }
 
@@ -85,7 +94,7 @@ namespace Iap
             }
             get
             {
-                return this.remainingTime +"'";
+                return this.remainingTime + "'";
             }
         }
 
@@ -112,21 +121,13 @@ namespace Iap
             lastMousePositionY = (int)e.GetTouchPoint(_internetAccessBrowser).Position.Y;
         }
 
-        public IEventAggregator Events
-        {
-            get
-            {
-                return this.events;
-            }
-        }
-
         public void Back()
         {
             if (_internetAccessBrowser != null)
             {
                 _internetAccessBrowser.Dispose();
             }
-            this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+            this.events.PublishOnCurrentThread(new ViewGreekCommand());
         }
 
         protected override void OnDeactivate(bool close)
@@ -140,7 +141,7 @@ namespace Iap
 
         public void ViewBuyWifi()
         {
-           this.events.PublishOnCurrentThread(new ViewBuyWifiCommand());
+            this.events.PublishOnCurrentThread(new ViewBuyWifiCommand());
         }
 
         public void ViewPrintBoardingPass()

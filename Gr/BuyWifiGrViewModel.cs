@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-using CefSharp.Wpf;
 using CefSharp;
-using System.Windows.Threading;
+using CefSharp.Wpf;
 using Iap.Commands;
+using System.Windows.Threading;
 
-namespace Iap
+namespace Iap.Gr
 {
-   public class BuyWifiViewModel:Screen
+   public class BuyWifiGrViewModel:Screen
     {
         private readonly IEventAggregator events;
 
@@ -19,7 +19,7 @@ namespace Iap
 
         public static ChromiumWebBrowser _buyWifiBrowser;
 
-        public BuyWifiViewModel(IEventAggregator events)
+        public BuyWifiGrViewModel(IEventAggregator events)
         {
             this.events = events;
         }
@@ -46,9 +46,7 @@ namespace Iap
 
             _buyWifiBrowser.Load("http://www.google.com");
 
-            //((InternetAccessView)view).InternetAccessBrowser.Children.Add(_buyWifiBrowser);
-
-            ((BuyWifiView)view).BuyWifiBrowser.Children.Add(_buyWifiBrowser);
+            ((BuyWifiGrView)view).BuyWifiBrowser.Children.Add(_buyWifiBrowser);
 
             _buyWifiBrowser.TouchDown += _buyWifiBrowser_TouchDown;
 
@@ -82,7 +80,7 @@ namespace Iap
                 {
                     _buyWifiBrowser.Dispose();
                 }
-                this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+                this.events.PublishOnCurrentThread(new ViewGreekCommand());
             }
         }
 
@@ -128,7 +126,7 @@ namespace Iap
             {
                 _buyWifiBrowser.Dispose();
             }
-            this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+            this.events.PublishOnCurrentThread(new ViewGreekCommand());
         }
 
         protected override void OnDeactivate(bool close)
