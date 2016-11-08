@@ -53,6 +53,13 @@ namespace Iap
                     this.IdleInput.LastMouseDownEventTicks =
                         TimeProvider.Current.UtcNow.ToLocalTime().Ticks));
 
+            EventManager.RegisterClassHandler(
+                typeof(CefSharp.Wpf.ChromiumWebBrowser),
+                Mouse.MouseDownEvent,
+                new MouseButtonEventHandler((s, e) =>
+                this.IdleInput.LastMouseDownEventTicks =
+                TimeProvider.Current.UtcNow.ToLocalTime().Ticks));
+
             base.OnViewLoaded(view);
         }
 
