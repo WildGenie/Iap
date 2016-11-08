@@ -3,12 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Grid Width="1920"
           Height="1080">
-       <!-- <MediaElement Name="ScreensaverVideo"
-                      Source="C:\Users\Σεραφειμ\Documents\Visual Studio 2015\Projects\Iap\Iap\bin\x64\Debug\Media\SampleVideo_1280x720_1mb.mp4"
-                      LoadedBehavior="Manual"
-                      Width="500"
-                      Height="200"
-                      UnloadedBehavior="Stop" Stretch="Fill"/>-->
-       <!-- <MediaElement Source="C://SampleVideo_720x480_1mb.mp4" LoadedBehavior="Play" StretchDirection="DownOnly"/>-->
+        <MediaElement x:Name="ScreenSaverVideo"  LoadedBehavior="Manual" UnloadedBehavior="Stop" StretchDirection="DownOnly"/>
     </Grid>
 </UserControl>

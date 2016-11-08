@@ -37,11 +37,11 @@ namespace Iap
 
         protected override void OnViewLoaded(object view)
         {
-            base.ActivateItem(this.Shell);
-             this.Shell.Parent = this;
+            //base.ActivateItem(this.Shell);
+             //this.Shell.Parent = this;
 
-           // base.ActivateItem(this.ScreenSaver);
-            //this.ScreenSaver.Parent = this;
+            base.ActivateItem(this.ScreenSaver);
+            this.ScreenSaver.Parent = this;
 
             base.OnViewLoaded(view);
         }

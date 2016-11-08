@@ -336,10 +336,7 @@
     <Folder Include="Handler\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Media\AIAnoloopyellow.mov">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Media\SampleVideo_1280x720_1mb.mp4">
+    <Content Include="Media\screensaverVideo.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

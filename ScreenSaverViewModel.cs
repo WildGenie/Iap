@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using System.IO;
+using Iap.Commands;
+using System.Windows.Controls;
 
 namespace Iap
 {
@@ -29,26 +31,35 @@ namespace Iap
         {
             try
             {
+                string path = @"C:\Users\Σεραφειμ\Documents\Visual Studio 2015\Projects\Iap\Iap\bin\x64\Debug\Media\screensaverVideo.mp4";
 
-               /* string videoPath =
-                    Path.Combine(
-                    Path.GetDirectoryName(
-                        this.GetType().Assembly.Location),
-                    "Media",
-                    "AIAnoloopyellow.mov").ToString();*/
+                ((ScreenSaverView)view).ScreenSaverVideo.Source = new Uri(path);
 
-               // string path = @"C:\Users\Σεραφειμ\Documents\Visual Studio 2015\Projects\Iap\Iap\bin\x64\Debug\Media\SampleVideo_1280x720_1mb.mp4";
+                ((ScreenSaverView)view).ScreenSaverVideo.ScrubbingEnabled = true;
+                ((ScreenSaverView)view).ScreenSaverVideo.Play();
 
-               // ((ScreenSaverView)view).ScreensaverVideo.Source = new Uri(path);
+                ((ScreenSaverView)view).ScreenSaverVideo.MediaEnded += ScreenSaverVideo_MediaEnded;
 
-               /* ((ScreenSaverView)view).ScreensaverVideo.ScrubbingEnabled = true;
-                ((ScreenSaverView)view).ScreensaverVideo.Play();*/
+                ((ScreenSaverView)view).ScreenSaverVideo.MouseDown += ScreenSaverVideo_MouseDown;
+
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                this.events.PublishOnCurrentThread(new ViewEnglishCommand());
             }
             base.OnViewLoaded(view);
+        }
+
+        private void ScreenSaverVideo_MediaEnded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            MediaElement video = sender as MediaElement;
+            video.Position = TimeSpan.FromSeconds(0);
+            video.Play();
+        }
+
+        private void ScreenSaverVideo_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            this.events.PublishOnCurrentThread(new ViewEnglishCommand());
         }
     }
 }
