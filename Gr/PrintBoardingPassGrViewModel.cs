@@ -147,10 +147,14 @@ namespace Iap.Gr
 
         protected override void OnDeactivate(bool close)
         {
-            if (_printBoardingPassBrowser != null)
+            try
             {
-                _printBoardingPassBrowser.Dispose();
+                if (_printBoardingPassBrowser != null)
+                {
+                    _printBoardingPassBrowser.Dispose();
+                }
             }
+            catch { }
             base.OnDeactivate(close);
         }
 

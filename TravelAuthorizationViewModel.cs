@@ -147,10 +147,15 @@ namespace Iap
 
         protected override void OnDeactivate(bool close)
         {
-            if (_travelAuthorizationBrowser != null)
+            try
             {
-                _travelAuthorizationBrowser.Dispose();
+                if (_travelAuthorizationBrowser != null)
+                {
+                    _travelAuthorizationBrowser.Dispose();
+                }
             }
+            catch
+            { }
             base.OnDeactivate(close);
         }
 

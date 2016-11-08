@@ -133,10 +133,14 @@ namespace Iap
 
         protected override void OnDeactivate(bool close)
         {
-            if (_buyWifiBrowser != null)
+            try
             {
-                _buyWifiBrowser.Dispose();
+                if (_buyWifiBrowser != null)
+                {
+                    _buyWifiBrowser.Dispose();
+                }
             }
+            catch { }
             base.OnDeactivate(close);
         }
 

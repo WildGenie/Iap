@@ -143,7 +143,7 @@ namespace Iap
 
         public void Handle(ViewSrceenSaverCommand message)
         {
-            base.ChangeActiveItem(this.ScreenSaver, true);
+            base.ActivateItem(this.ScreenSaver);
         }
     }
 }

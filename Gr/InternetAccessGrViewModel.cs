@@ -132,10 +132,14 @@ namespace Iap.Gr
 
         protected override void OnDeactivate(bool close)
         {
-            if (_internetAccessBrowser != null)
+            try
             {
-                _internetAccessBrowser.Dispose();
+                if (_internetAccessBrowser != null)
+                {
+                    _internetAccessBrowser.Dispose();
+                }
             }
+            catch { }
             base.OnDeactivate(close);
         }
 
