@@ -138,6 +138,7 @@
     <Compile Include="Commands\ViewGreekCommand.cs" />
     <Compile Include="Commands\ViewInternetAccessCommand.cs" />
     <Compile Include="Commands\ViewPrintBoardingPassCommand.cs" />
+    <Compile Include="Commands\ViewSrceenSaverCommand.cs" />
     <Compile Include="Commands\ViewTravelAuthorizationCommand.cs" />
     <Compile Include="Gr\BuyWifiGrView.xaml.cs">
       <DependentUpon>BuyWifiGrView.xaml</DependentUpon>
@@ -189,6 +190,9 @@
       <DependentUpon>TravelAuthorizationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="TravelAuthorizationViewModel.cs" />
+    <Compile Include="Unitilities\DefaultTimeProvider.cs" />
+    <Compile Include="Unitilities\IdleInputViewModel.cs" />
+    <Compile Include="Unitilities\TimeProvider.cs" />
     <Compile Include="Windsor\AppBootstrapper.cs" />
     <Compile Include="Windsor\AppSettingsConvention.cs" />
     <Compile Include="Windsor\EventRegistrationFacility.cs" />

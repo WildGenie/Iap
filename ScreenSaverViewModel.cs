@@ -31,7 +31,11 @@ namespace Iap
         {
             try
             {
-                string path = @"C:\Users\Σεραφειμ\Documents\Visual Studio 2015\Projects\Iap\Iap\bin\x64\Debug\Media\screensaverVideo.mp4";
+                string path = System.IO.Path.Combine(
+                 System.IO.Path.GetDirectoryName(
+                 this.GetType().Assembly.Location),
+                 "Media", "screenSaverVideo.mp4");
+                
 
                 ((ScreenSaverView)view).ScreenSaverVideo.Source = new Uri(path);
 

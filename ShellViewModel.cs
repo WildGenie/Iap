@@ -19,6 +19,13 @@ namespace Iap
             this.events = events;
         }
 
+
+        protected override void OnViewLoaded(object view)
+        {
+            this.OpenBanner();
+            base.OnViewLoaded(view);
+        }
+
         public IEventAggregator Events
         {
             get

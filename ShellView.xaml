@@ -43,9 +43,9 @@
             Width="126" 
             Height="86"/>
 
-        <Grid Margin="478 785 478 0">
+        <Grid x:Name="GridBanner" Margin="478 785 478 0">
             <Grid.Background>
-                <ImageBrush ImageSource="{Binding Path=BannerBackground}"/>
+                <ImageBrush ImageSource="{Binding Path=BannerBackground}" Stretch="Fill"/>
             </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>

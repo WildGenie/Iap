@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using Iap.Commands;
 using Iap.Gr;
+using System.Windows;
+using System.Windows.Input;
+using Iap.Unitilities;
+
 namespace Iap
 {
    public class AppViewModel:Conductor<Screen>,
@@ -15,7 +19,8 @@ namespace Iap
         IHandle<ViewBuyWifiCommand>,
         IHandle<ViewPrintBoardingPassCommand>,
         IHandle<ViewTravelAuthorizationCommand>,
-        IHandle<ViewChangeLanguageCommand>
+        IHandle<ViewChangeLanguageCommand>,
+        IHandle<ViewSrceenSaverCommand>
     {
         public IEventAggregator events;
         private bool isGreekSelected;
@@ -32,16 +37,21 @@ namespace Iap
         public PrintBoardingPassGrViewModel PrintBoardingPassGr { get; set; }
         public TravelAuthorizationViewModel TravelAuthorization { get; set; }
         public TravelAuthorizationGrViewModel TravelAuthorizationGr { get; set; }
+        public IdleInputViewModel IdleInput { get; set; }
 
         public ScreenSaverViewModel ScreenSaver { get; set; }
 
         protected override void OnViewLoaded(object view)
         {
-            //base.ActivateItem(this.Shell);
-             //this.Shell.Parent = this;
-
             base.ActivateItem(this.ScreenSaver);
             this.ScreenSaver.Parent = this;
+
+            EventManager.RegisterClassHandler(
+                typeof(UIElement),
+                Mouse.MouseDownEvent,
+                new MouseButtonEventHandler((s, e) =>
+                    this.IdleInput.LastMouseDownEventTicks =
+                        TimeProvider.Current.UtcNow.ToLocalTime().Ticks));
 
             base.OnViewLoaded(view);
         }
@@ -55,7 +65,6 @@ namespace Iap
         public void Handle(ViewGreekCommand message)
         {
               base.ActivateItem(new ShellGrViewModel(events));
-           // base.ActivateItem(new ScreenSaverViewModel(events));
         }
 
         public void Handle(ViewEnglishCommand message)
@@ -130,6 +139,11 @@ namespace Iap
         public void Handle(ViewChangeLanguageCommand message)
         {
             this.isGreekSelected = message.GreekSelected;
+        }
+
+        public void Handle(ViewSrceenSaverCommand message)
+        {
+            base.ChangeActiveItem(this.ScreenSaver, true);
         }
     }
 }
