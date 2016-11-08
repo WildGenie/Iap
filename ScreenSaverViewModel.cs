@@ -34,7 +34,7 @@ namespace Iap
                 string path = System.IO.Path.Combine(
                  System.IO.Path.GetDirectoryName(
                  this.GetType().Assembly.Location),
-                 "Media", "screenSaverVideo.mp4");
+                 "Media", "AIA_revised_converted.mp4");
                 
 
                 ((ScreenSaverView)view).ScreenSaverVideo.Source = new Uri(path);
