@@ -8,6 +8,7 @@ using CefSharp;
 using CefSharp.Wpf;
 using Iap.Commands;
 using System.Windows.Threading;
+using Iap.Handlers;
 
 namespace Iap.Gr
 {
@@ -49,6 +50,8 @@ namespace Iap.Gr
             _printBoardingPassBrowser.Load(this.boardingPassGrApi);
 
             ((PrintBoardingPassGrView)view).InternetAccessBrowser.Children.Add(_printBoardingPassBrowser);
+
+            _printBoardingPassBrowser.LifeSpanHandler = new LifeSpanHandler();
 
             _printBoardingPassBrowser.TouchDown += _printBoardingPassBrowser_TouchDown;
 
@@ -194,11 +197,23 @@ namespace Iap.Gr
 
         public void Back()
         {
-            if (_printBoardingPassBrowser != null)
+            try
             {
-                _printBoardingPassBrowser.Dispose();
+                if (_printBoardingPassBrowser.CanGoBack)
+                {
+                    _printBoardingPassBrowser.Back();
+                }
+                else
+                {
+                    if (_printBoardingPassBrowser != null)
+                    {
+                        _printBoardingPassBrowser.Dispose();
+                    }
+                    this.events.PublishOnCurrentThread(new ViewGreekCommand());
+                }
             }
-            this.events.PublishOnCurrentThread(new ViewGreekCommand());
+
+            catch { }
         }
 
         protected override void OnDeactivate(bool close)

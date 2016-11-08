@@ -8,10 +8,11 @@ using CefSharp;
 using CefSharp.Wpf;
 using System.Windows.Threading;
 using Iap.Commands;
+using Iap.Handlers;
 
 namespace Iap
 {
-   public class PrintBoardingPassViewModel:Screen, IRequestHandler, ILifeSpanHandler
+   public class PrintBoardingPassViewModel:Screen
     {
         private readonly IEventAggregator events;
         private readonly string boardingPassEnApi;
@@ -57,9 +58,7 @@ namespace Iap
 
             _printBoardingPassBrowser.MouseDown += _printBoardingPassBrowser_MouseDown;
 
-            _printBoardingPassBrowser.RequestHandler = this;
-
-            _printBoardingPassBrowser.LifeSpanHandler = this;
+            _printBoardingPassBrowser.LifeSpanHandler = new LifeSpanHandler();
 
             _printBoardingPassBrowser.RequestContext = new RequestContext();
 
@@ -246,105 +245,6 @@ namespace Iap
         public void ViewTravelAuthorization()
         {
             this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand());
-        }
-
-        public bool OnBeforeBrowse(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, bool isRedirect)
-        {
-            return false;
-        }
-
-        public bool OnOpenUrlFromTab(IWebBrowser browserControl, IBrowser browser, IFrame frame, string targetUrl, WindowOpenDisposition targetDisposition, bool userGesture)
-        {
-            _printBoardingPassBrowser.Load(targetUrl);
-
-            browser.MainFrame.ExecuteJavaScriptAsync(@"
-                       window.close()");
-
-            return false;
-        }
-
-        public bool OnCertificateError(IWebBrowser browserControl, IBrowser browser, CefErrorCode errorCode, string requestUrl, ISslInfo sslInfo, IRequestCallback callback)
-        {
-            return false;
-        }
-
-        public void OnPluginCrashed(IWebBrowser browserControl, IBrowser browser, string pluginPath)
-        {
-           
-        }
-
-        public CefReturnValue OnBeforeResourceLoad(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IRequestCallback callback)
-        {
-            return CefReturnValue.Continue;
-        }
-
-        public bool GetAuthCredentials(IWebBrowser browserControl, IBrowser browser, IFrame frame, bool isProxy, string host, int port, string realm, string scheme, IAuthCallback callback)
-        {
-            return false;
-        }
-
-        public void OnRenderProcessTerminated(IWebBrowser browserControl, IBrowser browser, CefTerminationStatus status)
-        {
-            
-        }
-
-        public bool OnQuotaRequest(IWebBrowser browserControl, IBrowser browser, string originUrl, long newSize, IRequestCallback callback)
-        {
-            return false;
-        }
-
-        public void OnResourceRedirect(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, ref string newUrl)
-        {
-            
-        }
-
-        public bool OnProtocolExecution(IWebBrowser browserControl, IBrowser browser, string url)
-        {
-            return false;
-        }
-
-        public void OnRenderViewReady(IWebBrowser browserControl, IBrowser browser)
-        {
-            
-        }
-
-        public bool OnResourceResponse(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response)
-        {
-            return false;
-        }
-
-        public IResponseFilter GetResourceResponseFilter(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response)
-        {
-            return null;
-        }
-
-        public void OnResourceLoadComplete(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response, UrlRequestStatus status, long receivedContentLength)
-        {
-            
-        }
-
-        public bool OnBeforePopup(IWebBrowser browserControl, IBrowser browser, IFrame frame, string targetUrl, string targetFrameName, WindowOpenDisposition targetDisposition, bool userGesture, IPopupFeatures popupFeatures, IWindowInfo windowInfo, IBrowserSettings browserSettings, ref bool noJavascriptAccess, out IWebBrowser newBrowser)
-        {
-            
-            newBrowser = null;
-            browserControl.Load(targetUrl);
-            
-            return true;
-        }
-
-        public void OnAfterCreated(IWebBrowser browserControl, IBrowser browser)
-        {
-            
-        }
-
-        public bool DoClose(IWebBrowser browserControl, IBrowser browser)
-        {
-            return false;
-        }
-
-        public void OnBeforeClose(IWebBrowser browserControl, IBrowser browser)
-        {
-            
         }
     }
 }

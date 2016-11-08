@@ -161,6 +161,7 @@
       <DependentUpon>TravelAuthorizationGrView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Gr\TravelAuthorizationGrViewModel.cs" />
+    <Compile Include="Handlers\LifeSpanHandler.cs" />
     <Compile Include="InternetAccessView.xaml.cs">
       <DependentUpon>InternetAccessView.xaml</DependentUpon>
     </Compile>
@@ -337,9 +338,7 @@
     <Resource Include="Images\AIA_FOR PNG-42.png" />
     <Resource Include="Images\AIA_FOR PNG-43.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Handler\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Media\AIA_revised_converted.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
