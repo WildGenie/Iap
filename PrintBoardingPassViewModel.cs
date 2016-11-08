@@ -11,11 +11,11 @@ using Iap.Commands;
 
 namespace Iap
 {
-   public class PrintBoardingPassViewModel:Screen
+   public class PrintBoardingPassViewModel:Screen, IRequestHandler, ILifeSpanHandler
     {
         private readonly IEventAggregator events;
         private readonly string boardingPassEnApi;
-        private bool showKeyboard;
+        private bool openKeyboard;
 
         private string remainingTime;
 
@@ -55,6 +55,12 @@ namespace Iap
 
             _printBoardingPassBrowser.TouchMove += _printBoardingPassBrowser_TouchMove;
 
+            _printBoardingPassBrowser.MouseDown += _printBoardingPassBrowser_MouseDown;
+
+            _printBoardingPassBrowser.RequestHandler = this;
+
+            _printBoardingPassBrowser.LifeSpanHandler = this;
+
             _printBoardingPassBrowser.RequestContext = new RequestContext();
 
             _printBoardingPassBrowser.Focus();
@@ -67,6 +73,60 @@ namespace Iap
             timer.Start();
 
             base.OnViewLoaded(view);
+        }
+
+        private void _printBoardingPassBrowser_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            try
+            {
+                string script =
+                                @"(function ()
+                    {
+                        var isText = false;
+                        var activeElement = document.activeElement;
+                        if (activeElement) {
+                            if (activeElement.tagName.toLowerCase() === 'textarea') {                              
+                                isText = true;
+                            } else {
+                                if (activeElement.tagName.toLowerCase() === 'input') {
+                                    if (activeElement.hasAttribute('type')) {
+                                        var inputType = activeElement.getAttribute('type').toLowerCase();
+                                        if (inputType === 'text' || inputType === 'email' || inputType === 'password' || inputType === 'tel' || inputType === 'number' || inputType === 'range' || inputType === 'search' || inputType === 'url') {                                          
+                                        isText = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        return isText;
+                    })();";
+
+                var task = _printBoardingPassBrowser.EvaluateScriptAsync(script, TimeSpan.FromSeconds(10));
+                task.Wait();
+
+                var response = task.Result;
+
+                var result = response.Success ? (response.Result ?? "null") : response.Message;
+
+
+                if (Convert.ToBoolean(result) == true)
+                {
+                    OpenKeyboard = true;
+                    NotifyOfPropertyChange(() => this.OpenKeyboard);
+                }
+
+                else
+                {
+                    OpenKeyboard = false;
+                    NotifyOfPropertyChange(() => this.OpenKeyboard);
+                }
+            }
+            catch
+            {
+
+            }
+
+            e.Handled = true;
         }
 
         private void TimerTick(object sender, EventArgs e)
@@ -101,16 +161,16 @@ namespace Iap
             }
         }
 
-        public bool ShowKeyboard
+        public bool OpenKeyboard
         {
             set
             {
-                this.showKeyboard = value;
-                NotifyOfPropertyChange(() => this.ShowKeyboard);
+                this.openKeyboard = value;
+                NotifyOfPropertyChange(() => this.OpenKeyboard);
             }
             get
             {
-                return this.showKeyboard;
+                return this.openKeyboard;
             }
         }
 
@@ -139,11 +199,25 @@ namespace Iap
 
         public void Back()
         {
-            if (_printBoardingPassBrowser != null)
+            try
             {
-                _printBoardingPassBrowser.Dispose();
+                if (_printBoardingPassBrowser.CanGoBack)
+                {
+                    _printBoardingPassBrowser.Back();
+                }
+                else
+                {
+                    if (_printBoardingPassBrowser != null)
+                    {
+                        _printBoardingPassBrowser.Dispose();
+                    }
+                    this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+                }
             }
-            this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+            catch
+            {
+                
+            }
         }
 
         protected override void OnDeactivate(bool close)
@@ -172,6 +246,105 @@ namespace Iap
         public void ViewTravelAuthorization()
         {
             this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand());
+        }
+
+        public bool OnBeforeBrowse(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, bool isRedirect)
+        {
+            return false;
+        }
+
+        public bool OnOpenUrlFromTab(IWebBrowser browserControl, IBrowser browser, IFrame frame, string targetUrl, WindowOpenDisposition targetDisposition, bool userGesture)
+        {
+            _printBoardingPassBrowser.Load(targetUrl);
+
+            browser.MainFrame.ExecuteJavaScriptAsync(@"
+                       window.close()");
+
+            return false;
+        }
+
+        public bool OnCertificateError(IWebBrowser browserControl, IBrowser browser, CefErrorCode errorCode, string requestUrl, ISslInfo sslInfo, IRequestCallback callback)
+        {
+            return false;
+        }
+
+        public void OnPluginCrashed(IWebBrowser browserControl, IBrowser browser, string pluginPath)
+        {
+           
+        }
+
+        public CefReturnValue OnBeforeResourceLoad(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IRequestCallback callback)
+        {
+            return CefReturnValue.Continue;
+        }
+
+        public bool GetAuthCredentials(IWebBrowser browserControl, IBrowser browser, IFrame frame, bool isProxy, string host, int port, string realm, string scheme, IAuthCallback callback)
+        {
+            return false;
+        }
+
+        public void OnRenderProcessTerminated(IWebBrowser browserControl, IBrowser browser, CefTerminationStatus status)
+        {
+            
+        }
+
+        public bool OnQuotaRequest(IWebBrowser browserControl, IBrowser browser, string originUrl, long newSize, IRequestCallback callback)
+        {
+            return false;
+        }
+
+        public void OnResourceRedirect(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, ref string newUrl)
+        {
+            
+        }
+
+        public bool OnProtocolExecution(IWebBrowser browserControl, IBrowser browser, string url)
+        {
+            return false;
+        }
+
+        public void OnRenderViewReady(IWebBrowser browserControl, IBrowser browser)
+        {
+            
+        }
+
+        public bool OnResourceResponse(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response)
+        {
+            return false;
+        }
+
+        public IResponseFilter GetResourceResponseFilter(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response)
+        {
+            return null;
+        }
+
+        public void OnResourceLoadComplete(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response, UrlRequestStatus status, long receivedContentLength)
+        {
+            
+        }
+
+        public bool OnBeforePopup(IWebBrowser browserControl, IBrowser browser, IFrame frame, string targetUrl, string targetFrameName, WindowOpenDisposition targetDisposition, bool userGesture, IPopupFeatures popupFeatures, IWindowInfo windowInfo, IBrowserSettings browserSettings, ref bool noJavascriptAccess, out IWebBrowser newBrowser)
+        {
+            
+            newBrowser = null;
+            browserControl.Load(targetUrl);
+            
+            return true;
+        }
+
+        public void OnAfterCreated(IWebBrowser browserControl, IBrowser browser)
+        {
+            
+        }
+
+        public bool DoClose(IWebBrowser browserControl, IBrowser browser)
+        {
+            return false;
+        }
+
+        public void OnBeforeClose(IWebBrowser browserControl, IBrowser browser)
+        {
+            
         }
     }
 }

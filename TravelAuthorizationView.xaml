@@ -153,7 +153,7 @@
                 
             </Grid>
             <Grid x:Name="InternetAccessBrowser" Grid.Column="4">
-                <Popup IsOpen="{Binding Path=ShowKeyboard}"
+                <Popup IsOpen="{Binding Path=OpenKeyboard}"
                        AllowsTransparency="True"
                        PlacementTarget="{Binding ElementName=InternetAccessBrowser}" VerticalOffset="160"
                        Placement="Center"

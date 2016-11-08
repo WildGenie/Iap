@@ -128,6 +128,7 @@
       <DependentUpon>AppView.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppViewModel.cs" />
+    <Compile Include="Bounds\BoundObject.cs" />
     <Compile Include="BuyWifiView.xaml.cs">
       <DependentUpon>BuyWifiView.xaml</DependentUpon>
     </Compile>

@@ -152,7 +152,7 @@
                 </Button>
             </Grid>
             <Grid x:Name="BuyWifiBrowser" Grid.Column="4">
-                <Popup IsOpen="True"
+                <Popup IsOpen="{Binding Path=OpenKeyboard}"
                        AllowsTransparency="True"
                        PlacementTarget="{Binding ElementName=InternetAccessBrowser}" VerticalOffset="160"
                        Placement="Center"
