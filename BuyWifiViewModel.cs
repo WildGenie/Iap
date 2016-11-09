@@ -193,11 +193,22 @@ namespace Iap
 
         public void Back()
         {
-            if (_buyWifiBrowser != null)
+            try
             {
-                _buyWifiBrowser.Dispose();
+                if (_buyWifiBrowser.CanGoBack)
+                {
+                    _buyWifiBrowser.Back();
+                }
+                else
+                {
+                    if (_buyWifiBrowser != null)
+                    {
+                        _buyWifiBrowser.Dispose();
+                    }
+                    this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+                }
             }
-            this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+            catch { }
         }
 
         protected override void OnDeactivate(bool close)

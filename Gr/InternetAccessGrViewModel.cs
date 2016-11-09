@@ -193,11 +193,24 @@ namespace Iap.Gr
 
         public void Back()
         {
-            if (_internetAccessBrowser != null)
+            this.OpenKeyboard = false;
+            try
             {
-                _internetAccessBrowser.Dispose();
+                if (_internetAccessBrowser.CanGoBack)
+                {
+                    _internetAccessBrowser.Back();
+                }
+
+                else
+                {
+                    if (_internetAccessBrowser != null)
+                    {
+                        _internetAccessBrowser.Dispose();
+                    }
+                    this.events.PublishOnCurrentThread(new ViewGreekCommand());
+                }
             }
-            this.events.PublishOnCurrentThread(new ViewGreekCommand());
+            catch { }
         }
 
         protected override void OnDeactivate(bool close)

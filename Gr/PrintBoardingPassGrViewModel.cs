@@ -197,6 +197,7 @@ namespace Iap.Gr
 
         public void Back()
         {
+            this.OpenKeyboard = false;
             try
             {
                 if (_printBoardingPassBrowser.CanGoBack)

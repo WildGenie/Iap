@@ -193,11 +193,23 @@ namespace Iap.Gr
 
         public void Back()
         {
-            if (_buyWifiBrowser != null)
+            this.OpenKeyboard = false;
+            try
             {
-                _buyWifiBrowser.Dispose();
+                if (_buyWifiBrowser.CanGoBack)
+                {
+                    _buyWifiBrowser.Back();
+                }
+                else
+                {
+                    if (_buyWifiBrowser != null)
+                    {
+                        _buyWifiBrowser.Dispose();
+                    }
+                    this.events.PublishOnCurrentThread(new ViewGreekCommand());
+                }
             }
-            this.events.PublishOnCurrentThread(new ViewGreekCommand());
+            catch { }
         }
 
         protected override void OnDeactivate(bool close)

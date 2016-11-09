@@ -195,11 +195,23 @@ namespace Iap
 
         public void Back()
         {
-            if (_travelAuthorizationBrowser != null)
+            this.OpenKeyboard = false;
+            try
             {
-                _travelAuthorizationBrowser.Dispose();
+                if (_travelAuthorizationBrowser.CanGoBack)
+                {
+                    _travelAuthorizationBrowser.Back();
+                }
+                else
+                {
+                    if (_travelAuthorizationBrowser != null)
+                    {
+                        _travelAuthorizationBrowser.Dispose();
+                    }
+                    this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+                }
             }
-            this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+            catch { }
         }
 
         protected override void OnDeactivate(bool close)
