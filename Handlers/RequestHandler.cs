@@ -73,7 +73,7 @@ namespace Iap.Handlers
 
         public void OnResourceLoadComplete(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response, UrlRequestStatus status, long receivedContentLength)
         {
-            
+            //browserControl.ExecuteScriptAsync(@"function($){}")
 
             if (request.Url.EndsWith(".doc"))
             {

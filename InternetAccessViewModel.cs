@@ -10,6 +10,7 @@ using CefSharp;
 using System.Windows.Threading;
 using Iap.Bounds;
 using Iap.Handlers;
+using System.Windows.Media;
 
 namespace Iap
 {
@@ -31,7 +32,7 @@ namespace Iap
         {
             _internetAccessBrowser = new ChromiumWebBrowser()
             {
-                Address = "http://www.google.com",
+                Address = "http://www.google.com/ncr",
             };
 
             _internetAccessBrowser.BrowserSettings = new CefSharp.BrowserSettings()
@@ -39,19 +40,22 @@ namespace Iap
                 OffScreenTransparentBackground = false,
             };
 
-            _internetAccessBrowser.Load("http://www.google.com");
+            _internetAccessBrowser.Load("http://www.google.com/ncr");
 
            /* _internetAccessBrowser.BrowserSettings.FileAccessFromFileUrls = CefState.Enabled;
             _internetAccessBrowser.BrowserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
             _internetAccessBrowser.BrowserSettings.WebSecurity = CefState.Disabled;
             _internetAccessBrowser.BrowserSettings.Javascript = CefState.Enabled;*/
 
-            var obj = new BoundObject();
+            var obj = new BoundObject(6);
             _internetAccessBrowser.RegisterJsObject("bound", obj);
             _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 
            // _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
             _internetAccessBrowser.RequestHandler = new RequestHandler();
+            _internetAccessBrowser.MenuHandler = new CustomMenuHandler();
+           
+        
 
             ((InternetAccessView)view).InternetAccessBrowser.Children.Add(_internetAccessBrowser);
 
@@ -61,8 +65,12 @@ namespace Iap
 
             _internetAccessBrowser.MouseDown += _internetAccessBrowser_MouseDown;
 
-            _internetAccessBrowser.RequestContext = new RequestContext();
+            
 
+            _internetAccessBrowser.RequestContext = new RequestContext();
+          //  _internetAccessBrowser.IsManipulationEnabled = true;
+
+            _internetAccessBrowser.ManipulationDelta += _internetAccessBrowser_ManipulationDelta;
             _internetAccessBrowser.Focus();
 
             this.RemainingTime = "30";
@@ -75,6 +83,28 @@ namespace Iap
             timer.Start();
 
             base.OnViewLoaded(view);
+        }
+
+        
+
+        private void _internetAccessBrowser_ManipulationDelta(object sender, System.Windows.Input.ManipulationDeltaEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                var point = e.ManipulationOrigin;
+
+                var browser = sender as ChromiumWebBrowser;
+
+                if (browser != null)
+                {
+                    browser.SendMouseWheelEvent(
+                        (int)point.X,
+                        (int)point.Y,
+                        deltaX: (int)e.DeltaManipulation.Translation.X,
+                        deltaY: (int)e.DeltaManipulation.Translation.Y,
+                        modifiers: CefEventFlags.None);
+                }
+            }
         }
 
         private void _internetAccessBrowser_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -191,7 +221,17 @@ namespace Iap
             int deltax = x - lastMousePositionX;
             int deltay = y - lastMousePositionY;
 
+            TranslateTransform transform = new TranslateTransform(x, y);
+
             _internetAccessBrowser.SendMouseWheelEvent((int)_internetAccessBrowser.Width, (int)_internetAccessBrowser.Height, deltax, deltay, CefEventFlags.None);
+
+         /*   _internetAccessBrowser.SendMouseWheelEvent(
+                        lastMousePositionX,
+                        lastMousePositionY,
+                        deltaX: (int)transform.X,
+                        deltaY: (int)transform.Y,
+                        modifiers: CefEventFlags.None);*/
+
         }
 
         private void _internetAccessBrowser_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
@@ -258,6 +298,11 @@ namespace Iap
         public void ViewTravelAuthorization()
         {
             this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand());
+        }
+
+        public void ViewInternetAccess()
+        {
+            _internetAccessBrowser.Load("http://google.com/ncr");
         }
     }
 }

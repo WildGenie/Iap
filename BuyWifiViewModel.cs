@@ -38,7 +38,7 @@ namespace Iap
         {
             _buyWifiBrowser = new ChromiumWebBrowser()
             {
-                Address = "http://www.google.com",
+                Address = "http://www.google.com/ncr",
             };
 
             _buyWifiBrowser.BrowserSettings = new CefSharp.BrowserSettings()
@@ -46,7 +46,7 @@ namespace Iap
                 OffScreenTransparentBackground = false,
             };
 
-            _buyWifiBrowser.Load("http://www.google.com");
+            _buyWifiBrowser.Load("http://www.google.com/ncr");
 
             _buyWifiBrowser.LifeSpanHandler = new LifeSpanHandler();
             _buyWifiBrowser.RequestHandler = new RequestHandler();
@@ -241,6 +241,11 @@ namespace Iap
         public void ViewTravelAuthorization()
         {
             this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand());
+        }
+
+        public void ViewBuyWifi()
+        {
+            _buyWifiBrowser.Load("http://www.google.com/ncr");
         }
     }
 }

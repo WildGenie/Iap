@@ -166,6 +166,7 @@
       <DependentUpon>TravelAuthorizationGrView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Gr\TravelAuthorizationGrViewModel.cs" />
+    <Compile Include="Handlers\CustomMenuHandler.cs" />
     <Compile Include="Handlers\LifeSpanHandler.cs" />
     <Compile Include="Handlers\PrinterCanceller.cs" />
     <Compile Include="Handlers\RequestHandler.cs" />
@@ -200,6 +201,7 @@
     </Compile>
     <Compile Include="TravelAuthorizationViewModel.cs" />
     <Compile Include="Unitilities\DefaultTimeProvider.cs" />
+    <Compile Include="Unitilities\IdleInputBrowserViewModel.cs" />
     <Compile Include="Unitilities\IdleInputViewModel.cs" />
     <Compile Include="Unitilities\TimeProvider.cs" />
     <Compile Include="Windsor\AppBootstrapper.cs" />

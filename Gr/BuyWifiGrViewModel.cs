@@ -242,5 +242,10 @@ namespace Iap.Gr
         {
             this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand());
         }
+
+        public void ViewBuyWifi()
+        {
+            _buyWifiBrowser.Load("http://google.com");
+        }
     }
 }

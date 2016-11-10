@@ -9,6 +9,7 @@ using CefSharp.Wpf;
 using System.Windows.Threading;
 using Iap.Commands;
 using Iap.Handlers;
+using Iap.Bounds;
 
 namespace Iap
 {
@@ -64,6 +65,12 @@ namespace Iap
             //_printBoardingPassBrowser.RequestHandler = new RequestHandler();
 
             _printBoardingPassBrowser.RequestContext = new RequestContext();
+
+
+            var obj = new BoundObject(6);
+            _printBoardingPassBrowser.RegisterJsObject("bound", obj);
+            _printBoardingPassBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
+
 
             _printBoardingPassBrowser.Focus();
 
@@ -249,6 +256,11 @@ namespace Iap
         public void ViewTravelAuthorization()
         {
             this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand());
+        }
+
+        public void ViewPrintBoardingPass()
+        {
+            _printBoardingPassBrowser.Load(this.boardingPassEnApi);
         }
     }
 }

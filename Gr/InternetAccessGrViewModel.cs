@@ -243,5 +243,10 @@ namespace Iap.Gr
         {
             this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand());
         }
+
+        public void ViewInternetAccess()
+        {
+            _internetAccessBrowser.Load("http://google.com");
+        }
     }
 }

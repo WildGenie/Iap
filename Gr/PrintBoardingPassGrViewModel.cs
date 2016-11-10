@@ -244,5 +244,10 @@ namespace Iap.Gr
         {
             this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand());
         }
+
+        public void PrintBoardingPass()
+        {
+            _printBoardingPassBrowser.Load(this.boardingPassGrApi);
+        }
     }
 }

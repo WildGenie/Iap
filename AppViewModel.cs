@@ -38,6 +38,7 @@ namespace Iap
         public TravelAuthorizationViewModel TravelAuthorization { get; set; }
         public TravelAuthorizationGrViewModel TravelAuthorizationGr { get; set; }
         public IdleInputViewModel IdleInput { get; set; }
+        public IdleInputBrowserViewModel IdleInputBrowser { get; set; }
 
         public ScreenSaverViewModel ScreenSaver { get; set; }
 
@@ -57,7 +58,7 @@ namespace Iap
                 typeof(CefSharp.Wpf.ChromiumWebBrowser),
                 Mouse.MouseDownEvent,
                 new MouseButtonEventHandler((s, e) =>
-                this.IdleInput.LastMouseDownEventTicks =
+                this.IdleInputBrowser.LastMouseDownEventTicks =
                 TimeProvider.Current.UtcNow.ToLocalTime().Ticks));
 
             base.OnViewLoaded(view);

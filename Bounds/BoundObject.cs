@@ -14,13 +14,40 @@ namespace Iap.Bounds
 {
     public class BoundObject
     {
+        private int numberOfAvailablePages;
+
+        public BoundObject(int numberOfAvailablePages)
+        {
+            this.numberOfAvailablePages = numberOfAvailablePages;
+        }
+
+        public int NumberOfAvailblePages
+        {
+            set
+            {
+                this.numberOfAvailablePages = value;
+            }
+            get
+            {
+                return this.numberOfAvailablePages;
+            }
+        }
+
         ChromiumWebBrowser _mainBrowser;
         public void OnFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
            
 
                  _mainBrowser = sender as ChromiumWebBrowser;
-                _mainBrowser.ExecuteScriptAsync(@"
+
+
+            _mainBrowser.ExecuteScriptAsync(@"document.onselectstart = function()
+{
+return false;
+}");
+
+
+            _mainBrowser.ExecuteScriptAsync(@"
                     
                 var pageElements = document.getElementsByClassName('ndfHFb-c4YZDc-DARUcf-NnAfwf-j4LONd');
                 
@@ -74,7 +101,7 @@ namespace Iap.Bounds
                         "Printings", "fileToPrint.pdf");
                 _mainBrowser.PrintToPdfAsync(path);
                 System.Threading.Thread.Sleep(3000);
-                if (PrinterCanceller.CanPrint(path))
+                if (this.CanPrint(path))
                 {
                     Process p = new Process();
                     p.StartInfo = new ProcessStartInfo()
@@ -91,6 +118,22 @@ namespace Iap.Bounds
                 {
                     System.Windows.MessageBox.Show("many docs to print");
                 }
+            }
+        }
+
+        public bool CanPrint(string path)
+        {
+            PdfReader pdfReader = new PdfReader(path);
+            int numberOfPages = pdfReader.NumberOfPages;
+
+            if (numberOfPages < 4)
+            {
+                return true;
+            }
+
+            else
+            {
+                return false;
             }
         }
     }

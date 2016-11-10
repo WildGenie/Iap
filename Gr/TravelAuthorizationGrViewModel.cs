@@ -244,5 +244,10 @@ namespace Iap.Gr
         {
             this.events.PublishOnCurrentThread(new ViewInternetAccessCommand());
         }
+
+        public void ViewTravelAuthorization()
+        {
+            _travelAuthorizationBrowser.Load(this.travelAuthorizationGrApi);
+        }
     }
 }

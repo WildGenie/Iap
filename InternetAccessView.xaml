@@ -149,12 +149,35 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <Image Grid.Row="5" Source="/Images/AIA_FOR PNG-20.png"/>
+                <Button x:Name="ViewInternetAccess" Grid.Row="5">
+                    <Image Source="/Images/AIA_FOR PNG-20.png"/>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
+                                            <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
+                                        </StackPanel>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsPressed" Value="true">
+                                                <Setter Property="Background" Value="Transparent" TargetName="panel" />
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="true">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </Grid>
             <Grid x:Name="InternetAccessBrowser" Grid.Column="4">
                 <Popup IsOpen="{Binding Path=OpenKeyboard}"
                        AllowsTransparency="True"
-                       PlacementTarget="{Binding ElementName=InternetAccessBrowser}" VerticalOffset="160"
+                       PlacementTarget="{Binding ElementName=InternetAccessBrowser}" VerticalOffset="300"
                        Placement="Center"
                        >
                     <keyboards:Keyboard/>
