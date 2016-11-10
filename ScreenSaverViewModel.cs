@@ -58,6 +58,7 @@ namespace Iap
         {
             MediaElement video = sender as MediaElement;
             video.Position = TimeSpan.FromSeconds(0);
+            //System.Threading.Thread.Sleep(TimeSpan.FromMinutes(2));
             video.Play();
         }
 

@@ -52,15 +52,15 @@ namespace Iap.Gr
             ((PrintBoardingPassGrView)view).InternetAccessBrowser.Children.Add(_printBoardingPassBrowser);
 
             _printBoardingPassBrowser.LifeSpanHandler = new LifeSpanHandler();
+            _printBoardingPassBrowser.RequestHandler = new RequestHandler();
+            _printBoardingPassBrowser.RequestContext = new RequestContext();
 
             _printBoardingPassBrowser.TouchDown += _printBoardingPassBrowser_TouchDown;
 
             _printBoardingPassBrowser.TouchMove += _printBoardingPassBrowser_TouchMove;
 
             _printBoardingPassBrowser.MouseDown += _printBoardingPassBrowser_MouseDown;
-
-            _printBoardingPassBrowser.RequestContext = new RequestContext();
-
+          
             _printBoardingPassBrowser.Focus();
 
             this.RemainingTime = "30";

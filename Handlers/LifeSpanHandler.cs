@@ -1,4 +1,5 @@
 ﻿using CefSharp;
+using CefSharp.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +27,16 @@ namespace Iap.Handlers
 
         public bool OnBeforePopup(IWebBrowser browserControl, IBrowser browser, IFrame frame, string targetUrl, string targetFrameName, WindowOpenDisposition targetDisposition, bool userGesture, IPopupFeatures popupFeatures, IWindowInfo windowInfo, IBrowserSettings browserSettings, ref bool noJavascriptAccess, out IWebBrowser newBrowser)
         {
-            newBrowser = null;
-            browserControl.Load(targetUrl);
-
+            if (!browserControl.GetMainFrame().Url.Contains("docs.google.com"))
+            {
+                newBrowser = null;
+                browserControl.Load(targetUrl);
+            }
+            else
+            {
+                newBrowser = new ChromiumWebBrowser();
+                newBrowser.Load(targetUrl);
+            }
             return true;
         }
     }

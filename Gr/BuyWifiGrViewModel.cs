@@ -8,6 +8,7 @@ using CefSharp;
 using CefSharp.Wpf;
 using Iap.Commands;
 using System.Windows.Threading;
+using Iap.Handlers;
 
 namespace Iap.Gr
 {
@@ -56,6 +57,8 @@ namespace Iap.Gr
             _buyWifiBrowser.MouseDown += _buyWifiBrowser_MouseDown;
 
             _buyWifiBrowser.RequestContext = new RequestContext();
+            _buyWifiBrowser.LifeSpanHandler = new LifeSpanHandler();
+            _buyWifiBrowser.RequestHandler = new RequestHandler();
 
             _buyWifiBrowser.Focus();
 

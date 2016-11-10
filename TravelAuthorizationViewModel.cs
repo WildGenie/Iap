@@ -8,6 +8,7 @@ using CefSharp;
 using CefSharp.Wpf;
 using System.Windows.Threading;
 using Iap.Commands;
+using Iap.Handlers;
 
 namespace Iap
 {
@@ -58,6 +59,9 @@ namespace Iap
             _travelAuthorizationBrowser.MouseDown += _travelAuthorizationBrowser_MouseDown;
 
             _travelAuthorizationBrowser.RequestContext = new RequestContext();
+
+            _travelAuthorizationBrowser.LifeSpanHandler = new LifeSpanHandler();
+            _travelAuthorizationBrowser.RequestHandler = new RequestHandler();
 
             _travelAuthorizationBrowser.Focus();
 

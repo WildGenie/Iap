@@ -99,9 +99,14 @@
       <HintPath>..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.10.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.10\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Interactivity">
       <HintPath>..\packages\Caliburn.Micro.3.0.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -162,6 +167,8 @@
     </Compile>
     <Compile Include="Gr\TravelAuthorizationGrViewModel.cs" />
     <Compile Include="Handlers\LifeSpanHandler.cs" />
+    <Compile Include="Handlers\PrinterCanceller.cs" />
+    <Compile Include="Handlers\RequestHandler.cs" />
     <Compile Include="InternetAccessView.xaml.cs">
       <DependentUpon>InternetAccessView.xaml</DependentUpon>
     </Compile>
@@ -338,7 +345,9 @@
     <Resource Include="Images\AIA_FOR PNG-42.png" />
     <Resource Include="Images\AIA_FOR PNG-43.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Printings\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Media\AIA_revised_converted.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

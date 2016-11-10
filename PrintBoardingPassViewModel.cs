@@ -50,6 +50,8 @@ namespace Iap
 
             _printBoardingPassBrowser.Load(this.boardingPassEnApi);
 
+            
+
             ((PrintBoardingPassView)view).InternetAccessBrowser.Children.Add(_printBoardingPassBrowser);
 
             _printBoardingPassBrowser.TouchDown += _printBoardingPassBrowser_TouchDown;
@@ -59,6 +61,7 @@ namespace Iap
             _printBoardingPassBrowser.MouseDown += _printBoardingPassBrowser_MouseDown;
 
             _printBoardingPassBrowser.LifeSpanHandler = new LifeSpanHandler();
+            //_printBoardingPassBrowser.RequestHandler = new RequestHandler();
 
             _printBoardingPassBrowser.RequestContext = new RequestContext();
 

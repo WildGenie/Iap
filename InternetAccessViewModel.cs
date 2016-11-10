@@ -9,6 +9,7 @@ using CefSharp.Wpf;
 using CefSharp;
 using System.Windows.Threading;
 using Iap.Bounds;
+using Iap.Handlers;
 
 namespace Iap
 {
@@ -40,9 +41,17 @@ namespace Iap
 
             _internetAccessBrowser.Load("http://www.google.com");
 
-            var obj = new BoundObject();
+           /* _internetAccessBrowser.BrowserSettings.FileAccessFromFileUrls = CefState.Enabled;
+            _internetAccessBrowser.BrowserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
+            _internetAccessBrowser.BrowserSettings.WebSecurity = CefState.Disabled;
+            _internetAccessBrowser.BrowserSettings.Javascript = CefState.Enabled;*/
 
+            var obj = new BoundObject();
             _internetAccessBrowser.RegisterJsObject("bound", obj);
+            _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
+
+           // _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
+            _internetAccessBrowser.RequestHandler = new RequestHandler();
 
             ((InternetAccessView)view).InternetAccessBrowser.Children.Add(_internetAccessBrowser);
 

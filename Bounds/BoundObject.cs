@@ -5,15 +5,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using iTextSharp.text.pdf;
+using Iap.Handlers;
+using System.Diagnostics;
 
 namespace Iap.Bounds
 {
     public class BoundObject
     {
+        ChromiumWebBrowser _mainBrowser;
         public void OnFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
-            ChromiumWebBrowser browser = sender as ChromiumWebBrowser;
-            browser.ExecuteScriptAsync(@"
+           
+
+                 _mainBrowser = sender as ChromiumWebBrowser;
+                _mainBrowser.ExecuteScriptAsync(@"
                     
                 var pageElements = document.getElementsByClassName('ndfHFb-c4YZDc-DARUcf-NnAfwf-j4LONd');
                 
@@ -24,7 +31,6 @@ namespace Iap.Bounds
                         noOfPages= pageElements[0].innerText;
                     }       
                 
-                        
                 
                 var beforePrint=function(){
 
@@ -50,39 +56,42 @@ namespace Iap.Bounds
                 window.onafterprint = afterPrint;
 
             ");
+
+                _mainBrowser.ExecuteScriptAsync(
+                    @"var elements = document.getElementsByClassName('ndfHFb-c4YZDc-to915-LgbsSe ndfHFb-c4YZDc-C7uZwb-LgbsSe VIpgJd-TzA9Ye-eEGnhe ndfHFb-c4YZDc-LgbsSe ndfHFb-c4YZDc-C7uZwb-LgbsSe-SfQLQb-Bz112c');
+                    elements[1].style.display = 'none';
+                    ");
+             
         }
 
-        public void OnMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        public void OnSelected(string selected, string noOfPages)
         {
-            ChromiumWebBrowser browser = sender as ChromiumWebBrowser;
-
-            string script =
-                            @"(function ()
+            if (selected == "before")
+            {
+                string path = System.IO.Path.Combine(
+                        System.IO.Path.GetDirectoryName(
+                        this.GetType().Assembly.Location),
+                        "Printings", "fileToPrint.pdf");
+                _mainBrowser.PrintToPdfAsync(path);
+                System.Threading.Thread.Sleep(3000);
+                if (PrinterCanceller.CanPrint(path))
+                {
+                    Process p = new Process();
+                    p.StartInfo = new ProcessStartInfo()
                     {
-                        var isText = false;
-                        var activeElement = document.activeElement;
-                        if (activeElement) {
-                            if (activeElement.tagName.toLowerCase() === 'textarea') {
-                                isText = true;
-                            } else {
-                                if (activeElement.tagName.toLowerCase() === 'input') {
-                                    if (activeElement.hasAttribute('type')) {
-                                        var inputType = activeElement.getAttribute('type').toLowerCase();
-                                        if (inputType === 'text' || inputType === 'email' || inputType === 'password' || inputType === 'tel' || inputType === 'number' || inputType === 'range' || inputType === 'search' || inputType === 'url') {  
-                                        isText = true;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        return isText;
-                    })();";
-            browser.GetMainFrame().ExecuteJavaScriptAsync(script);
-        }
+                        WindowStyle = ProcessWindowStyle.Hidden,
+                        CreateNoWindow = true,
+                        Verb = "print",
+                        FileName = path
+                    };
+                    p.Start();
+                }
 
-        public void showKBifIsText()
-        {
-            
+                else
+                {
+                    System.Windows.MessageBox.Show("many docs to print");
+                }
+            }
         }
     }
 }

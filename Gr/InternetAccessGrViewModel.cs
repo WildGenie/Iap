@@ -8,6 +8,7 @@ using CefSharp;
 using CefSharp.Wpf;
 using Iap.Commands;
 using System.Windows.Threading;
+using Iap.Handlers;
 
 namespace Iap.Gr
 {
@@ -56,6 +57,8 @@ namespace Iap.Gr
             _internetAccessBrowser.MouseDown += _internetAccessBrowser_MouseDown;
 
             _internetAccessBrowser.RequestContext = new RequestContext();
+            _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
+            _internetAccessBrowser.RequestHandler = new RequestHandler();
 
             _internetAccessBrowser.Focus();
 

@@ -8,6 +8,7 @@ using CefSharp.Wpf;
 using CefSharp;
 using System.Windows.Threading;
 using Iap.Commands;
+using Iap.Handlers;
 
 namespace Iap
 {
@@ -46,6 +47,9 @@ namespace Iap
             };
 
             _buyWifiBrowser.Load("http://www.google.com");
+
+            _buyWifiBrowser.LifeSpanHandler = new LifeSpanHandler();
+            _buyWifiBrowser.RequestHandler = new RequestHandler();
 
             ((BuyWifiView)view).BuyWifiBrowser.Children.Add(_buyWifiBrowser);
 
