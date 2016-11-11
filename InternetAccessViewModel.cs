@@ -42,20 +42,24 @@ namespace Iap
 
             _internetAccessBrowser.Load("http://www.google.com/ncr");
 
-           /* _internetAccessBrowser.BrowserSettings.FileAccessFromFileUrls = CefState.Enabled;
+            _internetAccessBrowser.BrowserSettings.FileAccessFromFileUrls = CefState.Enabled;
             _internetAccessBrowser.BrowserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
             _internetAccessBrowser.BrowserSettings.WebSecurity = CefState.Disabled;
-            _internetAccessBrowser.BrowserSettings.Javascript = CefState.Enabled;*/
+            _internetAccessBrowser.BrowserSettings.Javascript = CefState.Enabled;
 
-            var obj = new BoundObject(6);
+            _internetAccessBrowser.IsBrowserInitializedChanged += _internetAccessBrowser_IsBrowserInitializedChanged;
+
+            var obj = new BoundObject(6,0);
             _internetAccessBrowser.RegisterJsObject("bound", obj);
             _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 
-           // _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
+            _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
             _internetAccessBrowser.RequestHandler = new RequestHandler();
             _internetAccessBrowser.MenuHandler = new CustomMenuHandler();
-           
-        
+            _internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler();
+            _internetAccessBrowser.JsDialogHandler = new CustomJsDialog();
+
+            
 
             ((InternetAccessView)view).InternetAccessBrowser.Children.Add(_internetAccessBrowser);
 
@@ -64,8 +68,6 @@ namespace Iap
             _internetAccessBrowser.TouchMove += _internetAccessBrowser_TouchMove;
 
             _internetAccessBrowser.MouseDown += _internetAccessBrowser_MouseDown;
-
-            
 
             _internetAccessBrowser.RequestContext = new RequestContext();
           //  _internetAccessBrowser.IsManipulationEnabled = true;
@@ -85,7 +87,11 @@ namespace Iap
             base.OnViewLoaded(view);
         }
 
-        
+        private void _internetAccessBrowser_IsBrowserInitializedChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
+        {
+            var browser = sender as ChromiumWebBrowser;
+            browser.ExecuteScriptAsync(@"window.print=function() {alert('hello')}");
+        }
 
         private void _internetAccessBrowser_ManipulationDelta(object sender, System.Windows.Input.ManipulationDeltaEventArgs e)
         {

@@ -67,7 +67,7 @@ namespace Iap
             _printBoardingPassBrowser.RequestContext = new RequestContext();
 
 
-            var obj = new BoundObject(6);
+            var obj = new BoundObject(6,0);
             _printBoardingPassBrowser.RegisterJsObject("bound", obj);
             _printBoardingPassBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 

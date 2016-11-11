@@ -92,6 +92,12 @@ namespace Iap.Handlers
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=true&fullscreen=yes";
                 browserControl.Load(toNavigate);
             }
+
+            else if (request.Url.EndsWith(".pdf"))
+            {
+                string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
+                browserControl.Load(toNavigate);
+            }
         }
 
         public void OnResourceRedirect(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, ref string newUrl)

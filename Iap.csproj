@@ -134,6 +134,7 @@
     </Compile>
     <Compile Include="AppViewModel.cs" />
     <Compile Include="Bounds\BoundObject.cs" />
+    <Compile Include="Bounds\BoundPopUpObject.cs" />
     <Compile Include="BuyWifiView.xaml.cs">
       <DependentUpon>BuyWifiView.xaml</DependentUpon>
     </Compile>
@@ -166,7 +167,9 @@
       <DependentUpon>TravelAuthorizationGrView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Gr\TravelAuthorizationGrViewModel.cs" />
+    <Compile Include="Handlers\CustomJsDialog.cs" />
     <Compile Include="Handlers\CustomMenuHandler.cs" />
+    <Compile Include="Handlers\CustomRenderProcessHandler.cs" />
     <Compile Include="Handlers\LifeSpanHandler.cs" />
     <Compile Include="Handlers\PrinterCanceller.cs" />
     <Compile Include="Handlers\RequestHandler.cs" />

@@ -136,7 +136,7 @@ namespace Iap.Gr
             {
                 this.RemainingTime = "0";
                 timer.Stop();
-                System.Threading.Thread.Sleep(1000);
+              //  System.Threading.Thread.Sleep(1000);
                 timer.Tick -= TimerTick;
                 if (_printBoardingPassBrowser != null)
                 {

@@ -15,10 +15,12 @@ namespace Iap.Bounds
     public class BoundObject
     {
         private int numberOfAvailablePages;
+        private int currentPrinting;
 
-        public BoundObject(int numberOfAvailablePages)
+        public BoundObject(int numberOfAvailablePages, int currentPrinting)
         {
             this.numberOfAvailablePages = numberOfAvailablePages;
+            this.currentPrinting = currentPrinting;
         }
 
         public int NumberOfAvailblePages
@@ -33,6 +35,19 @@ namespace Iap.Bounds
             }
         }
 
+        public int CurrentPrinting
+        {
+            set
+            {
+                this.currentPrinting = value;
+            }
+
+            get
+            {
+                return this.currentPrinting;
+            }
+        }
+
         ChromiumWebBrowser _mainBrowser;
         public void OnFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
@@ -42,10 +57,11 @@ namespace Iap.Bounds
 
 
             _mainBrowser.ExecuteScriptAsync(@"document.onselectstart = function()
-{
-return false;
-}");
+        {
+            return false;
+        }");
 
+           
 
             _mainBrowser.ExecuteScriptAsync(@"
                     
@@ -84,42 +100,136 @@ return false;
 
             ");
 
-                _mainBrowser.ExecuteScriptAsync(
+
+            var scriptjq = @"(function () {
+    // more or less stolen form jquery core and adapted by paul irish
+    function getScript(url, success) {
+        var script = document.createElement('script');
+        script.src = url;
+        var head = document.getElementsByTagName('head')[0],
+            done = false;
+        // Attach handlers for all browsers
+        script.onload = script.onreadystatechange = function () {
+            if (!done && (!this.readyState
+                || this.readyState == 'loaded'
+                || this.readyState == 'complete')) {
+                done = true;
+                success();
+                script.onload = script.onreadystatechange = null;
+                head.removeChild(script);
+            }
+        };
+        head.appendChild(script);
+    }
+    getScript('http://code.jquery.com/jquery-latest.min.js', function () {
+        if (typeof jQuery == 'undefined') {
+            alert('no jquery');
+        } else {
+            console.log('This page is now jQuerified with v' + $.fn.jquery);
+
+            $(document).ready(function () {
+              
+                //here you can write your jquery code
+            });
+        }
+    });
+})();";
+            _mainBrowser.ExecuteScriptAsync(scriptjq);
+            
+           // _mainBrowser.ExecuteScriptAsync(@"document.onload = function () {alert('before');}");
+
+           // _mainBrowser.ExecuteScriptAsync(@"window.print=function() {alert('hello')}");
+             /*   _mainBrowser.ExecuteScriptAsync(
                     @"var elements = document.getElementsByClassName('ndfHFb-c4YZDc-to915-LgbsSe ndfHFb-c4YZDc-C7uZwb-LgbsSe VIpgJd-TzA9Ye-eEGnhe ndfHFb-c4YZDc-LgbsSe ndfHFb-c4YZDc-C7uZwb-LgbsSe-SfQLQb-Bz112c');
                     elements[1].style.display = 'none';
-                    ");
+                    ");*/
              
         }
 
-        public void OnSelected(string selected, string noOfPages)
+        public async void onPrintRequested(string selected, string noOfPages)
         {
-            if (selected == "before")
-            {
-                string path = System.IO.Path.Combine(
-                        System.IO.Path.GetDirectoryName(
-                        this.GetType().Assembly.Location),
-                        "Printings", "fileToPrint.pdf");
-                _mainBrowser.PrintToPdfAsync(path);
-                System.Threading.Thread.Sleep(3000);
-                if (this.CanPrint(path))
+
+            System.Windows.MessageBox.Show("print requested");
+
+            
+                if (selected == "before")
                 {
-                    Process p = new Process();
-                    p.StartInfo = new ProcessStartInfo()
+                   PrinterCanceller.CancelPrint();
+
+                    string path = System.IO.Path.Combine(
+                     System.IO.Path.GetDirectoryName(
+                     this.GetType().Assembly.Location),
+                     "Printings", this.CurrentPrinting.ToString()+".pdf");
+
+
+                    var success = await _mainBrowser.PrintToPdfAsync(path, new PdfPrintSettings
                     {
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        CreateNoWindow = true,
-                        Verb = "print",
-                        FileName = path
-                    };
-                    p.Start();
+                        MarginType = CefPdfPrintMarginType.Custom,
+                        MarginBottom = 10,
+                        MarginTop = 0,
+                        MarginLeft = 20,
+                        MarginRight = 10,
+                    });
+
+                    System.Threading.Thread.Sleep(3000);
+
+
+
+                if (success)
+                {
+                    try
+                    {
+                        iTextSharp.text.pdf.PdfReader pdfReader = new iTextSharp.text.pdf.PdfReader(path);
+                        int numberOfPages = pdfReader.NumberOfPages;
+
+                        if (this.CurrentPrinting + numberOfPages <= this.NumberOfAvailblePages)
+                        {
+                            System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+                            info.Verb = "print";
+                            info.FileName = path;
+                            info.CreateNoWindow = true;
+                            info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+
+                            System.Diagnostics.Process p = new System.Diagnostics.Process();
+                            p.StartInfo = info;
+                            p.Start();
+
+                            p.WaitForInputIdle();
+                            System.Threading.Thread.Sleep(3000);
+                            if (false == p.CloseMainWindow())
+                            {
+                                p.Kill();
+                            }
+                            else
+                            {
+                                p.Kill();
+                            }
+
+                            this.CurrentPrinting += numberOfPages;
+                        }
+
+                        else
+                        {
+                            System.Windows.MessageBox.Show("no more pages");
+                        }
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Windows.MessageBox.Show(ex.ToString());
+                    }
                 }
 
                 else
                 {
-                    System.Windows.MessageBox.Show("many docs to print");
+                    System.Windows.MessageBox.Show("No success");
                 }
+                
             }
         }
+
+        
 
         public bool CanPrint(string path)
         {
