@@ -18,7 +18,7 @@ namespace Iap
         {
             InitializeComponent();
             var settings = new CefSettings();
-             settings.EnableInternalPdfViewerOffScreen();
+             //settings.EnableInternalPdfViewerOffScreen();
              settings.CefCommandLineArgs.Add("disable-gpu", "0");
              settings.CefCommandLineArgs["touch-events"] = "enabled";
              settings.PackLoadingDisabled = false;

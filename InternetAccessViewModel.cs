@@ -49,7 +49,7 @@ namespace Iap
 
             _internetAccessBrowser.IsBrowserInitializedChanged += _internetAccessBrowser_IsBrowserInitializedChanged;
 
-            var obj = new BoundObject(6,0);
+            var obj = new BoundObject(6,0,"en");
             _internetAccessBrowser.RegisterJsObject("bound", obj);
             _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 

@@ -40,8 +40,12 @@ namespace Iap.Handlers
             if (browser.IsPopup)
             {
                 browser.MainFrame.ExecuteJavaScriptAsync(@"window.close()");
-                browserControl.Load(targetUrl.Replace("print=true", "print=false"));
-                PrinterCanceller.CancelPrint();
+              /*  if (targetUrl.Contains("print=true"))
+                {
+                    browserControl.Load(targetUrl.Replace("print=true", "print=false"));
+                }*/
+                //browserControl.Back();
+                browserControl.ExecuteScriptAsync(@"window.print()");
             }
             return false;
         }

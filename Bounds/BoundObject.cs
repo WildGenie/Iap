@@ -16,11 +16,13 @@ namespace Iap.Bounds
     {
         private int numberOfAvailablePages;
         private int currentPrinting;
+        private string language;
 
-        public BoundObject(int numberOfAvailablePages, int currentPrinting)
+        public BoundObject(int numberOfAvailablePages, int currentPrinting, string language)
         {
             this.numberOfAvailablePages = numberOfAvailablePages;
             this.currentPrinting = currentPrinting;
+            this.language = language;
         }
 
         public int NumberOfAvailblePages
@@ -45,6 +47,19 @@ namespace Iap.Bounds
             get
             {
                 return this.currentPrinting;
+            }
+        }
+
+        public string Language
+        {
+            set
+            {
+                this.language = value;
+            }
+
+            get
+            {
+                return this.language;
             }
         }
 
@@ -138,11 +153,11 @@ namespace Iap.Bounds
             
            // _mainBrowser.ExecuteScriptAsync(@"document.onload = function () {alert('before');}");
 
-           // _mainBrowser.ExecuteScriptAsync(@"window.print=function() {alert('hello')}");
-             /*   _mainBrowser.ExecuteScriptAsync(
+            //_mainBrowser.ExecuteScriptAsync(@"window.print=function() {alert('hello')}");
+                _mainBrowser.ExecuteScriptAsync(
                     @"var elements = document.getElementsByClassName('ndfHFb-c4YZDc-to915-LgbsSe ndfHFb-c4YZDc-C7uZwb-LgbsSe VIpgJd-TzA9Ye-eEGnhe ndfHFb-c4YZDc-LgbsSe ndfHFb-c4YZDc-C7uZwb-LgbsSe-SfQLQb-Bz112c');
                     elements[1].style.display = 'none';
-                    ");*/
+                    ");
              
         }
 
@@ -210,7 +225,14 @@ namespace Iap.Bounds
 
                         else
                         {
-                            System.Windows.MessageBox.Show("no more pages");
+                            if (this.Language == "el")
+                            {
+                                System.Windows.MessageBox.Show("Δεν μπορείτε να εκτυπώσετε άλλες σελίδες");
+                            }
+                            else
+                            {
+                                System.Windows.MessageBox.Show("Can not print other pages");
+                            }
                         }
 
 
@@ -223,7 +245,14 @@ namespace Iap.Bounds
 
                 else
                 {
-                    System.Windows.MessageBox.Show("No success");
+                    if (this.Language == "en")
+                    {
+                        System.Windows.MessageBox.Show("Failed to print");
+                    }
+                    else
+                    {
+                        System.Windows.MessageBox.Show("Αποτυχία εκτύπωσης");
+                    }
                 }
                 
             }
