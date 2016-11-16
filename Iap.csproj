@@ -135,6 +135,7 @@
     <Compile Include="AppViewModel.cs" />
     <Compile Include="Bounds\BoundObject.cs" />
     <Compile Include="Bounds\BoundPopUpObject.cs" />
+    <Compile Include="Bounds\BoundTest.cs" />
     <Compile Include="BuyWifiView.xaml.cs">
       <DependentUpon>BuyWifiView.xaml</DependentUpon>
     </Compile>

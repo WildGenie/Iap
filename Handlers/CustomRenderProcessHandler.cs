@@ -14,7 +14,7 @@ namespace Iap.Handlers
             /* const string script = "document.addEventListener('DOMContentLoaded', function(){ alert('DomLoaded'); });";
              frame.ExecuteJavaScriptAsync(script);
              frame.ExecuteJavaScriptAsync(@"window.print=function(){alert('hello')}");*/
-           
+            // frame.ExecuteJavaScriptAsync(@"window.print=function(){alert('hello');}");
         }
 
         public void OnFocusedNodeChanged(IWebBrowser browserControl, IBrowser browser, IFrame frame, IDomNode node)

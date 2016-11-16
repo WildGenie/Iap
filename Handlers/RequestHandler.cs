@@ -1,4 +1,5 @@
 ﻿using CefSharp;
+using CefSharp.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,14 +41,25 @@ namespace Iap.Handlers
             if (browser.IsPopup)
             {
                 browser.MainFrame.ExecuteJavaScriptAsync(@"window.close()");
-              /*  if (targetUrl.Contains("print=true"))
-                {
-                    browserControl.Load(targetUrl.Replace("print=true", "print=false"));
-                }*/
+                 if (targetUrl.Contains("print=true"))
+                  {
+                      browserControl.Load(targetUrl.Replace("print=true", "print=false"));
+                  }
                 //browserControl.Back();
-                browserControl.ExecuteScriptAsync(@"window.print()");
+
+             //   browserControl.FrameLoadEnd += BrowserControl_FrameLoadEnd;
+
+                  
             }
             return false;
+        }
+
+        private void BrowserControl_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
+        {
+            ChromiumWebBrowser mainBrowser = sender as ChromiumWebBrowser;
+           // mainBrowser.ExecuteScriptAsync("window.print()");
+
+            mainBrowser.Load("http://google.com");
         }
 
         public void OnPluginCrashed(IWebBrowser browserControl, IBrowser browser, string pluginPath)
@@ -99,8 +111,8 @@ namespace Iap.Handlers
 
             else if (request.Url.EndsWith(".pdf"))
             {
-                string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
-                browserControl.Load(toNavigate);
+              //  string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
+               // browserControl.Load(toNavigate);
             }
         }
 

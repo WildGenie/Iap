@@ -18,7 +18,7 @@ namespace Iap.Handlers
 
         public void OnAfterCreated(IWebBrowser browserControl, IBrowser browser)
         {
-            
+           
         }
 
         public void OnBeforeClose(IWebBrowser browserControl, IBrowser browser)
@@ -34,7 +34,12 @@ namespace Iap.Handlers
                 newBrowser = null;
                 
                 browserControl.Load(targetUrl);
-                browserControl.ExecuteScriptAsync(@"window.print=function(){alert('hello')");
+                //browserControl.ExecuteScriptAsync(@"window.print=function(){alert('hello')");
+                frame.ExecuteJavaScriptAsync(@"window.print = function(){ alert('hello');");
+
+               // var task = browserControl.EvaluateScriptAsync(@"window.print = function(){ alert('hello');", TimeSpan.FromSeconds(10));
+                //task.Wait();
+
                 return true;
             }
             else

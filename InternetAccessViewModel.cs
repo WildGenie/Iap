@@ -32,7 +32,7 @@ namespace Iap
         {
             _internetAccessBrowser = new ChromiumWebBrowser()
             {
-                Address = "http://www.google.com/ncr",
+                Address = "https://www.google.co.uk/",
             };
 
             _internetAccessBrowser.BrowserSettings = new CefSharp.BrowserSettings()
@@ -40,16 +40,20 @@ namespace Iap
                 OffScreenTransparentBackground = false,
             };
 
-            _internetAccessBrowser.Load("http://www.google.com/ncr");
+            _internetAccessBrowser.Load("https://www.google.co.uk/");
 
             _internetAccessBrowser.BrowserSettings.FileAccessFromFileUrls = CefState.Enabled;
             _internetAccessBrowser.BrowserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
-            _internetAccessBrowser.BrowserSettings.WebSecurity = CefState.Disabled;
+            _internetAccessBrowser.BrowserSettings.WebSecurity = CefState.Enabled;
             _internetAccessBrowser.BrowserSettings.Javascript = CefState.Enabled;
+           
 
-            _internetAccessBrowser.IsBrowserInitializedChanged += _internetAccessBrowser_IsBrowserInitializedChanged;
+           
 
-            var obj = new BoundObject(6,0,"en");
+           // var obj = new BoundTest(6,0,"en");
+
+            var obj = new BoundObject(6, 0, "en");
+
             _internetAccessBrowser.RegisterJsObject("bound", obj);
             _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 
@@ -59,6 +63,8 @@ namespace Iap
             _internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler();
             _internetAccessBrowser.JsDialogHandler = new CustomJsDialog();
 
+
+           // _internetAccessBrowser.FrameLoadEnd += _internetAccessBrowser_FrameLoadEnd;
             
 
             ((InternetAccessView)view).InternetAccessBrowser.Children.Add(_internetAccessBrowser);
@@ -87,10 +93,38 @@ namespace Iap
             base.OnViewLoaded(view);
         }
 
-        private void _internetAccessBrowser_IsBrowserInitializedChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
+        private void _internetAccessBrowser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
             var browser = sender as ChromiumWebBrowser;
-            browser.ExecuteScriptAsync(@"window.print=function() {alert('hello')}");
+
+            var script = @"var beforePrint = function(){
+
+                alert('before');
+            };
+
+            var afterPrint = function() {
+                alert('after');
+            };
+
+            if (window.matchMedia)
+            {
+                var mediaQueryList = window.matchMedia('print');
+                mediaQueryList.addListener(function(mql) {
+                    if (mql.matches)
+                    {
+                        beforePrint();
+                    }
+                    else
+                    {
+                        afterPrint();
+                    }
+                });
+            }
+
+            window.onbeforeprint = beforePrint;
+            window.onafterprint = afterPrint;";
+
+            browser.ExecuteScriptAsync(script);
         }
 
         private void _internetAccessBrowser_ManipulationDelta(object sender, System.Windows.Input.ManipulationDeltaEventArgs e)
@@ -115,6 +149,7 @@ namespace Iap
 
         private void _internetAccessBrowser_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+
             try
             {
                 string script =

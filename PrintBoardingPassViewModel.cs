@@ -62,8 +62,8 @@ namespace Iap
             _printBoardingPassBrowser.MouseDown += _printBoardingPassBrowser_MouseDown;
 
             _printBoardingPassBrowser.LifeSpanHandler = new LifeSpanHandler();
-            //_printBoardingPassBrowser.RequestHandler = new RequestHandler();
-
+            _printBoardingPassBrowser.RequestHandler = new RequestHandler();
+            _printBoardingPassBrowser.MenuHandler = new CustomMenuHandler();
             _printBoardingPassBrowser.RequestContext = new RequestContext();
 
 

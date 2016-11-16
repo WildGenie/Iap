@@ -1,6 +1,7 @@
 ﻿using System;
 using Caliburn.Micro;
 using Iap.Commands;
+using System.Windows.Controls;
 
 namespace Iap.Gr
 {
@@ -10,9 +11,19 @@ namespace Iap.Gr
         private string bannerBackground;
         private bool isBannerVisible;
 
+
+       
+
         public ShellGrViewModel(IEventAggregator events)
         {
             this.events = events;
+        }
+
+        protected override void OnViewLoaded(object view)
+        {
+            this.OpenBanner();
+           // grView = ((ShellGrViewModel)view).grView;
+            base.OnViewLoaded(view);
         }
 
         public IEventAggregator Events

@@ -1,24 +1,22 @@
 ﻿using CefSharp;
 using CefSharp.Wpf;
+using Iap.Handlers;
+using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using iTextSharp.text.pdf;
-using Iap.Handlers;
-using System.Diagnostics;
 
 namespace Iap.Bounds
 {
-    public class BoundObject
+   public class BoundTest
     {
         private int numberOfAvailablePages;
         private int currentPrinting;
         private string language;
 
-        public BoundObject(int numberOfAvailablePages, int currentPrinting, string language)
+        public BoundTest(int numberOfAvailablePages, int currentPrinting, string language)
         {
             this.numberOfAvailablePages = numberOfAvailablePages;
             this.currentPrinting = currentPrinting;
@@ -66,9 +64,9 @@ namespace Iap.Bounds
         ChromiumWebBrowser _mainBrowser;
         public void OnFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
-           
 
-                 _mainBrowser = sender as ChromiumWebBrowser;
+
+            _mainBrowser = sender as ChromiumWebBrowser;
 
 
             _mainBrowser.ExecuteScriptAsync(@"document.onselectstart = function()
@@ -76,44 +74,20 @@ namespace Iap.Bounds
             return false;
         }");
 
+
+
            
 
-       /*     _mainBrowser.ExecuteScriptAsync(@"
-                    
-                var pageElements = document.getElementsByClassName('ndfHFb-c4YZDc-DARUcf-NnAfwf-j4LONd');
-                
-                 var noOfPages='0';
+         
 
-                 if(pageElements.length!==0)
-                    {
-                        noOfPages= pageElements[0].innerText;
-                    }       
-                
-                
-                var beforePrint=function(){
+            // _mainBrowser.ExecuteScriptAsync(@"document.onload = function () {alert('before');}");
 
-                    bound.onPrintRequested('before',noOfPages);
-                };        
+            _mainBrowser.GetMainFrame().ExecuteJavaScriptAsync(@"window.print=function() {alert('print request');}");
+            _mainBrowser.ExecuteScriptAsync(
+                @"var elements = document.getElementsByClassName('ndfHFb-c4YZDc-to915-LgbsSe ndfHFb-c4YZDc-C7uZwb-LgbsSe VIpgJd-TzA9Ye-eEGnhe ndfHFb-c4YZDc-LgbsSe ndfHFb-c4YZDc-C7uZwb-LgbsSe-SfQLQb-Bz112c');
+                    elements[1].style.display = 'none';
+                    ");
 
-                var afterPrint = function() {
-                   bound.onPrintRequested('after',noOfPages);
-                };
-
-                if (window.matchMedia) {
-                    var mediaQueryList = window.matchMedia('print');
-                    mediaQueryList.addListener(function(mql) {
-                        if (mql.matches) {
-                            beforePrint();
-                        } else {
-                            afterPrint();
-                        }
-                    });
-                }
-
-                window.onbeforeprint = beforePrint;
-                window.onafterprint = afterPrint;
-
-            ");*/
 
 
             var scriptjq = @"(function () {
@@ -143,36 +117,35 @@ namespace Iap.Bounds
             console.log('This page is now jQuerified with v' + $.fn.jquery);
 
             $(document).ready(function () {
-              
-                    var mediaQueryList = window.matchMedia('print');
-mediaQueryList.addListener(function(mql) {
-    if (mql.matches) {
-        alert('onafterprint');
-    };
-});
+var url='C:/Users/Σεραφειμ/Desktop/testPdf/myScript.js';
+              var s = document.createElement('script');
+s.type = 'text/javascript';
+            s.src = url;
+$('body').append(s);
 
-                //here you can write your jquery code
-            });
+            //here you can write your jquery code
+        });
         }
     });
 })();";
-            //  _mainBrowser.ExecuteScriptAsync(scriptjq);
-
-            // _mainBrowser.ExecuteScriptAsync(@"document.onload = function () {alert('before');}");
-
-            //_mainBrowser.ExecuteScriptAsync(@"window.print=function() {alert('hello')}");
+            _mainBrowser.ExecuteScriptAsync(scriptjq);
 
 
-            var printScript = @"window.print=function() {bound.onPrintRequested('before','0');}";
 
-            _mainBrowser.ExecuteScriptAsync(printScript);
+            var scriptTo = @"var script = document.createElement( 'script' );
+                                script.type = 'text/javascript';
+                                script.src = 'C:\\Users\\Σεραφειμ\\Desktop\\testPdf\\myScript.js';
+                                $('#body').append( script );";
 
 
-                _mainBrowser.ExecuteScriptAsync(
-                    @"var elements = document.getElementsByClassName('ndfHFb-c4YZDc-to915-LgbsSe ndfHFb-c4YZDc-C7uZwb-LgbsSe VIpgJd-TzA9Ye-eEGnhe ndfHFb-c4YZDc-LgbsSe ndfHFb-c4YZDc-C7uZwb-LgbsSe-SfQLQb-Bz112c');
-                    elements[1].style.display = 'none';
-                    ");
-             
+            _mainBrowser.ExecuteScriptAsync(scriptTo);
+
+
+        }
+
+        public void PrintFound()
+        {
+            System.Windows.MessageBox.Show("print request");
         }
 
         public async void onPrintRequested(string selected, string noOfPages)
@@ -180,27 +153,27 @@ mediaQueryList.addListener(function(mql) {
 
             System.Windows.MessageBox.Show("print requested");
 
-            
-                if (selected == "before")
+
+            if (selected == "before")
+            {
+                PrinterCanceller.CancelPrint();
+
+                string path = System.IO.Path.Combine(
+                 System.IO.Path.GetDirectoryName(
+                 this.GetType().Assembly.Location),
+                 "Printings", this.CurrentPrinting.ToString() + ".pdf");
+
+
+                var success = await _mainBrowser.PrintToPdfAsync(path, new PdfPrintSettings
                 {
-                   PrinterCanceller.CancelPrint();
+                    MarginType = CefPdfPrintMarginType.Custom,
+                    MarginBottom = 10,
+                    MarginTop = 0,
+                    MarginLeft = 20,
+                    MarginRight = 10,
+                });
 
-                    string path = System.IO.Path.Combine(
-                     System.IO.Path.GetDirectoryName(
-                     this.GetType().Assembly.Location),
-                     "Printings", this.CurrentPrinting.ToString()+".pdf");
-
-
-                    var success = await _mainBrowser.PrintToPdfAsync(path, new PdfPrintSettings
-                    {
-                        MarginType = CefPdfPrintMarginType.Custom,
-                        MarginBottom = 10,
-                        MarginTop = 0,
-                        MarginLeft = 20,
-                        MarginRight = 10,
-                    });
-
-                    System.Threading.Thread.Sleep(3000);
+                System.Threading.Thread.Sleep(3000);
 
 
 
@@ -268,11 +241,11 @@ mediaQueryList.addListener(function(mql) {
                         System.Windows.MessageBox.Show("Αποτυχία εκτύπωσης");
                     }
                 }
-                
+
             }
         }
 
-        
+
 
         public bool CanPrint(string path)
         {
