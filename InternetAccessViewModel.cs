@@ -18,14 +18,16 @@ namespace Iap
     {
         private readonly IEventAggregator events;
         private string remainingTime;
+        private readonly string numberOfAvailablePagesToPrint;
 
         private bool openKeyboard;
 
         public static ChromiumWebBrowser _internetAccessBrowser;
 
-        public InternetAccessViewModel(IEventAggregator events)
+        public InternetAccessViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint)
         {
             this.events = events;
+            this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
         }
 
         protected override void OnViewLoaded(object view)
@@ -52,15 +54,15 @@ namespace Iap
 
            // var obj = new BoundTest(6,0,"en");
 
-            var obj = new BoundObject(6, 0, "en");
+            var obj = new BoundObject("en",Convert.ToInt32(numberOfAvailablePagesToPrint));
 
             _internetAccessBrowser.RegisterJsObject("bound", obj);
             _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
-            _internetAccessBrowser.RequestHandler = new RequestHandler();
+            _internetAccessBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
             _internetAccessBrowser.MenuHandler = new CustomMenuHandler();
-            _internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler();
+         //   _internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler();
             _internetAccessBrowser.JsDialogHandler = new CustomJsDialog();
 
 

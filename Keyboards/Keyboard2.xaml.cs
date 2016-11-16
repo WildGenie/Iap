@@ -499,5 +499,45 @@ namespace Iap.Keyboards
             keybd_event(VK_CAPITAL, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
             this.KeyboardGrid.Background = myBrush;
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+            keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+            keybd_event(VK_LALT, 0, 0, (UIntPtr)0);
+            keybd_event(VK_LALT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+            keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+            keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+            isEnghlish = false;
+            isCaps = false;
+        }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (isEnghlish)
+            {
+                keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+                keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+                keybd_event(VK_LALT, 0, 0, (UIntPtr)0);
+                keybd_event(VK_LALT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+                keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                isEnghlish = false;
+            }
+
+            if (isCaps)
+            {
+                keybd_event(VK_CAPITAL, 0, 0, (UIntPtr)0);
+                keybd_event(VK_CAPITAL, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                isCaps = false;
+            }
+        }
     }
 }

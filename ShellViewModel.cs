@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using Iap.Commands;
+using Iap.Handlers;
 
 namespace Iap
 {
@@ -23,6 +24,7 @@ namespace Iap
         protected override void OnViewLoaded(object view)
         {
             this.OpenBanner();
+            GlobalCounters.ResetAll();
             base.OnViewLoaded(view);
         }
 

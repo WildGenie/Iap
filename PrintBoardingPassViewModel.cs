@@ -18,15 +18,17 @@ namespace Iap
         private readonly IEventAggregator events;
         private readonly string boardingPassEnApi;
         private bool openKeyboard;
+        private readonly string numberOfAvailablePagesToPrint;
 
         private string remainingTime;
 
         public static ChromiumWebBrowser _printBoardingPassBrowser;
 
-        public PrintBoardingPassViewModel(IEventAggregator events,string boardingPassEnApi)
+        public PrintBoardingPassViewModel(IEventAggregator events,string boardingPassEnApi, string numberOfAvailablePagesToPrint)
         {
             this.events = events;
             this.boardingPassEnApi = boardingPassEnApi;
+            this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
         }
 
         public IEventAggregator Events
@@ -62,12 +64,12 @@ namespace Iap
             _printBoardingPassBrowser.MouseDown += _printBoardingPassBrowser_MouseDown;
 
             _printBoardingPassBrowser.LifeSpanHandler = new LifeSpanHandler();
-            _printBoardingPassBrowser.RequestHandler = new RequestHandler();
+            _printBoardingPassBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(this.numberOfAvailablePagesToPrint));
             _printBoardingPassBrowser.MenuHandler = new CustomMenuHandler();
             _printBoardingPassBrowser.RequestContext = new RequestContext();
 
 
-            var obj = new BoundObject(6,0,"en");
+            var obj = new BoundObject("en",Convert.ToInt32(numberOfAvailablePagesToPrint));
             _printBoardingPassBrowser.RegisterJsObject("bound", obj);
             _printBoardingPassBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 

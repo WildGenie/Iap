@@ -14,14 +14,12 @@ namespace Iap.Bounds
 {
     public class BoundObject
     {
-        private int numberOfAvailablePages;
-        private int currentPrinting;
+        private int numberOfAvailablePagesToPrint;
         private string language;
 
-        public BoundObject(int numberOfAvailablePages, int currentPrinting, string language)
+        public BoundObject(string language, int numberOfAvailablePagesToPrint)
         {
-            this.numberOfAvailablePages = numberOfAvailablePages;
-            this.currentPrinting = currentPrinting;
+            this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.language = language;
         }
 
@@ -29,24 +27,11 @@ namespace Iap.Bounds
         {
             set
             {
-                this.numberOfAvailablePages = value;
+                this.numberOfAvailablePagesToPrint = value;
             }
             get
             {
-                return this.numberOfAvailablePages;
-            }
-        }
-
-        public int CurrentPrinting
-        {
-            set
-            {
-                this.currentPrinting = value;
-            }
-
-            get
-            {
-                return this.currentPrinting;
+                return this.numberOfAvailablePagesToPrint;
             }
         }
 
@@ -78,7 +63,7 @@ namespace Iap.Bounds
 
            
 
-       /*     _mainBrowser.ExecuteScriptAsync(@"
+            _mainBrowser.ExecuteScriptAsync(@"
                     
                 var pageElements = document.getElementsByClassName('ndfHFb-c4YZDc-DARUcf-NnAfwf-j4LONd');
                 
@@ -113,7 +98,7 @@ namespace Iap.Bounds
                 window.onbeforeprint = beforePrint;
                 window.onafterprint = afterPrint;
 
-            ");*/
+            ");
 
 
             var scriptjq = @"(function () {
@@ -178,8 +163,9 @@ mediaQueryList.addListener(function(mql) {
         public async void onPrintRequested(string selected, string noOfPages)
         {
 
-            System.Windows.MessageBox.Show("print requested");
+             System.Windows.MessageBox.Show("print ok to continue");
 
+           // System.Threading.Thread.Sleep(5000);
             
                 if (selected == "before")
                 {
@@ -188,7 +174,7 @@ mediaQueryList.addListener(function(mql) {
                     string path = System.IO.Path.Combine(
                      System.IO.Path.GetDirectoryName(
                      this.GetType().Assembly.Location),
-                     "Printings", this.CurrentPrinting.ToString()+".pdf");
+                     "Printings", GlobalCounters.numberOfCurrentPrintings.ToString()+".pdf");
 
 
                     var success = await _mainBrowser.PrintToPdfAsync(path, new PdfPrintSettings
@@ -210,50 +196,61 @@ mediaQueryList.addListener(function(mql) {
                     {
                         iTextSharp.text.pdf.PdfReader pdfReader = new iTextSharp.text.pdf.PdfReader(path);
                         int numberOfPages = pdfReader.NumberOfPages;
-
-                        if (this.CurrentPrinting + numberOfPages <= this.NumberOfAvailblePages)
+                        if (!(numberOfPages > this.NumberOfAvailblePages))
                         {
-                            System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
-                            info.Verb = "print";
-                            info.FileName = path;
-                            info.CreateNoWindow = true;
-                            info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-
-                            System.Diagnostics.Process p = new System.Diagnostics.Process();
-                            p.StartInfo = info;
-                            p.Start();
-
-                            p.WaitForInputIdle();
-                            System.Threading.Thread.Sleep(3000);
-                            if (false == p.CloseMainWindow())
+                            if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <= this.NumberOfAvailblePages)
                             {
-                                p.Kill();
+
+                                System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+                                info.Verb = "print";
+                                info.FileName = path;
+                                info.CreateNoWindow = true;
+                                info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+
+                                System.Diagnostics.Process p = new System.Diagnostics.Process();
+                                p.StartInfo = info;
+                                p.Start();
+
+                                p.WaitForInputIdle();
+                                System.Threading.Thread.Sleep(3000);
+                                if (false == p.CloseMainWindow())
+                                {
+                                    try
+                                    {
+                                        p.Kill();
+                                    }
+                                    catch { }
+                                }
+                                else
+                                {
+                                    try
+                                    {
+                                        p.Kill();
+                                    }
+                                    catch { }
+                                }
+
+                                GlobalCounters.numberOfCurrentPrintings += numberOfPages;
+
                             }
+
                             else
                             {
-                                p.Kill();
+                                if (this.Language == "el")
+                                {
+                                    System.Windows.MessageBox.Show("Δεν μπορείτε να εκτυπώσετε άλλες σελίδες");
+                                }
+                                else
+                                {
+                                    System.Windows.MessageBox.Show("Can not print other pages");
+                                }
                             }
 
-                            this.CurrentPrinting += numberOfPages;
                         }
-
-                        else
-                        {
-                            if (this.Language == "el")
-                            {
-                                System.Windows.MessageBox.Show("Δεν μπορείτε να εκτυπώσετε άλλες σελίδες");
-                            }
-                            else
-                            {
-                                System.Windows.MessageBox.Show("Can not print other pages");
-                            }
-                        }
-
-
                     }
                     catch (Exception ex)
                     {
-                        System.Windows.MessageBox.Show(ex.ToString());
+                       // System.Windows.MessageBox.Show(ex.ToString());
                     }
                 }
 
@@ -270,6 +267,7 @@ mediaQueryList.addListener(function(mql) {
                 }
                 
             }
+          
         }
 
         

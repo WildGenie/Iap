@@ -17,15 +17,17 @@ namespace Iap.Gr
         private readonly IEventAggregator events;
         private readonly string travelAuthorizationGrApi;
         private bool openKeyboard;
+        private readonly string numberOfAvailablePagesToPrint;
 
         private string remainingTime;
 
         public static ChromiumWebBrowser _travelAuthorizationBrowser;
 
-        public TravelAuthorizationGrViewModel(IEventAggregator events, string travelAuthorizationGrApi)
+        public TravelAuthorizationGrViewModel(IEventAggregator events, string travelAuthorizationGrApi, string numberOfAvailablePagesToPrint)
         {
             this.events = events;
             this.travelAuthorizationGrApi = travelAuthorizationGrApi;
+            this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
         }
 
         public IEventAggregator Events
@@ -60,7 +62,7 @@ namespace Iap.Gr
 
             _travelAuthorizationBrowser.RequestContext = new RequestContext();
             _travelAuthorizationBrowser.LifeSpanHandler = new LifeSpanHandler();
-            _travelAuthorizationBrowser.RequestHandler = new RequestHandler();
+            _travelAuthorizationBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
 
             _travelAuthorizationBrowser.Focus();
 

@@ -39,6 +39,10 @@ namespace Iap
         public TravelAuthorizationGrViewModel TravelAuthorizationGr { get; set; }
         public IdleInputViewModel IdleInput { get; set; }
         public IdleInputBrowserViewModel IdleInputBrowser { get; set; }
+        public InternetAccessGrViewModel InternetAccessGr { get; set; }
+        public InternetAccessViewModel InternetAccess { get; set; }
+        public BuyWifiGrViewModel BuyWifiGr { get; set; }
+        public BuyWifiViewModel BuyWifi { get; set; }
 
         public ScreenSaverViewModel ScreenSaver { get; set; }
 
@@ -84,11 +88,11 @@ namespace Iap
         {
             if (this.isGreekSelected)
             {
-                base.ActivateItem(new BuyWifiGrViewModel(events));
+                base.ChangeActiveItem(BuyWifiGr,true);
             }
             else
             {
-                base.ActivateItem(new BuyWifiViewModel(events));
+                base.ChangeActiveItem(BuyWifi,true);
             }
         }
 
@@ -116,11 +120,11 @@ namespace Iap
         {
             if (this.isGreekSelected)
             {
-                base.ActivateItem(new InternetAccessGrViewModel(events));
+                base.ChangeActiveItem(InternetAccessGr,true);
             }
             else
             {
-                base.ActivateItem(new InternetAccessViewModel(events));
+                base.ChangeActiveItem(InternetAccess,true);
             }
         }
 

@@ -2,6 +2,7 @@
 using Caliburn.Micro;
 using Iap.Commands;
 using System.Windows.Controls;
+using Iap.Handlers;
 
 namespace Iap.Gr
 {
@@ -22,7 +23,8 @@ namespace Iap.Gr
         protected override void OnViewLoaded(object view)
         {
             this.OpenBanner();
-           // grView = ((ShellGrViewModel)view).grView;
+            // grView = ((ShellGrViewModel)view).grView;
+            GlobalCounters.ResetAll();
             base.OnViewLoaded(view);
         }
 

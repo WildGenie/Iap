@@ -18,12 +18,14 @@ namespace Iap.Gr
 
         private string remainingTime;
         private bool openKeyboard;
+        private readonly string numberOfAvailablePagesToPrint;
 
         public static ChromiumWebBrowser _buyWifiBrowser;
 
-        public BuyWifiGrViewModel(IEventAggregator events)
+        public BuyWifiGrViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint)
         {
             this.events = events;
+            this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
         }
 
         public IEventAggregator Events
@@ -58,7 +60,7 @@ namespace Iap.Gr
 
             _buyWifiBrowser.RequestContext = new RequestContext();
             _buyWifiBrowser.LifeSpanHandler = new LifeSpanHandler();
-            _buyWifiBrowser.RequestHandler = new RequestHandler();
+            _buyWifiBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
 
             _buyWifiBrowser.Focus();
 

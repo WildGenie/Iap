@@ -10,6 +10,25 @@ namespace Iap.Handlers
 {
     public class RequestHandler : IRequestHandler
     {
+        private int numberOfAvailablePages;
+
+        public RequestHandler(int numberOfAvailablePages)
+        {
+            this.numberOfAvailablePages = numberOfAvailablePages;
+        }
+
+        public int NumberOfAvailablePages
+        {
+            set
+            {
+                this.numberOfAvailablePages = value;
+            }
+            get
+            {
+                return this.numberOfAvailablePages;
+            }
+        }
+
         public bool GetAuthCredentials(IWebBrowser browserControl, IBrowser browser, IFrame frame, bool isProxy, string host, int port, string realm, string scheme, IAuthCallback callback)
         {
             return false;
@@ -40,26 +59,52 @@ namespace Iap.Handlers
         {
             if (browser.IsPopup)
             {
+                //  browser.MainFrame.ExecuteJavaScriptAsync(@"window.close()");
+                // if (targetUrl.Contains("print=true"))
+                //{
+                //  browserControl.Load(targetUrl.Replace("print=true", "print=false"));
+                //}
+                // browser.MainFrame.ExecuteJavaScriptAsync(@"window.print=function() {alert('hi');}");
+
+                //  var obj = new Bounds.BoundObject("en", Convert.ToInt32(this.numberOfAvailablePages));
+                // ChromiumWebBrowser newBrowser = browser as ChromiumWebBrowser;
+
+                //   newBrowser.RegisterJsObject("bound", obj);
+                // newBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
                 browser.MainFrame.ExecuteJavaScriptAsync(@"window.close()");
-                 if (targetUrl.Contains("print=true"))
-                  {
-                      browserControl.Load(targetUrl.Replace("print=true", "print=false"));
-                  }
-                //browserControl.Back();
 
-             //   browserControl.FrameLoadEnd += BrowserControl_FrameLoadEnd;
+                if (targetUrl.Contains("print=true"))
+                {
+                    browserControl.Load(targetUrl.Replace("print=true", "print=false"));
 
-                  
+                   // browserControl.ExecuteScriptAsync("window.print()");
+                }
+
+               
+
+               // browserControl.RenderProcessMessageHandler = new CustomRenderProcessHandler();
+
+                browserControl.FrameLoadEnd += BrowserControl_FrameLoadEnd;
+
+              //  browserControl.Back();
+
             }
             return false;
         }
+        
 
         private void BrowserControl_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
             ChromiumWebBrowser mainBrowser = sender as ChromiumWebBrowser;
-           // mainBrowser.ExecuteScriptAsync("window.print()");
+            if (mainBrowser.GetMainFrame().Url.Contains("print"))
+            {
+                string path = System.IO.Path.Combine(
+                           System.IO.Path.GetDirectoryName(
+                           this.GetType().Assembly.Location),
+                           "Printings", "test.pdf");
 
-            mainBrowser.Load("http://google.com");
+                mainBrowser.PrintToPdfAsync(path);
+            }
         }
 
         public void OnPluginCrashed(IWebBrowser browserControl, IBrowser browser, string pluginPath)
@@ -111,14 +156,14 @@ namespace Iap.Handlers
 
             else if (request.Url.EndsWith(".pdf"))
             {
-              //  string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
-               // browserControl.Load(toNavigate);
+                string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
+                browserControl.Load(toNavigate);
             }
         }
 
         public void OnResourceRedirect(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, ref string newUrl)
         {
-           
+            
         }
 
         public bool OnResourceResponse(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response)

@@ -17,15 +17,17 @@ namespace Iap.Gr
         private IEventAggregator events;
         private readonly string boardingPassGrApi;
         private bool openKeyboard;
+        private readonly string numberOfAvailablePagesToPrint;
 
         private string remainingTime;
 
         public static ChromiumWebBrowser _printBoardingPassBrowser;
 
-        public PrintBoardingPassGrViewModel(IEventAggregator events, string boardingPassGrApi)
+        public PrintBoardingPassGrViewModel(IEventAggregator events, string boardingPassGrApi, string numberOfAvailablePagesToPrint)
         {
             this.events = events;
             this.boardingPassGrApi = boardingPassGrApi;
+            this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
         }
 
         public IEventAggregator Events
@@ -52,7 +54,7 @@ namespace Iap.Gr
             ((PrintBoardingPassGrView)view).InternetAccessBrowser.Children.Add(_printBoardingPassBrowser);
 
             _printBoardingPassBrowser.LifeSpanHandler = new LifeSpanHandler();
-            _printBoardingPassBrowser.RequestHandler = new RequestHandler();
+            _printBoardingPassBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(this.numberOfAvailablePagesToPrint));
             _printBoardingPassBrowser.RequestContext = new RequestContext();
 
             _printBoardingPassBrowser.TouchDown += _printBoardingPassBrowser_TouchDown;
