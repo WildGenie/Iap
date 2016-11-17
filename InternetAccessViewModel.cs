@@ -11,6 +11,9 @@ using System.Windows.Threading;
 using Iap.Bounds;
 using Iap.Handlers;
 using System.Windows.Media;
+using System.Windows;
+using System.Windows.Input;
+using Iap.Unitilities;
 
 namespace Iap
 {
@@ -23,6 +26,14 @@ namespace Iap
         private bool openKeyboard;
 
         public static ChromiumWebBrowser _internetAccessBrowser;
+
+
+
+        private int TimeElapsed = 30;
+        private DispatcherTimer timer;
+
+
+        public IdleInputBrowserViewModel IdleInputBrowser { get; set; }
 
         public InternetAccessViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint)
         {
@@ -87,13 +98,29 @@ namespace Iap
 
             this.OpenKeyboard = true;
 
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMinutes(1);
+            this.TimeElapsed = 30;
+            timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 1, 0);
             timer.Tick += TimerTick;
             timer.Start();
 
+
             base.OnViewLoaded(view);
         }
+
+        private void TimerTick(object sender, EventArgs e)
+       {
+            if (TimeElapsed > 1)
+            {
+                TimeElapsed--;
+                this.RemainingTime = TimeElapsed.ToString();
+            }
+            else
+            {
+                timer.Stop();
+                this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+            }
+       }
 
         private void _internetAccessBrowser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
@@ -204,25 +231,6 @@ namespace Iap
             e.Handled = true;
         }
 
-        private void TimerTick(object sender, EventArgs e)
-        {
-            DispatcherTimer timer = (DispatcherTimer)sender;
-            timeElapsed--;
-            this.RemainingTime = timeElapsed.ToString();
-            if (timeElapsed == 0)
-            {
-                this.RemainingTime = "0";
-                timer.Stop();
-                System.Threading.Thread.Sleep(1000);
-                timer.Tick -= TimerTick;
-                if (_internetAccessBrowser != null)
-                {
-                    _internetAccessBrowser.Dispose();
-                }
-                this.events.PublishOnCurrentThread(new ViewEnglishCommand());
-            }
-        }
-
         public bool OpenKeyboard
         {
             set
@@ -242,7 +250,7 @@ namespace Iap
             set
             {
                 this.remainingTime = value;
-                NotifyOfPropertyChange(() => this.remainingTime);
+                NotifyOfPropertyChange(() => this.RemainingTime);
             }
             get
             {
@@ -250,7 +258,7 @@ namespace Iap
             }
         }
 
-        public int timeElapsed = 30;
+      
 
         public int lastMousePositionX;
         public int lastMousePositionY;
@@ -314,6 +322,7 @@ namespace Iap
 
         protected override void OnDeactivate(bool close)
         {
+            timer.Stop();
             try
             {
                 if (_internetAccessBrowser != null)

@@ -22,6 +22,9 @@ namespace Iap.Gr
 
         public static ChromiumWebBrowser _internetAccessBrowser;
 
+        private int TimeElapsed = 30;
+        private DispatcherTimer timer;
+
         public InternetAccessGrViewModel(IEventAggregator events,string numberOfAvailablePagesToPrint)
         {
             this.events = events;
@@ -66,12 +69,29 @@ namespace Iap.Gr
 
             this.RemainingTime = "30";
 
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMinutes(1);
+            this.OpenKeyboard = true;
+
+            this.TimeElapsed = 30;
+            timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 1, 0);
             timer.Tick += TimerTick;
             timer.Start();
 
             base.OnViewLoaded(view);
+        }
+
+        private void TimerTick(object sender, EventArgs e)
+        {
+            if (TimeElapsed > 1)
+            {
+                TimeElapsed--;
+                this.RemainingTime = TimeElapsed.ToString();
+            }
+            else
+            {
+                timer.Stop();
+                this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+            }
         }
 
         private void _internetAccessBrowser_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -128,31 +148,14 @@ namespace Iap.Gr
             e.Handled = true;
         }
 
-        private void TimerTick(object sender, EventArgs e)
-        {
-            DispatcherTimer timer = (DispatcherTimer)sender;
-            timeElapsed--;
-            this.RemainingTime = timeElapsed.ToString();
-            if (timeElapsed == 0)
-            {
-                this.RemainingTime = "0";
-                timer.Stop();
-                System.Threading.Thread.Sleep(1000);
-                timer.Tick -= TimerTick;
-                if (_internetAccessBrowser != null)
-                {
-                    _internetAccessBrowser.Dispose();
-                }
-                this.events.PublishOnCurrentThread(new ViewGreekCommand());
-            }
-        }
+       
 
         public string RemainingTime
         {
             set
             {
                 this.remainingTime = value;
-                NotifyOfPropertyChange(() => this.remainingTime);
+                NotifyOfPropertyChange(() => this.RemainingTime);
             }
             get
             {
@@ -172,8 +175,6 @@ namespace Iap.Gr
                 return this.openKeyboard;
             }
         }
-
-        public int timeElapsed = 30;
 
         public int lastMousePositionX;
         public int lastMousePositionY;
@@ -220,6 +221,7 @@ namespace Iap.Gr
 
         protected override void OnDeactivate(bool close)
         {
+            timer.Stop();
             try
             {
                 if (_internetAccessBrowser != null)

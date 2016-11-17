@@ -38,7 +38,6 @@ namespace Iap
         public TravelAuthorizationViewModel TravelAuthorization { get; set; }
         public TravelAuthorizationGrViewModel TravelAuthorizationGr { get; set; }
         public IdleInputViewModel IdleInput { get; set; }
-        public IdleInputBrowserViewModel IdleInputBrowser { get; set; }
         public InternetAccessGrViewModel InternetAccessGr { get; set; }
         public InternetAccessViewModel InternetAccess { get; set; }
         public BuyWifiGrViewModel BuyWifiGr { get; set; }
@@ -57,13 +56,6 @@ namespace Iap
                 new MouseButtonEventHandler((s, e) =>
                     this.IdleInput.LastMouseDownEventTicks =
                         TimeProvider.Current.UtcNow.ToLocalTime().Ticks));
-
-            EventManager.RegisterClassHandler(
-                typeof(CefSharp.Wpf.ChromiumWebBrowser),
-                Mouse.MouseDownEvent,
-                new MouseButtonEventHandler((s, e) =>
-                this.IdleInputBrowser.LastMouseDownEventTicks =
-                TimeProvider.Current.UtcNow.ToLocalTime().Ticks));
 
             base.OnViewLoaded(view);
         }

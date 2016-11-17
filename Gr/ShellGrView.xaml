@@ -83,21 +83,6 @@
                     </Style>
                 </Button.Style>
                 <Image Source="/Images/AIA_FOR PNG-12.png"/>
-               <!-- <Button.Triggers>
-                    <EventTrigger RoutedEvent="Button.Click">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimationUsingKeyFrames
-                                Storyboard.TargetName="trans"
-                                Storyboard.TargetProperty="Y"
-                                Duration="0:0:0.5">
-                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0" />
-                                    <LinearDoubleKeyFrame Value="180" KeyTime="0:0:0.5" />
-                                </DoubleAnimationUsingKeyFrames>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </Button.Triggers>-->
             </Button>
             <Grid Grid.Row="1">
                 <Grid.Background>
