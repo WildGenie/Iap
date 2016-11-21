@@ -162,6 +162,10 @@
       <DependentUpon>DynamicBrowserEnView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DynamicEnglishScreens\DynamicBrowserEnViewModel.cs" />
+    <Compile Include="DynamicEnglishScreens\DynamicEnShell6View.xaml.cs">
+      <DependentUpon>DynamicEnShell6View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicEnglishScreens\DynamicEnShell6ViewModel.cs" />
     <Compile Include="DynamicEnglishScreens\DynamicEnShellView.xaml.cs">
       <DependentUpon>DynamicEnShellView.xaml</DependentUpon>
     </Compile>
@@ -282,6 +286,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DynamicEnglishScreens\DynamicBrowserEnView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicEnglishScreens\DynamicEnShell6View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

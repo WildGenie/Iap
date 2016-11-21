@@ -57,6 +57,7 @@ namespace Iap
         public DynamicEnShellViewModel DynamicEnShell { get; set; }
         public DynamicBrowserEnViewModel DynamicBrowserEn { get; set; }
         public DynamicBrowserEn6ViewModel DynamicBrowserEn6 { get; set; }
+        public DynamicEnShell6ViewModel DynamicEnShell6 { get; set; }
 
         protected override void OnViewLoaded(object view)
         {
@@ -182,8 +183,18 @@ namespace Iap
 
         public void Handle(ViewDynamicEnglishShellCommand message)
         {
-            this.DynamicEnShell.PopulateButtonLinks(this.buttons.ToList());
-            base.ActivateItem(this.DynamicEnShell);
+            List<ButtonLinkModel> ButtonsDetails = this.buttons.ToList();
+            if (ButtonsDetails.Count == 4)
+            {
+                this.DynamicEnShell.PopulateButtonLinks(this.buttons.ToList());
+                base.ActivateItem(this.DynamicEnShell);
+            }
+
+            else if (ButtonsDetails.Count == 6)
+            {
+                this.DynamicEnShell6.PopulateButtonLinks(ButtonsDetails);
+                base.ActivateItem(this.DynamicEnShell6);
+            }
             //this.DynamicEnShell.Parent = this;
         }
 
