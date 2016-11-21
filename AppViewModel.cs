@@ -9,6 +9,9 @@ using Iap.Gr;
 using System.Windows;
 using System.Windows.Input;
 using Iap.Unitilities;
+using Iap.Services;
+using Iap.Models;
+using Iap.DynamicEnglishScreens;
 
 namespace Iap
 {
@@ -20,14 +23,19 @@ namespace Iap
         IHandle<ViewPrintBoardingPassCommand>,
         IHandle<ViewTravelAuthorizationCommand>,
         IHandle<ViewChangeLanguageCommand>,
-        IHandle<ViewSrceenSaverCommand>
+        IHandle<ViewSrceenSaverCommand>,
+        IHandle<ViewDynamicEnglishShellCommand>,
+        IHandle<ViewRedirectToBrowserCommand>
     {
         public IEventAggregator events;
         private bool isGreekSelected;
 
-        public AppViewModel(IEventAggregator events)
+        private readonly IGetScreenDetailsService parser;
+
+        public AppViewModel(IEventAggregator events, IGetScreenDetailsService parser)
         {
             this.events = events;
+            this.parser = parser;
         }
 
         public ShellViewModel Shell { get; set; }
@@ -45,6 +53,11 @@ namespace Iap
 
         public ScreenSaverViewModel ScreenSaver { get; set; }
 
+
+        public DynamicEnShellViewModel DynamicEnShell { get; set; }
+        public DynamicBrowserEnViewModel DynamicBrowserEn { get; set; }
+        public DynamicBrowserEn6ViewModel DynamicBrowserEn6 { get; set; }
+
         protected override void OnViewLoaded(object view)
         {
             base.ActivateItem(this.ScreenSaver);
@@ -57,7 +70,24 @@ namespace Iap
                     this.IdleInput.LastMouseDownEventTicks =
                         TimeProvider.Current.UtcNow.ToLocalTime().Ticks));
 
+            try
+            {
+                this.buttons = this.parser.GetButtonLinksDetails();
+
+               // this.DynamicEnShell.PopulateButtonLinks(buttons);
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString());
+            }
             base.OnViewLoaded(view);
+        }
+
+        public IReadOnlyCollection<ButtonLinkModel> buttons
+        {
+            get;
+            set;
         }
 
         protected override void OnDeactivate(bool close)
@@ -148,6 +178,37 @@ namespace Iap
         public void Handle(ViewSrceenSaverCommand message)
         {
             base.ActivateItem(this.ScreenSaver);
+        }
+
+        public void Handle(ViewDynamicEnglishShellCommand message)
+        {
+            this.DynamicEnShell.PopulateButtonLinks(this.buttons.ToList());
+            base.ActivateItem(this.DynamicEnShell);
+            //this.DynamicEnShell.Parent = this;
+        }
+
+        public void Handle(ViewRedirectToBrowserCommand message)
+        {
+            List<ButtonLinkModel> buttonDetails = this.buttons.ToList();
+            if (buttonDetails.Count == 4)
+            {
+                base.ChangeActiveItem(this.DynamicBrowserEn, true);
+                this.DynamicBrowserEn.ButtonsDetails = message.ButtonsDetails;
+                this.DynamicBrowserEn.HomeUrl = message.Url;
+                this.DynamicBrowserEn.SelectedPosition = message.Position;
+            }
+
+            else if (buttonDetails.Count == 6)
+            {
+                base.ChangeActiveItem(this.DynamicBrowserEn6, true);
+                this.DynamicBrowserEn6.ButtonsDetails = message.ButtonsDetails;
+                this.DynamicBrowserEn6.HomeUrl = message.Url;
+                this.DynamicBrowserEn6.SelectedPosition = message.Position;
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("another length");
+            }
         }
     }
 }

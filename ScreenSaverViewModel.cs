@@ -64,7 +64,8 @@ namespace Iap
 
         private void ScreenSaverVideo_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+              //this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+              this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
         }
     }
 }

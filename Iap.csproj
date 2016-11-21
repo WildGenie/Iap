@@ -103,6 +103,10 @@
       <HintPath>..\packages\iTextSharp.5.5.10\lib\itextsharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -142,12 +146,26 @@
     <Compile Include="BuyWifiViewModel.cs" />
     <Compile Include="Commands\ViewBuyWifiCommand.cs" />
     <Compile Include="Commands\ViewChangeLanguageCommand.cs" />
+    <Compile Include="Commands\ViewDynamicEnglishShellCommand.cs" />
     <Compile Include="Commands\ViewEnglishCommand.cs" />
     <Compile Include="Commands\ViewGreekCommand.cs" />
     <Compile Include="Commands\ViewInternetAccessCommand.cs" />
     <Compile Include="Commands\ViewPrintBoardingPassCommand.cs" />
+    <Compile Include="Commands\ViewRedirectToBrowserCommand.cs" />
     <Compile Include="Commands\ViewSrceenSaverCommand.cs" />
     <Compile Include="Commands\ViewTravelAuthorizationCommand.cs" />
+    <Compile Include="DynamicEnglishScreens\DynamicBrowserEn6View.xaml.cs">
+      <DependentUpon>DynamicBrowserEn6View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicEnglishScreens\DynamicBrowserEn6ViewModel.cs" />
+    <Compile Include="DynamicEnglishScreens\DynamicBrowserEnView.xaml.cs">
+      <DependentUpon>DynamicBrowserEnView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicEnglishScreens\DynamicBrowserEnViewModel.cs" />
+    <Compile Include="DynamicEnglishScreens\DynamicEnShellView.xaml.cs">
+      <DependentUpon>DynamicEnShellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicEnglishScreens\DynamicEnShellViewModel.cs" />
     <Compile Include="Gr\BuyWifiGrView.xaml.cs">
       <DependentUpon>BuyWifiGrView.xaml</DependentUpon>
     </Compile>
@@ -185,6 +203,9 @@
     <Compile Include="Keyboards\Keyboard2.xaml.cs">
       <DependentUpon>Keyboard2.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\ButtonLinkModel.cs" />
+    <Compile Include="Models\OuterEnglishScreenViewModel.cs" />
+    <Compile Include="Models\OuterGreekScreenViewModel.cs" />
     <Compile Include="NoBorderWindowManager.cs" />
     <Compile Include="PrintBoardingPassView.xaml.cs">
       <DependentUpon>PrintBoardingPassView.xaml</DependentUpon>
@@ -197,6 +218,8 @@
     <Compile Include="SelectButtonEn.xaml.cs">
       <DependentUpon>SelectButtonEn.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\GetScreenDetailsService.cs" />
+    <Compile Include="Services\IGetScreenDetailsService.cs" />
     <Compile Include="ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
@@ -251,6 +274,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="BuyWifiView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicEnglishScreens\DynamicBrowserEn6View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicEnglishScreens\DynamicBrowserEnView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicEnglishScreens\DynamicEnShellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
