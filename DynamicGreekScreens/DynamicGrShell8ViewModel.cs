@@ -8,12 +8,12 @@ using System.Windows.Media.Imaging;
 using Iap.Models;
 using Iap.Commands;
 
-
-namespace Iap.DynamicEnglishScreens
+namespace Iap.DynamicGreekScreens
 {
-   public class DynamicEnShell6ViewModel:Screen
+   public class DynamicGrShell8ViewModel:Screen
     {
         private readonly IEventAggregator events;
+
         private string bannerBackground;
         private bool isBannerVisible;
 
@@ -23,10 +23,17 @@ namespace Iap.DynamicEnglishScreens
         private BitmapImage image4;
         private BitmapImage image5;
         private BitmapImage image6;
+        private BitmapImage image7;
+        private BitmapImage image8;
 
-        public DynamicEnShell6ViewModel(IEventAggregator events)
+        public DynamicGrShell8ViewModel(IEventAggregator events)
         {
             this.events = events;
+        }
+
+        public IEventAggregator Events
+        {
+            get { return this.events; }
         }
 
         public BitmapImage Image1
@@ -112,6 +119,31 @@ namespace Iap.DynamicEnglishScreens
             }
         }
 
+        public BitmapImage Image7
+        {
+            set
+            {
+                this.image7 = value;
+                NotifyOfPropertyChange(() => this.Image7);
+            }
+            get
+            {
+                return this.image7;
+            }
+        }
+
+        public BitmapImage Image8
+        {
+            set
+            {
+                this.image8 = value;
+                NotifyOfPropertyChange(() => this.Image8);
+            }
+            get
+            {
+                return this.image8;
+            }
+        }
 
         public List<ButtonLinkModel> ButtonsDetails
         {
@@ -122,20 +154,14 @@ namespace Iap.DynamicEnglishScreens
         public void PopulateButtonLinks(List<ButtonLinkModel> populatedList)
         {
             this.ButtonsDetails = populatedList;
-            this.Image1 = populatedList[0].ExternalEngImg;
-            this.Image2 = populatedList[1].ExternalEngImg;
-            this.Image3 = populatedList[2].ExternalEngImg;
-            this.Image4 = populatedList[3].ExternalEngImg;
-            this.Image5 = populatedList[4].ExternalEngImg;
-            this.Image6 = populatedList[5].ExternalEngImg;
-        }
-
-        public IEventAggregator Events
-        {
-            get
-            {
-                return this.events;
-            }
+            this.Image1 = populatedList[0].ExternalGrImg;
+            this.Image2 = populatedList[1].ExternalGrImg;
+            this.Image3 = populatedList[2].ExternalGrImg;
+            this.Image4 = populatedList[3].ExternalGrImg;
+            this.Image5 = populatedList[4].ExternalGrImg;
+            this.Image6 = populatedList[5].ExternalGrImg;
+            this.Image7 = populatedList[6].ExternalGrImg;
+            this.Image8 = populatedList[7].ExternalGrImg;
         }
 
         public string BannerBackground
@@ -184,38 +210,48 @@ namespace Iap.DynamicEnglishScreens
 
         public void ViewRedirect1()
         {
-            this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[0].EnUrl, this.ButtonsDetails, "1"));
+            this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[0].GrUrl, this.ButtonsDetails, "1"));
         }
 
         public void ViewRedirect2()
         {
-            this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[1].EnUrl, this.ButtonsDetails, "2"));
+            this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[1].GrUrl, this.ButtonsDetails, "2"));
         }
 
         public void ViewRedirect3()
         {
-            this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[2].EnUrl, this.ButtonsDetails, "3"));
+            this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[2].GrUrl, this.ButtonsDetails, "3"));
         }
 
         public void ViewRedirect4()
         {
-            this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[3].EnUrl, this.ButtonsDetails, "4"));
+            this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[3].GrUrl, this.ButtonsDetails, "4"));
         }
 
         public void ViewRedirect5()
         {
-            this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[4].EnUrl, this.ButtonsDetails, "5"));
+            this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[4].GrUrl, this.ButtonsDetails, "5"));
         }
 
         public void ViewRedirect6()
         {
-            this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[5].EnUrl, this.ButtonsDetails, "6"));
+            this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[5].GrUrl, this.ButtonsDetails, "6"));
         }
 
-        public void ViewGreek()
+        public void ViewRedirect7()
         {
-            this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
-            this.events.PublishOnCurrentThread(new ViewChangeLanguageCommand(true));
+            this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[6].GrUrl, this.ButtonsDetails, "7"));
+        }
+
+        public void ViewRedirect8()
+        {
+            this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[7].GrUrl, this.ButtonsDetails, "8"));
+        }
+
+        public void ViewEnglish()
+        {
+            this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
+            this.events.PublishOnCurrentThread(new ViewChangeLanguageCommand(false));
         }
     }
 }

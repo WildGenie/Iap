@@ -147,6 +147,7 @@
     <Compile Include="Commands\ViewBuyWifiCommand.cs" />
     <Compile Include="Commands\ViewChangeLanguageCommand.cs" />
     <Compile Include="Commands\ViewDynamicEnglishShellCommand.cs" />
+    <Compile Include="Commands\ViewDynamicGreekShellCommand.cs" />
     <Compile Include="Commands\ViewEnglishCommand.cs" />
     <Compile Include="Commands\ViewGreekCommand.cs" />
     <Compile Include="Commands\ViewInternetAccessCommand.cs" />
@@ -154,22 +155,86 @@
     <Compile Include="Commands\ViewRedirectToBrowserCommand.cs" />
     <Compile Include="Commands\ViewSrceenSaverCommand.cs" />
     <Compile Include="Commands\ViewTravelAuthorizationCommand.cs" />
+    <Compile Include="DynamicEnglishScreens\DynamicBrowserEn5View.xaml.cs">
+      <DependentUpon>DynamicBrowserEn5View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicEnglishScreens\DynamicBrowserEn5ViewModel.cs" />
     <Compile Include="DynamicEnglishScreens\DynamicBrowserEn6View.xaml.cs">
       <DependentUpon>DynamicBrowserEn6View.xaml</DependentUpon>
     </Compile>
     <Compile Include="DynamicEnglishScreens\DynamicBrowserEn6ViewModel.cs" />
+    <Compile Include="DynamicEnglishScreens\DynamicBrowserEn7View.xaml.cs">
+      <DependentUpon>DynamicBrowserEn7View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicEnglishScreens\DynamicBrowserEn7ViewModel.cs" />
+    <Compile Include="DynamicEnglishScreens\DynamicBrowserEn8View.xaml.cs">
+      <DependentUpon>DynamicBrowserEn8View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicEnglishScreens\DynamicBrowserEn8ViewModel.cs" />
     <Compile Include="DynamicEnglishScreens\DynamicBrowserEnView.xaml.cs">
       <DependentUpon>DynamicBrowserEnView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DynamicEnglishScreens\DynamicBrowserEnViewModel.cs" />
+    <Compile Include="DynamicEnglishScreens\DynamicEnShell5View.xaml.cs">
+      <DependentUpon>DynamicEnShell5View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicEnglishScreens\DynamicEnShell5ViewModel.cs" />
     <Compile Include="DynamicEnglishScreens\DynamicEnShell6View.xaml.cs">
       <DependentUpon>DynamicEnShell6View.xaml</DependentUpon>
     </Compile>
     <Compile Include="DynamicEnglishScreens\DynamicEnShell6ViewModel.cs" />
+    <Compile Include="DynamicEnglishScreens\DynamicEnShell7View.xaml.cs">
+      <DependentUpon>DynamicEnShell7View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicEnglishScreens\DynamicEnShell7ViewModel.cs" />
+    <Compile Include="DynamicEnglishScreens\DynamicEnShell8View.xaml.cs">
+      <DependentUpon>DynamicEnShell8View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicEnglishScreens\DynamicEnShell8ViewModel.cs" />
     <Compile Include="DynamicEnglishScreens\DynamicEnShellView.xaml.cs">
       <DependentUpon>DynamicEnShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DynamicEnglishScreens\DynamicEnShellViewModel.cs" />
+    <Compile Include="DynamicGreekScreens\DynamicBrowserGr5View.xaml.cs">
+      <DependentUpon>DynamicBrowserGr5View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicGreekScreens\DynamicBrowserGr5ViewModel.cs" />
+    <Compile Include="DynamicGreekScreens\DynamicBrowserGr6View.xaml.cs">
+      <DependentUpon>DynamicBrowserGr6View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicGreekScreens\DynamicBrowserGr6ViewModel.cs" />
+    <Compile Include="DynamicGreekScreens\DynamicBrowserGr7View.xaml.cs">
+      <DependentUpon>DynamicBrowserGr7View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicGreekScreens\DynamicBrowserGr7ViewModel.cs" />
+    <Compile Include="DynamicGreekScreens\DynamicBrowserGr8View.xaml.cs">
+      <DependentUpon>DynamicBrowserGr8View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicGreekScreens\DynamicBrowserGr8ViewModel.cs" />
+    <Compile Include="DynamicGreekScreens\DynamicBrowserGrView.xaml.cs">
+      <DependentUpon>DynamicBrowserGrView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicGreekScreens\DynamicBrowserGrViewModel.cs" />
+    <Compile Include="DynamicGreekScreens\DynamicGrShell5View.xaml.cs">
+      <DependentUpon>DynamicGrShell5View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicGreekScreens\DynamicGrShell5ViewModel.cs" />
+    <Compile Include="DynamicGreekScreens\DynamicGrShell6View.xaml.cs">
+      <DependentUpon>DynamicGrShell6View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicGreekScreens\DynamicGrShell6ViewModel.cs" />
+    <Compile Include="DynamicGreekScreens\DynamicGrShell7View.xaml.cs">
+      <DependentUpon>DynamicGrShell7View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicGreekScreens\DynamicGrShell7ViewModel.cs" />
+    <Compile Include="DynamicGreekScreens\DynamicGrShell8View.xaml.cs">
+      <DependentUpon>DynamicGrShell8View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicGreekScreens\DynamicGrShell8ViewModel.cs" />
+    <Compile Include="DynamicGreekScreens\DynamicGrShellView.xaml.cs">
+      <DependentUpon>DynamicGrShellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicGreekScreens\DynamicGrShellViewModel.cs" />
     <Compile Include="Gr\BuyWifiGrView.xaml.cs">
       <DependentUpon>BuyWifiGrView.xaml</DependentUpon>
     </Compile>
@@ -281,7 +346,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DynamicEnglishScreens\DynamicBrowserEn5View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DynamicEnglishScreens\DynamicBrowserEn6View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicEnglishScreens\DynamicBrowserEn7View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicEnglishScreens\DynamicBrowserEn8View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -289,11 +366,63 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DynamicEnglishScreens\DynamicEnShell5View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DynamicEnglishScreens\DynamicEnShell6View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DynamicEnglishScreens\DynamicEnShell7View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicEnglishScreens\DynamicEnShell8View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DynamicEnglishScreens\DynamicEnShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicGreekScreens\DynamicBrowserGr5View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicGreekScreens\DynamicBrowserGr6View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicGreekScreens\DynamicBrowserGr7View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicGreekScreens\DynamicBrowserGr8View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicGreekScreens\DynamicBrowserGrView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicGreekScreens\DynamicGrShell5View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicGreekScreens\DynamicGrShell6View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicGreekScreens\DynamicGrShell7View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicGreekScreens\DynamicGrShell8View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicGreekScreens\DynamicGrShellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

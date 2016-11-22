@@ -26,7 +26,7 @@ namespace Iap.Models
             this.internalEngImg = internalEngImg;
             this.internalGrImg = internalGrImg;
             this.selectedEngImg = selectedEngImg;
-            this.SelectedGrImg = selectedEngImg;
+            this.selectedGrImg = selectedGrImg;
             this.enUrl = enUrl;
             this.grUrl = grUrl;
         }

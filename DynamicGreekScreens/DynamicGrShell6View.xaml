@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Iap.DynamicEnglishScreens.DynamicEnShell6View"
+﻿<UserControl x:Class="Iap.DynamicGreekScreens.DynamicGrShell6View"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <UserControl.Resources>
@@ -7,7 +7,7 @@
     <Grid Width="1920"
           Height="1080">
         <Grid.Background>
-            <ImageBrush ImageSource="/Images/AIA_FOR PNG-01.png"/>
+            <ImageBrush ImageSource="/Images/AIA_FOR PNG-24.png"/>
         </Grid.Background>
         <Grid x:Name="ButtonsGridFirstRow" Margin="180 20 115 700">
             <Grid.RowDefinitions>
@@ -22,7 +22,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            
+
             <Button 
             x:Name="ViewRedirect1" Grid.Column="0" Grid.Row="0"
             Width="320" Height="425">
@@ -38,7 +38,7 @@
                                         <Trigger Property="IsPressed" Value="true">
                                             <Setter Property="Background" Value="Transparent" TargetName="panel" />
                                         </Trigger>
-                                        
+
 
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -276,7 +276,7 @@
             </Grid.Triggers>
         </Grid>
         <Button
-            x:Name="ViewGreek"
+            x:Name="ViewEnglish"
             Background="Transparent"
             HorizontalAlignment="Left"
             Margin="1784,28,0,0"

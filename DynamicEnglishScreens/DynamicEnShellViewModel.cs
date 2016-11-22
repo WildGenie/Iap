@@ -170,5 +170,11 @@ namespace Iap.DynamicEnglishScreens
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[3].EnUrl, this.ButtonsDetails, "4"));
         }
+
+        public void ViewGreek()
+        {
+            this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
+            this.events.PublishOnCurrentThread(new ViewChangeLanguageCommand(true));
+        }
     }
 }

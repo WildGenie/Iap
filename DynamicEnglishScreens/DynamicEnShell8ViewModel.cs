@@ -8,12 +8,12 @@ using System.Windows.Media.Imaging;
 using Iap.Models;
 using Iap.Commands;
 
-
 namespace Iap.DynamicEnglishScreens
 {
-   public class DynamicEnShell6ViewModel:Screen
+   public class DynamicEnShell8ViewModel:Screen
     {
         private readonly IEventAggregator events;
+
         private string bannerBackground;
         private bool isBannerVisible;
 
@@ -23,10 +23,17 @@ namespace Iap.DynamicEnglishScreens
         private BitmapImage image4;
         private BitmapImage image5;
         private BitmapImage image6;
+        private BitmapImage image7;
+        private BitmapImage image8;
 
-        public DynamicEnShell6ViewModel(IEventAggregator events)
+        public DynamicEnShell8ViewModel(IEventAggregator events)
         {
             this.events = events;
+        }
+
+        public IEventAggregator Events
+        {
+            get { return this.events; }
         }
 
         public BitmapImage Image1
@@ -112,6 +119,31 @@ namespace Iap.DynamicEnglishScreens
             }
         }
 
+        public BitmapImage Image7
+        {
+            set
+            {
+                this.image7 = value;
+                NotifyOfPropertyChange(() => this.Image7);
+            }
+            get
+            {
+                return this.image7;
+            }
+        }
+
+        public BitmapImage Image8
+        {
+            set
+            {
+                this.image8 = value;
+                NotifyOfPropertyChange(() => this.Image8);
+            }
+            get
+            {
+                return this.image8;
+            }
+        }
 
         public List<ButtonLinkModel> ButtonsDetails
         {
@@ -128,14 +160,8 @@ namespace Iap.DynamicEnglishScreens
             this.Image4 = populatedList[3].ExternalEngImg;
             this.Image5 = populatedList[4].ExternalEngImg;
             this.Image6 = populatedList[5].ExternalEngImg;
-        }
-
-        public IEventAggregator Events
-        {
-            get
-            {
-                return this.events;
-            }
+            this.Image7 = populatedList[6].ExternalEngImg;
+            this.Image8 = populatedList[7].ExternalEngImg;
         }
 
         public string BannerBackground
@@ -210,6 +236,16 @@ namespace Iap.DynamicEnglishScreens
         public void ViewRedirect6()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[5].EnUrl, this.ButtonsDetails, "6"));
+        }
+
+        public void ViewRedirect7()
+        {
+            this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[6].EnUrl, this.ButtonsDetails, "7"));
+        }
+
+        public void ViewRedirect8()
+        {
+            this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[7].EnUrl, this.ButtonsDetails, "8"));
         }
 
         public void ViewGreek()

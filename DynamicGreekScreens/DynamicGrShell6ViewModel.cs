@@ -8,10 +8,9 @@ using System.Windows.Media.Imaging;
 using Iap.Models;
 using Iap.Commands;
 
-
-namespace Iap.DynamicEnglishScreens
+namespace Iap.DynamicGreekScreens
 {
-   public class DynamicEnShell6ViewModel:Screen
+   public class DynamicGrShell6ViewModel:Screen
     {
         private readonly IEventAggregator events;
         private string bannerBackground;
@@ -24,7 +23,7 @@ namespace Iap.DynamicEnglishScreens
         private BitmapImage image5;
         private BitmapImage image6;
 
-        public DynamicEnShell6ViewModel(IEventAggregator events)
+        public DynamicGrShell6ViewModel(IEventAggregator events)
         {
             this.events = events;
         }
@@ -112,7 +111,6 @@ namespace Iap.DynamicEnglishScreens
             }
         }
 
-
         public List<ButtonLinkModel> ButtonsDetails
         {
             get;
@@ -122,12 +120,12 @@ namespace Iap.DynamicEnglishScreens
         public void PopulateButtonLinks(List<ButtonLinkModel> populatedList)
         {
             this.ButtonsDetails = populatedList;
-            this.Image1 = populatedList[0].ExternalEngImg;
-            this.Image2 = populatedList[1].ExternalEngImg;
-            this.Image3 = populatedList[2].ExternalEngImg;
-            this.Image4 = populatedList[3].ExternalEngImg;
-            this.Image5 = populatedList[4].ExternalEngImg;
-            this.Image6 = populatedList[5].ExternalEngImg;
+            this.Image1 = populatedList[0].ExternalGrImg;
+            this.Image2 = populatedList[1].ExternalGrImg;
+            this.Image3 = populatedList[2].ExternalGrImg;
+            this.Image4 = populatedList[3].ExternalGrImg;
+            this.Image5 = populatedList[4].ExternalGrImg;
+            this.Image6 = populatedList[5].ExternalGrImg;
         }
 
         public IEventAggregator Events
@@ -212,10 +210,10 @@ namespace Iap.DynamicEnglishScreens
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[5].EnUrl, this.ButtonsDetails, "6"));
         }
 
-        public void ViewGreek()
+        public void ViewEnglish()
         {
-            this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
-            this.events.PublishOnCurrentThread(new ViewChangeLanguageCommand(true));
+            this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
+            this.events.PublishOnCurrentThread(new ViewChangeLanguageCommand(false));
         }
     }
 }

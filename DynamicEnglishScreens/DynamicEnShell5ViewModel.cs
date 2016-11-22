@@ -8,12 +8,12 @@ using System.Windows.Media.Imaging;
 using Iap.Models;
 using Iap.Commands;
 
-
 namespace Iap.DynamicEnglishScreens
 {
-   public class DynamicEnShell6ViewModel:Screen
+   public class DynamicEnShell5ViewModel:Screen
     {
         private readonly IEventAggregator events;
+
         private string bannerBackground;
         private bool isBannerVisible;
 
@@ -22,11 +22,15 @@ namespace Iap.DynamicEnglishScreens
         private BitmapImage image3;
         private BitmapImage image4;
         private BitmapImage image5;
-        private BitmapImage image6;
 
-        public DynamicEnShell6ViewModel(IEventAggregator events)
+        public DynamicEnShell5ViewModel(IEventAggregator events)
         {
             this.events = events;
+        }
+
+        public IEventAggregator Events
+        {
+            get { return this.events; }
         }
 
         public BitmapImage Image1
@@ -98,21 +102,6 @@ namespace Iap.DynamicEnglishScreens
             }
         }
 
-        public BitmapImage Image6
-        {
-            set
-            {
-                this.image6 = value;
-                NotifyOfPropertyChange(() => this.Image6);
-            }
-
-            get
-            {
-                return this.image6;
-            }
-        }
-
-
         public List<ButtonLinkModel> ButtonsDetails
         {
             get;
@@ -127,15 +116,6 @@ namespace Iap.DynamicEnglishScreens
             this.Image3 = populatedList[2].ExternalEngImg;
             this.Image4 = populatedList[3].ExternalEngImg;
             this.Image5 = populatedList[4].ExternalEngImg;
-            this.Image6 = populatedList[5].ExternalEngImg;
-        }
-
-        public IEventAggregator Events
-        {
-            get
-            {
-                return this.events;
-            }
         }
 
         public string BannerBackground
@@ -205,11 +185,6 @@ namespace Iap.DynamicEnglishScreens
         public void ViewRedirect5()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[4].EnUrl, this.ButtonsDetails, "5"));
-        }
-
-        public void ViewRedirect6()
-        {
-            this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[5].EnUrl, this.ButtonsDetails, "6"));
         }
 
         public void ViewGreek()
