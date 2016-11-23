@@ -14,6 +14,7 @@ using System.Windows.Threading;
 using Iap.Unitilities;
 using System.Windows.Media;
 using Iap.Handlers;
+using Iap.Bounds;
 
 namespace Iap.DynamicGreekScreens
 {
@@ -160,7 +161,10 @@ namespace Iap.DynamicGreekScreens
 
             _internetAccessBrowser.RequestContext = new RequestContext();
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
-           
+            _internetAccessBrowser.RequestHandler = new DynamicBrowserRequestHandler();
+            var boundGrObject = new DynamicBrowserBoundObjectGr();
+            _internetAccessBrowser.RegisterJsObject("bound", boundGrObject);
+            _internetAccessBrowser.FrameLoadEnd += boundGrObject.OnFrameLoadEnd;
 
             PopulatePanel(currentView);
 
@@ -276,7 +280,7 @@ namespace Iap.DynamicGreekScreens
             else
             {
                 timer.Stop();
-                this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+                this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
             }
         }
 

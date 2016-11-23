@@ -14,6 +14,7 @@ using System.Windows.Threading;
 using Iap.Unitilities;
 using System.Windows.Media;
 using Iap.Handlers;
+using Iap.Bounds;
 
 namespace Iap.DynamicEnglishScreens
 {
@@ -151,6 +152,10 @@ namespace Iap.DynamicEnglishScreens
 
             _internetAccessBrowser.RequestContext = new RequestContext();
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
+            _internetAccessBrowser.RequestHandler = new DynamicBrowserRequestHandler();
+            var boundEnObject = new DynamicBrowserBoundObjectEn();
+            _internetAccessBrowser.RegisterJsObject("bound", boundEnObject);
+            _internetAccessBrowser.FrameLoadEnd += boundEnObject.OnFrameLoadEnd;
 
             _internetAccessBrowser.MouseDown += _internetAccessBrowser_MouseDown;
             _internetAccessBrowser.TouchDown += _internetAccessBrowser_TouchDown;
@@ -165,7 +170,7 @@ namespace Iap.DynamicEnglishScreens
 
             this.RemainingTime = "30";
 
-            this.OpenKeyboard = true;
+           // this.OpenKeyboard = true;
 
             this.TimeElapsed = 30;
             timer = new DispatcherTimer();
@@ -267,7 +272,7 @@ namespace Iap.DynamicEnglishScreens
             else
             {
                 timer.Stop();
-                this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+                this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
             }
         }
 

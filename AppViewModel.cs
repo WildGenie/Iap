@@ -57,26 +57,36 @@ namespace Iap
 
 
         public DynamicEnShellViewModel DynamicEnShell { get; set; }
-        public DynamicBrowserEnViewModel DynamicBrowserEn { get; set; }
-        public DynamicBrowserEn6ViewModel DynamicBrowserEn6 { get; set; }
-        public DynamicEnShell6ViewModel DynamicEnShell6 { get; set; }
+        public DynamicEnShell2ViewModel DynamicEnShell2 { get; set; }
+        public DynamicEnShell3ViewModel DynamicEnShell3 { get; set; }
         public DynamicEnShell5ViewModel DynamicEnShell5 { get; set; }
+        public DynamicEnShell6ViewModel DynamicEnShell6 { get; set; }
         public DynamicEnShell7ViewModel DynamicEnShell7 { get; set; }
         public DynamicEnShell8ViewModel DynamicEnShell8 { get; set; }
+        public DynamicBrowserEnViewModel DynamicBrowserEn { get; set; }
+        public DynamicBrowserEn2ViewModel DynamicBrowserEn2 { get; set; }
+        public DynamicBrowserEn3ViewModel DynamicBrowserEn3 { get; set; }
         public DynamicBrowserEn5ViewModel DynamicBrowserEn5 { get; set; }
+        public DynamicBrowserEn6ViewModel DynamicBrowserEn6 { get; set; }
         public DynamicBrowserEn7ViewModel DynamicBrowserEn7 { get; set; }
         public DynamicBrowserEn8ViewModel DynamicBrowserEn8 { get; set; }
+        
 
         public DynamicGrShellViewModel  DynamicGrShell { get; set; }
+        public DynamicGrShell2ViewModel DynamicGrShell2 { get; set; }
+        public DynamicGrShell3ViewModel DynamicGrShell3 { get; set; }
         public DynamicGrShell5ViewModel DynamicGrShell5 { get; set;}
         public DynamicGrShell6ViewModel DynamicGrShell6 { get; set; }
         public DynamicGrShell7ViewModel DynamicGrShell7 { get; set; }
         public DynamicGrShell8ViewModel DynamicGrShell8 { get; set; }
         public DynamicBrowserGrViewModel DynamicBrowserGr { get; set; }
+        public DynamicBrowserGr2ViewModel DynamicBrowserGr2 { get; set; }
+        public DynamicBrowserGr3ViewModel DynamicBrowserGr3 { get; set; }
         public DynamicBrowserGr5ViewModel DynamicBrowserGr5 { get; set;}
         public DynamicBrowserGr6ViewModel DynamicBrowserGr6 { get; set; }
         public DynamicBrowserGr7ViewModel DynamicBrowserGr7 { get; set; }
         public DynamicBrowserGr8ViewModel DynamicBrowserGr8 { get; set; }
+        
 
         protected override void OnViewLoaded(object view)
         {
@@ -203,167 +213,210 @@ namespace Iap
         public void Handle(ViewDynamicEnglishShellCommand message)
         {
             List<ButtonLinkModel> ButtonsDetails = this.buttons.ToList();
-            if (ButtonsDetails.Count == 4)
-            {
-                this.DynamicEnShell.PopulateButtonLinks(ButtonsDetails);
-                base.ActivateItem(this.DynamicEnShell);
-            }
 
-            else if (ButtonsDetails.Count == 5)
-            {
-                this.DynamicEnShell5.PopulateButtonLinks(ButtonsDetails);
-                base.ActivateItem(this.DynamicEnShell5);
-            }
 
-            else if (ButtonsDetails.Count == 6)
+            switch (ButtonsDetails.Count)
             {
-                this.DynamicEnShell6.PopulateButtonLinks(ButtonsDetails);
-                base.ActivateItem(this.DynamicEnShell6);
+                case 2:
+                    this.DynamicEnShell2.PopulateButtonLinks(ButtonsDetails);
+                    base.ActivateItem(this.DynamicEnShell2);
+                    break;
+                case 3:
+                    this.DynamicEnShell3.PopulateButtonLinks(ButtonsDetails);
+                    base.ActivateItem(this.DynamicEnShell3);
+                    break;
+                case 4:
+                    this.DynamicEnShell.PopulateButtonLinks(ButtonsDetails);
+                    base.ActivateItem(this.DynamicEnShell);
+                    break;
+                case 5:
+                    this.DynamicEnShell5.PopulateButtonLinks(ButtonsDetails);
+                    base.ActivateItem(this.DynamicEnShell5);
+                    break;
+                case 6:
+                    this.DynamicEnShell6.PopulateButtonLinks(ButtonsDetails);
+                    base.ActivateItem(this.DynamicEnShell6);
+                    break;
+                case 7:
+                    this.DynamicEnShell7.PopulateButtonLinks(ButtonsDetails);
+                    base.ActivateItem(this.DynamicEnShell7);
+                    break;
+                case 8:
+                    this.DynamicEnShell8.PopulateButtonLinks(ButtonsDetails);
+                    base.ActivateItem(this.DynamicEnShell8);
+                    break;
             }
-
-            else if (ButtonsDetails.Count == 7)
-            {
-                this.DynamicEnShell7.PopulateButtonLinks(ButtonsDetails);
-                base.ActivateItem(this.DynamicEnShell7);
-            }
-
-            else if (ButtonsDetails.Count == 8)
-            {
-                this.DynamicEnShell8.PopulateButtonLinks(ButtonsDetails);
-                base.ActivateItem(this.DynamicEnShell8);
-            }
-            //this.DynamicEnShell.Parent = this;
         }
 
         public void Handle(ViewRedirectToBrowserCommand message)
         {
             List<ButtonLinkModel> buttonDetails = this.buttons.ToList();
-            if (buttonDetails.Count == 4)
+
+            switch(buttonDetails.Count)
             {
-                if (this.isGreekSelected)
-                {
-                    base.ChangeActiveItem(this.DynamicBrowserGr, true);
-                    this.DynamicBrowserGr.ButtonsDetails = message.ButtonsDetails;
-                    this.DynamicBrowserGr.HomeUrl = message.Url;
-                    this.DynamicBrowserGr.SelectedPosition = message.Position;
-                }
-                else
-                {
-                    base.ChangeActiveItem(this.DynamicBrowserEn, true);
-                    this.DynamicBrowserEn.ButtonsDetails = message.ButtonsDetails;
-                    this.DynamicBrowserEn.HomeUrl = message.Url;
-                    this.DynamicBrowserEn.SelectedPosition = message.Position;
-                }
+                case 2:
+                    if(this.isGreekSelected)
+                    {
+                        base.ChangeActiveItem(this.DynamicBrowserGr2, true);
+                        this.DynamicBrowserGr2.ButtonsDetails = message.ButtonsDetails;
+                        this.DynamicBrowserGr2.HomeUrl = message.Url;
+                        this.DynamicBrowserGr2.SelectedPosition = message.Position;
+                    }
+                    else
+                    {
+                        base.ChangeActiveItem(this.DynamicBrowserEn2, true);
+                        this.DynamicBrowserEn2.ButtonsDetails = message.ButtonsDetails;
+                        this.DynamicBrowserEn2.HomeUrl = message.Url;
+                        this.DynamicBrowserEn2.SelectedPosition = message.Position;
+                    }
+
+                    break;
+
+                case 3:
+                    if (this.isGreekSelected)
+                    {
+                        base.ChangeActiveItem(this.DynamicBrowserGr3, true);
+                        this.DynamicBrowserGr3.ButtonsDetails = message.ButtonsDetails;
+                        this.DynamicBrowserGr3.HomeUrl = message.Url;
+                        this.DynamicBrowserGr3.SelectedPosition = message.Position;
+                    }
+                    else
+                    {
+                        base.ChangeActiveItem(this.DynamicBrowserEn3, true);
+                        this.DynamicBrowserEn3.ButtonsDetails = message.ButtonsDetails;
+                        this.DynamicBrowserEn3.HomeUrl = message.Url;
+                        this.DynamicBrowserEn3.SelectedPosition = message.Position;
+                    }
+
+                    break;
+
+                case 4:
+                    if (this.isGreekSelected)
+                    {
+                        base.ChangeActiveItem(this.DynamicBrowserGr, true);
+                        this.DynamicBrowserGr.ButtonsDetails = message.ButtonsDetails;
+                        this.DynamicBrowserGr.HomeUrl = message.Url;
+                        this.DynamicBrowserGr.SelectedPosition = message.Position;
+                    }
+                    else
+                    {
+                        base.ChangeActiveItem(this.DynamicBrowserEn, true);
+                        this.DynamicBrowserEn.ButtonsDetails = message.ButtonsDetails;
+                        this.DynamicBrowserEn.HomeUrl = message.Url;
+                        this.DynamicBrowserEn.SelectedPosition = message.Position;
+                    }
+
+                    break;
+
+                case 5:
+                    if (this.isGreekSelected)
+                    {
+                        base.ChangeActiveItem(this.DynamicBrowserGr5, true);
+                        this.DynamicBrowserGr5.ButtonsDetails = message.ButtonsDetails;
+                        this.DynamicBrowserGr5.HomeUrl = message.Url;
+                        this.DynamicBrowserGr5.SelectedPosition = message.Position;
+                    }
+                    else
+                    {
+                        base.ChangeActiveItem(this.DynamicBrowserEn5, true);
+                        this.DynamicBrowserEn5.ButtonsDetails = message.ButtonsDetails;
+                        this.DynamicBrowserEn5.HomeUrl = message.Url;
+                        this.DynamicBrowserEn5.SelectedPosition = message.Position;
+                    }
+
+                    break;
+
+                case 6:
+                    if (this.isGreekSelected)
+                    {
+                        base.ChangeActiveItem(this.DynamicBrowserGr6, true);
+                        this.DynamicBrowserGr6.ButtonsDetails = message.ButtonsDetails;
+                        this.DynamicBrowserGr6.HomeUrl = message.Url;
+                        this.DynamicBrowserGr6.SelectedPosition = message.Position;
+                    }
+                    else
+                    {
+                        base.ChangeActiveItem(this.DynamicBrowserEn6, true);
+                        this.DynamicBrowserEn6.ButtonsDetails = message.ButtonsDetails;
+                        this.DynamicBrowserEn6.HomeUrl = message.Url;
+                        this.DynamicBrowserEn6.SelectedPosition = message.Position;
+                    }
+
+                    break;
+
+                case 7:
+                    if (this.isGreekSelected)
+                    {
+                        base.ChangeActiveItem(this.DynamicBrowserGr7, true);
+                        this.DynamicBrowserGr7.ButtonsDetails = message.ButtonsDetails;
+                        this.DynamicBrowserGr7.HomeUrl = message.Url;
+                        this.DynamicBrowserGr7.SelectedPosition = message.Position;
+                    }
+                    else
+                    {
+                        base.ChangeActiveItem(this.DynamicBrowserEn7, true);
+                        this.DynamicBrowserEn7.ButtonsDetails = message.ButtonsDetails;
+                        this.DynamicBrowserEn7.HomeUrl = message.Url;
+                        this.DynamicBrowserEn7.SelectedPosition = message.Position;
+                    }
+
+                    break;
+
+                case 8:
+                    if (this.isGreekSelected)
+                    {
+                        base.ChangeActiveItem(this.DynamicBrowserGr8, true);
+                        this.DynamicBrowserGr8.ButtonsDetails = message.ButtonsDetails;
+                        this.DynamicBrowserGr8.HomeUrl = message.Url;
+                        this.DynamicBrowserGr8.SelectedPosition = message.Position;
+                    }
+                    else
+                    {
+                        base.ChangeActiveItem(this.DynamicBrowserEn8, true);
+                        this.DynamicBrowserEn8.ButtonsDetails = message.ButtonsDetails;
+                        this.DynamicBrowserEn8.HomeUrl = message.Url;
+                        this.DynamicBrowserEn8.SelectedPosition = message.Position;
+                    }
+
+                    break;
             }
 
-            else if (buttonDetails.Count == 5)
-            {
-                if (this.isGreekSelected)
-                {
-                    base.ChangeActiveItem(this.DynamicBrowserGr5, true);
-                    this.DynamicBrowserGr5.ButtonsDetails = message.ButtonsDetails;
-                    this.DynamicBrowserGr5.HomeUrl = message.Url;
-                    this.DynamicBrowserGr5.SelectedPosition = message.Position;
-                }
-                else
-                {
-                    base.ChangeActiveItem(this.DynamicBrowserEn5, true);
-                    this.DynamicBrowserEn5.ButtonsDetails = message.ButtonsDetails;
-                    this.DynamicBrowserEn5.HomeUrl = message.Url;
-                    this.DynamicBrowserEn5.SelectedPosition = message.Position;
-                }
-            }
-
-            else if (buttonDetails.Count == 6)
-            {
-                if (this.isGreekSelected)
-                {
-                    base.ChangeActiveItem(this.DynamicBrowserGr6, true);
-                    this.DynamicBrowserGr6.ButtonsDetails = message.ButtonsDetails;
-                    this.DynamicBrowserGr6.HomeUrl = message.Url;
-                    this.DynamicBrowserGr6.SelectedPosition = message.Position;
-                }
-                else
-                {
-                    base.ChangeActiveItem(this.DynamicBrowserEn6, true);
-                    this.DynamicBrowserEn6.ButtonsDetails = message.ButtonsDetails;
-                    this.DynamicBrowserEn6.HomeUrl = message.Url;
-                    this.DynamicBrowserEn6.SelectedPosition = message.Position;
-                }
-            }
-
-            else if (buttonDetails.Count == 7)
-            {
-                if (this.isGreekSelected)
-                {
-                    base.ChangeActiveItem(this.DynamicBrowserGr7, true);
-                    this.DynamicBrowserGr7.ButtonsDetails = message.ButtonsDetails;
-                    this.DynamicBrowserGr7.HomeUrl = message.Url;
-                    this.DynamicBrowserGr7.SelectedPosition = message.Position;
-                }
-                else
-                {
-                    base.ChangeActiveItem(this.DynamicBrowserEn7, true);
-                    this.DynamicBrowserEn7.ButtonsDetails = message.ButtonsDetails;
-                    this.DynamicBrowserEn7.HomeUrl = message.Url;
-                    this.DynamicBrowserEn7.SelectedPosition = message.Position;
-                }
-            }
-
-            else if (buttonDetails.Count == 8)
-            {
-                if (this.isGreekSelected)
-                {
-                    base.ChangeActiveItem(this.DynamicBrowserGr8, true);
-                    this.DynamicBrowserGr8.ButtonsDetails = message.ButtonsDetails;
-                    this.DynamicBrowserGr8.HomeUrl = message.Url;
-                    this.DynamicBrowserGr8.SelectedPosition = message.Position;
-                }
-                else
-                {
-                    base.ChangeActiveItem(this.DynamicBrowserEn8, true);
-                    this.DynamicBrowserEn8.ButtonsDetails = message.ButtonsDetails;
-                    this.DynamicBrowserEn8.HomeUrl = message.Url;
-                    this.DynamicBrowserEn8.SelectedPosition = message.Position;
-                }
-            }
-            else
-            {
-                System.Windows.MessageBox.Show("another length");
-            }
         }
 
         public void Handle(ViewDynamicGreekShellCommand message)
         {
             List<ButtonLinkModel> ButtonsDetails = this.buttons.ToList();
-            if (ButtonsDetails.Count == 4)
-            {
-                this.DynamicGrShell.PopulateButtonLinks(ButtonsDetails);
-                base.ActivateItem(this.DynamicGrShell);
-            }
 
-            else if (ButtonsDetails.Count == 5)
+            switch(ButtonsDetails.Count)
             {
-                this.DynamicGrShell5.PopulateButtonLinks(ButtonsDetails);
-                base.ActivateItem(this.DynamicGrShell5);
-            }
-
-            else if (ButtonsDetails.Count == 6)
-            {
-                this.DynamicGrShell6.PopulateButtonLinks(ButtonsDetails);
-                base.ActivateItem(this.DynamicGrShell6);
-            }
-
-            else if (ButtonsDetails.Count == 7)
-            {
-                this.DynamicGrShell7.PopulateButtonLinks(ButtonsDetails);
-                base.ActivateItem(this.DynamicGrShell7);
-            }
-
-            else if (ButtonsDetails.Count == 8)
-            {
-                this.DynamicGrShell8.PopulateButtonLinks(ButtonsDetails);
-                base.ActivateItem(this.DynamicGrShell8);
+                case 2:
+                    this.DynamicGrShell2.PopulateButtonLinks(ButtonsDetails);
+                    base.ActivateItem(this.DynamicGrShell2);
+                    break;
+                case 3:
+                    this.DynamicGrShell3.PopulateButtonLinks(ButtonsDetails);
+                    base.ActivateItem(this.DynamicGrShell3);
+                    break;
+                case 4:
+                    this.DynamicGrShell.PopulateButtonLinks(ButtonsDetails);
+                    base.ActivateItem(this.DynamicGrShell);
+                    break;
+                case 5:
+                    this.DynamicGrShell5.PopulateButtonLinks(ButtonsDetails);
+                    base.ActivateItem(this.DynamicGrShell5);
+                    break;
+                case 6:
+                    this.DynamicGrShell6.PopulateButtonLinks(ButtonsDetails);
+                    base.ActivateItem(this.DynamicGrShell6);
+                    break;
+                case 7:
+                    this.DynamicGrShell7.PopulateButtonLinks(ButtonsDetails);
+                    base.ActivateItem(this.DynamicGrShell7);
+                    break;
+                case 8:
+                    this.DynamicGrShell8.PopulateButtonLinks(ButtonsDetails);
+                    base.ActivateItem(this.DynamicGrShell8);
+                    break;
             }
         }
     }

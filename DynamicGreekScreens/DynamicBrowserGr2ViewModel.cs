@@ -6,30 +6,27 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using System.Windows.Media.Imaging;
 using CefSharp.Wpf;
-using CefSharp;
-using System.Windows;
-using Iap.Commands;
-using Iap.Models;
 using System.Windows.Threading;
 using Iap.Unitilities;
-using System.Windows.Media;
+using CefSharp;
 using Iap.Handlers;
+using Iap.Commands;
+using System.Windows.Media;
+using System.Windows;
+using Iap.Models;
 using Iap.Bounds;
 
-namespace Iap.DynamicEnglishScreens
+namespace Iap.DynamicGreekScreens
 {
-   public class DynamicBrowserEn5ViewModel:Screen
+   public class DynamicBrowserGr2ViewModel:Screen
     {
         private readonly IEventAggregator events;
-
         private BitmapImage leftImage1;
         private BitmapImage leftImage2;
-        private BitmapImage leftImage3;
-        private BitmapImage leftImage4;
-        private BitmapImage leftImage5;
+       
 
         public static ChromiumWebBrowser _internetAccessBrowser;
-        private DynamicBrowserEn5View currentView;
+        private DynamicBrowserGr2View currentView;
 
         private bool openKeyboard;
         private string remainingTime;
@@ -39,7 +36,7 @@ namespace Iap.DynamicEnglishScreens
 
         public IdleInputBrowserViewModel IdleInputBrowser { get; set; }
 
-        public DynamicBrowserEn5ViewModel(IEventAggregator events)
+        public DynamicBrowserGr2ViewModel(IEventAggregator events)
         {
             this.events = events;
         }
@@ -87,45 +84,6 @@ namespace Iap.DynamicEnglishScreens
             }
         }
 
-        public BitmapImage LeftImage3
-        {
-            set
-            {
-                this.leftImage3 = value;
-                NotifyOfPropertyChange(() => LeftImage3);
-            }
-            get
-            {
-                return this.leftImage3;
-            }
-        }
-
-        public BitmapImage LeftImage4
-        {
-            set
-            {
-                this.leftImage4 = value;
-                NotifyOfPropertyChange(() => LeftImage4);
-            }
-            get
-            {
-                return this.leftImage4;
-            }
-        }
-
-        public BitmapImage LeftImage5
-        {
-            set
-            {
-                this.leftImage5 = value;
-                NotifyOfPropertyChange(() => LeftImage5);
-            }
-            get
-            {
-                return this.leftImage5;
-            }
-        }
-
         public string SelectedPosition
         {
             get;
@@ -139,7 +97,7 @@ namespace Iap.DynamicEnglishScreens
 
         protected override void OnViewLoaded(object view)
         {
-            currentView = ((DynamicBrowserEn5View)view);
+            currentView = ((DynamicBrowserGr2View)view);
 
             _internetAccessBrowser = new ChromiumWebBrowser()
             {
@@ -162,23 +120,23 @@ namespace Iap.DynamicEnglishScreens
             _internetAccessBrowser.RequestContext = new RequestContext();
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
             _internetAccessBrowser.RequestHandler = new DynamicBrowserRequestHandler();
-            var boundEnObject = new DynamicBrowserBoundObjectEn();
-            _internetAccessBrowser.RegisterJsObject("bound", boundEnObject);
-            _internetAccessBrowser.FrameLoadEnd += boundEnObject.OnFrameLoadEnd;
+            var boundGrObject = new DynamicBrowserBoundObjectGr();
+            _internetAccessBrowser.RegisterJsObject("bound", boundGrObject);
+            _internetAccessBrowser.FrameLoadEnd += boundGrObject.OnFrameLoadEnd;
+
+            PopulatePanel(currentView);
+
+            ((DynamicBrowserGr2View)view).DynamicBrowser.Children.Add(_internetAccessBrowser);
 
             _internetAccessBrowser.MouseDown += _internetAccessBrowser_MouseDown;
             _internetAccessBrowser.TouchDown += _internetAccessBrowser_TouchDown;
             _internetAccessBrowser.TouchMove += _internetAccessBrowser_TouchMove;
 
-            PopulatePanel(currentView);
-
-            ((DynamicBrowserEn5View)view).DynamicBrowser.Children.Add(_internetAccessBrowser);
-
             _internetAccessBrowser.Focus();
 
             this.RemainingTime = "30";
 
-            //this.OpenKeyboard = true;
+            // this.OpenKeyboard = true;
 
             this.TimeElapsed = 30;
             timer = new DispatcherTimer();
@@ -280,24 +238,8 @@ namespace Iap.DynamicEnglishScreens
             else
             {
                 timer.Stop();
-                this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
+                this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
             }
-        }
-
-        protected override void OnDeactivate(bool close)
-        {
-            try
-            {
-                if (_internetAccessBrowser != null)
-                {
-                    _internetAccessBrowser.Dispose();
-                }
-            }
-            catch
-            {
-
-            }
-            base.OnDeactivate(close);
         }
 
         public int lastMousePositionX;
@@ -324,7 +266,23 @@ namespace Iap.DynamicEnglishScreens
             lastMousePositionY = (int)e.GetTouchPoint(_internetAccessBrowser).Position.Y;
         }
 
-        private void PopulatePanel(DynamicBrowserEn5View view)
+        protected override void OnDeactivate(bool close)
+        {
+            try
+            {
+                if (_internetAccessBrowser != null)
+                {
+                    _internetAccessBrowser.Dispose();
+                }
+            }
+            catch
+            {
+
+            }
+            base.OnDeactivate(close);
+        }
+
+        private void PopulatePanel(DynamicBrowserGr2View view)
         {
             switch (this.SelectedPosition)
             {
@@ -333,15 +291,12 @@ namespace Iap.DynamicEnglishScreens
 
                     view.Row1.Height = new GridLength(293, GridUnitType.Auto);
                     view.Row2.Height = new GridLength(177, GridUnitType.Auto);
-                    view.Row3.Height = new GridLength(177, GridUnitType.Auto);
-                    view.Row4.Height = new GridLength(177, GridUnitType.Auto);
-                    view.Row5.Height = new GridLength(177, GridUnitType.Auto);
 
-                    this.LeftImage1 = this.ButtonsDetails[0].SelectedEngImg;
-                    this.LeftImage2 = this.ButtonsDetails[1].InternalEngImg;
-                    this.LeftImage3 = this.ButtonsDetails[2].InternalEngImg;
-                    this.LeftImage4 = this.ButtonsDetails[3].InternalEngImg;
-                    this.LeftImage5 = this.ButtonsDetails[4].InternalEngImg;
+                    this.LeftImage1 = this.ButtonsDetails[0].SelectedGrImg;
+                    this.LeftImage2 = this.ButtonsDetails[1].InternalGrImg;
+                    
+
+
 
                     break;
 
@@ -349,76 +304,27 @@ namespace Iap.DynamicEnglishScreens
 
                     view.Row1.Height = new GridLength(177, GridUnitType.Auto);
                     view.Row2.Height = new GridLength(293, GridUnitType.Auto);
-                    view.Row3.Height = new GridLength(177, GridUnitType.Auto);
-                    view.Row4.Height = new GridLength(177, GridUnitType.Auto);
-                    view.Row5.Height = new GridLength(177, GridUnitType.Auto);
+                    
 
-                    this.LeftImage1 = this.ButtonsDetails[0].InternalEngImg;
-                    this.LeftImage2 = this.ButtonsDetails[1].SelectedEngImg;
-                    this.LeftImage3 = this.ButtonsDetails[2].InternalEngImg;
-                    this.LeftImage4 = this.ButtonsDetails[3].InternalEngImg;
-                    this.LeftImage5 = this.ButtonsDetails[4].InternalEngImg;
 
+                    this.LeftImage1 = this.ButtonsDetails[0].InternalGrImg;
+                    this.LeftImage2 = this.ButtonsDetails[1].SelectedGrImg;
+                   
                     break;
-                case "3":
-
-                    view.Row1.Height = new GridLength(177, GridUnitType.Auto);
-                    view.Row2.Height = new GridLength(177, GridUnitType.Auto);
-                    view.Row3.Height = new GridLength(293, GridUnitType.Auto);
-                    view.Row4.Height = new GridLength(177, GridUnitType.Auto);
-                    view.Row5.Height = new GridLength(177, GridUnitType.Auto);
-
-                    this.LeftImage1 = this.ButtonsDetails[0].InternalEngImg;
-                    this.LeftImage2 = this.ButtonsDetails[1].InternalEngImg;
-                    this.LeftImage3 = this.ButtonsDetails[2].SelectedEngImg;
-                    this.LeftImage4 = this.ButtonsDetails[3].InternalEngImg;
-                    this.LeftImage5 = this.ButtonsDetails[4].InternalEngImg;
-
-                    break;
-                case "4":
+              
 
 
-                    view.Row1.Height = new GridLength(177, GridUnitType.Auto);
-                    view.Row2.Height = new GridLength(177, GridUnitType.Auto);
-                    view.Row3.Height = new GridLength(177, GridUnitType.Auto);
-                    view.Row4.Height = new GridLength(293, GridUnitType.Auto);
-                    view.Row5.Height = new GridLength(177, GridUnitType.Auto);
-
-                    this.LeftImage1 = this.ButtonsDetails[0].InternalEngImg;
-                    this.LeftImage2 = this.ButtonsDetails[1].InternalEngImg;
-                    this.LeftImage3 = this.ButtonsDetails[2].InternalEngImg;
-                    this.LeftImage4 = this.ButtonsDetails[3].SelectedEngImg;
-                    this.LeftImage5 = this.ButtonsDetails[4].InternalEngImg;
-
-                    break;
-
-                case "5":
-
-                    view.Row1.Height = new GridLength(177, GridUnitType.Auto);
-                    view.Row2.Height = new GridLength(177, GridUnitType.Auto);
-                    view.Row3.Height = new GridLength(177, GridUnitType.Auto);
-                    view.Row4.Height = new GridLength(177, GridUnitType.Auto);
-                    view.Row5.Height = new GridLength(293, GridUnitType.Auto);
-
-                    this.LeftImage1 = this.ButtonsDetails[0].InternalEngImg;
-                    this.LeftImage2 = this.ButtonsDetails[1].InternalEngImg;
-                    this.LeftImage3 = this.ButtonsDetails[2].InternalEngImg;
-                    this.LeftImage4 = this.ButtonsDetails[3].InternalEngImg;
-                    this.LeftImage5 = this.ButtonsDetails[4].SelectedEngImg;
-
-                    break;
             }
 
             NotifyOfPropertyChange(() => LeftImage1);
             NotifyOfPropertyChange(() => LeftImage2);
-            NotifyOfPropertyChange(() => LeftImage3);
-            NotifyOfPropertyChange(() => LeftImage4);
-            NotifyOfPropertyChange(() => LeftImage5);
+           
+
         }
 
         public void Back()
         {
-              this.OpenKeyboard = false;
+            this.OpenKeyboard = false;
             try
             {
                 if (_internetAccessBrowser.CanGoBack && this.PreviousSelected == this.SelectedPosition)
@@ -431,7 +337,7 @@ namespace Iap.DynamicEnglishScreens
                     {
                         _internetAccessBrowser.Dispose();
                     }
-                    this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
+                    this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
                 }
             }
             catch { }
@@ -443,7 +349,7 @@ namespace Iap.DynamicEnglishScreens
             this.SelectedPosition = "1";
             NotifyOfPropertyChange(() => SelectedPosition);
             PopulatePanel(currentView);
-            _internetAccessBrowser.Load(this.ButtonsDetails[0].EnUrl);
+            _internetAccessBrowser.Load(this.ButtonsDetails[0].GrUrl);
         }
 
         public void ViewRedirect2()
@@ -453,35 +359,7 @@ namespace Iap.DynamicEnglishScreens
             this.SelectedPosition = "2";
             NotifyOfPropertyChange(() => SelectedPosition);
             PopulatePanel(currentView);
-            _internetAccessBrowser.Load(this.ButtonsDetails[1].EnUrl);
-        }
-
-        public void ViewRedirect3()
-        {
-
-            this.PreviousSelected = this.SelectedPosition;
-            this.SelectedPosition = "3";
-            NotifyOfPropertyChange(() => SelectedPosition);
-            PopulatePanel(currentView);
-            _internetAccessBrowser.Load(this.ButtonsDetails[2].EnUrl);
-        }
-
-        public void ViewRedirect4()
-        {
-            this.PreviousSelected = this.SelectedPosition;
-            this.SelectedPosition = "4";
-            NotifyOfPropertyChange(() => SelectedPosition);
-            PopulatePanel(currentView);
-            _internetAccessBrowser.Load(this.ButtonsDetails[3].EnUrl);
-        }
-
-        public void ViewRedirect5()
-        {
-            this.PreviousSelected = this.SelectedPosition;
-            this.SelectedPosition = "5";
-            NotifyOfPropertyChange(() => SelectedPosition);
-            PopulatePanel(currentView);
-            _internetAccessBrowser.Load(this.ButtonsDetails[4].EnUrl);
+            _internetAccessBrowser.Load(this.ButtonsDetails[1].GrUrl);
         }
     }
 }

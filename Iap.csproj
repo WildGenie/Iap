@@ -140,6 +140,8 @@
     <Compile Include="Bounds\BoundObject.cs" />
     <Compile Include="Bounds\BoundPopUpObject.cs" />
     <Compile Include="Bounds\BoundTest.cs" />
+    <Compile Include="Bounds\DynamicBrowserBoundObjectEn.cs" />
+    <Compile Include="Bounds\DynamicBrowserBoundObjectGr.cs" />
     <Compile Include="BuyWifiView.xaml.cs">
       <DependentUpon>BuyWifiView.xaml</DependentUpon>
     </Compile>
@@ -155,6 +157,14 @@
     <Compile Include="Commands\ViewRedirectToBrowserCommand.cs" />
     <Compile Include="Commands\ViewSrceenSaverCommand.cs" />
     <Compile Include="Commands\ViewTravelAuthorizationCommand.cs" />
+    <Compile Include="DynamicEnglishScreens\DynamicBrowserEn2View.xaml.cs">
+      <DependentUpon>DynamicBrowserEn2View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicEnglishScreens\DynamicBrowserEn2ViewModel.cs" />
+    <Compile Include="DynamicEnglishScreens\DynamicBrowserEn3View.xaml.cs">
+      <DependentUpon>DynamicBrowserEn3View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicEnglishScreens\DynamicBrowserEn3ViewModel.cs" />
     <Compile Include="DynamicEnglishScreens\DynamicBrowserEn5View.xaml.cs">
       <DependentUpon>DynamicBrowserEn5View.xaml</DependentUpon>
     </Compile>
@@ -175,6 +185,14 @@
       <DependentUpon>DynamicBrowserEnView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DynamicEnglishScreens\DynamicBrowserEnViewModel.cs" />
+    <Compile Include="DynamicEnglishScreens\DynamicEnShell2View.xaml.cs">
+      <DependentUpon>DynamicEnShell2View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicEnglishScreens\DynamicEnShell2ViewModel.cs" />
+    <Compile Include="DynamicEnglishScreens\DynamicEnShell3View.xaml.cs">
+      <DependentUpon>DynamicEnShell3View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicEnglishScreens\DynamicEnShell3ViewModel.cs" />
     <Compile Include="DynamicEnglishScreens\DynamicEnShell5View.xaml.cs">
       <DependentUpon>DynamicEnShell5View.xaml</DependentUpon>
     </Compile>
@@ -195,6 +213,14 @@
       <DependentUpon>DynamicEnShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DynamicEnglishScreens\DynamicEnShellViewModel.cs" />
+    <Compile Include="DynamicGreekScreens\DynamicBrowserGr2View.xaml.cs">
+      <DependentUpon>DynamicBrowserGr2View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicGreekScreens\DynamicBrowserGr2ViewModel.cs" />
+    <Compile Include="DynamicGreekScreens\DynamicBrowserGr3View.xaml.cs">
+      <DependentUpon>DynamicBrowserGr3View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicGreekScreens\DynamicBrowserGr3ViewModel.cs" />
     <Compile Include="DynamicGreekScreens\DynamicBrowserGr5View.xaml.cs">
       <DependentUpon>DynamicBrowserGr5View.xaml</DependentUpon>
     </Compile>
@@ -215,6 +241,14 @@
       <DependentUpon>DynamicBrowserGrView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DynamicGreekScreens\DynamicBrowserGrViewModel.cs" />
+    <Compile Include="DynamicGreekScreens\DynamicGrShell2ViewModel.cs" />
+    <Compile Include="DynamicGreekScreens\DynamicGrShell3View.xaml.cs">
+      <DependentUpon>DynamicGrShell3View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicGreekScreens\DynamicGrShell3ViewModel.cs" />
+    <Compile Include="DynamicGreekScreens\DynamicGrShell2View.xaml.cs">
+      <DependentUpon>DynamicGrShell2View.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DynamicGreekScreens\DynamicGrShell5View.xaml.cs">
       <DependentUpon>DynamicGrShell5View.xaml</DependentUpon>
     </Compile>
@@ -258,6 +292,7 @@
     <Compile Include="Handlers\CustomJsDialog.cs" />
     <Compile Include="Handlers\CustomMenuHandler.cs" />
     <Compile Include="Handlers\CustomRenderProcessHandler.cs" />
+    <Compile Include="Handlers\DynamicBrowserRequestHandler.cs" />
     <Compile Include="Handlers\GlobalCounters.cs" />
     <Compile Include="Handlers\LifeSpanHandler.cs" />
     <Compile Include="Handlers\PrinterCanceller.cs" />
@@ -346,6 +381,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DynamicEnglishScreens\DynamicBrowserEn2View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicEnglishScreens\DynamicBrowserEn3View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DynamicEnglishScreens\DynamicBrowserEn5View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -363,6 +406,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DynamicEnglishScreens\DynamicBrowserEnView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicEnglishScreens\DynamicEnShell2View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicEnglishScreens\DynamicEnShell3View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -386,6 +437,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DynamicGreekScreens\DynamicBrowserGr2View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicGreekScreens\DynamicBrowserGr3View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DynamicGreekScreens\DynamicBrowserGr5View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -403,6 +462,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DynamicGreekScreens\DynamicBrowserGrView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicGreekScreens\DynamicGrShell3View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicGreekScreens\DynamicGrShell2View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

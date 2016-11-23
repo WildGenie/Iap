@@ -262,7 +262,7 @@ namespace Iap.DynamicGreekScreens
             else
             {
                 timer.Stop();
-                this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+                this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
             }
         }
 
