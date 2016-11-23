@@ -172,6 +172,11 @@ namespace Iap.DynamicEnglishScreens
 
             PopulatePanel(currentView);
 
+            if (this.SelectedPosition == "8" || this.SelectedPosition == "7" || this.SelectedPosition == "6" || this.SelectedPosition == "")
+            {
+                currentView.scroller.ScrollToEnd();
+            }
+
             ((DynamicBrowserEn5View)view).DynamicBrowser.Children.Add(_internetAccessBrowser);
 
             _internetAccessBrowser.Focus();

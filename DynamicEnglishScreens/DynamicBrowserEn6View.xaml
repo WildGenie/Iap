@@ -65,7 +65,7 @@
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Hidden">
+            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Hidden" x:Name="scroller">
                 <Grid Grid.Column="1" ScrollViewer.CanContentScroll="True">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="15"/>

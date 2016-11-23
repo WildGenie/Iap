@@ -107,9 +107,9 @@ namespace Iap
                // this.DynamicEnShell.PopulateButtonLinks(buttons);
 
             }
-            catch (Exception ex)
+            catch
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                this.buttons = null;
             }
             base.OnViewLoaded(view);
         }
@@ -207,44 +207,59 @@ namespace Iap
 
         public void Handle(ViewSrceenSaverCommand message)
         {
+           /* try
+            {
+                System.Threading.Thread checkServiceThread = new System.Threading.Thread(() =>
+                    this.buttons = this.parser.GetButtonLinksDetails()
+                );
+                checkServiceThread.Start();
+            }
+            catch { }*/
             base.ActivateItem(this.ScreenSaver);
         }
 
         public void Handle(ViewDynamicEnglishShellCommand message)
         {
-            List<ButtonLinkModel> ButtonsDetails = this.buttons.ToList();
-
-
-            switch (ButtonsDetails.Count)
+            if (this.buttons == null)
             {
-                case 2:
-                    this.DynamicEnShell2.PopulateButtonLinks(ButtonsDetails);
-                    base.ActivateItem(this.DynamicEnShell2);
-                    break;
-                case 3:
-                    this.DynamicEnShell3.PopulateButtonLinks(ButtonsDetails);
-                    base.ActivateItem(this.DynamicEnShell3);
-                    break;
-                case 4:
-                    this.DynamicEnShell.PopulateButtonLinks(ButtonsDetails);
-                    base.ActivateItem(this.DynamicEnShell);
-                    break;
-                case 5:
-                    this.DynamicEnShell5.PopulateButtonLinks(ButtonsDetails);
-                    base.ActivateItem(this.DynamicEnShell5);
-                    break;
-                case 6:
-                    this.DynamicEnShell6.PopulateButtonLinks(ButtonsDetails);
-                    base.ActivateItem(this.DynamicEnShell6);
-                    break;
-                case 7:
-                    this.DynamicEnShell7.PopulateButtonLinks(ButtonsDetails);
-                    base.ActivateItem(this.DynamicEnShell7);
-                    break;
-                case 8:
-                    this.DynamicEnShell8.PopulateButtonLinks(ButtonsDetails);
-                    base.ActivateItem(this.DynamicEnShell8);
-                    break;
+                this.events.BeginPublishOnUIThread(new ViewEnglishCommand());
+            }
+            else
+            {
+                List<ButtonLinkModel> ButtonsDetails = this.buttons.ToList();
+
+
+                switch (ButtonsDetails.Count)
+                {
+                    case 2:
+                        this.DynamicEnShell2.PopulateButtonLinks(ButtonsDetails);
+                        base.ActivateItem(this.DynamicEnShell2);
+                        break;
+                    case 3:
+                        this.DynamicEnShell3.PopulateButtonLinks(ButtonsDetails);
+                        base.ActivateItem(this.DynamicEnShell3);
+                        break;
+                    case 4:
+                        this.DynamicEnShell.PopulateButtonLinks(ButtonsDetails);
+                        base.ActivateItem(this.DynamicEnShell);
+                        break;
+                    case 5:
+                        this.DynamicEnShell5.PopulateButtonLinks(ButtonsDetails);
+                        base.ActivateItem(this.DynamicEnShell5);
+                        break;
+                    case 6:
+                        this.DynamicEnShell6.PopulateButtonLinks(ButtonsDetails);
+                        base.ActivateItem(this.DynamicEnShell6);
+                        break;
+                    case 7:
+                        this.DynamicEnShell7.PopulateButtonLinks(ButtonsDetails);
+                        base.ActivateItem(this.DynamicEnShell7);
+                        break;
+                    case 8:
+                        this.DynamicEnShell8.PopulateButtonLinks(ButtonsDetails);
+                        base.ActivateItem(this.DynamicEnShell8);
+                        break;
+                }
             }
         }
 
