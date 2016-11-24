@@ -89,9 +89,9 @@ namespace Iap
             _internetAccessBrowser.MouseDown += _internetAccessBrowser_MouseDown;
 
             _internetAccessBrowser.RequestContext = new RequestContext();
-          //  _internetAccessBrowser.IsManipulationEnabled = true;
-
-            _internetAccessBrowser.ManipulationDelta += _internetAccessBrowser_ManipulationDelta;
+            //_internetAccessBrowser.IsManipulationEnabled = true;
+            //_internetAccessBrowser.ReleaseAllTouchCaptures();
+            //_internetAccessBrowser.ManipulationDelta += _internetAccessBrowser_ManipulationDelta;
             _internetAccessBrowser.Focus();
 
             this.RemainingTime = "30";
@@ -265,7 +265,7 @@ namespace Iap
 
         private void _internetAccessBrowser_TouchMove(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            int x = (int)e.GetTouchPoint(_internetAccessBrowser).Position.X;
+          /*  int x = (int)e.GetTouchPoint(_internetAccessBrowser).Position.X;
             int y = (int)e.GetTouchPoint(_internetAccessBrowser).Position.Y;
 
 
@@ -274,7 +274,7 @@ namespace Iap
 
             TranslateTransform transform = new TranslateTransform(x, y);
 
-            _internetAccessBrowser.SendMouseWheelEvent((int)_internetAccessBrowser.Width, (int)_internetAccessBrowser.Height, deltax, deltay, CefEventFlags.None);
+            _internetAccessBrowser.SendMouseWheelEvent((int)_internetAccessBrowser.Width, (int)_internetAccessBrowser.Height, deltax, deltay, CefEventFlags.None);*/
 
          /*   _internetAccessBrowser.SendMouseWheelEvent(
                         lastMousePositionX,
@@ -282,7 +282,7 @@ namespace Iap
                         deltaX: (int)transform.X,
                         deltaY: (int)transform.Y,
                         modifiers: CefEventFlags.None);*/
-
+                        
         }
 
         private void _internetAccessBrowser_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)

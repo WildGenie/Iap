@@ -179,7 +179,6 @@ namespace Iap.DynamicEnglishScreens
 
             ((DynamicBrowserEnView)view).DynamicBrowser.Children.Add(_internetAccessBrowser);
 
-
            // _internetAccessBrowser.Focus();
 
             this.RemainingTime = "30";
@@ -406,23 +405,49 @@ namespace Iap.DynamicEnglishScreens
 
         public void Back()
         {
-            this.OpenKeyboard = false;
+            /*  this.OpenKeyboard = false;
+              if (_internetAccessBrowser.GetMainFrame().Url.Contains(".pdf"))
+              {
+                  try
+                  {
+                      if (_internetAccessBrowser != null)
+                      {
+                          _internetAccessBrowser.Dispose();
+                      }
+                      this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
+                  }
+
+                  catch { }
+              }
+              else
+              {
+                  try
+                  {
+                      if (_internetAccessBrowser.CanGoBack && (this.PreviousSelected == this.SelectedPosition))
+                      {
+                          _internetAccessBrowser.Back();
+                      }
+                      else
+                      {
+                          if (_internetAccessBrowser != null)
+                          {
+                              _internetAccessBrowser.Dispose();
+                          }
+                          this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
+                      }
+                  }
+                  catch { }
+              }*/
             try
             {
-                if (_internetAccessBrowser.CanGoBack && this.PreviousSelected==this.SelectedPosition)
+                if (_internetAccessBrowser != null)
                 {
-                    _internetAccessBrowser.Back();
+                    _internetAccessBrowser.Dispose();
                 }
-                else
-                {
-                    if (_internetAccessBrowser != null)
-                    {
-                        _internetAccessBrowser.Dispose();
-                    }
-                    this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
-                }
+                this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
             }
-            catch { }
+            catch {
+            }
         }
 
         public void ViewRedirect1()

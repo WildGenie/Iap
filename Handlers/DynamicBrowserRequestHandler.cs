@@ -10,6 +10,9 @@ namespace Iap.Handlers
 {
     public class DynamicBrowserRequestHandler : IRequestHandler
     {
+
+        private string previousUrl;
+
         public bool GetAuthCredentials(IWebBrowser browserControl, IBrowser browser, IFrame frame, bool isProxy, string host, int port, string realm, string scheme, IAuthCallback callback)
         {
             return false;
@@ -37,6 +40,7 @@ namespace Iap.Handlers
 
         public bool OnOpenUrlFromTab(IWebBrowser browserControl, IBrowser browser, IFrame frame, string targetUrl, WindowOpenDisposition targetDisposition, bool userGesture)
         {
+            previousUrl = browserControl.GetMainFrame().Url;
             if (browser.IsPopup)
             {
                 browser.MainFrame.ExecuteJavaScriptAsync(@"window.close()");
@@ -64,6 +68,9 @@ namespace Iap.Handlers
 
                 mainBrowser.PrintToPdfAsync(path);
             }
+
+           
+            mainBrowser.Load(this.previousUrl);
         }
 
         public void OnPluginCrashed(IWebBrowser browserControl, IBrowser browser, string pluginPath)

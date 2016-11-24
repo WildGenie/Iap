@@ -287,6 +287,7 @@ namespace Iap
                         this.DynamicBrowserGr2.ButtonsDetails = message.ButtonsDetails;
                         this.DynamicBrowserGr2.HomeUrl = message.Url;
                         this.DynamicBrowserGr2.SelectedPosition = message.Position;
+                        this.DynamicBrowserGr2.PreviousSelected = message.Position;
                     }
                     else
                     {
@@ -294,6 +295,7 @@ namespace Iap
                         this.DynamicBrowserEn2.ButtonsDetails = message.ButtonsDetails;
                         this.DynamicBrowserEn2.HomeUrl = message.Url;
                         this.DynamicBrowserEn2.SelectedPosition = message.Position;
+                        this.DynamicBrowserEn2.PreviousSelected = message.Position;
                     }
 
                     break;
@@ -305,12 +307,14 @@ namespace Iap
                         this.DynamicBrowserGr3.ButtonsDetails = message.ButtonsDetails;
                         this.DynamicBrowserGr3.HomeUrl = message.Url;
                         this.DynamicBrowserGr3.SelectedPosition = message.Position;
+                        this.DynamicBrowserGr3.PreviousSelected = message.Position;
                     }
                     else
                     {
                         base.ChangeActiveItem(this.DynamicBrowserEn3, true);
                         this.DynamicBrowserEn3.ButtonsDetails = message.ButtonsDetails;
                         this.DynamicBrowserEn3.HomeUrl = message.Url;
+                        this.DynamicBrowserEn3.SelectedPosition = message.Position;
                         this.DynamicBrowserEn3.SelectedPosition = message.Position;
                     }
 
@@ -323,6 +327,7 @@ namespace Iap
                         this.DynamicBrowserGr.ButtonsDetails = message.ButtonsDetails;
                         this.DynamicBrowserGr.HomeUrl = message.Url;
                         this.DynamicBrowserGr.SelectedPosition = message.Position;
+                        this.DynamicBrowserGr.PreviousSelected = message.Position;
                     }
                     else
                     {
@@ -330,6 +335,7 @@ namespace Iap
                         this.DynamicBrowserEn.ButtonsDetails = message.ButtonsDetails;
                         this.DynamicBrowserEn.HomeUrl = message.Url;
                         this.DynamicBrowserEn.SelectedPosition = message.Position;
+                        this.DynamicBrowserEn.PreviousSelected = message.Position;
                     }
 
                     break;
@@ -341,6 +347,7 @@ namespace Iap
                         this.DynamicBrowserGr5.ButtonsDetails = message.ButtonsDetails;
                         this.DynamicBrowserGr5.HomeUrl = message.Url;
                         this.DynamicBrowserGr5.SelectedPosition = message.Position;
+                        this.DynamicBrowserGr5.PreviousSelected = message.Position;
                     }
                     else
                     {
@@ -348,6 +355,7 @@ namespace Iap
                         this.DynamicBrowserEn5.ButtonsDetails = message.ButtonsDetails;
                         this.DynamicBrowserEn5.HomeUrl = message.Url;
                         this.DynamicBrowserEn5.SelectedPosition = message.Position;
+                        this.DynamicBrowserEn5.PreviousSelected = message.Position;
                     }
 
                     break;
@@ -359,6 +367,7 @@ namespace Iap
                         this.DynamicBrowserGr6.ButtonsDetails = message.ButtonsDetails;
                         this.DynamicBrowserGr6.HomeUrl = message.Url;
                         this.DynamicBrowserGr6.SelectedPosition = message.Position;
+                        this.DynamicBrowserGr6.PreviousSelected = message.Position;
                     }
                     else
                     {
@@ -366,6 +375,7 @@ namespace Iap
                         this.DynamicBrowserEn6.ButtonsDetails = message.ButtonsDetails;
                         this.DynamicBrowserEn6.HomeUrl = message.Url;
                         this.DynamicBrowserEn6.SelectedPosition = message.Position;
+                        this.DynamicBrowserEn6.PreviousSelected = message.Position;
                     }
 
                     break;
@@ -377,6 +387,7 @@ namespace Iap
                         this.DynamicBrowserGr7.ButtonsDetails = message.ButtonsDetails;
                         this.DynamicBrowserGr7.HomeUrl = message.Url;
                         this.DynamicBrowserGr7.SelectedPosition = message.Position;
+                        this.DynamicBrowserGr7.PreviousSelected = message.Position;
                     }
                     else
                     {
@@ -384,6 +395,7 @@ namespace Iap
                         this.DynamicBrowserEn7.ButtonsDetails = message.ButtonsDetails;
                         this.DynamicBrowserEn7.HomeUrl = message.Url;
                         this.DynamicBrowserEn7.SelectedPosition = message.Position;
+                        this.DynamicBrowserEn7.PreviousSelected = message.Position;
                     }
 
                     break;
@@ -395,6 +407,7 @@ namespace Iap
                         this.DynamicBrowserGr8.ButtonsDetails = message.ButtonsDetails;
                         this.DynamicBrowserGr8.HomeUrl = message.Url;
                         this.DynamicBrowserGr8.SelectedPosition = message.Position;
+                        this.DynamicBrowserGr8.PreviousSelected = message.Position;
                     }
                     else
                     {
@@ -402,6 +415,7 @@ namespace Iap
                         this.DynamicBrowserEn8.ButtonsDetails = message.ButtonsDetails;
                         this.DynamicBrowserEn8.HomeUrl = message.Url;
                         this.DynamicBrowserEn8.SelectedPosition = message.Position;
+                        this.DynamicBrowserEn8.PreviousSelected = message.Position;
                     }
 
                     break;
