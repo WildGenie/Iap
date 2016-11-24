@@ -15,6 +15,7 @@ namespace Iap.DynamicEnglishScreens
         private readonly IEventAggregator events;
         private string bannerBackground;
         private bool isBannerVisible;
+        private readonly ILog log;
 
         private BitmapImage image1;
         private BitmapImage image2;
@@ -22,9 +23,10 @@ namespace Iap.DynamicEnglishScreens
         private BitmapImage image4;
 
 
-        public DynamicEnShellViewModel(IEventAggregator events)
+        public DynamicEnShellViewModel(IEventAggregator events, ILog log)
         {
             this.events = events;
+            this.log = log;
         }
 
 
@@ -154,21 +156,25 @@ namespace Iap.DynamicEnglishScreens
         public void ViewRedirect1()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("",this.ButtonsDetails[0].EnUrl,this.ButtonsDetails, "1"));
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[0].Title + ".");
         }
 
         public void ViewRedirect2()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[1].EnUrl, this.ButtonsDetails, "2"));
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[1].Title + ".");
         }
 
         public void ViewRedirect3()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[2].EnUrl, this.ButtonsDetails, "3"));
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[2].Title + ".");
         }
 
         public void ViewRedirect4()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[3].EnUrl, this.ButtonsDetails, "4"));
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[3].Title + ".");
         }
 
         public void ViewGreek()

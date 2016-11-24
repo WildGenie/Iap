@@ -36,7 +36,7 @@ namespace Iap.DynamicEnglishScreens
         private int TimeElapsed = 30;
         private DispatcherTimer timer;
 
-        public IdleInputBrowserViewModel IdleInputBrowser { get; set; }
+        
 
         public DynamicBrowserEn3ViewModel(IEventAggregator events)
         {

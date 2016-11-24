@@ -13,6 +13,7 @@ namespace Iap.DynamicGreekScreens
    public class DynamicGrShellViewModel:Screen
     {
         private readonly IEventAggregator events;
+        private readonly ILog log;
         private string bannerBackground;
         private bool isBannerVisible;
 
@@ -21,9 +22,10 @@ namespace Iap.DynamicGreekScreens
         private BitmapImage image3;
         private BitmapImage image4;
 
-        public DynamicGrShellViewModel(IEventAggregator events)
+        public DynamicGrShellViewModel(IEventAggregator events, ILog log)
         {
             this.events = events;
+            this.log = log;
         }
 
         public BitmapImage Image1
@@ -152,21 +154,25 @@ namespace Iap.DynamicGreekScreens
         public void ViewRedirect1()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[0].GrUrl, this.ButtonsDetails, "1"));
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[0].Title + ".");
         }
 
         public void ViewRedirect2()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[1].GrUrl, this.ButtonsDetails, "2"));
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[1].Title + ".");
         }
 
         public void ViewRedirect3()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[2].GrUrl, this.ButtonsDetails, "3"));
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[2].Title + ".");
         }
 
         public void ViewRedirect4()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[3].GrUrl, this.ButtonsDetails, "4"));
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[3].Title + ".");
         }
 
         public void ViewEnglish()

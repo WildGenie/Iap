@@ -63,6 +63,11 @@ namespace Iap.Windsor
                     .Where(x => x.Name.EndsWith("Projection"))
                     .WithServiceDefaultInterfaces());
 
+            this.ConfigureLog();
+            this.container
+                .Resolve<ILog>()
+                .Info("Invoking Action: Start Application.");
+
             base.Configure();
         }
 
@@ -87,6 +92,25 @@ namespace Iap.Windsor
 
 
             base.OnStartup(sender, e);
+        }
+
+        protected override void OnExit(object sender, EventArgs e)
+        {
+            this.container.Dispose();
+            base.OnExit(sender, e);
+        }
+
+        private void ConfigureLog()
+        {
+            this.container.Register(
+                Component
+                    .For<ILog>()
+                    .ImplementedBy<UserActivityLogger>());
+
+            LogManager.GetLog = caliburnType =>
+                new UserActivityLogger(
+                    caliburnType,
+                    this.container.Resolve<CultureInfo>());
         }
     }
 }

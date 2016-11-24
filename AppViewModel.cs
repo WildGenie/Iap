@@ -13,6 +13,8 @@ using Iap.Services;
 using Iap.Models;
 using Iap.DynamicEnglishScreens;
 using Iap.DynamicGreekScreens;
+using CefSharp.Wpf;
+using CefSharp;
 
 namespace Iap
 {
@@ -41,13 +43,13 @@ namespace Iap
         }
 
         public ShellViewModel Shell { get; set; }
+      //  public IdleInputViewModel IdleInput { get; set; }
         public ShellGrViewModel ShellGr {get;set;}
 
         public PrintBoardingPassViewModel PrintBoardingPass { get; set; }
         public PrintBoardingPassGrViewModel PrintBoardingPassGr { get; set; }
         public TravelAuthorizationViewModel TravelAuthorization { get; set; }
         public TravelAuthorizationGrViewModel TravelAuthorizationGr { get; set; }
-        public IdleInputViewModel IdleInput { get; set; }
         public InternetAccessGrViewModel InternetAccessGr { get; set; }
         public InternetAccessViewModel InternetAccess { get; set; }
         public BuyWifiGrViewModel BuyWifiGr { get; set; }
@@ -55,6 +57,7 @@ namespace Iap
 
         public ScreenSaverViewModel ScreenSaver { get; set; }
 
+        public IdleBrowserViewModel IdleBrowser { get; set; }
 
         public DynamicEnShellViewModel DynamicEnShell { get; set; }
         public DynamicEnShell2ViewModel DynamicEnShell2 { get; set; }
@@ -93,12 +96,19 @@ namespace Iap
             base.ActivateItem(this.ScreenSaver);
             this.ScreenSaver.Parent = this;
 
+            /* EventManager.RegisterClassHandler(
+                 typeof(UIElement),
+                 Mouse.MouseDownEvent,
+                 new MouseButtonEventHandler((s, e) =>
+                     this.IdleInput.LastMouseDownEventTicks =
+                         TimeProvider.Current.UtcNow.ToLocalTime().Ticks));*/
+
             EventManager.RegisterClassHandler(
-                typeof(UIElement),
-                Mouse.MouseDownEvent,
-                new MouseButtonEventHandler((s, e) =>
-                    this.IdleInput.LastMouseDownEventTicks =
-                        TimeProvider.Current.UtcNow.ToLocalTime().Ticks));
+             typeof(ChromiumWebBrowser),
+             Mouse.MouseDownEvent,
+             new MouseButtonEventHandler((s, e) =>
+                 this.IdleBrowser.LastMouseDownEventTicks =
+                     TimeProvider.Current.UtcNow.ToLocalTime().Ticks));
 
             try
             {
@@ -107,8 +117,9 @@ namespace Iap
                // this.DynamicEnShell.PopulateButtonLinks(buttons);
 
             }
-            catch
+            catch(Exception ex)
             {
+                System.Windows.MessageBox.Show(ex.ToString());
                 this.buttons = null;
             }
             base.OnViewLoaded(view);

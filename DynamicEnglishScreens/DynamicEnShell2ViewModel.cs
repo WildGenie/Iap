@@ -13,17 +13,17 @@ namespace Iap.DynamicEnglishScreens
    public class DynamicEnShell2ViewModel:Screen
     {
         private readonly IEventAggregator events;
+        private readonly ILog log;
         private string bannerBackground;
         private bool isBannerVisible;
 
         private BitmapImage image1;
         private BitmapImage image2;
-        private BitmapImage image3;
-        private BitmapImage image4;
 
-        public DynamicEnShell2ViewModel(IEventAggregator events)
+        public DynamicEnShell2ViewModel(IEventAggregator events, ILog log)
         {
             this.events = events;
+            this.log = log;
         }
 
         public BitmapImage Image1
@@ -121,11 +121,13 @@ namespace Iap.DynamicEnglishScreens
         public void ViewRedirect1()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[0].EnUrl, this.ButtonsDetails, "1"));
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[0].Title + ".");
         }
 
         public void ViewRedirect2()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[1].EnUrl, this.ButtonsDetails, "2"));
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[1].Title + ".");
         }
 
         public void ViewGreek()

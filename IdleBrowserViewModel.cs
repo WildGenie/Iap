@@ -1,29 +1,32 @@
 ﻿using Caliburn.Micro;
 using Iap.Commands;
+using Iap.Unitilities;
 using System;
 using System.Threading;
 
-namespace Iap.Unitilities
+
+namespace Iap
 {
-   public class IdleInputBrowserViewModel:PropertyChangedBase
+   public class IdleBrowserViewModel:PropertyChangedBase
     {
         public long LastMouseDownEventTicks;
 
         private readonly IEventAggregator events;
-        private readonly double browserIsIdleAfterMinutes;
+        private readonly double applicationIsIdleAfterMinutes;
         private readonly Timer notifier;
 
-        public IdleInputBrowserViewModel(IEventAggregator events,
-            double browserIsIdleAfterMinutes)
+        public IdleBrowserViewModel(
+            IEventAggregator events,
+            double applicationIsIdleAfterMinutes)
         {
             this.events = events;
-            this.browserIsIdleAfterMinutes = browserIsIdleAfterMinutes;
+            this.applicationIsIdleAfterMinutes = applicationIsIdleAfterMinutes;
 
             this.notifier = new Timer(
-                this.ActiveSlideshow,
-                null,
-                TimeSpan.FromSeconds(0),
-                TimeSpan.FromMinutes(this.browserIsIdleAfterMinutes));
+               this.ActiveSlideshow,
+               null,
+               TimeSpan.FromSeconds(0),
+               TimeSpan.FromMinutes(this.applicationIsIdleAfterMinutes));
         }
 
         public IEventAggregator Events
@@ -33,13 +36,13 @@ namespace Iap.Unitilities
 
         public double ApplicationIsIdleAfterMinutes
         {
-            get { return this.browserIsIdleAfterMinutes; }
+            get { return this.applicationIsIdleAfterMinutes; }
         }
 
         private void ActiveSlideshow(object state)
         {
             if (this.ApplicationIsIdle())
-                this.events.PublishOnCurrentThread(new ViewSrceenSaverCommand());
+                this.events.PublishOnUIThread(new ViewSrceenSaverCommand());
         }
 
         private bool ApplicationIsIdle()
@@ -53,7 +56,7 @@ namespace Iap.Unitilities
         private long GetMaximumAllowedInactivity()
         {
             return TimeSpan
-                .FromMinutes(this.browserIsIdleAfterMinutes)
+                .FromMinutes(this.applicationIsIdleAfterMinutes)
                 .Ticks;
         }
     }

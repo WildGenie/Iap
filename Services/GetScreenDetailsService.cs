@@ -48,6 +48,7 @@ namespace Iap.Services
 
                 var contents = JToken.Parse(result.ToString());
 
+                string title = String.Empty;
                 BitmapImage externalImgEn = null;
                 BitmapImage externalImgGr = null;
                 BitmapImage internalImgEn = null;
@@ -57,6 +58,7 @@ namespace Iap.Services
                 string englishUrl = String.Empty;
                 string greekUrl = String.Empty;
 
+                title = contents["Title"].ToString();
                 externalImgEn = getBitmapImage(contents["Image"].ToString());
                 externalImgGr = getBitmapImage(contents["OutpuImageGreek"].ToString());
                 internalImgEn = getBitmapImage(contents["InternalImgEn"].ToString());
@@ -66,7 +68,7 @@ namespace Iap.Services
                 englishUrl = contents["EnglishUrl"].ToString();
                 greekUrl = contents["GreekUrl"].ToString();
 
-                yield return new ButtonLinkModel(externalImgEn, externalImgGr, internalImgEn, internalImgGr,
+                yield return new ButtonLinkModel(title,externalImgEn, externalImgGr, internalImgEn, internalImgGr,
                     selectedImgEn, selectedImgGr, englishUrl, greekUrl);
             }
         }

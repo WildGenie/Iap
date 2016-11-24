@@ -13,16 +13,17 @@ namespace Iap.DynamicGreekScreens
    public class DynamicGrShell2ViewModel:Screen
     {
         private readonly IEventAggregator events;
+        private readonly ILog log;
         private string bannerBackground;
         private bool isBannerVisible;
 
         private BitmapImage image1;
         private BitmapImage image2;
-        private BitmapImage image3;
 
-        public DynamicGrShell2ViewModel(IEventAggregator events)
+        public DynamicGrShell2ViewModel(IEventAggregator events, ILog log)
         {
             this.events = events;
+            this.log = log;
         }
 
         public BitmapImage Image1
@@ -120,11 +121,13 @@ namespace Iap.DynamicGreekScreens
         public void ViewRedirect1()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[0].GrUrl, this.ButtonsDetails, "1"));
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[0].Title + ".");
         }
 
         public void ViewRedirect2()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[1].GrUrl, this.ButtonsDetails, "2"));
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[1].Title + ".");
         }
 
         public void ViewEnglish()

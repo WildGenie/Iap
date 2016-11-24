@@ -15,6 +15,7 @@ using Iap.Unitilities;
 using System.Windows.Media;
 using Iap.Handlers;
 using Iap.Bounds;
+using System.Windows.Input;
 
 namespace Iap.DynamicEnglishScreens
 {
@@ -37,7 +38,7 @@ namespace Iap.DynamicEnglishScreens
         private int TimeElapsed = 30;
         private DispatcherTimer timer;
 
-        public IdleInputBrowserViewModel IdleInputBrowser { get; set; }
+        
 
         public DynamicBrowserEnViewModel(IEventAggregator events)
         {
@@ -132,11 +133,24 @@ namespace Iap.DynamicEnglishScreens
         {
             currentView = ((DynamicBrowserEnView)view);
 
+           
+
             _internetAccessBrowser = new ChromiumWebBrowser()
             {
                 Address = this.HomeUrl
             };
-
+           
+          /*  try
+            {
+                _internetAccessBrowser.AddHandler(Mouse.MouseDownEvent,
+                    new MouseButtonEventHandler((s, e) =>
+                    this.IdleInput.LastMouseDownEventTicks = TimeProvider.Current.UtcNow.ToLocalTime().Ticks));
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString());
+            }
+            */
             _internetAccessBrowser.BrowserSettings = new CefSharp.BrowserSettings()
             {
                 OffScreenTransparentBackground = false,
@@ -272,6 +286,7 @@ namespace Iap.DynamicEnglishScreens
             else
             {
                 timer.Stop();
+                System.Windows.MessageBox.Show("stopped");
                 this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
             }
         }

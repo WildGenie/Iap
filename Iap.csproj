@@ -297,6 +297,7 @@
     <Compile Include="Handlers\LifeSpanHandler.cs" />
     <Compile Include="Handlers\PrinterCanceller.cs" />
     <Compile Include="Handlers\RequestHandler.cs" />
+    <Compile Include="IdleBrowserViewModel.cs" />
     <Compile Include="InternetAccessView.xaml.cs">
       <DependentUpon>InternetAccessView.xaml</DependentUpon>
     </Compile>
@@ -333,9 +334,8 @@
     </Compile>
     <Compile Include="TravelAuthorizationViewModel.cs" />
     <Compile Include="Unitilities\DefaultTimeProvider.cs" />
-    <Compile Include="Unitilities\IdleInputBrowserViewModel.cs" />
-    <Compile Include="Unitilities\IdleInputViewModel.cs" />
     <Compile Include="Unitilities\TimeProvider.cs" />
+    <Compile Include="UserActivityLogger.cs" />
     <Compile Include="Windsor\AppBootstrapper.cs" />
     <Compile Include="Windsor\AppSettingsConvention.cs" />
     <Compile Include="Windsor\EventRegistrationFacility.cs" />

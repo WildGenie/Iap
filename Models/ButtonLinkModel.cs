@@ -9,6 +9,7 @@ namespace Iap.Models
 {
   public class ButtonLinkModel
     {
+        private string title;
         private BitmapImage externalEngImg;
         private BitmapImage externalGrImg;
         private BitmapImage internalEngImg;
@@ -18,9 +19,10 @@ namespace Iap.Models
         private string enUrl;
         private string grUrl;
 
-        public ButtonLinkModel(BitmapImage externalEngImg, BitmapImage externalGrImg, BitmapImage internalEngImg, BitmapImage internalGrImg,
+        public ButtonLinkModel(string title,BitmapImage externalEngImg, BitmapImage externalGrImg, BitmapImage internalEngImg, BitmapImage internalGrImg,
             BitmapImage selectedEngImg, BitmapImage selectedGrImg, string enUrl, string grUrl)
         {
+            this.title = title;
             this.externalEngImg = externalEngImg;
             this.externalGrImg = externalGrImg;
             this.internalEngImg = internalEngImg;
@@ -29,6 +31,19 @@ namespace Iap.Models
             this.selectedGrImg = selectedGrImg;
             this.enUrl = enUrl;
             this.grUrl = grUrl;
+        }
+
+        public string Title
+        {
+            get
+            {
+                return this.title;
+            }
+
+            set
+            {
+                title = value;
+            }
         }
 
         public BitmapImage ExternalEngImg

@@ -33,7 +33,7 @@ namespace Iap
         private DispatcherTimer timer;
 
 
-        public IdleInputBrowserViewModel IdleInputBrowser { get; set; }
+       
 
         public InternetAccessViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint)
         {

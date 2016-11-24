@@ -37,8 +37,7 @@ namespace Iap.DynamicGreekScreens
         private int TimeElapsed = 30;
         private DispatcherTimer timer;
 
-        public IdleInputBrowserViewModel IdleInputBrowser { get; set; }
-
+       
         public DynamicBrowserGr5ViewModel(IEventAggregator events)
         {
             this.events = events;
