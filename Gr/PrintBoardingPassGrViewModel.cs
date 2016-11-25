@@ -9,6 +9,9 @@ using CefSharp.Wpf;
 using Iap.Commands;
 using System.Windows.Threading;
 using Iap.Handlers;
+using Iap.Bounds;
+using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace Iap.Gr
 {
@@ -53,6 +56,11 @@ namespace Iap.Gr
             };
 
             _printBoardingPassBrowser.Load(this.boardingPassGrApi);
+
+            var obj = new BoundObject("el", Convert.ToInt32(numberOfAvailablePagesToPrint));
+
+            _printBoardingPassBrowser.RegisterJsObject("bound", obj);
+            _printBoardingPassBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 
             ((PrintBoardingPassGrView)view).InternetAccessBrowser.Children.Add(_printBoardingPassBrowser);
 
@@ -180,22 +188,45 @@ namespace Iap.Gr
         public int lastMousePositionX;
         public int lastMousePositionY;
 
+        private TouchDevice windowTouchDevice;
+        private System.Windows.Point lastPoint;
+
         private void _printBoardingPassBrowser_TouchMove(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            int x = (int)e.GetTouchPoint(_printBoardingPassBrowser).Position.X;
-            int y = (int)e.GetTouchPoint(_printBoardingPassBrowser).Position.Y;
+            /* int x = (int)e.GetTouchPoint(_printBoardingPassBrowser).Position.X;
+             int y = (int)e.GetTouchPoint(_printBoardingPassBrowser).Position.Y;
 
 
-            int deltax = x - lastMousePositionX;
-            int deltay = y - lastMousePositionY;
+             int deltax = x - lastMousePositionX;
+             int deltay = y - lastMousePositionY;
 
-            _printBoardingPassBrowser.SendMouseWheelEvent((int)_printBoardingPassBrowser.Width, (int)_printBoardingPassBrowser.Height, deltax, deltay, CefEventFlags.None);
+             _printBoardingPassBrowser.SendMouseWheelEvent((int)_printBoardingPassBrowser.Width, (int)_printBoardingPassBrowser.Height, deltax, deltay, CefEventFlags.None);*/
+            Control control = (Control)sender;
+
+            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+
+            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
+
+            var deltaX = locationOnScreen.X - lastPoint.X;
+            var deltaY = locationOnScreen.Y - lastPoint.Y;
+
+            lastPoint = locationOnScreen;
+
+            _printBoardingPassBrowser.SendMouseWheelEvent((int)lastPoint.X, (int)lastPoint.Y, (int)deltaX, (int)deltaY, CefEventFlags.None);
         }
 
         private void _printBoardingPassBrowser_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            lastMousePositionX = (int)e.GetTouchPoint(_printBoardingPassBrowser).Position.X;
-            lastMousePositionY = (int)e.GetTouchPoint(_printBoardingPassBrowser).Position.Y;
+            // lastMousePositionX = (int)e.GetTouchPoint(_printBoardingPassBrowser).Position.X;
+            // lastMousePositionY = (int)e.GetTouchPoint(_printBoardingPassBrowser).Position.Y;
+            Control control = (Control)sender;
+            e.TouchDevice.Capture(control);
+            windowTouchDevice = e.TouchDevice;
+            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+
+
+            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
+            lastPoint = locationOnScreen;
         }
 
         public void Back()

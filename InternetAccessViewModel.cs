@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows;
 using System.Windows.Input;
 using Iap.Unitilities;
+using System.Windows.Controls;
 
 namespace Iap
 {
@@ -258,37 +259,38 @@ namespace Iap
             }
         }
 
-      
 
-        public int lastMousePositionX;
-        public int lastMousePositionY;
+       
 
+        private TouchDevice windowTouchDevice;
+        private System.Windows.Point lastPoint;
         private void _internetAccessBrowser_TouchMove(object sender, System.Windows.Input.TouchEventArgs e)
         {
-          /*  int x = (int)e.GetTouchPoint(_internetAccessBrowser).Position.X;
-            int y = (int)e.GetTouchPoint(_internetAccessBrowser).Position.Y;
 
+            Control control = (Control)sender;
 
-            int deltax = x - lastMousePositionX;
-            int deltay = y - lastMousePositionY;
+            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
 
-            TranslateTransform transform = new TranslateTransform(x, y);
+            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
 
-            _internetAccessBrowser.SendMouseWheelEvent((int)_internetAccessBrowser.Width, (int)_internetAccessBrowser.Height, deltax, deltay, CefEventFlags.None);*/
+            var deltaX = locationOnScreen.X - lastPoint.X;
+            var deltaY = locationOnScreen.Y - lastPoint.Y;
 
-         /*   _internetAccessBrowser.SendMouseWheelEvent(
-                        lastMousePositionX,
-                        lastMousePositionY,
-                        deltaX: (int)transform.X,
-                        deltaY: (int)transform.Y,
-                        modifiers: CefEventFlags.None);*/
-                        
+            lastPoint = locationOnScreen;
+
+            _internetAccessBrowser.SendMouseWheelEvent((int)lastPoint.X, (int)lastPoint.Y, (int)deltaX, (int)deltaY, CefEventFlags.None);
         }
 
         private void _internetAccessBrowser_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            lastMousePositionX = (int)e.GetTouchPoint(_internetAccessBrowser).Position.X;
-            lastMousePositionY = (int)e.GetTouchPoint(_internetAccessBrowser).Position.Y;
+            Control control = (Control)sender;
+            e.TouchDevice.Capture(control);
+            windowTouchDevice = e.TouchDevice;
+            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+
+
+            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
+            lastPoint = locationOnScreen;
         }
 
         public IEventAggregator Events

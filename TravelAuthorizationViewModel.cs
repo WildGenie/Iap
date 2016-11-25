@@ -9,6 +9,9 @@ using CefSharp.Wpf;
 using System.Windows.Threading;
 using Iap.Commands;
 using Iap.Handlers;
+using Iap.Bounds;
+using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace Iap
 {
@@ -52,6 +55,10 @@ namespace Iap
             {
                 OffScreenTransparentBackground = false,
             };
+
+            var obj = new BoundObject("en", Convert.ToInt32(numberOfAvailablePagesToPrint));
+            _travelAuthorizationBrowser.RegisterJsObject("bound", obj);
+            _travelAuthorizationBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 
             _travelAuthorizationBrowser.Load(this.travelAuthorizationEnApi);
 
@@ -178,22 +185,45 @@ namespace Iap
         public int lastMousePositionX;
         public int lastMousePositionY;
 
+        private TouchDevice windowTouchDevice;
+        private System.Windows.Point lastPoint;
+
         private void _travelAuthorizationBrowser_TouchMove(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            int x = (int)e.GetTouchPoint(_travelAuthorizationBrowser).Position.X;
-            int y = (int)e.GetTouchPoint(_travelAuthorizationBrowser).Position.Y;
+            /* int x = (int)e.GetTouchPoint(_travelAuthorizationBrowser).Position.X;
+             int y = (int)e.GetTouchPoint(_travelAuthorizationBrowser).Position.Y;
 
 
-            int deltax = x - lastMousePositionX;
-            int deltay = y - lastMousePositionY;
+             int deltax = x - lastMousePositionX;
+             int deltay = y - lastMousePositionY;
 
-            _travelAuthorizationBrowser.SendMouseWheelEvent((int)_travelAuthorizationBrowser.Width, (int)_travelAuthorizationBrowser.Height, deltax, deltay, CefEventFlags.None);
+             _travelAuthorizationBrowser.SendMouseWheelEvent((int)_travelAuthorizationBrowser.Width, (int)_travelAuthorizationBrowser.Height, deltax, deltay, CefEventFlags.None);*/
+            Control control = (Control)sender;
+
+            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+
+            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
+
+            var deltaX = locationOnScreen.X - lastPoint.X;
+            var deltaY = locationOnScreen.Y - lastPoint.Y;
+
+            lastPoint = locationOnScreen;
+
+            _travelAuthorizationBrowser.SendMouseWheelEvent((int)lastPoint.X, (int)lastPoint.Y, (int)deltaX, (int)deltaY, CefEventFlags.None);
         }
 
         private void _travelAuthorizationBrowser_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            lastMousePositionX = (int)e.GetTouchPoint(_travelAuthorizationBrowser).Position.X;
-            lastMousePositionY = (int)e.GetTouchPoint(_travelAuthorizationBrowser).Position.Y;
+            //lastMousePositionX = (int)e.GetTouchPoint(_travelAuthorizationBrowser).Position.X;
+            //lastMousePositionY = (int)e.GetTouchPoint(_travelAuthorizationBrowser).Position.Y;
+            Control control = (Control)sender;
+            e.TouchDevice.Capture(control);
+            windowTouchDevice = e.TouchDevice;
+            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+
+
+            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
+            lastPoint = locationOnScreen;
         }
 
         public void Back()

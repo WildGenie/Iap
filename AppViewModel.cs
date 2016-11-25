@@ -119,7 +119,7 @@ namespace Iap
             }
             catch(Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+              //  System.Windows.MessageBox.Show(ex.ToString());
                 this.buttons = null;
             }
             base.OnViewLoaded(view);

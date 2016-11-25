@@ -9,6 +9,7 @@ using CefSharp;
 using System.Windows.Threading;
 using Iap.Commands;
 using Iap.Handlers;
+using Iap.Bounds;
 
 namespace Iap
 {
@@ -44,7 +45,7 @@ namespace Iap
         {
             _buyWifiBrowser = new ChromiumWebBrowser()
             {
-                Address = "http://www.google.com/ncr",
+                Address = "https://www.google.co.uk/",
             };
 
             _buyWifiBrowser.BrowserSettings = new CefSharp.BrowserSettings()
@@ -52,7 +53,13 @@ namespace Iap
                 OffScreenTransparentBackground = false,
             };
 
-            _buyWifiBrowser.Load("http://www.google.com/ncr");
+            _buyWifiBrowser.Load("https://www.google.co.uk/");
+
+
+            var obj = new BoundObject("en", Convert.ToInt32(numberOfAvailablePagesToPrint));
+
+            _buyWifiBrowser.RegisterJsObject("bound", obj);
+            _buyWifiBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 
             _buyWifiBrowser.LifeSpanHandler = new LifeSpanHandler();
             _buyWifiBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
@@ -249,7 +256,7 @@ namespace Iap
 
         public void ViewBuyWifi()
         {
-            _buyWifiBrowser.Load("http://www.google.com/ncr");
+            _buyWifiBrowser.Load("https://www.google.co.uk/");
         }
     }
 }
