@@ -152,10 +152,14 @@ namespace Iap
             if (this.isGreekSelected)
             {
                 base.ChangeActiveItem(BuyWifiGr,true);
+                BuyWifiGr.RemainingTime = message.RemaingTime;
+                BuyWifiGr.TimeElapsed = Convert.ToInt32(message.RemaingTime);
             }
             else
             {
                 base.ChangeActiveItem(BuyWifi,true);
+                BuyWifi.RemainingTime = message.RemaingTime;
+                BuyWifi.TimeElapsed = Convert.ToInt32(message.RemaingTime);
             }
         }
 
@@ -172,10 +176,14 @@ namespace Iap
             if (this.isGreekSelected)
             {
                 base.ChangeActiveItem(PrintBoardingPassGr, true);
+                PrintBoardingPassGr.RemainingTime = message.RemainingTime;
+                PrintBoardingPassGr.TimeElapsed = Convert.ToInt32(message.RemainingTime);
             }
             else
             {
                 base.ChangeActiveItem(PrintBoardingPass, true);
+                PrintBoardingPass.RemainingTime = message.RemainingTime;
+                PrintBoardingPass.TimeElapsed = Convert.ToInt32(message.RemainingTime);
             }
         }
 
@@ -184,10 +192,14 @@ namespace Iap
             if (this.isGreekSelected)
             {
                 base.ChangeActiveItem(InternetAccessGr,true);
+                InternetAccessGr.RemainingTime = message.RemainingTime;
+                InternetAccessGr.TimeElapsed = Convert.ToInt32(message.RemainingTime);
             }
             else
             {
                 base.ChangeActiveItem(InternetAccess,true);
+                InternetAccess.RemainingTime = message.RemainingTime;
+                InternetAccess.TimeElapsed = Convert.ToInt32(message.RemainingTime);
             }
         }
 
@@ -204,10 +216,14 @@ namespace Iap
             if (this.isGreekSelected)
             {
                 base.ChangeActiveItem(this.TravelAuthorizationGr, true);
+                TravelAuthorizationGr.RemainingTime = message.RemaingTime;
+                TravelAuthorizationGr.TimeElapsed = Convert.ToInt32(message.RemaingTime);
             }
             else
             {
                 base.ChangeActiveItem(this.TravelAuthorization, true);
+                TravelAuthorization.RemainingTime = message.RemaingTime;
+                TravelAuthorization.TimeElapsed = Convert.ToInt32(message.RemaingTime);
             }
         }
 

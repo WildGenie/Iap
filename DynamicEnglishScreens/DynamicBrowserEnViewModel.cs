@@ -282,6 +282,7 @@ namespace Iap.DynamicEnglishScreens
 
         protected override void OnDeactivate(bool close)
         {
+            timer.Stop();
             try
             {
                 if (_internetAccessBrowser != null)

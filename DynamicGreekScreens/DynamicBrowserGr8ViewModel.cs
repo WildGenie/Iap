@@ -214,7 +214,7 @@ namespace Iap.DynamicGreekScreens
 
             PopulatePanel(currentView);
 
-            if (this.SelectedPosition == "8" || this.SelectedPosition == "7" || this.SelectedPosition == "6" || this.SelectedPosition == "")
+            if (this.SelectedPosition == "8" || this.SelectedPosition == "7" || this.SelectedPosition == "6" || this.SelectedPosition == "5")
             {
                 currentView.scroller.ScrollToEnd();
             }
@@ -429,6 +429,7 @@ namespace Iap.DynamicGreekScreens
 
         protected override void OnDeactivate(bool close)
         {
+            timer.Stop();
             try
             {
                 if (_internetAccessBrowser != null)

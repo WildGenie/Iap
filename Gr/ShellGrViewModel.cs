@@ -13,7 +13,7 @@ namespace Iap.Gr
         private bool isBannerVisible;
 
 
-       
+        private string RemainingTime = "30";
 
         public ShellGrViewModel(IEventAggregator events)
         {
@@ -82,22 +82,22 @@ namespace Iap.Gr
 
         public void ViewBuyWifi()
         {
-            this.events.PublishOnBackgroundThread(new ViewBuyWifiCommand());
+            this.events.PublishOnBackgroundThread(new ViewBuyWifiCommand(this.RemainingTime));
         }
 
         public void ViewPrintBoardingPass()
         {
-            this.events.PublishOnBackgroundThread(new ViewPrintBoardingPassCommand());
+            this.events.PublishOnBackgroundThread(new ViewPrintBoardingPassCommand(this.RemainingTime));
         }
 
         public void ViewInternetAccess()
         {
-            this.events.PublishOnBackgroundThread(new ViewInternetAccessCommand());
+            this.events.PublishOnBackgroundThread(new ViewInternetAccessCommand(this.RemainingTime));
         }
 
         public void ViewTravelAuthorization()
         {
-            this.events.PublishOnBackgroundThread(new ViewTravelAuthorizationCommand());
+            this.events.PublishOnBackgroundThread(new ViewTravelAuthorizationCommand(this.RemainingTime));
         }
     }
 }

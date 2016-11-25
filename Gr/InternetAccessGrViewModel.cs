@@ -25,7 +25,7 @@ namespace Iap.Gr
 
         public static ChromiumWebBrowser _internetAccessBrowser;
 
-        private int TimeElapsed = 30;
+       
         private DispatcherTimer timer;
 
         public InternetAccessGrViewModel(IEventAggregator events,string numberOfAvailablePagesToPrint)
@@ -75,17 +75,23 @@ namespace Iap.Gr
 
             _internetAccessBrowser.Focus();
 
-            this.RemainingTime = "30";
+            
 
             this.OpenKeyboard = true;
 
-            this.TimeElapsed = 30;
+           
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 1, 0);
             timer.Tick += TimerTick;
             timer.Start();
 
             base.OnViewLoaded(view);
+        }
+
+        public int TimeElapsed
+        {
+            get;
+            set;
         }
 
         private void TimerTick(object sender, EventArgs e)
@@ -266,17 +272,17 @@ namespace Iap.Gr
 
         public void ViewBuyWifi()
         {
-            this.events.PublishOnCurrentThread(new ViewBuyWifiCommand());
+            this.events.PublishOnCurrentThread(new ViewBuyWifiCommand(this.TimeElapsed.ToString()));
         }
 
         public void ViewPrintBoardingPass()
         {
-            this.events.PublishOnCurrentThread(new ViewPrintBoardingPassCommand());
+            this.events.PublishOnCurrentThread(new ViewPrintBoardingPassCommand(this.TimeElapsed.ToString()));
         }
 
         public void ViewTravelAuthorization()
         {
-            this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand());
+            this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand(this.TimeElapsed.ToString()));
         }
 
         public void ViewInternetAccess()

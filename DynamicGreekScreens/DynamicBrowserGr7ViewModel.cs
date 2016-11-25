@@ -15,6 +15,8 @@ using Iap.Unitilities;
 using System.Windows.Media;
 using Iap.Handlers;
 using Iap.Bounds;
+using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace Iap.DynamicGreekScreens
 {
@@ -190,10 +192,15 @@ namespace Iap.DynamicGreekScreens
 
             PopulatePanel(currentView);
 
-            if (this.SelectedPosition == "8" || this.SelectedPosition == "7" || this.SelectedPosition == "6" || this.SelectedPosition == "")
+            if (this.SelectedPosition == "8" || this.SelectedPosition == "7" || this.SelectedPosition == "6" || this.SelectedPosition == "5")
             {
                 currentView.scroller.ScrollToEnd();
             }
+
+            currentView.scroller.PreviewMouseDown += Scroller_PreviewMouseDown;
+            currentView.scroller.PreviewMouseMove += Scroller_PreviewMouseMove;
+            currentView.scroller.PreviewMouseUp += Scroller_PreviewMouseUp;
+
 
             ((DynamicBrowserGr7View)view).DynamicBrowser.Children.Add(_internetAccessBrowser);
 
@@ -214,6 +221,47 @@ namespace Iap.DynamicGreekScreens
             timer.Start();
 
             base.OnViewLoaded(view);
+        }
+
+        private Point scrollTarget;
+
+        private Point scrollStartPoint;
+
+        private Point scrollStartOffset;
+
+        private void Scroller_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ScrollViewer scrollViewer = sender as ScrollViewer;
+            if (scrollViewer.IsMouseCaptured)
+            {
+                scrollViewer.ReleaseMouseCapture();
+            }
+        }
+
+        private void Scroller_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            ScrollViewer scrollViewer = sender as ScrollViewer;
+            Point currentPoint = e.GetPosition(scrollViewer);
+
+            Point delta = new Point(scrollStartPoint.X - currentPoint.X,
+                scrollStartPoint.Y - currentPoint.Y);
+
+            scrollTarget.X = scrollStartOffset.X + delta.X;
+            scrollTarget.Y = scrollStartOffset.Y + delta.Y;
+
+            scrollViewer.ScrollToHorizontalOffset(scrollTarget.X);
+            scrollViewer.ScrollToVerticalOffset(scrollTarget.Y);
+        }
+
+        private void Scroller_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ScrollViewer scrollViewer = sender as ScrollViewer;
+            if (scrollViewer.IsMouseOver)
+            {
+                scrollStartPoint = e.GetPosition(scrollViewer);
+                scrollStartOffset.X = scrollViewer.HorizontalOffset;
+                scrollStartOffset.Y = scrollViewer.VerticalOffset;
+            }
         }
 
         private void _internetAccessBrowser_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -314,29 +362,52 @@ namespace Iap.DynamicGreekScreens
         public int lastMousePositionX;
         public int lastMousePositionY;
 
+        private TouchDevice windowTouchDevice;
+        private System.Windows.Point lastPoint;
+
         private void _internetAccessBrowser_TouchMove(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            int x = (int)e.GetTouchPoint(_internetAccessBrowser).Position.X;
-            int y = (int)e.GetTouchPoint(_internetAccessBrowser).Position.Y;
+            /*int x = (int)e.GetTouchPoint(_internetAccessBrowser).Position.X;
+             int y = (int)e.GetTouchPoint(_internetAccessBrowser).Position.Y;
 
 
-            int deltax = x - lastMousePositionX;
-            int deltay = y - lastMousePositionY;
+             int deltax = x - lastMousePositionX;
+             int deltay = y - lastMousePositionY;
 
-            TranslateTransform transform = new TranslateTransform(x, y);
+             TranslateTransform transform = new TranslateTransform(x, y);
 
-            _internetAccessBrowser.SendMouseWheelEvent((int)_internetAccessBrowser.Width, (int)_internetAccessBrowser.Height, deltax, deltay, CefEventFlags.None);
+             _internetAccessBrowser.SendMouseWheelEvent((int)_internetAccessBrowser.Width, (int)_internetAccessBrowser.Height, deltax, deltay, CefEventFlags.None);*/
+            Control control = (Control)sender;
 
+            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+
+            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
+
+            var deltaX = locationOnScreen.X - lastPoint.X;
+            var deltaY = locationOnScreen.Y - lastPoint.Y;
+
+            lastPoint = locationOnScreen;
+
+            _internetAccessBrowser.SendMouseWheelEvent((int)lastPoint.X, (int)lastPoint.Y, (int)deltaX, (int)deltaY, CefEventFlags.None);
         }
 
         private void _internetAccessBrowser_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            lastMousePositionX = (int)e.GetTouchPoint(_internetAccessBrowser).Position.X;
-            lastMousePositionY = (int)e.GetTouchPoint(_internetAccessBrowser).Position.Y;
+            // lastMousePositionX = (int)e.GetTouchPoint(_internetAccessBrowser).Position.X;
+            // lastMousePositionY = (int)e.GetTouchPoint(_internetAccessBrowser).Position.Y;
+            Control control = (Control)sender;
+            e.TouchDevice.Capture(control);
+            windowTouchDevice = e.TouchDevice;
+            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+
+
+            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
+            lastPoint = locationOnScreen;
         }
 
         protected override void OnDeactivate(bool close)
         {
+            timer.Stop();
             try
             {
                 if (_internetAccessBrowser != null)

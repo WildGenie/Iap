@@ -26,7 +26,7 @@ namespace Iap
 
         public static ChromiumWebBrowser _printBoardingPassBrowser;
 
-        private int TimeElapsed = 30;
+     
         private DispatcherTimer timer;
 
         public PrintBoardingPassViewModel(IEventAggregator events,string boardingPassEnApi, string numberOfAvailablePagesToPrint)
@@ -81,9 +81,7 @@ namespace Iap
 
             _printBoardingPassBrowser.Focus();
 
-            this.RemainingTime = "30";
-
-            this.TimeElapsed = 30;
+           
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 1, 0);
             timer.Tick += TimerTick;
@@ -104,6 +102,12 @@ namespace Iap
                 timer.Stop();
                 this.events.PublishOnCurrentThread(new ViewEnglishCommand());
             }
+        }
+
+        public int TimeElapsed
+        {
+            get;
+            set;
         }
 
         private void _printBoardingPassBrowser_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -272,17 +276,17 @@ namespace Iap
 
         public void ViewBuyWifi()
         {
-            this.events.PublishOnCurrentThread(new ViewBuyWifiCommand());
+            this.events.PublishOnCurrentThread(new ViewBuyWifiCommand(this.TimeElapsed.ToString()));
         }
 
         public void ViewInternetAccess()
         {
-            this.events.PublishOnCurrentThread(new ViewInternetAccessCommand());
+            this.events.PublishOnCurrentThread(new ViewInternetAccessCommand(this.TimeElapsed.ToString()));
         }
 
         public void ViewTravelAuthorization()
         {
-            this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand());
+            this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand(this.TimeElapsed.ToString()));
         }
 
         public void ViewPrintBoardingPass()
