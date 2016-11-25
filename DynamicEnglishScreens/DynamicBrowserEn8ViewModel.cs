@@ -257,6 +257,7 @@ namespace Iap.DynamicEnglishScreens
 
         #endregion
 
+
         private void Scroller_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             ScrollViewer scrollViewer = sender as ScrollViewer;
@@ -264,21 +265,26 @@ namespace Iap.DynamicEnglishScreens
             {
                 scrollViewer.ReleaseMouseCapture();
             }
+            
         }
 
         private void Scroller_PreviewMouseMove(object sender, MouseEventArgs e)
         {
             ScrollViewer scrollViewer = sender as ScrollViewer;
-            Point currentPoint = e.GetPosition(scrollViewer);
+            if (scrollViewer.IsMouseOver)
+            {
+                Point currentPoint = e.GetPosition(scrollViewer);
 
-            Point delta = new Point(scrollStartPoint.X - currentPoint.X,
-                scrollStartPoint.Y - currentPoint.Y);
+                Point delta = new Point(scrollStartPoint.X - currentPoint.X,
+                    scrollStartPoint.Y - currentPoint.Y);
 
-            scrollTarget.X = scrollStartOffset.X + delta.X;
-            scrollTarget.Y = scrollStartOffset.Y + delta.Y;
+                scrollTarget.X = scrollStartOffset.X + delta.X;
+                scrollTarget.Y = scrollStartOffset.Y + delta.Y;
 
-            scrollViewer.ScrollToHorizontalOffset(scrollTarget.X);
-            scrollViewer.ScrollToVerticalOffset(scrollTarget.Y);
+                scrollViewer.ScrollToHorizontalOffset(scrollTarget.X);
+                scrollViewer.ScrollToVerticalOffset(scrollTarget.Y);
+            }
+            
         }
 
         private void Scroller_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -290,6 +296,7 @@ namespace Iap.DynamicEnglishScreens
                 scrollStartOffset.X = scrollViewer.HorizontalOffset;
                 scrollStartOffset.Y = scrollViewer.VerticalOffset;
             }
+            
         }
 
         private void _internetAccessBrowser_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
