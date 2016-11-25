@@ -21,6 +21,7 @@ namespace Iap
              //settings.EnableInternalPdfViewerOffScreen();
              settings.CefCommandLineArgs.Add("disable-gpu", "0");
              settings.CefCommandLineArgs["touch-events"] = "enabled";
+           //settings.CefCommandLineArgs["--disable-pdf-extension"] = "true";
              settings.PackLoadingDisabled = false;
              settings.PersistSessionCookies = false;
              settings.PersistUserPreferences = false;

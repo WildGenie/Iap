@@ -57,19 +57,26 @@ namespace Iap
             _internetAccessBrowser.BrowserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
             _internetAccessBrowser.BrowserSettings.WebSecurity = CefState.Enabled;
             _internetAccessBrowser.BrowserSettings.Javascript = CefState.Enabled;
-           
 
-           
 
-           // var obj = new BoundTest(6,0,"en");
 
-            var obj = new BoundObject("en",Convert.ToInt32(numberOfAvailablePagesToPrint));
 
-            _internetAccessBrowser.RegisterJsObject("bound", obj);
-            _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
+            // var obj = new BoundTest(6,0,"en");
+
+            /*  var obj = new BoundObject("en",Convert.ToInt32(numberOfAvailablePagesToPrint));
+
+              _internetAccessBrowser.RegisterJsObject("bound", obj);
+              _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;*/
+
+            var boundObject = new CustomBoundObject();
+            _internetAccessBrowser.RegisterJsObject("bound", boundObject, true);
+            _internetAccessBrowser.FrameLoadEnd += boundObject.OnFrameLoadEnd;
 
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
-            _internetAccessBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
+            // _internetAccessBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
+
+            _internetAccessBrowser.RequestHandler = new CustomRequestHandler();
+
             _internetAccessBrowser.MenuHandler = new CustomMenuHandler();
          //   _internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler();
             _internetAccessBrowser.JsDialogHandler = new CustomJsDialog();
@@ -359,7 +366,7 @@ namespace Iap
 
         public void ViewInternetAccess()
         {
-            _internetAccessBrowser.Load("http://google.com/ncr");
+            _internetAccessBrowser.Load("https://www.google.co.uk/");
         }
     }
 }

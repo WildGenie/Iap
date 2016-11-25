@@ -61,7 +61,8 @@ namespace Iap
             _buyWifiBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 
             _buyWifiBrowser.LifeSpanHandler = new LifeSpanHandler();
-            _buyWifiBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
+            // _buyWifiBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
+            _buyWifiBrowser.RequestHandler = new CustomRequestHandler();
 
             ((BuyWifiView)view).BuyWifiBrowser.Children.Add(_buyWifiBrowser);
 

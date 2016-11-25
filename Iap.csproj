@@ -140,6 +140,7 @@
     <Compile Include="Bounds\BoundObject.cs" />
     <Compile Include="Bounds\BoundPopUpObject.cs" />
     <Compile Include="Bounds\BoundTest.cs" />
+    <Compile Include="Bounds\CustomBoundObject.cs" />
     <Compile Include="Bounds\DynamicBrowserBoundObjectEn.cs" />
     <Compile Include="Bounds\DynamicBrowserBoundObjectGr.cs" />
     <Compile Include="BuyWifiView.xaml.cs">
@@ -292,6 +293,7 @@
     <Compile Include="Handlers\CustomJsDialog.cs" />
     <Compile Include="Handlers\CustomMenuHandler.cs" />
     <Compile Include="Handlers\CustomRenderProcessHandler.cs" />
+    <Compile Include="Handlers\CustomRequestHandler.cs" />
     <Compile Include="Handlers\DynamicBrowserRequestHandler.cs" />
     <Compile Include="Handlers\GlobalCounters.cs" />
     <Compile Include="Handlers\LifeSpanHandler.cs" />
