@@ -12,6 +12,14 @@ namespace Iap.Bounds
 {
    public class DynamicBrowserBoundObjectEn
     {
+
+        private readonly string numberOfAvailablePagesToPrint;
+
+        public DynamicBrowserBoundObjectEn(string numberOfAvailablePagesToPrint)
+        {
+            this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
+        }
+
         ChromiumWebBrowser _mainBrowser;
         public void OnFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
@@ -109,7 +117,7 @@ namespace Iap.Bounds
                         int numberOfPages = pdfReader.NumberOfPages;
                         if (!(numberOfPages > 6))
                         {
-                            if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <= 6)
+                            if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <= Convert.ToInt32(this.numberOfAvailablePagesToPrint))
                             {
 
                                 System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
@@ -147,7 +155,7 @@ namespace Iap.Bounds
 
                             else
                             {                                
-                                    System.Windows.MessageBox.Show("Can not print other pages");                                
+                                    System.Windows.MessageBox.Show("Big number of pages");                                
                             }
 
                         }
@@ -161,7 +169,7 @@ namespace Iap.Bounds
                 else
                 {
                    
-                        System.Windows.MessageBox.Show("Failed to print");
+                        System.Windows.MessageBox.Show("Failed to print. Please try later");
 
                 }
 

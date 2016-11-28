@@ -16,12 +16,14 @@ using System.Windows.Media;
 using Iap.Handlers;
 using System.Windows.Input;
 using System.Windows.Controls;
+using Iap.Bounds;
 
 namespace Iap.DynamicGreekScreens
 {
    public class DynamicBrowserGrViewModel:Screen
     {
         private readonly IEventAggregator events;
+        private readonly string numberOfAvailablePagesToPrint;
 
         private BitmapImage leftImage1;
         private BitmapImage leftImage2;
@@ -40,9 +42,10 @@ namespace Iap.DynamicGreekScreens
 
        
 
-        public DynamicBrowserGrViewModel(IEventAggregator events)
+        public DynamicBrowserGrViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint)
         {
             this.events = events;
+            this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
         }
 
         public IEventAggregator Events
@@ -149,6 +152,12 @@ namespace Iap.DynamicGreekScreens
 
             _internetAccessBrowser.RequestContext = new RequestContext();
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
+
+            _internetAccessBrowser.RequestHandler = new DynamicBrowserRequestHandler();
+            var boundGrObject = new DynamicBrowserBoundObjectGr(this.numberOfAvailablePagesToPrint);
+            _internetAccessBrowser.RegisterJsObject("bound", boundGrObject);
+            _internetAccessBrowser.FrameLoadEnd += boundGrObject.OnFrameLoadEnd;
+
 
             PopulatePanel(currentView);
 

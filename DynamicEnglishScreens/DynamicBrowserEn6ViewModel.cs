@@ -23,6 +23,7 @@ namespace Iap.DynamicEnglishScreens
    public class DynamicBrowserEn6ViewModel:Screen
     {
         private readonly IEventAggregator events;
+        private readonly string numberOfAvailablePagesToPrint;
 
         private BitmapImage leftImage1;
         private BitmapImage leftImage2;
@@ -42,9 +43,10 @@ namespace Iap.DynamicEnglishScreens
 
        
 
-        public DynamicBrowserEn6ViewModel(IEventAggregator events)
+        public DynamicBrowserEn6ViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint)
         {
             this.events = events;
+            this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
         }
 
         public IEventAggregator Events
@@ -178,7 +180,7 @@ namespace Iap.DynamicEnglishScreens
             _internetAccessBrowser.RequestContext = new RequestContext();
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
             _internetAccessBrowser.RequestHandler = new DynamicBrowserRequestHandler();
-            var boundEnObject = new DynamicBrowserBoundObjectEn();
+            var boundEnObject = new DynamicBrowserBoundObjectEn(this.numberOfAvailablePagesToPrint);
             _internetAccessBrowser.RegisterJsObject("bound", boundEnObject);
             _internetAccessBrowser.FrameLoadEnd += boundEnObject.OnFrameLoadEnd;
 

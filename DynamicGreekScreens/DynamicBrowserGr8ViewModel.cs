@@ -23,6 +23,7 @@ namespace Iap.DynamicGreekScreens
    public class DynamicBrowserGr8ViewModel:Screen
     {
         private readonly IEventAggregator events;
+        private readonly string numberOfAvailablePagesToPrint;
 
         private BitmapImage leftImage1;
         private BitmapImage leftImage2;
@@ -44,9 +45,10 @@ namespace Iap.DynamicGreekScreens
 
         
 
-        public DynamicBrowserGr8ViewModel(IEventAggregator events)
+        public DynamicBrowserGr8ViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint)
         {
             this.events = events;
+            this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
         }
 
         public IEventAggregator Events
@@ -208,7 +210,7 @@ namespace Iap.DynamicGreekScreens
             _internetAccessBrowser.RequestContext = new RequestContext();
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
             _internetAccessBrowser.RequestHandler = new DynamicBrowserRequestHandler();
-            var boundGrObject = new DynamicBrowserBoundObjectGr();
+            var boundGrObject = new DynamicBrowserBoundObjectGr(this.numberOfAvailablePagesToPrint);
             _internetAccessBrowser.RegisterJsObject("bound", boundGrObject);
             _internetAccessBrowser.FrameLoadEnd += boundGrObject.OnFrameLoadEnd;
 
