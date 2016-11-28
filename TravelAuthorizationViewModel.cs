@@ -240,6 +240,10 @@ namespace Iap
             {
                 if (_travelAuthorizationBrowser.CanGoBack)
                 {
+                    if(_travelAuthorizationBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+                    {
+                        ViewTravelAuthorization();
+                    }
                     _travelAuthorizationBrowser.Back();
                 }
                 else

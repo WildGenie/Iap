@@ -62,9 +62,8 @@ namespace Iap.Gr
             _travelAuthorizationBrowser.RegisterJsObject("bound", obj);
             _travelAuthorizationBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 
-            ((PrintBoardingPassGrView)view).InternetAccessBrowser.Children.Add(_travelAuthorizationBrowser);
-
             ((TravelAuthorizationGrView)view).InternetAccessBrowser.Children.Add(_travelAuthorizationBrowser);
+
 
             _travelAuthorizationBrowser.TouchDown += _travelAuthorizationBrowser_TouchDown;
 
@@ -241,6 +240,10 @@ namespace Iap.Gr
             {
                 if (_travelAuthorizationBrowser.CanGoBack)
                 {
+                    if(_travelAuthorizationBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+                    {
+                        ViewTravelAuthorization();
+                    }
                     _travelAuthorizationBrowser.Back();
                 }
                 else

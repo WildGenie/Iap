@@ -246,7 +246,14 @@ namespace Iap
             {
                 if (_printBoardingPassBrowser.CanGoBack)
                 {
-                    _printBoardingPassBrowser.Back();
+                    if (_printBoardingPassBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+                    {
+                        ViewPrintBoardingPass();
+                    }
+                    else
+                    {
+                        _printBoardingPassBrowser.Back();
+                    }
                 }
                 else
                 {

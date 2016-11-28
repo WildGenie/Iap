@@ -23,6 +23,7 @@ namespace Iap
         private readonly IEventAggregator events;
         private string remainingTime;
         private readonly string numberOfAvailablePagesToPrint;
+        private readonly string internetAccessEnApi;
 
         private bool openKeyboard;
 
@@ -33,17 +34,18 @@ namespace Iap
 
        
 
-        public InternetAccessViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint)
+        public InternetAccessViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string internetAccessEnApi)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
+            this.internetAccessEnApi = internetAccessEnApi;
         }
 
         protected override void OnViewLoaded(object view)
         {
             _internetAccessBrowser = new ChromiumWebBrowser()
             {
-                Address = "https://www.google.co.uk/",
+                Address = this.internetAccessEnApi,
             };
 
             _internetAccessBrowser.BrowserSettings = new CefSharp.BrowserSettings()
@@ -51,7 +53,7 @@ namespace Iap
                 OffScreenTransparentBackground = false,
             };
 
-            _internetAccessBrowser.Load("https://www.google.co.uk/");
+            _internetAccessBrowser.Load(this.internetAccessEnApi);
 
             _internetAccessBrowser.BrowserSettings.FileAccessFromFileUrls = CefState.Enabled;
             _internetAccessBrowser.BrowserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
@@ -318,7 +320,14 @@ namespace Iap
             {
                 if (_internetAccessBrowser.CanGoBack)
                 {
-                    _internetAccessBrowser.Back();
+                    if (_internetAccessBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+                    {
+                        ViewInternetAccess();
+                    }
+                    else
+                    {
+                        _internetAccessBrowser.Back();
+                    }
                 }
                 else
                 {
@@ -366,7 +375,7 @@ namespace Iap
 
         public void ViewInternetAccess()
         {
-            _internetAccessBrowser.Load("https://www.google.co.uk/");
+            _internetAccessBrowser.Load(this.internetAccessEnApi);
         }
     }
 }

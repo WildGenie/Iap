@@ -240,6 +240,10 @@ namespace Iap.Gr
             {
                 if (_printBoardingPassBrowser.CanGoBack)
                 {
+                    if(_printBoardingPassBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+                    {
+                        ViewPrintBoardingPass();
+                    }
                     _printBoardingPassBrowser.Back();
                 }
                 else
@@ -284,7 +288,7 @@ namespace Iap.Gr
             this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand(this.TimeElapsed.ToString()));
         }
 
-        public void PrintBoardingPass()
+        public void ViewPrintBoardingPass()
         {
             _printBoardingPassBrowser.Load(this.boardingPassGrApi);
         }

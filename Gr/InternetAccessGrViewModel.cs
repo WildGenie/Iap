@@ -22,16 +22,18 @@ namespace Iap.Gr
         private string remainingTime;
         private bool openKeyboard;
         private readonly string numberOfAvailablePagesToPrint;
+        private readonly string internetAccessGrApi;
 
         public static ChromiumWebBrowser _internetAccessBrowser;
 
        
         private DispatcherTimer timer;
 
-        public InternetAccessGrViewModel(IEventAggregator events,string numberOfAvailablePagesToPrint)
+        public InternetAccessGrViewModel(IEventAggregator events,string numberOfAvailablePagesToPrint, string internetAccessGrApi)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
+            this.internetAccessGrApi = internetAccessGrApi;
         }
 
         public IEventAggregator Events
@@ -46,7 +48,7 @@ namespace Iap.Gr
         {
             _internetAccessBrowser = new ChromiumWebBrowser()
             {
-                Address = "http://www.google.com",
+                Address = this.internetAccessGrApi,
             };
 
             _internetAccessBrowser.BrowserSettings = new CefSharp.BrowserSettings()
@@ -54,7 +56,7 @@ namespace Iap.Gr
                 OffScreenTransparentBackground = false,
             };
 
-            _internetAccessBrowser.Load("http://www.google.com");
+            _internetAccessBrowser.Load(this.internetAccessGrApi);
 
             var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint);
 
@@ -241,7 +243,14 @@ namespace Iap.Gr
             {
                 if (_internetAccessBrowser.CanGoBack)
                 {
-                    _internetAccessBrowser.Back();
+                    if (_internetAccessBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+                    {
+                        ViewInternetAccess();
+                    }
+                    else
+                    {
+                        _internetAccessBrowser.Back();
+                    }
                 }
 
                 else
@@ -287,7 +296,7 @@ namespace Iap.Gr
 
         public void ViewInternetAccess()
         {
-            _internetAccessBrowser.Load("http://google.com");
+            _internetAccessBrowser.Load(this.internetAccessGrApi);
         }
     }
 }

@@ -101,7 +101,7 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <Button x:Name="PrintBoardingPass" Grid.Row="3">
+                <Button x:Name="ViewPrintBoardingPass" Grid.Row="3">
                     <Image Source="/Images/AIA_FOR PNG-39.png"/>
                     <Button.Style>
                         <Style TargetType="Button">

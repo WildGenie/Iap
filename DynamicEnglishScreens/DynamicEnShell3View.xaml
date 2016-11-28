@@ -24,9 +24,19 @@
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsPressed" Value="true">
                                         <Setter Property="Background" Value="Transparent" TargetName="panel" />
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <DropShadowEffect ShadowDepth="4" BlurRadius="7"/>
+                                            </Setter.Value>
+                                        </Setter>
                                     </Trigger>
                                     <Trigger Property="IsMouseOver" Value="true">
                                         <Setter Property="Background" Value="Transparent" />
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <DropShadowEffect ShadowDepth="4" BlurRadius="7"/>
+                                            </Setter.Value>
+                                        </Setter>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -52,7 +62,7 @@
                                         <Setter Property="Background" Value="Transparent" TargetName="panel" />
                                         <Setter Property="Effect">
                                             <Setter.Value>
-                                                <DropShadowEffect ShadowDepth="7" BlurRadius="5"/>
+                                                <DropShadowEffect ShadowDepth="4" BlurRadius="7"/>
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger>
@@ -60,7 +70,7 @@
                                         <Setter Property="Background" Value="Transparent" />
                                         <Setter Property="Effect">
                                             <Setter.Value>
-                                                <DropShadowEffect ShadowDepth="7" BlurRadius="5"/>
+                                                <DropShadowEffect ShadowDepth="4" BlurRadius="7"/>
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger>
@@ -86,9 +96,19 @@
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsPressed" Value="true">
                                         <Setter Property="Background" Value="Transparent" TargetName="panel" />
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <DropShadowEffect ShadowDepth="4" BlurRadius="7"/>
+                                            </Setter.Value>
+                                        </Setter>
                                     </Trigger>
                                     <Trigger Property="IsMouseOver" Value="true">
                                         <Setter Property="Background" Value="Transparent" />
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <DropShadowEffect ShadowDepth="4" BlurRadius="7"/>
+                                            </Setter.Value>
+                                        </Setter>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>

@@ -22,16 +22,18 @@ namespace Iap.Gr
         private string remainingTime;
         private bool openKeyboard;
         private readonly string numberOfAvailablePagesToPrint;
+        private readonly string buyWifiGrApi;
 
         public static ChromiumWebBrowser _buyWifiBrowser;
 
        
         private DispatcherTimer timer;
 
-        public BuyWifiGrViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint)
+        public BuyWifiGrViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string buyWifiGrApi)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
+            this.buyWifiGrApi = buyWifiGrApi;
         }
 
         public IEventAggregator Events
@@ -46,7 +48,7 @@ namespace Iap.Gr
         {
             _buyWifiBrowser = new ChromiumWebBrowser()
             {
-                Address = "http://www.google.com",
+                Address = this.buyWifiGrApi,
             };
 
             _buyWifiBrowser.BrowserSettings = new CefSharp.BrowserSettings()
@@ -54,7 +56,7 @@ namespace Iap.Gr
                 OffScreenTransparentBackground = false,
             };
 
-            _buyWifiBrowser.Load("http://www.google.com");
+            _buyWifiBrowser.Load(this.buyWifiGrApi);
 
             var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint);
 
@@ -238,7 +240,14 @@ namespace Iap.Gr
             {
                 if (_buyWifiBrowser.CanGoBack)
                 {
-                    _buyWifiBrowser.Back();
+                    if (_buyWifiBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+                    {
+                        ViewBuyWifi();
+                    }
+                    else
+                    {
+                        _buyWifiBrowser.Back();
+                    }
                 }
                 else
                 {
@@ -283,7 +292,7 @@ namespace Iap.Gr
 
         public void ViewBuyWifi()
         {
-            _buyWifiBrowser.Load("http://google.com");
+            _buyWifiBrowser.Load(this.buyWifiGrApi);
         }
     }
 }

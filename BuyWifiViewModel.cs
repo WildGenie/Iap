@@ -20,16 +20,18 @@ namespace Iap
         private string remainingTime;
         private bool openKeyboard;
         private readonly string numberOfAvailablePagesToPrint;
+        private readonly string buyWifiEnApi;
 
 
         public static ChromiumWebBrowser _buyWifiBrowser;
 
         private DispatcherTimer timer;
 
-        public BuyWifiViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint)
+        public BuyWifiViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string buyWifiEnApi)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
+            this.buyWifiEnApi = buyWifiEnApi;
         }
 
         public IEventAggregator Events
@@ -44,7 +46,7 @@ namespace Iap
         {
             _buyWifiBrowser = new ChromiumWebBrowser()
             {
-                Address = "https://www.google.co.uk/",
+                Address = this.buyWifiEnApi,
             };
 
             _buyWifiBrowser.BrowserSettings = new CefSharp.BrowserSettings()
@@ -52,7 +54,7 @@ namespace Iap
                 OffScreenTransparentBackground = false,
             };
 
-            _buyWifiBrowser.Load("https://www.google.co.uk/");
+            _buyWifiBrowser.Load(this.buyWifiEnApi);
 
 
             var obj = new CustomBoundObject(this.numberOfAvailablePagesToPrint);
@@ -217,7 +219,14 @@ namespace Iap
             {
                 if (_buyWifiBrowser.CanGoBack)
                 {
-                    _buyWifiBrowser.Back();
+                    if (_buyWifiBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+                    {
+                        ViewBuyWifi();
+                    }
+                    else
+                    {
+                        _buyWifiBrowser.Back();
+                    }
                 }
                 else
                 {
@@ -262,7 +271,7 @@ namespace Iap
 
         public void ViewBuyWifi()
         {
-            _buyWifiBrowser.Load("https://www.google.co.uk/");
+            _buyWifiBrowser.Load(this.buyWifiEnApi);
         }
     }
 }

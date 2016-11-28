@@ -26,7 +26,7 @@
                                         <Setter Property="Background" Value="Transparent" TargetName="panel" />
                                         <Setter Property="Effect">
                                             <Setter.Value>
-                                                <DropShadowEffect ShadowDepth="7" BlurRadius="5"/>
+                                                <DropShadowEffect ShadowDepth="4" BlurRadius="7"/>
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger>
@@ -34,7 +34,7 @@
                                         <Setter Property="Background" Value="Transparent" />
                                         <Setter Property="Effect">
                                             <Setter.Value>
-                                                <DropShadowEffect ShadowDepth="7" BlurRadius="5"/>
+                                                <DropShadowEffect ShadowDepth="4" BlurRadius="7"/>
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger>
@@ -62,7 +62,7 @@
                                         <Setter Property="Background" Value="Transparent" TargetName="panel" />
                                         <Setter Property="Effect">
                                             <Setter.Value>
-                                                <DropShadowEffect ShadowDepth="7" BlurRadius="5"/>
+                                                <DropShadowEffect ShadowDepth="4" BlurRadius="7"/>
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger>
@@ -70,7 +70,7 @@
                                         <Setter Property="Background" Value="Transparent" />
                                         <Setter Property="Effect">
                                             <Setter.Value>
-                                                <DropShadowEffect ShadowDepth="7" BlurRadius="5"/>
+                                                <DropShadowEffect ShadowDepth="4" BlurRadius="7"/>
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger>
@@ -98,7 +98,7 @@
                                         <Setter Property="Background" Value="Transparent" TargetName="panel" />
                                         <Setter Property="Effect">
                                             <Setter.Value>
-                                                <DropShadowEffect ShadowDepth="7" BlurRadius="5"/>
+                                                <DropShadowEffect ShadowDepth="4" BlurRadius="7"/>
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger>
@@ -106,7 +106,7 @@
                                         <Setter Property="Background" Value="Transparent" />
                                         <Setter Property="Effect">
                                             <Setter.Value>
-                                                <DropShadowEffect ShadowDepth="7" BlurRadius="5"/>
+                                                <DropShadowEffect ShadowDepth="4" BlurRadius="7"/>
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger>
@@ -134,7 +134,7 @@
                                         <Setter Property="Background" Value="Transparent" TargetName="panel" />
                                         <Setter Property="Effect">
                                             <Setter.Value>
-                                                <DropShadowEffect ShadowDepth="7" BlurRadius="5"/>
+                                                <DropShadowEffect ShadowDepth="4" BlurRadius="7"/>
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger>
@@ -142,7 +142,7 @@
                                         <Setter Property="Background" Value="Transparent" />
                                         <Setter Property="Effect">
                                             <Setter.Value>
-                                                <DropShadowEffect ShadowDepth="7" BlurRadius="5"/>
+                                                <DropShadowEffect ShadowDepth="4" BlurRadius="7"/>
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger>

@@ -136,6 +136,12 @@
     <Compile Include="AdornerControl\AdornedControl.cs" />
     <Compile Include="AdornerControl\AdornerPlacement.cs" />
     <Compile Include="AdornerControl\FrameworkElementAdorner.cs" />
+    <Compile Include="AdornerControl\LoadingWait.xaml.cs">
+      <DependentUpon>LoadingWait.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdornerControl\PleaseWaitWindow.xaml.cs">
+      <DependentUpon>PleaseWaitWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AppView.xaml.cs">
       <DependentUpon>AppView.xaml</DependentUpon>
     </Compile>
@@ -379,6 +385,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="AdornerControl\LoadingWait.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdornerControl\PleaseWaitWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AppView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

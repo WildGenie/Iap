@@ -1,11 +1,13 @@
 ﻿using CefSharp;
 using CefSharp.Wpf;
+using Iap.AdornerControl;
 using Iap.Handlers;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Iap.Bounds
@@ -81,9 +83,29 @@ namespace Iap.Bounds
         public async void onPrintRequested(string selected)
         {
 
-            System.Windows.MessageBox.Show("print ok to continue");
+            // System.Windows.MessageBox.Show("print ok to continue");
 
             // System.Threading.Thread.Sleep(5000);
+
+            try
+            {
+                Thread waitThread = new Thread(() =>
+                {
+                    PleaseWaitWindow wait = new PleaseWaitWindow();
+                    // wait.Topmost = true;
+                    wait.ShowDialog();
+                    wait.LoadingAdorner.IsAdornerVisible = true;
+                    wait.Close();
+                    //_windowManager.ShowWindow(wait);
+                });
+                waitThread.SetApartmentState(ApartmentState.STA);
+                waitThread.Start();
+            }
+
+            catch
+            {
+
+            }
 
             if (selected == "before")
             {

@@ -58,7 +58,7 @@
                 Grid.Row="0"
                 Margin="920,30,0,0"
                 Visibility="{Binding Path=IsBannerVisible,Converter={StaticResource BoolToVis}}"
-                Width="25" Height="25">
+                Width="17" Height="19">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Template">
