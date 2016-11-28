@@ -133,6 +133,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdornerControl\AdornedControl.cs" />
+    <Compile Include="AdornerControl\AdornerPlacement.cs" />
+    <Compile Include="AdornerControl\FrameworkElementAdorner.cs" />
     <Compile Include="AppView.xaml.cs">
       <DependentUpon>AppView.xaml</DependentUpon>
     </Compile>
