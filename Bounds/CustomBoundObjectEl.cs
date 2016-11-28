@@ -10,13 +10,12 @@ using System.Threading.Tasks;
 
 namespace Iap.Bounds
 {
-   public class CustomBoundObject
+   public class CustomBoundObjectEl
     {
         private readonly string numberOfAvailablePagesToPrint;
         ChromiumWebBrowser _mainBrowser;
 
-
-        public CustomBoundObject(string numberOfAvailablePagesToPrint)
+        public CustomBoundObjectEl(string numberOfAvailablePagesToPrint)
         {
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
         }
@@ -117,7 +116,7 @@ namespace Iap.Bounds
                         int numberOfPages = pdfReader.NumberOfPages;
                         if (!(numberOfPages > 6))
                         {
-                            if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <=Convert.ToInt32(this.numberOfAvailablePagesToPrint))
+                            if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <= Convert.ToInt32(this.numberOfAvailablePagesToPrint))
                             {
 
                                 System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
@@ -155,7 +154,7 @@ namespace Iap.Bounds
 
                             else
                             {
-                                System.Windows.MessageBox.Show("Can not print other pages");
+                                System.Windows.MessageBox.Show("Δεν έχετε άλλες διαθέσιμες σελίδες για εκτύπωση");
                             }
 
                         }
@@ -169,7 +168,7 @@ namespace Iap.Bounds
                 else
                 {
 
-                    System.Windows.MessageBox.Show("Failed to print please try again");
+                    System.Windows.MessageBox.Show("Αποτυχία εκτύπωσης. Παρακαλούμε δοκιμάστε ξανά.");
 
                 }
 

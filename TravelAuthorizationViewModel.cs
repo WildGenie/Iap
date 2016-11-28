@@ -56,7 +56,7 @@ namespace Iap
                 OffScreenTransparentBackground = false,
             };
 
-            var obj = new BoundObject("en", Convert.ToInt32(numberOfAvailablePagesToPrint));
+            var obj = new CustomBoundObject(this.numberOfAvailablePagesToPrint);
             _travelAuthorizationBrowser.RegisterJsObject("bound", obj);
             _travelAuthorizationBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 

@@ -77,7 +77,7 @@ namespace Iap
             _printBoardingPassBrowser.RequestContext = new RequestContext();
 
 
-            var obj = new BoundObject("en",Convert.ToInt32(numberOfAvailablePagesToPrint));
+            var obj = new CustomBoundObject(this.numberOfAvailablePagesToPrint);
             _printBoardingPassBrowser.RegisterJsObject("bound", obj);
             _printBoardingPassBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 

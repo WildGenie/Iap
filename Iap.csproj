@@ -141,6 +141,7 @@
     <Compile Include="Bounds\BoundPopUpObject.cs" />
     <Compile Include="Bounds\BoundTest.cs" />
     <Compile Include="Bounds\CustomBoundObject.cs" />
+    <Compile Include="Bounds\CustomBoundObjectEl.cs" />
     <Compile Include="Bounds\DynamicBrowserBoundObjectEn.cs" />
     <Compile Include="Bounds\DynamicBrowserBoundObjectGr.cs" />
     <Compile Include="BuyWifiView.xaml.cs">

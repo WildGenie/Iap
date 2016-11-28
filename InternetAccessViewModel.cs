@@ -68,7 +68,7 @@ namespace Iap
               _internetAccessBrowser.RegisterJsObject("bound", obj);
               _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;*/
 
-            var boundObject = new CustomBoundObject();
+            var boundObject = new CustomBoundObject(this.numberOfAvailablePagesToPrint);
             _internetAccessBrowser.RegisterJsObject("bound", boundObject, true);
             _internetAccessBrowser.FrameLoadEnd += boundObject.OnFrameLoadEnd;
 

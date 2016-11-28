@@ -55,7 +55,7 @@ namespace Iap
             _buyWifiBrowser.Load("https://www.google.co.uk/");
 
 
-            var obj = new BoundObject("en", Convert.ToInt32(numberOfAvailablePagesToPrint));
+            var obj = new CustomBoundObject(this.numberOfAvailablePagesToPrint);
 
             _buyWifiBrowser.RegisterJsObject("bound", obj);
             _buyWifiBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;

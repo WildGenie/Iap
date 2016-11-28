@@ -56,7 +56,7 @@ namespace Iap.Gr
 
             _internetAccessBrowser.Load("http://www.google.com");
 
-            var obj = new BoundObject("el", Convert.ToInt32(numberOfAvailablePagesToPrint));
+            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint);
 
             _internetAccessBrowser.RegisterJsObject("bound", obj);
             _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
