@@ -65,219 +65,221 @@
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Hidden" x:Name="scroller">
-                <Grid Grid.Column="1" ScrollViewer.CanContentScroll="True">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="15"/>
-                        <RowDefinition x:Name="Row1"/>
-                        <RowDefinition Height="15"/>
-                        <RowDefinition x:Name="Row2"/>
-                        <RowDefinition Height="15"/>
-                        <RowDefinition x:Name="Row3"/>
-                        <RowDefinition Height="15"/>
-                        <RowDefinition x:Name="Row4"/>
-                        <RowDefinition Height="15"/>
-                        <RowDefinition x:Name="Row5"/>
-                        <RowDefinition Height="15"/>
-                        <RowDefinition x:Name="Row6"/>
-                        <RowDefinition Height="15"/>
-                        <RowDefinition x:Name="Row7"/>
-                        <RowDefinition Height="15"/>
-                        <RowDefinition x:Name="Row8"/>
-                    </Grid.RowDefinitions>
-                    <Button x:Name="ViewRedirect1" Grid.Row="1">
-                        <Image Source="{Binding Path=LeftImage1}" Stretch="UniformToFill"/>
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
-                                                <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
-                                            </StackPanel>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsPressed" Value="true">
-                                                    <Setter Property="Background" Value="Transparent" TargetName="panel" />
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="true">
-                                                    <Setter Property="Background" Value="Transparent" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                    <Button x:Name="ViewRedirect2" Grid.Row="3">
-                        <Image Source="{Binding Path=LeftImage2}" Stretch="UniformToFill"/>
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
-                                                <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
-                                            </StackPanel>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsPressed" Value="true">
-                                                    <Setter Property="Background" Value="Transparent" TargetName="panel" />
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="true">
-                                                    <Setter Property="Background" Value="Transparent" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                    <Button x:Name="ViewRedirect3" Grid.Row="5">
-                        <Image Source="{Binding Path=LeftImage3}" Stretch="UniformToFill"/>
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
-                                                <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
-                                            </StackPanel>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsPressed" Value="true">
-                                                    <Setter Property="Background" Value="Transparent" TargetName="panel" />
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="true">
-                                                    <Setter Property="Background" Value="Transparent" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                    <Button x:Name="ViewRedirect4" Grid.Row="7">
-                        <Image Source="{Binding Path=LeftImage4}" Stretch="UniformToFill"/>
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
-                                                <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
-                                            </StackPanel>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsPressed" Value="true">
-                                                    <Setter Property="Background" Value="Transparent" TargetName="panel" />
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="true">
-                                                    <Setter Property="Background" Value="Transparent" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                    <Button x:Name="ViewRedirect5" Grid.Row="9">
-                        <Image Source="{Binding Path=LeftImage5}" Stretch="UniformToFill"/>
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
-                                                <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
-                                            </StackPanel>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsPressed" Value="true">
-                                                    <Setter Property="Background" Value="Transparent" TargetName="panel" />
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="true">
-                                                    <Setter Property="Background" Value="Transparent" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                    <Button x:Name="ViewRedirect6" Grid.Row="11">
-                        <Image Source="{Binding Path=LeftImage6}" Stretch="UniformToFill"/>
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
-                                                <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
-                                            </StackPanel>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsPressed" Value="true">
-                                                    <Setter Property="Background" Value="Transparent" TargetName="panel" />
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="true">
-                                                    <Setter Property="Background" Value="Transparent" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                    <Button x:Name="ViewRedirect7" Grid.Row="13">
-                        <Image Source="{Binding Path=LeftImage7}" Stretch="UniformToFill"/>
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
-                                                <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
-                                            </StackPanel>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsPressed" Value="true">
-                                                    <Setter Property="Background" Value="Transparent" TargetName="panel" />
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="true">
-                                                    <Setter Property="Background" Value="Transparent" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                    <Button x:Name="ViewRedirect8" Grid.Row="15">
-                        <Image Source="{Binding Path=LeftImage8}" Stretch="UniformToFill"/>
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
-                                                <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
-                                            </StackPanel>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsPressed" Value="true">
-                                                    <Setter Property="Background" Value="Transparent" TargetName="panel" />
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="true">
-                                                    <Setter Property="Background" Value="Transparent" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                </Grid>
+            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Hidden"  x:Name="scroller" Grid.ColumnSpan="2" Margin="10,-10,20,10">
+                
+                    <Grid  ScrollViewer.CanContentScroll="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="15"/>
+                            <RowDefinition x:Name="Row1"/>
+                            <RowDefinition Height="15"/>
+                            <RowDefinition x:Name="Row2"/>
+                            <RowDefinition Height="15"/>
+                            <RowDefinition x:Name="Row3"/>
+                            <RowDefinition Height="15"/>
+                            <RowDefinition x:Name="Row4"/>
+                            <RowDefinition Height="15"/>
+                            <RowDefinition x:Name="Row5"/>
+                            <RowDefinition Height="15"/>
+                            <RowDefinition x:Name="Row6"/>
+                            <RowDefinition Height="15"/>
+                            <RowDefinition x:Name="Row7"/>
+                            <RowDefinition Height="15"/>
+                            <RowDefinition x:Name="Row8"/>
+                        </Grid.RowDefinitions>
+                        <Button x:Name="ViewRedirect1" Grid.Row="1">
+                            <Image Source="{Binding Path=LeftImage1}" Stretch="UniformToFill"/>
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
+                                                    <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
+                                                </StackPanel>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsPressed" Value="true">
+                                                        <Setter Property="Background" Value="Transparent" TargetName="panel" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="true">
+                                                        <Setter Property="Background" Value="Transparent" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button x:Name="ViewRedirect2" Grid.Row="3">
+                            <Image Source="{Binding Path=LeftImage2}" Stretch="UniformToFill"/>
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
+                                                    <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
+                                                </StackPanel>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsPressed" Value="true">
+                                                        <Setter Property="Background" Value="Transparent" TargetName="panel" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="true">
+                                                        <Setter Property="Background" Value="Transparent" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button x:Name="ViewRedirect3" Grid.Row="5">
+                            <Image Source="{Binding Path=LeftImage3}" Stretch="UniformToFill"/>
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
+                                                    <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
+                                                </StackPanel>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsPressed" Value="true">
+                                                        <Setter Property="Background" Value="Transparent" TargetName="panel" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="true">
+                                                        <Setter Property="Background" Value="Transparent" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button x:Name="ViewRedirect4" Grid.Row="7">
+                            <Image Source="{Binding Path=LeftImage4}" Stretch="UniformToFill"/>
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
+                                                    <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
+                                                </StackPanel>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsPressed" Value="true">
+                                                        <Setter Property="Background" Value="Transparent" TargetName="panel" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="true">
+                                                        <Setter Property="Background" Value="Transparent" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button x:Name="ViewRedirect5" Grid.Row="9">
+                            <Image Source="{Binding Path=LeftImage5}" Stretch="UniformToFill"/>
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
+                                                    <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
+                                                </StackPanel>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsPressed" Value="true">
+                                                        <Setter Property="Background" Value="Transparent" TargetName="panel" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="true">
+                                                        <Setter Property="Background" Value="Transparent" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button x:Name="ViewRedirect6" Grid.Row="11">
+                            <Image Source="{Binding Path=LeftImage6}" Stretch="UniformToFill"/>
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
+                                                    <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
+                                                </StackPanel>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsPressed" Value="true">
+                                                        <Setter Property="Background" Value="Transparent" TargetName="panel" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="true">
+                                                        <Setter Property="Background" Value="Transparent" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button x:Name="ViewRedirect7" Grid.Row="13">
+                            <Image Source="{Binding Path=LeftImage7}" Stretch="UniformToFill"/>
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
+                                                    <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
+                                                </StackPanel>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsPressed" Value="true">
+                                                        <Setter Property="Background" Value="Transparent" TargetName="panel" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="true">
+                                                        <Setter Property="Background" Value="Transparent" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button x:Name="ViewRedirect8" Grid.Row="15">
+                            <Image Source="{Binding Path=LeftImage8}" Stretch="UniformToFill"/>
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
+                                                    <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
+                                                </StackPanel>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsPressed" Value="true">
+                                                        <Setter Property="Background" Value="Transparent" TargetName="panel" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="true">
+                                                        <Setter Property="Background" Value="Transparent" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </Grid>
+                
             </ScrollViewer>
             <Grid x:Name="DynamicBrowser" Grid.Column="4">
                 <Popup IsOpen="{Binding Path=OpenKeyboard}"

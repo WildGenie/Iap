@@ -220,9 +220,9 @@ namespace Iap.DynamicEnglishScreens
             {
                 currentView.scroller.ScrollToEnd();
             }
-            currentView.scroller.PreviewMouseDown += Scroller_PreviewMouseDown;
+            currentView.scroller.PreviewMouseLeftButtonDown += Scroller_PreviewMouseDown;
             currentView.scroller.PreviewMouseMove += Scroller_PreviewMouseMove;
-            currentView.scroller.PreviewMouseUp += Scroller_PreviewMouseUp;
+            currentView.scroller.PreviewMouseLeftButtonUp += Scroller_PreviewMouseUp;
 
             ((DynamicBrowserEn8View)view).DynamicBrowser.Children.Add(_internetAccessBrowser);
 
@@ -245,7 +245,28 @@ namespace Iap.DynamicEnglishScreens
             base.OnViewLoaded(view);
         }
 
+          
+
+       /* private void Scroller_PreviewTouchDown(object sender, TouchEventArgs e)
+        {
+           
+            ScrollViewer scrollViewer = sender as ScrollViewer;
+            if (scrollViewer.IsMouseOver)
+            {
+                scrollStartPoint = e.GetTouchPoint(scrollViewer).Position; 
+                scrollStartOffset.X = scrollViewer.HorizontalOffset;
+                scrollStartOffset.Y = scrollViewer.VerticalOffset;
+            }
+
+            Mouse.Capture(scrollViewer, CaptureMode.SubTree);
+        }*/
+
        
+
+      
+     
+
+
 
         #region Data
 
@@ -257,40 +278,49 @@ namespace Iap.DynamicEnglishScreens
 
             private Point scrollStartOffset;
 
+        private DateTime mouseTimer;
+
         #endregion
+
 
 
         private void Scroller_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             ScrollViewer scrollViewer = sender as ScrollViewer;
-            if(scrollViewer.IsMouseCaptured)
-            {
+            if (scrollViewer.IsMouseCaptured) { 
                 scrollViewer.ReleaseMouseCapture();
             }
-            
+            TimeSpan difference = DateTime.Now - mouseTimer;
+            if (difference.TotalMilliseconds>500)
+            {
+                e.Handled = true;
+            }
         }
 
         private void Scroller_PreviewMouseMove(object sender, MouseEventArgs e)
         {
             ScrollViewer scrollViewer = sender as ScrollViewer;
-            if (scrollViewer.IsMouseOver)
-            {
-                Point currentPoint = e.GetPosition(scrollViewer);
+          
+                if (scrollViewer.IsMouseOver)
+                {
+                    Point currentPoint = e.GetPosition(scrollViewer);
 
-                Point delta = new Point(scrollStartPoint.X - currentPoint.X,
-                    scrollStartPoint.Y - currentPoint.Y);
+                    Point delta = new Point(scrollStartPoint.X - currentPoint.X,
+                        scrollStartPoint.Y - currentPoint.Y);
 
-                scrollTarget.X = scrollStartOffset.X + delta.X;
-                scrollTarget.Y = scrollStartOffset.Y + delta.Y;
+                    scrollTarget.X = scrollStartOffset.X + delta.X;
+                    scrollTarget.Y = scrollStartOffset.Y + delta.Y;
 
-                scrollViewer.ScrollToHorizontalOffset(scrollTarget.X);
-                scrollViewer.ScrollToVerticalOffset(scrollTarget.Y);
-            }
-            
+                    scrollViewer.ScrollToHorizontalOffset(scrollTarget.X);
+                    scrollViewer.ScrollToVerticalOffset(scrollTarget.Y);
+
+                }
         }
 
         private void Scroller_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            mouseTimer = DateTime.Now;
+
             ScrollViewer scrollViewer = sender as ScrollViewer;
             if (scrollViewer.IsMouseOver)
             {
@@ -298,7 +328,7 @@ namespace Iap.DynamicEnglishScreens
                 scrollStartOffset.X = scrollViewer.HorizontalOffset;
                 scrollStartOffset.Y = scrollViewer.VerticalOffset;
             }
-            
+          
         }
 
         private void _internetAccessBrowser_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -462,6 +492,7 @@ namespace Iap.DynamicEnglishScreens
 
         private void PopulatePanel(DynamicBrowserEn8View view)
         {
+
             switch (this.SelectedPosition)
             {
                 case "1":

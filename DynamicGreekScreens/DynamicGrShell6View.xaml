@@ -9,23 +9,21 @@
         <Grid.Background>
             <ImageBrush ImageSource="/Images/AIA_FOR PNG-24.png"/>
         </Grid.Background>
-        <Grid x:Name="ButtonsGridFirstRow" Margin="180 20 115 700">
+        <Grid x:Name="ButtonsGridFirstRow" Margin="400,20,400,320">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="350"/>
+                <RowDefinition/>
+                <RowDefinition Height="350"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions>
-
             <Button 
-            x:Name="ViewRedirect1" Grid.Column="0" Grid.Row="0"
-            Width="320" Height="425">
+            x:Name="ViewRedirect1" Grid.Column="0" Height="350">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Template">
@@ -61,8 +59,7 @@
             </Button>
             <Button 
             x:Name="ViewRedirect2"
-            Width="320" Height="425" Grid.Column="2" Grid.Row="0"
-            >
+             Grid.Column="2" Height="350">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Template">
@@ -98,8 +95,7 @@
             </Button>
             <Button 
             x:Name="ViewRedirect3"
-            Width="320" Height="425" Grid.Column="4" Grid.Row="0"
-            >
+            Grid.Column="4" Height="350">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Template">
@@ -135,8 +131,7 @@
             </Button>
             <Button 
             x:Name="ViewRedirect4"
-            Width="320" Height="425" Grid.Column="6" Grid.Row="0"
-            >
+             Grid.Column="0" Grid.Row="2" Height="350">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Template">
@@ -170,21 +165,9 @@
                 </Button.Style>
                 <Image Source="{Binding Path=Image4}"/>
             </Button>
-        </Grid>
-        <Grid x:Name="ButtonsGridSecondRow" Margin="180 420 115 300">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
             <Button 
             x:Name="ViewRedirect5"
-            Width="320" Height="425" Grid.Column="1"
-            >
+             Grid.Column="2" Grid.Row="2" Height="350">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Template">
@@ -220,8 +203,7 @@
             </Button>
             <Button 
             x:Name="ViewRedirect6"
-            Width="320" Height="425" Grid.Column="5"
-            >
+             Grid.Column="4" Grid.Row="2"  Height="350">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Template">
