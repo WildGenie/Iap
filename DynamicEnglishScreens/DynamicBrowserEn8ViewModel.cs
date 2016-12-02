@@ -280,55 +280,122 @@ namespace Iap.DynamicEnglishScreens
 
         private DateTime mouseTimer;
 
+        private double vOff;
+
+        private Point scrollMousePoint;
+        private bool drag;
+
         #endregion
 
-
+        private double firstOffest;
+        private double endOffset;
 
         private void Scroller_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            ScrollViewer scrollViewer = sender as ScrollViewer;
-            if (scrollViewer.IsMouseCaptured) { 
+             ScrollViewer scrollViewer = sender as ScrollViewer;
+             if (scrollViewer.IsMouseCaptured) { 
+                 scrollViewer.ReleaseMouseCapture();
+             }
+             TimeSpan difference = DateTime.Now - mouseTimer;
+             if (drag)
+             {
+               // System.Windows.MessageBox.Show(firstOffest.ToString() + "-" + endOffset.ToString());
+                 e.Handled = true;
+             }
+             
+           // System.Windows.MessageBox.Show(firstOffest.ToString() + "-" + endOffset.ToString());
+            // scrollViewer.Focusable = false;
+            drag = false;
+           /* ScrollViewer scrollViewer = sender as ScrollViewer;
+            
                 scrollViewer.ReleaseMouseCapture();
-            }
-            TimeSpan difference = DateTime.Now - mouseTimer;
-            if (difference.TotalMilliseconds>500)
+            
+            if (drag)
             {
                 e.Handled = true;
+            }
+            else
+            {
+                e.Handled = false;
+            }
+            drag = false;*/
+        }
+
+        public bool CanScroll(ScrollViewer viewer, double first, double last)
+        {
+            if(((first==last)&&last==0)||((first==last)&&last==viewer.MaxHeight))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
 
         private void Scroller_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            ScrollViewer scrollViewer = sender as ScrollViewer;
-          
-                if (scrollViewer.IsMouseOver)
+              ScrollViewer scrollViewer = sender as ScrollViewer;
+
+                  if (scrollViewer.IsMouseOver)
+                  {
+                      Point currentPoint = e.GetPosition(scrollViewer);
+
+                      Point delta = new Point(scrollStartPoint.X - currentPoint.X,
+                          scrollStartPoint.Y - currentPoint.Y);
+
+                      scrollTarget.X = scrollStartOffset.X + delta.X;
+                      scrollTarget.Y = scrollStartOffset.Y + delta.Y;
+
+                      scrollViewer.ScrollToHorizontalOffset(scrollTarget.X);
+                      scrollViewer.ScrollToVerticalOffset(scrollTarget.Y);
+
+                endOffset = scrollViewer.VerticalOffset;           
+                  }
+            var moveTo = scrollTarget.Y - scrollStartPoint.Y;
+            if (Math.Abs(moveTo)>1)
+            {
+                drag = true;
+            }
+            
+           
+            /*ScrollViewer scrollViewer = sender as ScrollViewer;
+            if (scrollViewer.IsMouseOver)
+            {
+                var moveTo = scrollMousePoint.Y - e.GetPosition(scrollViewer).Y;
+
+                if (Math.Abs(moveTo) > 1)
                 {
-                    Point currentPoint = e.GetPosition(scrollViewer);
-
-                    Point delta = new Point(scrollStartPoint.X - currentPoint.X,
-                        scrollStartPoint.Y - currentPoint.Y);
-
-                    scrollTarget.X = scrollStartOffset.X + delta.X;
-                    scrollTarget.Y = scrollStartOffset.Y + delta.Y;
-
-                    scrollViewer.ScrollToHorizontalOffset(scrollTarget.X);
-                    scrollViewer.ScrollToVerticalOffset(scrollTarget.Y);
-
+                    drag = true;
+                    scrollViewer.ScrollToVerticalOffset(vOff + moveTo);
                 }
+                
+
+            }*/
         }
 
         private void Scroller_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            mouseTimer = DateTime.Now;
+              mouseTimer = DateTime.Now;
 
-            ScrollViewer scrollViewer = sender as ScrollViewer;
-            if (scrollViewer.IsMouseOver)
-            {
-                scrollStartPoint = e.GetPosition(scrollViewer);
-                scrollStartOffset.X = scrollViewer.HorizontalOffset;
-                scrollStartOffset.Y = scrollViewer.VerticalOffset;
-            }
-          
+              ScrollViewer scrollViewer = sender as ScrollViewer;
+            //scrollViewer.CaptureMouse();
+            //  if (scrollViewer.IsMouseOver)
+             // {
+                  scrollStartPoint = e.GetPosition(scrollViewer);
+                  scrollStartOffset.X = scrollViewer.HorizontalOffset;
+                  scrollStartOffset.Y = scrollViewer.VerticalOffset;
+
+            firstOffest = scrollViewer.VerticalOffset;
+              //}
+            drag = false;
+           
+          /*  ScrollViewer scrollViewer = sender as ScrollViewer;
+            scrollMousePoint = e.GetPosition(scrollViewer);
+            vOff = scrollViewer.VerticalOffset;
+
+            drag = false;
+            scrollViewer.CaptureMouse();*/
         }
 
         private void _internetAccessBrowser_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
