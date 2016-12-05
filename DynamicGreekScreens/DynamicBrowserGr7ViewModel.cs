@@ -231,18 +231,23 @@ namespace Iap.DynamicGreekScreens
 
         private Point scrollStartOffset;
 
+        private bool drag;
+
         private void Scroller_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             ScrollViewer scrollViewer = sender as ScrollViewer;
-            if (scrollViewer.IsMouseCaptured)
+            if (drag)
             {
-                scrollViewer.ReleaseMouseCapture();
+                e.Handled = true;
             }
+
+            drag = false;
         }
 
         private void Scroller_PreviewMouseMove(object sender, MouseEventArgs e)
         {
             ScrollViewer scrollViewer = sender as ScrollViewer;
+
             Point currentPoint = e.GetPosition(scrollViewer);
 
             Point delta = new Point(scrollStartPoint.X - currentPoint.X,
@@ -253,17 +258,21 @@ namespace Iap.DynamicGreekScreens
 
             scrollViewer.ScrollToHorizontalOffset(scrollTarget.X);
             scrollViewer.ScrollToVerticalOffset(scrollTarget.Y);
+
+            var moveTo = currentPoint.Y - scrollStartPoint.Y;
+            if (Math.Abs(moveTo) > 1)
+            {
+                drag = true;
+            }
         }
 
         private void Scroller_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             ScrollViewer scrollViewer = sender as ScrollViewer;
-            if (scrollViewer.IsMouseOver)
-            {
-                scrollStartPoint = e.GetPosition(scrollViewer);
-                scrollStartOffset.X = scrollViewer.HorizontalOffset;
-                scrollStartOffset.Y = scrollViewer.VerticalOffset;
-            }
+            drag = false;
+            scrollStartPoint = e.GetPosition(scrollViewer);
+            scrollStartOffset.X = scrollViewer.HorizontalOffset;
+            scrollStartOffset.Y = scrollViewer.VerticalOffset;
         }
 
         private void _internetAccessBrowser_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
