@@ -139,7 +139,7 @@ namespace Iap.Bounds
                     {
                         iTextSharp.text.pdf.PdfReader pdfReader = new iTextSharp.text.pdf.PdfReader(path);
                         int numberOfPages = pdfReader.NumberOfPages;
-                        if (!(numberOfPages > 6))
+                        if (!(numberOfPages > Int32.Parse(this.numberOfAvailablePagesToPrint)))
                         {
                             if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <=Convert.ToInt32(this.numberOfAvailablePagesToPrint))
                             {

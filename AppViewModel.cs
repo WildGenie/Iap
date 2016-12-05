@@ -15,6 +15,7 @@ using Iap.DynamicEnglishScreens;
 using Iap.DynamicGreekScreens;
 using CefSharp.Wpf;
 using CefSharp;
+using System.IO;
 
 namespace Iap
 {
@@ -95,6 +96,26 @@ namespace Iap
         {
             base.ActivateItem(this.ScreenSaver);
             this.ScreenSaver.Parent = this;
+
+            try
+            {
+                string path = System.IO.Path.Combine(
+                              System.IO.Path.GetDirectoryName(
+                              this.GetType().Assembly.Location),
+                              "Printings");
+
+
+                System.IO.DirectoryInfo di = new DirectoryInfo(path);
+
+                if (Directory.Exists(path))
+                {
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        file.Delete();
+                    }
+                }
+            }
+            catch { }
 
             /* EventManager.RegisterClassHandler(
                  typeof(UIElement),

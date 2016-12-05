@@ -15,5 +15,10 @@ namespace Iap.Handlers
         {
             numberOfCurrentPrintings= 0;
         }
+
+        public static void DeletePrintedFiles()
+        {
+           
+        }
       }
 }

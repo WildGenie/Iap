@@ -138,35 +138,40 @@ namespace Iap
         private void _internetAccessBrowser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
             var browser = sender as ChromiumWebBrowser;
-
-            var script = @"var beforePrint = function(){
-
-                alert('before');
-            };
-
-            var afterPrint = function() {
-                alert('after');
-            };
-
-            if (window.matchMedia)
+            if (browser.GetMainFrame().Url.Contains("print=true"))
             {
-                var mediaQueryList = window.matchMedia('print');
-                mediaQueryList.addListener(function(mql) {
-                    if (mql.matches)
-                    {
-                        beforePrint();
-                    }
-                    else
-                    {
-                        afterPrint();
-                    }
-                });
+                browser.Load(browser.GetMainFrame().Url.Replace("print=true", "print=false"));
             }
+            /*  var browser = sender as ChromiumWebBrowser;
 
-            window.onbeforeprint = beforePrint;
-            window.onafterprint = afterPrint;";
+              var script = @"var beforePrint = function(){
 
-            browser.ExecuteScriptAsync(script);
+                  alert('before');
+              };
+
+              var afterPrint = function() {
+                  alert('after');
+              };
+
+              if (window.matchMedia)
+              {
+                  var mediaQueryList = window.matchMedia('print');
+                  mediaQueryList.addListener(function(mql) {
+                      if (mql.matches)
+                      {
+                          beforePrint();
+                      }
+                      else
+                      {
+                          afterPrint();
+                      }
+                  });
+              }
+
+              window.onbeforeprint = beforePrint;
+              window.onafterprint = afterPrint;";
+
+              browser.ExecuteScriptAsync(script);*/
         }
 
         private void _internetAccessBrowser_ManipulationDelta(object sender, System.Windows.Input.ManipulationDeltaEventArgs e)
