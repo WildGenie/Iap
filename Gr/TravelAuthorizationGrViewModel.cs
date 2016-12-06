@@ -74,6 +74,7 @@ namespace Iap.Gr
             _travelAuthorizationBrowser.RequestContext = new RequestContext();
             _travelAuthorizationBrowser.LifeSpanHandler = new LifeSpanHandler();
             _travelAuthorizationBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
+            _travelAuthorizationBrowser.RequestHandler = new CustomRequestHandler();
 
             _travelAuthorizationBrowser.Focus();
 

@@ -183,6 +183,10 @@ namespace Iap.Bounds
                             }
 
                         }
+                        else
+                        {
+                            System.Windows.MessageBox.Show("Too many pages");
+                        }
                     }
                     catch (Exception ex)
                     {

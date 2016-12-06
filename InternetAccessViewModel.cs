@@ -83,7 +83,7 @@ namespace Iap
          //   _internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler();
             _internetAccessBrowser.JsDialogHandler = new CustomJsDialog();
 
-
+            _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
            // _internetAccessBrowser.FrameLoadEnd += _internetAccessBrowser_FrameLoadEnd;
             
 

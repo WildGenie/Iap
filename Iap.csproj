@@ -300,6 +300,7 @@
       <DependentUpon>TravelAuthorizationGrView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Gr\TravelAuthorizationGrViewModel.cs" />
+    <Compile Include="Handlers\CustomDialogHandler.cs" />
     <Compile Include="Handlers\CustomJsDialog.cs" />
     <Compile Include="Handlers\CustomMenuHandler.cs" />
     <Compile Include="Handlers\CustomRenderProcessHandler.cs" />

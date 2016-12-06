@@ -72,7 +72,7 @@ namespace Iap
             // _printBoardingPassBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(this.numberOfAvailablePagesToPrint));
 
             _printBoardingPassBrowser.RequestHandler = new CustomRequestHandler();
-
+            _printBoardingPassBrowser.DialogHandler = new CustomDialogHandler();
             _printBoardingPassBrowser.MenuHandler = new CustomMenuHandler();
             _printBoardingPassBrowser.RequestContext = new RequestContext();
 

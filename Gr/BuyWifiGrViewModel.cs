@@ -74,7 +74,7 @@ namespace Iap.Gr
             _buyWifiBrowser.RequestContext = new RequestContext();
             _buyWifiBrowser.LifeSpanHandler = new LifeSpanHandler();
             _buyWifiBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
-
+            _buyWifiBrowser.DialogHandler = new CustomDialogHandler();
             _buyWifiBrowser.Focus();
 
             

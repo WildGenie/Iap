@@ -139,6 +139,7 @@ namespace Iap.DynamicEnglishScreens
             _internetAccessBrowser.RequestContext = new RequestContext();
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
             _internetAccessBrowser.RequestHandler = new DynamicBrowserRequestHandler();
+            _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
             var boundEnObject = new DynamicBrowserBoundObjectEn(this.numberOfAvailablePagesToPrint);
             _internetAccessBrowser.RegisterJsObject("bound", boundEnObject);
             _internetAccessBrowser.FrameLoadEnd += boundEnObject.OnFrameLoadEnd;

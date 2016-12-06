@@ -76,6 +76,7 @@ namespace Iap
             //   _travelAuthorizationBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
 
             _travelAuthorizationBrowser.RequestHandler = new CustomRequestHandler();
+            _travelAuthorizationBrowser.DialogHandler = new CustomDialogHandler();
 
             _travelAuthorizationBrowser.Focus();
 

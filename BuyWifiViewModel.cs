@@ -65,6 +65,7 @@ namespace Iap
             _buyWifiBrowser.LifeSpanHandler = new LifeSpanHandler();
             // _buyWifiBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
             _buyWifiBrowser.RequestHandler = new CustomRequestHandler();
+            _buyWifiBrowser.DialogHandler = new CustomDialogHandler();
 
             ((BuyWifiView)view).BuyWifiBrowser.Children.Add(_buyWifiBrowser);
 
