@@ -77,7 +77,7 @@ namespace Iap
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
             // _internetAccessBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
 
-            _internetAccessBrowser.RequestHandler = new CustomRequestHandler();
+            _internetAccessBrowser.RequestHandler = new CustomRequestHandler("");
 
             _internetAccessBrowser.MenuHandler = new CustomMenuHandler();
          //   _internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler();
@@ -137,11 +137,11 @@ namespace Iap
 
         private void _internetAccessBrowser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
-            var browser = sender as ChromiumWebBrowser;
+           /* var browser = sender as ChromiumWebBrowser;
             if (browser.GetMainFrame().Url.Contains("print=true"))
             {
                 browser.Load(browser.GetMainFrame().Url.Replace("print=true", "print=false"));
-            }
+            }*/
             /*  var browser = sender as ChromiumWebBrowser;
 
               var script = @"var beforePrint = function(){
@@ -323,25 +323,26 @@ namespace Iap
             this.OpenKeyboard = false;
             try
             {
-                if (_internetAccessBrowser.CanGoBack)
-                {
-                    if (_internetAccessBrowser.GetMainFrame().Url.Contains("docs.google.com"))
-                    {
-                        ViewInternetAccess();
-                    }
-                    else
-                    {
-                        _internetAccessBrowser.Back();
-                    }
-                }
-                else
-                {
-                    if (_internetAccessBrowser != null)
-                    {
-                        _internetAccessBrowser.Dispose();
-                    }
-                    this.events.PublishOnCurrentThread(new ViewEnglishCommand());
-                }
+                /* if (_internetAccessBrowser.CanGoBack)
+                 {
+                     if (_internetAccessBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+                     {
+                         ViewInternetAccess();
+                     }
+                     else
+                     {
+                         _internetAccessBrowser.Back();
+                     }
+                 }
+                 else
+                 {
+                     if (_internetAccessBrowser != null)
+                     {
+                         _internetAccessBrowser.Dispose();
+                     }
+                     this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+                 }*/
+                this.events.PublishOnCurrentThread(new ViewEnglishCommand());
             }
             catch { }
         }

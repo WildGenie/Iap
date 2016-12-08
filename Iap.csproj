@@ -616,6 +616,9 @@
     <Folder Include="Printings\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\adding.jpg" />
+    <Resource Include="Images\adding1111.png" />
+    <Resource Include="Images\AIA_FOR_20PNG-1111111.png" />
     <Content Include="Media\AIA_revised_converted.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

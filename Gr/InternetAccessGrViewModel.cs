@@ -73,7 +73,8 @@ namespace Iap.Gr
 
             _internetAccessBrowser.RequestContext = new RequestContext();
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
-            _internetAccessBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
+            //  _internetAccessBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
+            _internetAccessBrowser.RequestHandler = new CustomRequestHandler("");
             _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
             _internetAccessBrowser.Focus();
 
@@ -241,26 +242,27 @@ namespace Iap.Gr
             this.OpenKeyboard = false;
             try
             {
-                if (_internetAccessBrowser.CanGoBack)
-                {
-                    if (_internetAccessBrowser.GetMainFrame().Url.Contains("docs.google.com"))
-                    {
-                        ViewInternetAccess();
-                    }
-                    else
-                    {
-                        _internetAccessBrowser.Back();
-                    }
-                }
+                /* if (_internetAccessBrowser.CanGoBack)
+                 {
+                     if (_internetAccessBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+                     {
+                         ViewInternetAccess();
+                     }
+                     else
+                     {
+                         _internetAccessBrowser.Back();
+                     }
+                 }
 
-                else
-                {
-                    if (_internetAccessBrowser != null)
-                    {
-                        _internetAccessBrowser.Dispose();
-                    }
-                    this.events.PublishOnCurrentThread(new ViewGreekCommand());
-                }
+                 else
+                 {
+                     if (_internetAccessBrowser != null)
+                     {
+                         _internetAccessBrowser.Dispose();
+                     }
+                     this.events.PublishOnCurrentThread(new ViewGreekCommand());
+                 }*/
+                this.events.PublishOnCurrentThread(new ViewGreekCommand());
             }
             catch { }
         }

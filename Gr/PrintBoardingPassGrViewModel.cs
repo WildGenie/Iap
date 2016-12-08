@@ -77,6 +77,7 @@ namespace Iap.Gr
           
             _printBoardingPassBrowser.Focus();
 
+
             
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 1, 0);
@@ -239,22 +240,23 @@ namespace Iap.Gr
             this.OpenKeyboard = false;
             try
             {
-                if (_printBoardingPassBrowser.CanGoBack)
-                {
-                    if(_printBoardingPassBrowser.GetMainFrame().Url.Contains("docs.google.com"))
-                    {
-                        ViewPrintBoardingPass();
-                    }
-                    _printBoardingPassBrowser.Back();
-                }
-                else
-                {
-                    if (_printBoardingPassBrowser != null)
-                    {
-                        _printBoardingPassBrowser.Dispose();
-                    }
-                    this.events.PublishOnCurrentThread(new ViewGreekCommand());
-                }
+                /*  if (_printBoardingPassBrowser.CanGoBack)
+                  {
+                      if(_printBoardingPassBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+                      {
+                          ViewPrintBoardingPass();
+                      }
+                      _printBoardingPassBrowser.Back();
+                  }
+                  else
+                  {
+                      if (_printBoardingPassBrowser != null)
+                      {
+                          _printBoardingPassBrowser.Dispose();
+                      }
+                      this.events.PublishOnCurrentThread(new ViewGreekCommand());
+                  }*/
+                this.events.PublishOnCurrentThread(new ViewGreekCommand());
             }
 
             catch { }

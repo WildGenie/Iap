@@ -5,6 +5,7 @@ using Iap.Handlers;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -135,12 +136,13 @@ namespace Iap.Bounds
 
                 if (success)
                 {
+                    
                     try
                     {
                         iTextSharp.text.pdf.PdfReader pdfReader = new iTextSharp.text.pdf.PdfReader(path);
                         int numberOfPages = pdfReader.NumberOfPages;
-                        if (!(numberOfPages > Int32.Parse(this.numberOfAvailablePagesToPrint)))
-                        {
+                      //  if (!(numberOfPages > Int32.Parse(this.numberOfAvailablePagesToPrint)))
+                       // {
                             if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <=Convert.ToInt32(this.numberOfAvailablePagesToPrint))
                             {
 
@@ -179,14 +181,14 @@ namespace Iap.Bounds
 
                             else
                             {
-                                System.Windows.MessageBox.Show("Can not print other pages");
+                                System.Windows.MessageBox.Show("Can not print other so many pages!");
                             }
 
-                        }
-                        else
-                        {
-                            System.Windows.MessageBox.Show("Too many pages");
-                        }
+                        //}
+                      //  else
+                       // {
+                         //   System.Windows.MessageBox.Show("Too many pages to print!");
+                        //}
                     }
                     catch (Exception ex)
                     {
@@ -198,13 +200,21 @@ namespace Iap.Bounds
                 {
 
                     System.Windows.MessageBox.Show("Failed to print please try again");
+                  //  KillAdobeProcess();
 
                 }
 
             }
         }
 
-
+        public void KillAdobeProcess()
+        {
+            Process[] processes = Process.GetProcessesByName("AcroRd32");
+            foreach(var process in processes)
+            {
+                process.Kill();
+            }
+        }
 
         public bool CanPrint(string path)
         {

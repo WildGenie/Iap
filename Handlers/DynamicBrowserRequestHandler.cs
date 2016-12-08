@@ -20,6 +20,11 @@ namespace Iap.Handlers
 
         public IResponseFilter GetResourceResponseFilter(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response)
         {
+            if (request.Url.EndsWith(".pdf"))
+            {
+                string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
+                browserControl.Load(toNavigate);
+            }
             return null;
         }
 

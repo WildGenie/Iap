@@ -102,9 +102,8 @@ namespace Iap.Bounds
             {
 
             }
-            // System.Windows.MessageBox.Show("print ok to continue");
 
-            // System.Threading.Thread.Sleep(5000);
+            System.Threading.Thread.Sleep(2000);
 
             if (selected == "before")
             {
@@ -135,9 +134,9 @@ namespace Iap.Bounds
                     {
                         iTextSharp.text.pdf.PdfReader pdfReader = new iTextSharp.text.pdf.PdfReader(path);
                         int numberOfPages = pdfReader.NumberOfPages;
-                        if (!(numberOfPages > 6))
+                        if (!(numberOfPages > Int32.Parse(this.numberOfAvailablePagesToPrint)))
                         {
-                            if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <= Convert.ToInt32(numberOfAvailablePagesToPrint))
+                            if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <= Convert.ToInt32(this.numberOfAvailablePagesToPrint))
                             {
 
                                 System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
@@ -175,9 +174,13 @@ namespace Iap.Bounds
 
                             else
                             {
-                                System.Windows.MessageBox.Show("Μεγάλος αριθμός σελίδων");
+                                System.Windows.MessageBox.Show("Δε μπορείτε να εκτυπώσετε άλλες σελίδες");
                             }
 
+                        }
+                        else
+                        {
+                            System.Windows.MessageBox.Show("Μεγάλος αριθμός σελίδων");
                         }
                     }
                     catch (Exception ex)
@@ -189,12 +192,11 @@ namespace Iap.Bounds
                 else
                 {
 
-                    System.Windows.MessageBox.Show("Αποτυχία εκτύπωσης. Παρακαλούμε δοκιμάστε αργότερα");
+                    System.Windows.MessageBox.Show("Αποτυχία εκτύπωσης. Δοκιμάστε αργότερα");
 
                 }
 
             }
-
         }
 
 

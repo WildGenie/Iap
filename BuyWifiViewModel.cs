@@ -64,7 +64,7 @@ namespace Iap
 
             _buyWifiBrowser.LifeSpanHandler = new LifeSpanHandler();
             // _buyWifiBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
-            _buyWifiBrowser.RequestHandler = new CustomRequestHandler();
+            _buyWifiBrowser.RequestHandler = new CustomRequestHandler("");
             _buyWifiBrowser.DialogHandler = new CustomDialogHandler();
 
             ((BuyWifiView)view).BuyWifiBrowser.Children.Add(_buyWifiBrowser);
@@ -79,7 +79,7 @@ namespace Iap
 
             _buyWifiBrowser.Focus();
 
-         
+            GlobalCounters.ResetAll();
 
             
             timer = new DispatcherTimer();
@@ -218,25 +218,26 @@ namespace Iap
         {
             try
             {
-                if (_buyWifiBrowser.CanGoBack)
-                {
-                    if (_buyWifiBrowser.GetMainFrame().Url.Contains("docs.google.com"))
-                    {
-                        ViewBuyWifi();
-                    }
-                    else
-                    {
-                        _buyWifiBrowser.Back();
-                    }
-                }
-                else
-                {
-                    if (_buyWifiBrowser != null)
-                    {
-                        _buyWifiBrowser.Dispose();
-                    }
-                    this.events.PublishOnCurrentThread(new ViewEnglishCommand());
-                }
+                /* if (_buyWifiBrowser.CanGoBack)
+                 {
+                     if (_buyWifiBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+                     {
+                         ViewBuyWifi();
+                     }
+                     else
+                     {
+                         _buyWifiBrowser.Back();
+                     }
+                 }
+                 else
+                 {
+                     if (_buyWifiBrowser != null)
+                     {
+                         _buyWifiBrowser.Dispose();
+                     }
+                     this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+                 }*/
+                this.events.PublishOnCurrentThread(new ViewEnglishCommand());
             }
             catch { }
         }

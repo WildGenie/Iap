@@ -136,8 +136,8 @@ namespace Iap.Bounds
                     {
                         iTextSharp.text.pdf.PdfReader pdfReader = new iTextSharp.text.pdf.PdfReader(path);
                         int numberOfPages = pdfReader.NumberOfPages;
-                        if (!(numberOfPages > 6))
-                        {
+                      //  if (!(numberOfPages > 6))
+                       // {
                             if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <= Convert.ToInt32(this.numberOfAvailablePagesToPrint))
                             {
 
@@ -176,10 +176,10 @@ namespace Iap.Bounds
 
                             else
                             {
-                                System.Windows.MessageBox.Show("Δεν έχετε άλλες διαθέσιμες σελίδες για εκτύπωση");
+                                System.Windows.MessageBox.Show("Μεγάλος αριθμός σελίδων για εκτύπωση");
                             }
 
-                        }
+                       // }
                     }
                     catch (Exception ex)
                     {
@@ -187,12 +187,12 @@ namespace Iap.Bounds
                     }
                 }
 
-                else
-                {
+               // else
+                //{
 
-                    System.Windows.MessageBox.Show("Αποτυχία εκτύπωσης. Παρακαλούμε δοκιμάστε ξανά.");
+                  //  System.Windows.MessageBox.Show("Αποτυχία εκτύπωσης. Παρακαλούμε δοκιμάστε ξανά.");
 
-                }
+                //}
 
             }
         }

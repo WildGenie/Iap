@@ -169,7 +169,7 @@
             </Button>
             <Grid Grid.Row="1">
                 <Grid.Background>
-                    <ImageBrush ImageSource="/Images/AIA_FOR PNG-02.png"/>
+                    <ImageBrush ImageSource="{Binding Path=Arrow}"/>
                 </Grid.Background>
                 <Button x:Name="OpenBanner" Margin="430 00 430 15" Background="Transparent">
                     <Button.Triggers>

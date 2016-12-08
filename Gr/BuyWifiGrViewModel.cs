@@ -73,7 +73,8 @@ namespace Iap.Gr
 
             _buyWifiBrowser.RequestContext = new RequestContext();
             _buyWifiBrowser.LifeSpanHandler = new LifeSpanHandler();
-            _buyWifiBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
+            // _buyWifiBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
+            _buyWifiBrowser.RequestHandler = new CustomRequestHandler("");
             _buyWifiBrowser.DialogHandler = new CustomDialogHandler();
             _buyWifiBrowser.Focus();
 
@@ -238,25 +239,26 @@ namespace Iap.Gr
             this.OpenKeyboard = false;
             try
             {
-                if (_buyWifiBrowser.CanGoBack)
-                {
-                    if (_buyWifiBrowser.GetMainFrame().Url.Contains("docs.google.com"))
-                    {
-                        ViewBuyWifi();
-                    }
-                    else
-                    {
-                        _buyWifiBrowser.Back();
-                    }
-                }
-                else
-                {
-                    if (_buyWifiBrowser != null)
-                    {
-                        _buyWifiBrowser.Dispose();
-                    }
-                    this.events.PublishOnCurrentThread(new ViewGreekCommand());
-                }
+                /*  if (_buyWifiBrowser.CanGoBack)
+                  {
+                      if (_buyWifiBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+                      {
+                          ViewBuyWifi();
+                      }
+                      else
+                      {
+                          _buyWifiBrowser.Back();
+                      }
+                  }
+                  else
+                  {
+                      if (_buyWifiBrowser != null)
+                      {
+                          _buyWifiBrowser.Dispose();
+                      }
+                      this.events.PublishOnCurrentThread(new ViewGreekCommand());
+                  }*/
+                this.events.PublishOnCurrentThread(new ViewGreekCommand());
             }
             catch { }
         }

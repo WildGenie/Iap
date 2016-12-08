@@ -209,11 +209,16 @@ namespace Iap.DynamicGreekScreens
 
             _internetAccessBrowser.RequestContext = new RequestContext();
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
-            _internetAccessBrowser.RequestHandler = new DynamicBrowserRequestHandler();
+            //  _internetAccessBrowser.RequestHandler = new DynamicBrowserRequestHandler();
+            _internetAccessBrowser.RequestHandler = new CustomRequestHandler("");
             _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
-            var boundGrObject = new DynamicBrowserBoundObjectGr(this.numberOfAvailablePagesToPrint);
-            _internetAccessBrowser.RegisterJsObject("bound", boundGrObject);
-            _internetAccessBrowser.FrameLoadEnd += boundGrObject.OnFrameLoadEnd;
+            // var boundGrObject = new DynamicBrowserBoundObjectGr(this.numberOfAvailablePagesToPrint);
+            //_internetAccessBrowser.RegisterJsObject("bound", boundGrObject);
+            // _internetAccessBrowser.FrameLoadEnd += boundGrObject.OnFrameLoadEnd;
+            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint);
+
+            _internetAccessBrowser.RegisterJsObject("bound", obj);
+            _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 
             PopulatePanel(currentView);
 
@@ -649,18 +654,19 @@ namespace Iap.DynamicGreekScreens
               this.OpenKeyboard = false;
             try
             {
-                if (_internetAccessBrowser.CanGoBack && this.PreviousSelected == this.SelectedPosition)
-                {
-                    _internetAccessBrowser.Back();
-                }
-                else
-                {
-                    if (_internetAccessBrowser != null)
-                    {
-                        _internetAccessBrowser.Dispose();
-                    }
-                    this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
-                }
+                /* if (_internetAccessBrowser.CanGoBack && this.PreviousSelected == this.SelectedPosition)
+                 {
+                     _internetAccessBrowser.Back();
+                 }
+                 else
+                 {
+                     if (_internetAccessBrowser != null)
+                     {
+                         _internetAccessBrowser.Dispose();
+                     }
+                     this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
+                 }*/
+                this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
             }
             catch { }
         }

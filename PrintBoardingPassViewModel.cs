@@ -71,7 +71,7 @@ namespace Iap
             _printBoardingPassBrowser.LifeSpanHandler = new LifeSpanHandler();
             // _printBoardingPassBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(this.numberOfAvailablePagesToPrint));
 
-            _printBoardingPassBrowser.RequestHandler = new CustomRequestHandler();
+            _printBoardingPassBrowser.RequestHandler = new CustomRequestHandler("");
             _printBoardingPassBrowser.DialogHandler = new CustomDialogHandler();
             _printBoardingPassBrowser.MenuHandler = new CustomMenuHandler();
             _printBoardingPassBrowser.RequestContext = new RequestContext();
@@ -244,25 +244,26 @@ namespace Iap
             this.OpenKeyboard = false;
             try
             {
-                if (_printBoardingPassBrowser.CanGoBack)
-                {
-                    if (_printBoardingPassBrowser.GetMainFrame().Url.Contains("docs.google.com"))
-                    {
-                        ViewPrintBoardingPass();
-                    }
-                    else
-                    {
-                        _printBoardingPassBrowser.Back();
-                    }
-                }
-                else
-                {
-                    if (_printBoardingPassBrowser != null)
-                    {
-                        _printBoardingPassBrowser.Dispose();
-                    }
-                    this.events.PublishOnCurrentThread(new ViewEnglishCommand());
-                }
+                /*  if (_printBoardingPassBrowser.CanGoBack)
+                  {
+                      if (_printBoardingPassBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+                      {
+                          ViewPrintBoardingPass();
+                      }
+                      else
+                      {
+                          _printBoardingPassBrowser.Back();
+                      }
+                  }
+                  else
+                  {
+                      if (_printBoardingPassBrowser != null)
+                      {
+                          _printBoardingPassBrowser.Dispose();
+                      }
+                      this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+                  }*/
+                this.events.PublishOnCurrentThread(new ViewEnglishCommand());
             }
             catch
             {

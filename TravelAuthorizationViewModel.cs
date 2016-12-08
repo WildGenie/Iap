@@ -75,10 +75,11 @@ namespace Iap
             _travelAuthorizationBrowser.LifeSpanHandler = new LifeSpanHandler();
             //   _travelAuthorizationBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
 
-            _travelAuthorizationBrowser.RequestHandler = new CustomRequestHandler();
+            _travelAuthorizationBrowser.RequestHandler = new CustomRequestHandler("");
             _travelAuthorizationBrowser.DialogHandler = new CustomDialogHandler();
 
             _travelAuthorizationBrowser.Focus();
+
 
             
             timer = new DispatcherTimer();
@@ -255,6 +256,7 @@ namespace Iap
                     }
                     this.events.PublishOnCurrentThread(new ViewEnglishCommand());
                 }
+                this.events.PublishOnCurrentThread(new ViewEnglishCommand());
             }
             catch { }
         }

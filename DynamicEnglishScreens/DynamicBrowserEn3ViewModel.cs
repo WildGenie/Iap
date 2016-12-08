@@ -138,9 +138,11 @@ namespace Iap.DynamicEnglishScreens
 
             _internetAccessBrowser.RequestContext = new RequestContext();
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
-            _internetAccessBrowser.RequestHandler = new DynamicBrowserRequestHandler();
+            // _internetAccessBrowser.RequestHandler = new DynamicBrowserRequestHandler();
+            _internetAccessBrowser.RequestHandler = new CustomRequestHandler("");
             _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
-            var boundEnObject = new DynamicBrowserBoundObjectEn(this.numberOfAvailablePagesToPrint);
+            //var boundEnObject = new DynamicBrowserBoundObjectEn(this.numberOfAvailablePagesToPrint);
+            var boundEnObject = new CustomBoundObject(this.numberOfAvailablePagesToPrint);
             _internetAccessBrowser.RegisterJsObject("bound", boundEnObject);
             _internetAccessBrowser.FrameLoadEnd += boundEnObject.OnFrameLoadEnd;
 
@@ -390,18 +392,19 @@ namespace Iap.DynamicEnglishScreens
             this.OpenKeyboard = false;
             try
             {
-                if (_internetAccessBrowser.CanGoBack && this.PreviousSelected == this.SelectedPosition)
-                {
-                    _internetAccessBrowser.Back();
-                }
-                else
-                {
-                    if (_internetAccessBrowser != null)
-                    {
-                        _internetAccessBrowser.Dispose();
-                    }
-                    this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
-                }
+                /* if (_internetAccessBrowser.CanGoBack && this.PreviousSelected == this.SelectedPosition)
+                 {
+                     _internetAccessBrowser.Back();
+                 }
+                 else
+                 {
+                     if (_internetAccessBrowser != null)
+                     {
+                         _internetAccessBrowser.Dispose();
+                     }
+                     this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
+                 }*/
+                this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
             }
             catch { }
         }

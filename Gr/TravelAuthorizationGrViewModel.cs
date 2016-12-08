@@ -74,7 +74,7 @@ namespace Iap.Gr
             _travelAuthorizationBrowser.RequestContext = new RequestContext();
             _travelAuthorizationBrowser.LifeSpanHandler = new LifeSpanHandler();
             _travelAuthorizationBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
-            _travelAuthorizationBrowser.RequestHandler = new CustomRequestHandler();
+            _travelAuthorizationBrowser.RequestHandler = new CustomRequestHandler("");
 
             _travelAuthorizationBrowser.Focus();
 
@@ -239,22 +239,23 @@ namespace Iap.Gr
             this.OpenKeyboard = false;
             try
             {
-                if (_travelAuthorizationBrowser.CanGoBack)
-                {
-                    if(_travelAuthorizationBrowser.GetMainFrame().Url.Contains("docs.google.com"))
-                    {
-                        ViewTravelAuthorization();
-                    }
-                    _travelAuthorizationBrowser.Back();
-                }
-                else
-                {
-                    if (_travelAuthorizationBrowser != null)
-                    {
-                        _travelAuthorizationBrowser.Dispose();
-                    }
-                    this.events.PublishOnCurrentThread(new ViewEnglishCommand());
-                }
+                /* if (_travelAuthorizationBrowser.CanGoBack)
+                 {
+                     if(_travelAuthorizationBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+                     {
+                         ViewTravelAuthorization();
+                     }
+                     _travelAuthorizationBrowser.Back();
+                 }
+                 else
+                 {
+                     if (_travelAuthorizationBrowser != null)
+                     {
+                         _travelAuthorizationBrowser.Dispose();
+                     }
+                     this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+                 }*/
+                this.events.PublishOnCurrentThread(new ViewGreekCommand());
             }
             catch { }
         }

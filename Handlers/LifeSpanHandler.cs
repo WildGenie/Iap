@@ -29,13 +29,14 @@ namespace Iap.Handlers
         public bool OnBeforePopup(IWebBrowser browserControl, IBrowser browser, IFrame frame, string targetUrl, string targetFrameName, WindowOpenDisposition targetDisposition, bool userGesture, IPopupFeatures popupFeatures, IWindowInfo windowInfo, IBrowserSettings browserSettings, ref bool noJavascriptAccess, out IWebBrowser newBrowser)
         {
             
+            
             if (!browserControl.GetMainFrame().Url.Contains("docs.google.com"))
             {
                 newBrowser = null;
                 
                 browserControl.Load(targetUrl);
                 //browserControl.ExecuteScriptAsync(@"window.print=function(){alert('hello')");
-                frame.ExecuteJavaScriptAsync(@"window.print = function(){ alert('hello');");
+               // frame.ExecuteJavaScriptAsync(@"window.print = function(){ alert('hello');");
 
                // var task = browserControl.EvaluateScriptAsync(@"window.print = function(){ alert('hello');", TimeSpan.FromSeconds(10));
                 //task.Wait();

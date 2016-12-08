@@ -16,6 +16,7 @@ namespace Iap.DynamicEnglishScreens
         private readonly ILog log;
         private string bannerBackground;
         private bool isBannerVisible;
+        private string arrow;
 
         private BitmapImage image1;
         private BitmapImage image2;
@@ -132,6 +133,19 @@ namespace Iap.DynamicEnglishScreens
             }
         }
 
+        public string Arrow
+        {
+            set
+            {
+                this.arrow = value;
+                NotifyOfPropertyChange(() => this.Arrow);
+            }
+            get
+            {
+                return this.arrow;
+            }
+        }
+
         public bool IsBannerVisible
         {
             set
@@ -147,13 +161,15 @@ namespace Iap.DynamicEnglishScreens
 
         public void OpenBanner()
         {
-            this.BannerBackground = "/Images/AIA_FOR PNG-11.png";
+            this.BannerBackground = "/Images/AIA_FOR_20PNG-1111111.png";
+            this.Arrow = null;
             this.IsBannerVisible = true;
         }
 
         public void CloseBanner()
         {
             this.BannerBackground = "";
+            this.Arrow = "/Images/AIA_FOR PNG-02.png";
             this.IsBannerVisible = false;
         }
 
