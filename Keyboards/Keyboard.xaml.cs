@@ -373,6 +373,15 @@ namespace Iap.Keyboards
                         keybd_event(VK_SPACE, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
                         e.Handled = true;
                         break;
+                    case "At":
+                        keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+                        keybd_event(VK_2, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_2, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                        keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        break;
                 }
             }
             catch { }
@@ -465,7 +474,7 @@ namespace Iap.Keyboards
             this.KeyboardGrid.Background = myBrush;
         }
 
-        private void Caps2_Click(object sender, RoutedEventArgs e)
+      /*  private void Caps2_Click(object sender, RoutedEventArgs e)
         {
             ImageBrush myBrush = new ImageBrush();
             if (isCaps)
@@ -500,7 +509,7 @@ namespace Iap.Keyboards
             keybd_event(VK_CAPITAL, 0, 0, (UIntPtr)0);
             keybd_event(VK_CAPITAL, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
             this.KeyboardGrid.Background = myBrush;
-        }
+        }*/
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {

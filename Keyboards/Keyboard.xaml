@@ -564,14 +564,16 @@
             Focusable="False"
             />
         <Button 
-            x:Name="Caps2"
+            x:Name="At"
             HorizontalAlignment="Left"
             Margin="860,231,0,0"
             VerticalAlignment="Top"
             Width="120"
             Height="63"
             Background="Transparent"
-            Focusable="False" Click="Caps2_Click"
+            Focusable="False"
+            Click="cmdSymbolButtonClick"
+            ClickMode="Release"
             />
         <Button 
             x:Name="Space" 

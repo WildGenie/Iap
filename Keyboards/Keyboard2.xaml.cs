@@ -373,6 +373,16 @@ namespace Iap.Keyboards
                         keybd_event(VK_SPACE, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
                         e.Handled = true;
                         break;
+
+                    case "At":
+                        keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+                        keybd_event(VK_2, 0, 0, (UIntPtr)0);
+                        keybd_event(VK_2, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                        keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        break;
                 }
             }
             catch { }
