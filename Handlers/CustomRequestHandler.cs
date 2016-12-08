@@ -12,6 +12,11 @@ namespace Iap.Handlers
     {
         private string previousUrl;
 
+        public CustomRequestHandler(string previousUrl)
+        {
+            this.previousUrl = previousUrl;
+        }
+
         public bool GetAuthCredentials(IWebBrowser browserControl, IBrowser browser, IFrame frame, bool isProxy, string host, int port, string realm, string scheme, IAuthCallback callback)
         {
             return false;
@@ -19,6 +24,11 @@ namespace Iap.Handlers
 
         public IResponseFilter GetResourceResponseFilter(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response)
         {
+            if(request.Url.EndsWith(".pdf"))
+            {
+                string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
+                browserControl.Load(toNavigate);
+            }
             return null;
         }
 
@@ -57,17 +67,22 @@ namespace Iap.Handlers
 
         private void BrowserControl_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
-            ChromiumWebBrowser mainBrowser = sender as ChromiumWebBrowser;
-            if (mainBrowser.GetMainFrame().Url.Contains("print"))
+            if (this.previousUrl != "")
             {
-                string path = System.IO.Path.Combine(
-                           System.IO.Path.GetDirectoryName(
-                           this.GetType().Assembly.Location),
-                           "Printings", "test.pdf");
+                ChromiumWebBrowser mainBrowser = sender as ChromiumWebBrowser;
+                if (mainBrowser.GetMainFrame().Url.Contains("print"))
+                {
+                    string path = System.IO.Path.Combine(
+                               System.IO.Path.GetDirectoryName(
+                               this.GetType().Assembly.Location),
+                               "Printings", "test.pdf");
 
-                mainBrowser.PrintToPdfAsync(path);
+                    mainBrowser.PrintToPdfAsync(path);
 
-                mainBrowser.Load(this.previousUrl);
+                    mainBrowser.Load(this.previousUrl);
+
+                }
+                this.previousUrl = "";
             }
         }
 
@@ -106,13 +121,15 @@ namespace Iap.Handlers
 
             else if (request.Url.EndsWith(".ppt"))
             {
-                string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=true&fullscreen=yes";
+                // string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=true&fullscreen=yes";
+                string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
                 browserControl.Load(toNavigate);
             }
 
             else if (request.Url.EndsWith(".xls"))
             {
-                string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=true&fullscreen=yes";
+                //string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=true&fullscreen=yes";
+                string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
                 browserControl.Load(toNavigate);
             }
 
