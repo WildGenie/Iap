@@ -168,6 +168,12 @@ namespace Iap.DynamicGreekScreens
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[2].Title + ".");
         }
 
+        public void ViewAdvertLink()
+        {
+            this.events.PublishOnBackgroundThread(new ViewDynamicBannerEnCommand(this.ButtonsDetails));
+            this.log.Info("Invoking Action: ViewBannerLink");
+        }
+
         public void ViewEnglish()
         {
             this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());

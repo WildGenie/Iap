@@ -23,17 +23,19 @@ namespace Iap.Gr
         private bool openKeyboard;
         private readonly string numberOfAvailablePagesToPrint;
         private readonly string internetAccessGrApi;
+        private readonly string bannerLinkGrApi;
 
         public static ChromiumWebBrowser _internetAccessBrowser;
 
        
         private DispatcherTimer timer;
 
-        public InternetAccessGrViewModel(IEventAggregator events,string numberOfAvailablePagesToPrint, string internetAccessGrApi)
+        public InternetAccessGrViewModel(IEventAggregator events,string numberOfAvailablePagesToPrint, string internetAccessGrApi,string bannerLinkGrApi)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.internetAccessGrApi = internetAccessGrApi;
+            this.bannerLinkGrApi = bannerLinkGrApi;
         }
 
         public IEventAggregator Events
@@ -46,17 +48,33 @@ namespace Iap.Gr
 
         protected override void OnViewLoaded(object view)
         {
-            _internetAccessBrowser = new ChromiumWebBrowser()
+            if (!ShowBannerUrl)
             {
-                Address = this.internetAccessGrApi,
-            };
+                _internetAccessBrowser = new ChromiumWebBrowser()
+                {
+                    Address = this.internetAccessGrApi,
+                };
+
+                _internetAccessBrowser.Load(this.internetAccessGrApi);
+
+                this.OpenKeyboard = true;
+            }
+            else
+            {
+                _internetAccessBrowser = new ChromiumWebBrowser()
+                {
+                    Address = this.bannerLinkGrApi,
+                };
+
+                _internetAccessBrowser.Load(this.bannerLinkGrApi);
+
+                this.OpenKeyboard = false;
+            }
 
             _internetAccessBrowser.BrowserSettings = new CefSharp.BrowserSettings()
             {
                 OffScreenTransparentBackground = false,
             };
-
-            _internetAccessBrowser.Load(this.internetAccessGrApi);
 
             var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint);
 
@@ -80,7 +98,7 @@ namespace Iap.Gr
 
             
 
-            this.OpenKeyboard = true;
+         
 
            
             timer = new DispatcherTimer();
@@ -109,6 +127,12 @@ namespace Iap.Gr
                 timer.Stop();
                 this.events.PublishOnCurrentThread(new ViewEnglishCommand());
             }
+        }
+
+        public bool ShowBannerUrl
+        {
+            get;
+            set;
         }
 
         private void _internetAccessBrowser_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

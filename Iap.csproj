@@ -160,6 +160,7 @@
     <Compile Include="Commands\ViewAdvertCommand.cs" />
     <Compile Include="Commands\ViewBuyWifiCommand.cs" />
     <Compile Include="Commands\ViewChangeLanguageCommand.cs" />
+    <Compile Include="Commands\ViewDynamicBannerEnCommand.cs" />
     <Compile Include="Commands\ViewDynamicEnglishShellCommand.cs" />
     <Compile Include="Commands\ViewDynamicGreekShellCommand.cs" />
     <Compile Include="Commands\ViewEnglishCommand.cs" />
@@ -169,6 +170,10 @@
     <Compile Include="Commands\ViewRedirectToBrowserCommand.cs" />
     <Compile Include="Commands\ViewSrceenSaverCommand.cs" />
     <Compile Include="Commands\ViewTravelAuthorizationCommand.cs" />
+    <Compile Include="DynamicEnglishScreens\DynamicBannerBrowserEn5View.xaml.cs">
+      <DependentUpon>DynamicBannerBrowserEn5View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicEnglishScreens\DynamicBannerBrowserEn5ViewModel.cs" />
     <Compile Include="DynamicEnglishScreens\DynamicBrowserEn2View.xaml.cs">
       <DependentUpon>DynamicBrowserEn2View.xaml</DependentUpon>
     </Compile>
@@ -225,6 +230,10 @@
       <DependentUpon>DynamicEnShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DynamicEnglishScreens\DynamicEnShellViewModel.cs" />
+    <Compile Include="DynamicGreekScreens\DynamicBannerBrowserGr5View.xaml.cs">
+      <DependentUpon>DynamicBannerBrowserGr5View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicGreekScreens\DynamicBannerBrowserGr5ViewModel.cs" />
     <Compile Include="DynamicGreekScreens\DynamicBrowserGr2View.xaml.cs">
       <DependentUpon>DynamicBrowserGr2View.xaml</DependentUpon>
     </Compile>
@@ -403,6 +412,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DynamicEnglishScreens\DynamicBannerBrowserEn5View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DynamicEnglishScreens\DynamicBrowserEn2View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -456,6 +469,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DynamicEnglishScreens\DynamicEnShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DynamicGreekScreens\DynamicBannerBrowserGr5View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

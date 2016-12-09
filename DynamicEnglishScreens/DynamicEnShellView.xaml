@@ -202,6 +202,7 @@
                 </Button.Style>
                 <Image Source="/Images/AIA_FOR PNG-12.png"/>
             </Button>
+            <Button x:Name="ViewAdvertLink" Margin="0 0 70 0" Background="Transparent"/>
             <Grid Grid.Row="1">
                 <Grid.Background>
                     <ImageBrush ImageSource="{Binding Path=Arrow}"/>

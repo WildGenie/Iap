@@ -30,7 +30,9 @@ namespace Iap
         IHandle<ViewSrceenSaverCommand>,
         IHandle<ViewDynamicEnglishShellCommand>,
         IHandle<ViewRedirectToBrowserCommand>,
-        IHandle<ViewDynamicGreekShellCommand>
+        IHandle<ViewDynamicGreekShellCommand>,
+        IHandle<ViewAdvertCommand>,
+        IHandle<ViewDynamicBannerEnCommand>
     {
         public IEventAggregator events;
         private bool isGreekSelected;
@@ -90,7 +92,9 @@ namespace Iap
         public DynamicBrowserGr6ViewModel DynamicBrowserGr6 { get; set; }
         public DynamicBrowserGr7ViewModel DynamicBrowserGr7 { get; set; }
         public DynamicBrowserGr8ViewModel DynamicBrowserGr8 { get; set; }
-        
+
+        public DynamicBannerBrowserEn5ViewModel DynamicBannerBrowserEn5 { get; set; }
+        public DynamicBannerBrowserGr5ViewModel DynamicBannerBrowserGr5 { get; set; }
 
         protected override void OnViewLoaded(object view)
         {
@@ -129,6 +133,12 @@ namespace Iap
         }
 
         public IReadOnlyCollection<ButtonLinkModel> buttons
+        {
+            get;
+            set;
+        }
+
+        public IReadOnlyCollection<ButtonLinkModel> tempButtons
         {
             get;
             set;
@@ -197,12 +207,14 @@ namespace Iap
                 base.ChangeActiveItem(InternetAccessGr,true);
                 InternetAccessGr.RemainingTime = message.RemainingTime;
                 InternetAccessGr.TimeElapsed = Convert.ToInt32(message.RemainingTime);
+                InternetAccessGr.ShowBannerUrl = false;
             }
             else
             {
                 base.ChangeActiveItem(InternetAccess,true);
                 InternetAccess.RemainingTime = message.RemainingTime;
                 InternetAccess.TimeElapsed = Convert.ToInt32(message.RemainingTime);
+                InternetAccess.ShowBannerUrl = false;
             }
         }
 
@@ -237,14 +249,17 @@ namespace Iap
 
         public void Handle(ViewSrceenSaverCommand message)
         {
-           /* try
+            try
             {
-                System.Threading.Thread checkServiceThread = new System.Threading.Thread(() =>
-                    this.buttons = this.parser.GetButtonLinksDetails()
-                );
-                checkServiceThread.Start();
+                this.tempButtons = this.buttons;
+                this.buttons = this.parser.GetButtonLinksDetails();
+
             }
-            catch { }*/
+            catch 
+            {
+                this.buttons = tempButtons;
+            }
+
             base.ActivateItem(this.ScreenSaver);
         }
 
@@ -477,6 +492,45 @@ namespace Iap
                     base.ActivateItem(this.DynamicGrShell8);
                     break;
             }
+        }
+
+        public void Handle(ViewAdvertCommand message)
+        {
+            if (this.isGreekSelected)
+            {
+                base.ChangeActiveItem(InternetAccessGr, true);
+                InternetAccessGr.RemainingTime = message.RemainingTime;
+                InternetAccessGr.TimeElapsed = Convert.ToInt32(message.RemainingTime);
+                InternetAccessGr.ShowBannerUrl = true;
+                InternetAccessGr.OpenKeyboard = false;
+            }
+            else
+            {
+                base.ChangeActiveItem(InternetAccess, true);
+                InternetAccess.RemainingTime = message.RemainingTime;
+                InternetAccess.TimeElapsed = Convert.ToInt32(message.RemainingTime);
+                InternetAccess.ShowBannerUrl = true;
+                InternetAccess.OpenKeyboard = false;
+            }
+        }
+
+        public void Handle(ViewDynamicBannerEnCommand message)
+        {
+            List<ButtonLinkModel> buttonDetails = this.buttons.ToList();
+
+            if (this.isGreekSelected)
+            {
+                base.ChangeActiveItem(this.DynamicBannerBrowserGr5, true);
+                this.DynamicBannerBrowserGr5.SelectedPosition = "none";
+                this.DynamicBannerBrowserGr5.ButtonsDetails = message.ButtonDetails;
+            }
+            else
+            {
+                base.ChangeActiveItem(this.DynamicBannerBrowserEn5, true);
+                this.DynamicBannerBrowserEn5.SelectedPosition = "none";
+                this.DynamicBannerBrowserEn5.ButtonsDetails = message.ButtonDetails;
+            }
+            
         }
     }
 }

@@ -114,5 +114,10 @@ namespace Iap.Gr
         {
             this.events.PublishOnBackgroundThread(new ViewTravelAuthorizationCommand(this.RemainingTime));
         }
+
+        public void ViewAdvertLink()
+        {
+            this.events.PublishOnCurrentThread(new ViewAdvertCommand(this.RemainingTime));
+        }
     }
 }

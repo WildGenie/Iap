@@ -114,7 +114,7 @@ namespace Iap
 
         public void ViewAdvertLink()
         {
-            this.events.PublishOnBackgroundThread(new ViewInternetAccessCommand(this.RemainingTime));
+            this.events.PublishOnCurrentThread(new ViewAdvertCommand(this.RemainingTime));
         }
 
         public void ViewGreek()

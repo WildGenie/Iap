@@ -211,8 +211,8 @@ namespace Iap.DynamicEnglishScreens
 
         public void ViewAdvertLink()
         {
-            this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[2].EnUrl, this.ButtonsDetails, "3"));
-            this.log.Info("Invoking Action: View" + this.ButtonsDetails[2].Title + ".");
+            this.events.PublishOnBackgroundThread(new ViewDynamicBannerEnCommand(this.ButtonsDetails));
+            this.log.Info("Invoking Action: ViewBannerLink");
         }
 
         public void ViewGreek()
