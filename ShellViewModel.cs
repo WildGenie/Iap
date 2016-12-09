@@ -112,6 +112,11 @@ namespace Iap
             this.events.PublishOnBackgroundThread(new ViewTravelAuthorizationCommand(this.RemainingTime));
         }
 
+        public void ViewAdvertLink()
+        {
+            this.events.PublishOnBackgroundThread(new ViewInternetAccessCommand(this.RemainingTime));
+        }
+
         public void ViewGreek()
         {
             this.events.PublishOnCurrentThread(new ViewGreekCommand());

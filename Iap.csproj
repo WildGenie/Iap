@@ -157,6 +157,7 @@
       <DependentUpon>BuyWifiView.xaml</DependentUpon>
     </Compile>
     <Compile Include="BuyWifiViewModel.cs" />
+    <Compile Include="Commands\ViewAdvertCommand.cs" />
     <Compile Include="Commands\ViewBuyWifiCommand.cs" />
     <Compile Include="Commands\ViewChangeLanguageCommand.cs" />
     <Compile Include="Commands\ViewDynamicEnglishShellCommand.cs" />
