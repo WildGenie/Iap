@@ -4,46 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-using CefSharp;
 using CefSharp.Wpf;
-using Iap.Commands;
 using System.Windows.Threading;
-using Iap.Handlers;
 using Iap.Bounds;
-using System.Windows.Input;
+using CefSharp;
+using Iap.Handlers;
+using Iap.Commands;
 using System.Windows.Controls;
+using System.Windows.Input;
 
-namespace Iap.Gr
+namespace Iap
 {
-   public class InternetAccessGrViewModel:Screen
+   public class InternetAccess2ViewModel:Screen
     {
         private readonly IEventAggregator events;
-
         private string remainingTime;
-        private bool openKeyboard;
         private readonly string numberOfAvailablePagesToPrint;
-        private readonly string internetAccessGrApi;
-        private readonly string bannerLinkGrApi;
+        private readonly string internetAccessEnApi;
+        private readonly string bannerLinkEnApi;
+
+        private bool openKeyboard;
 
         public static ChromiumWebBrowser _internetAccessBrowser;
 
-       
         private DispatcherTimer timer;
 
-        public InternetAccessGrViewModel(IEventAggregator events,string numberOfAvailablePagesToPrint, string internetAccessGrApi,string bannerLinkGrApi)
+        public InternetAccess2ViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string internetAccessEnApi, string bannerLinkEnApi)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
-            this.internetAccessGrApi = internetAccessGrApi;
-            this.bannerLinkGrApi = bannerLinkGrApi;
-        }
-
-        public IEventAggregator Events
-        {
-            get
-            {
-                return this.events;
-            }
+            this.internetAccessEnApi = internetAccessEnApi;
+            this.bannerLinkEnApi = bannerLinkEnApi;
         }
 
         protected override void OnViewLoaded(object view)
@@ -52,10 +43,10 @@ namespace Iap.Gr
             {
                 _internetAccessBrowser = new ChromiumWebBrowser()
                 {
-                    Address = this.internetAccessGrApi,
+                    Address = this.internetAccessEnApi,
                 };
 
-                _internetAccessBrowser.Load(this.internetAccessGrApi);
+                _internetAccessBrowser.Load(this.internetAccessEnApi);
 
                 this.OpenKeyboard = true;
             }
@@ -63,10 +54,10 @@ namespace Iap.Gr
             {
                 _internetAccessBrowser = new ChromiumWebBrowser()
                 {
-                    Address = this.bannerLinkGrApi,
+                    Address = this.bannerLinkEnApi,
                 };
 
-                _internetAccessBrowser.Load(this.bannerLinkGrApi);
+                _internetAccessBrowser.Load(this.bannerLinkEnApi);
 
                 this.OpenKeyboard = false;
             }
@@ -76,12 +67,39 @@ namespace Iap.Gr
                 OffScreenTransparentBackground = false,
             };
 
-            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint);
+            _internetAccessBrowser.BrowserSettings.FileAccessFromFileUrls = CefState.Enabled;
+            _internetAccessBrowser.BrowserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
+            _internetAccessBrowser.BrowserSettings.WebSecurity = CefState.Enabled;
+            _internetAccessBrowser.BrowserSettings.Javascript = CefState.Enabled;
 
-            _internetAccessBrowser.RegisterJsObject("bound", obj);
-            _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 
-            ((InternetAccessGrView)view).InternetAccessBrowser.Children.Add(_internetAccessBrowser);
+
+
+            // var obj = new BoundTest(6,0,"en");
+
+            /*  var obj = new BoundObject("en",Convert.ToInt32(numberOfAvailablePagesToPrint));
+
+              _internetAccessBrowser.RegisterJsObject("bound", obj);
+              _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;*/
+
+            var boundObject = new CustomBoundObject(this.numberOfAvailablePagesToPrint);
+            _internetAccessBrowser.RegisterJsObject("bound", boundObject, true);
+            _internetAccessBrowser.FrameLoadEnd += boundObject.OnFrameLoadEnd;
+
+            _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
+            // _internetAccessBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
+
+            _internetAccessBrowser.RequestHandler = new CustomRequestHandler("");
+
+            _internetAccessBrowser.MenuHandler = new CustomMenuHandler();
+            //   _internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler();
+            _internetAccessBrowser.JsDialogHandler = new CustomJsDialog();
+
+            _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
+            // _internetAccessBrowser.FrameLoadEnd += _internetAccessBrowser_FrameLoadEnd;
+
+
+            ((InternetAccess2View)view).InternetAccessBrowser.Children.Add(_internetAccessBrowser);
 
             _internetAccessBrowser.TouchDown += _internetAccessBrowser_TouchDown;
 
@@ -90,12 +108,18 @@ namespace Iap.Gr
             _internetAccessBrowser.MouseDown += _internetAccessBrowser_MouseDown;
 
             _internetAccessBrowser.RequestContext = new RequestContext();
-            _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
-            //  _internetAccessBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
-            _internetAccessBrowser.RequestHandler = new CustomRequestHandler("");
-            _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
+            //_internetAccessBrowser.IsManipulationEnabled = true;
+            //_internetAccessBrowser.ReleaseAllTouchCaptures();
+            //_internetAccessBrowser.ManipulationDelta += _internetAccessBrowser_ManipulationDelta;
+
+
             _internetAccessBrowser.Focus();
-   
+
+            //this.RemainingTime = "30";
+
+
+
+            //this.TimeElapsed = 30;
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 1, 0);
             timer.Tick += TimerTick;
@@ -132,6 +156,7 @@ namespace Iap.Gr
 
         private void _internetAccessBrowser_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+
             try
             {
                 string script =
@@ -184,7 +209,19 @@ namespace Iap.Gr
             e.Handled = true;
         }
 
-       
+        public bool OpenKeyboard
+        {
+            set
+            {
+                this.openKeyboard = value;
+                NotifyOfPropertyChange(() => this.OpenKeyboard);
+            }
+
+            get
+            {
+                return this.openKeyboard;
+            }
+        }
 
         public string RemainingTime
         {
@@ -199,35 +236,14 @@ namespace Iap.Gr
             }
         }
 
-        public bool OpenKeyboard
-        {
-            set
-            {
-                this.openKeyboard = value;
-                NotifyOfPropertyChange(() => this.OpenKeyboard);
-            }
-            get
-            {
-                return this.openKeyboard;
-            }
-        }
 
-        public int lastMousePositionX;
-        public int lastMousePositionY;
+
 
         private TouchDevice windowTouchDevice;
         private System.Windows.Point lastPoint;
-
         private void _internetAccessBrowser_TouchMove(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            /* int x = (int)e.GetTouchPoint(_internetAccessBrowser).Position.X;
-              int y = (int)e.GetTouchPoint(_internetAccessBrowser).Position.Y;
 
-
-              int deltax = x - lastMousePositionX;
-              int deltay = y - lastMousePositionY;
-
-              _internetAccessBrowser.SendMouseWheelEvent((int)_internetAccessBrowser.Width, (int)_internetAccessBrowser.Height, deltax, deltay, CefEventFlags.None);*/
             Control control = (Control)sender;
 
             var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
@@ -244,8 +260,6 @@ namespace Iap.Gr
 
         private void _internetAccessBrowser_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            //  lastMousePositionX = (int)e.GetTouchPoint(_internetAccessBrowser).Position.X;
-            //  lastMousePositionY = (int)e.GetTouchPoint(_internetAccessBrowser).Position.Y;
             Control control = (Control)sender;
             e.TouchDevice.Capture(control);
             windowTouchDevice = e.TouchDevice;
@@ -256,38 +270,27 @@ namespace Iap.Gr
             lastPoint = locationOnScreen;
         }
 
+        public IEventAggregator Events
+        {
+            get
+            {
+                return this.events;
+            }
+        }
+
         public void Back()
         {
             this.OpenKeyboard = false;
             try
             {
-                /* if (_internetAccessBrowser.CanGoBack)
-                 {
-                     if (_internetAccessBrowser.GetMainFrame().Url.Contains("docs.google.com"))
-                     {
-                         ViewInternetAccess();
-                     }
-                     else
-                     {
-                         _internetAccessBrowser.Back();
-                     }
-                 }
-
-                 else
-                 {
-                     if (_internetAccessBrowser != null)
-                     {
-                         _internetAccessBrowser.Dispose();
-                     }
-                     this.events.PublishOnCurrentThread(new ViewGreekCommand());
-                 }*/
-                this.events.PublishOnCurrentThread(new ViewGreekCommand());
+                this.events.PublishOnCurrentThread(new ViewTwoButtonsShellEnCommand());
             }
             catch { }
         }
 
         protected override void OnDeactivate(bool close)
         {
+            this.ShowBannerUrl = false;
             timer.Stop();
             try
             {
@@ -296,28 +299,21 @@ namespace Iap.Gr
                     _internetAccessBrowser.Dispose();
                 }
             }
-            catch { }
+            catch
+            {
+
+            }
             base.OnDeactivate(close);
         }
 
         public void ViewBuyWifi()
         {
-            this.events.PublishOnCurrentThread(new ViewBuyWifiCommand(this.TimeElapsed.ToString()));
-        }
-
-        public void ViewPrintBoardingPass()
-        {
-            this.events.PublishOnCurrentThread(new ViewPrintBoardingPassCommand(this.TimeElapsed.ToString()));
-        }
-
-        public void ViewTravelAuthorization()
-        {
-            this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand(this.TimeElapsed.ToString()));
+            this.events.PublishOnCurrentThread(new ViewBuyWifi2Command(this.TimeElapsed.ToString()));
         }
 
         public void ViewInternetAccess()
         {
-            _internetAccessBrowser.Load(this.internetAccessGrApi);
+            _internetAccessBrowser.Load(this.internetAccessEnApi);
         }
     }
 }

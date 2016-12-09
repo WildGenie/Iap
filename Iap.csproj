@@ -153,11 +153,16 @@
     <Compile Include="Bounds\CustomBoundObjectEl.cs" />
     <Compile Include="Bounds\DynamicBrowserBoundObjectEn.cs" />
     <Compile Include="Bounds\DynamicBrowserBoundObjectGr.cs" />
+    <Compile Include="BuyWifi2View.xaml.cs">
+      <DependentUpon>BuyWifi2View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BuyWifi2ViewModel.cs" />
     <Compile Include="BuyWifiView.xaml.cs">
       <DependentUpon>BuyWifiView.xaml</DependentUpon>
     </Compile>
     <Compile Include="BuyWifiViewModel.cs" />
     <Compile Include="Commands\ViewAdvertCommand.cs" />
+    <Compile Include="Commands\ViewBuyWifi2Command.cs" />
     <Compile Include="Commands\ViewBuyWifiCommand.cs" />
     <Compile Include="Commands\ViewChangeLanguageCommand.cs" />
     <Compile Include="Commands\ViewDynamicBannerEnCommand.cs" />
@@ -165,11 +170,15 @@
     <Compile Include="Commands\ViewDynamicGreekShellCommand.cs" />
     <Compile Include="Commands\ViewEnglishCommand.cs" />
     <Compile Include="Commands\ViewGreekCommand.cs" />
+    <Compile Include="Commands\ViewInternetAccess2Command.cs" />
     <Compile Include="Commands\ViewInternetAccessCommand.cs" />
     <Compile Include="Commands\ViewPrintBoardingPassCommand.cs" />
     <Compile Include="Commands\ViewRedirectToBrowserCommand.cs" />
     <Compile Include="Commands\ViewSrceenSaverCommand.cs" />
     <Compile Include="Commands\ViewTravelAuthorizationCommand.cs" />
+    <Compile Include="Commands\ViewTwoButtonsAdvertCommand.cs" />
+    <Compile Include="Commands\ViewTwoButtonsShellEnCommand.cs" />
+    <Compile Include="Commands\ViewTwoButtonsShellGrCommand.cs" />
     <Compile Include="DynamicEnglishScreens\DynamicBannerBrowserEn5View.xaml.cs">
       <DependentUpon>DynamicBannerBrowserEn5View.xaml</DependentUpon>
     </Compile>
@@ -290,10 +299,18 @@
       <DependentUpon>DynamicGrShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DynamicGreekScreens\DynamicGrShellViewModel.cs" />
+    <Compile Include="Gr\BuyWifiGr2View.xaml.cs">
+      <DependentUpon>BuyWifiGr2View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Gr\BuyWifiGr2ViewModel.cs" />
     <Compile Include="Gr\BuyWifiGrView.xaml.cs">
       <DependentUpon>BuyWifiGrView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Gr\BuyWifiGrViewModel.cs" />
+    <Compile Include="Gr\InternetAccessGr2View.xaml.cs">
+      <DependentUpon>InternetAccessGr2View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Gr\InternetAccessGr2ViewModel.cs" />
     <Compile Include="Gr\InternetAccessGrView.xaml.cs">
       <DependentUpon>InternetAccessGrView.xaml</DependentUpon>
     </Compile>
@@ -310,6 +327,10 @@
       <DependentUpon>TravelAuthorizationGrView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Gr\TravelAuthorizationGrViewModel.cs" />
+    <Compile Include="Gr\TwoButtonsShellGrView.xaml.cs">
+      <DependentUpon>TwoButtonsShellGrView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Gr\TwoButtonsShellGrViewModel.cs" />
     <Compile Include="Handlers\CustomDialogHandler.cs" />
     <Compile Include="Handlers\CustomJsDialog.cs" />
     <Compile Include="Handlers\CustomMenuHandler.cs" />
@@ -321,6 +342,10 @@
     <Compile Include="Handlers\PrinterCanceller.cs" />
     <Compile Include="Handlers\RequestHandler.cs" />
     <Compile Include="IdleBrowserViewModel.cs" />
+    <Compile Include="InternetAccess2View.xaml.cs">
+      <DependentUpon>InternetAccess2View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InternetAccess2ViewModel.cs" />
     <Compile Include="InternetAccessView.xaml.cs">
       <DependentUpon>InternetAccessView.xaml</DependentUpon>
     </Compile>
@@ -356,6 +381,10 @@
       <DependentUpon>TravelAuthorizationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="TravelAuthorizationViewModel.cs" />
+    <Compile Include="TwoButtonsShellView.xaml.cs">
+      <DependentUpon>TwoButtonsShellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TwoButtonsShellViewModel.cs" />
     <Compile Include="Unitilities\DefaultTimeProvider.cs" />
     <Compile Include="Unitilities\TimeProvider.cs" />
     <Compile Include="UserActivityLogger.cs" />
@@ -405,6 +434,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AppView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BuyWifi2View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -532,7 +565,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Gr\BuyWifiGr2View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Gr\BuyWifiGrView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Gr\InternetAccessGr2View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -549,6 +590,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Gr\TravelAuthorizationGrView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Gr\TwoButtonsShellGrView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InternetAccess2View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -581,6 +630,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TravelAuthorizationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TwoButtonsShellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

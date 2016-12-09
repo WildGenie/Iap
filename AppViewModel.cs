@@ -32,10 +32,17 @@ namespace Iap
         IHandle<ViewRedirectToBrowserCommand>,
         IHandle<ViewDynamicGreekShellCommand>,
         IHandle<ViewAdvertCommand>,
-        IHandle<ViewDynamicBannerEnCommand>
+        IHandle<ViewDynamicBannerEnCommand>,
+        IHandle<ViewTwoButtonsShellEnCommand>,
+        IHandle<ViewBuyWifi2Command>,
+        IHandle<ViewInternetAccess2Command>,
+        IHandle<ViewTwoButtonsShellGrCommand>,
+        IHandle<ViewTwoButtonsAdvertCommand>
     {
         public IEventAggregator events;
         private bool isGreekSelected;
+
+        private string storeType = System.Configuration.ConfigurationManager.AppSettings["storeType"];
 
         private readonly IGetScreenDetailsService parser;
 
@@ -95,6 +102,14 @@ namespace Iap
 
         public DynamicBannerBrowserEn5ViewModel DynamicBannerBrowserEn5 { get; set; }
         public DynamicBannerBrowserGr5ViewModel DynamicBannerBrowserGr5 { get; set; }
+
+
+        public TwoButtonsShellViewModel TwoButtonsShell { get; set; }
+        public TwoButtonsShellGrViewModel TwoButtonsShellGr { get; set; }
+        public BuyWifi2ViewModel BuyWifi2 { get; set; }
+        public InternetAccess2ViewModel InternetAccess2 { get; set; }
+        public BuyWifiGr2ViewModel BuyWifiGr2 { get; set; }
+        public InternetAccessGr2ViewModel InternetAccessGr2 { get; set; }
 
         protected override void OnViewLoaded(object view)
         {
@@ -267,7 +282,14 @@ namespace Iap
         {
             if (this.buttons == null)
             {
-                this.events.BeginPublishOnUIThread(new ViewEnglishCommand());
+                if (this.storeType == "full")
+                {
+                    this.events.BeginPublishOnUIThread(new ViewEnglishCommand());
+                }
+                else
+                {
+                    this.events.PublishOnUIThread(new ViewTwoButtonsShellEnCommand());
+                }
             }
             else
             {
@@ -531,6 +553,70 @@ namespace Iap
                 this.DynamicBannerBrowserEn5.ButtonsDetails = message.ButtonDetails;
             }
             
+        }
+
+        public void Handle(ViewTwoButtonsShellEnCommand message)
+        {
+            base.ActivateItem(TwoButtonsShell);
+        }
+
+        public void Handle(ViewBuyWifi2Command message)
+        {
+            if (this.isGreekSelected)
+            {
+                base.ChangeActiveItem(BuyWifiGr2, true);
+                BuyWifiGr2.RemainingTime = message.RemaingTime;
+                BuyWifiGr2.TimeElapsed = Convert.ToInt32(message.RemaingTime);
+            }
+            else
+            {
+                base.ChangeActiveItem(BuyWifi2, true);
+                BuyWifi2.RemainingTime = message.RemaingTime;
+                BuyWifi2.TimeElapsed = Convert.ToInt32(message.RemaingTime);
+            }
+        }
+
+        public void Handle(ViewInternetAccess2Command message)
+        {
+            if (this.isGreekSelected)
+            {
+                base.ChangeActiveItem(InternetAccessGr2, true);
+                InternetAccessGr2.RemainingTime = message.RemainingTime;
+                InternetAccessGr2.TimeElapsed = Convert.ToInt32(message.RemainingTime);
+                InternetAccessGr2.ShowBannerUrl = false;
+            }
+            else
+            {
+                base.ChangeActiveItem(InternetAccess2, true);
+                InternetAccess2.RemainingTime = message.RemainingTime;
+                InternetAccess2.TimeElapsed = Convert.ToInt32(message.RemainingTime);
+                InternetAccess2.ShowBannerUrl = false;
+            }
+        }
+
+        public void Handle(ViewTwoButtonsShellGrCommand message)
+        {
+            base.ActivateItem(this.TwoButtonsShellGr);
+        }
+
+        public void Handle(ViewTwoButtonsAdvertCommand message)
+        {
+            if (this.isGreekSelected)
+            {
+                base.ChangeActiveItem(InternetAccessGr2, true);
+                InternetAccessGr2.RemainingTime = message.RemainingTime;
+                InternetAccessGr2.TimeElapsed = Convert.ToInt32(message.RemainingTime);
+                InternetAccessGr2.ShowBannerUrl = true;
+                InternetAccessGr2.OpenKeyboard = false;
+            }
+            else
+            {
+                base.ChangeActiveItem(InternetAccess2, true);
+                InternetAccess2.RemainingTime = message.RemainingTime;
+                InternetAccess2.TimeElapsed = Convert.ToInt32(message.RemainingTime);
+                InternetAccess2.ShowBannerUrl = true;
+                InternetAccess2.OpenKeyboard = false;
+            }
         }
     }
 }
