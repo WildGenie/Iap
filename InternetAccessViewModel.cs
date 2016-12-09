@@ -24,6 +24,7 @@ namespace Iap
         private string remainingTime;
         private readonly string numberOfAvailablePagesToPrint;
         private readonly string internetAccessEnApi;
+        private readonly string bannerLinkEnApi;
 
         private bool openKeyboard;
 
@@ -34,26 +35,43 @@ namespace Iap
 
        
 
-        public InternetAccessViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string internetAccessEnApi)
+        public InternetAccessViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string internetAccessEnApi,string bannerLinkEnApi)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.internetAccessEnApi = internetAccessEnApi;
+            this.bannerLinkEnApi = bannerLinkEnApi;
         }
 
         protected override void OnViewLoaded(object view)
         {
-            _internetAccessBrowser = new ChromiumWebBrowser()
+            if (!ShowBannerUrl)
             {
-                Address = this.internetAccessEnApi,
-            };
+                _internetAccessBrowser = new ChromiumWebBrowser()
+                {
+                    Address = this.internetAccessEnApi,
+                };
 
-            _internetAccessBrowser.BrowserSettings = new CefSharp.BrowserSettings()
+                _internetAccessBrowser.Load(this.internetAccessEnApi);
+
+                this.OpenKeyboard = true;
+            }
+            else
+            {
+                _internetAccessBrowser = new ChromiumWebBrowser()
+                {
+                    Address = this.bannerLinkEnApi,
+                };
+
+                _internetAccessBrowser.Load(this.bannerLinkEnApi);
+
+                this.OpenKeyboard = false;
+            }
+
+                _internetAccessBrowser.BrowserSettings = new CefSharp.BrowserSettings()
             {
                 OffScreenTransparentBackground = false,
             };
-
-            _internetAccessBrowser.Load(this.internetAccessEnApi);
 
             _internetAccessBrowser.BrowserSettings.FileAccessFromFileUrls = CefState.Enabled;
             _internetAccessBrowser.BrowserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
@@ -99,18 +117,19 @@ namespace Iap
             //_internetAccessBrowser.IsManipulationEnabled = true;
             //_internetAccessBrowser.ReleaseAllTouchCaptures();
             //_internetAccessBrowser.ManipulationDelta += _internetAccessBrowser_ManipulationDelta;
+
+
             _internetAccessBrowser.Focus();
 
             //this.RemainingTime = "30";
 
-            this.OpenKeyboard = true;
+           
 
             //this.TimeElapsed = 30;
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 1, 0);
             timer.Tick += TimerTick;
             timer.Start();
-
 
             base.OnViewLoaded(view);
         }
@@ -135,13 +154,20 @@ namespace Iap
             }
        }
 
+        public bool ShowBannerUrl
+        {
+            get;
+            set;
+        }
+
         private void _internetAccessBrowser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
-           /* var browser = sender as ChromiumWebBrowser;
-            if (browser.GetMainFrame().Url.Contains("print=true"))
-            {
-                browser.Load(browser.GetMainFrame().Url.Replace("print=true", "print=false"));
-            }*/
+            _internetAccessBrowser.SetZoomLevel(20);
+            /* var browser = sender as ChromiumWebBrowser;
+             if (browser.GetMainFrame().Url.Contains("print=true"))
+             {
+                 browser.Load(browser.GetMainFrame().Url.Replace("print=true", "print=false"));
+             }*/
             /*  var browser = sender as ChromiumWebBrowser;
 
               var script = @"var beforePrint = function(){
@@ -349,6 +375,7 @@ namespace Iap
 
         protected override void OnDeactivate(bool close)
         {
+            this.ShowBannerUrl = false;
             timer.Stop();
             try
             {
