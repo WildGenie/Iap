@@ -37,8 +37,10 @@ namespace Iap.Bounds
         }");
 
 
+            if (_mainBrowser.GetMainFrame().Url.Contains("print=false"))
+            {
 
-            _mainBrowser.ExecuteScriptAsync(@"
+                _mainBrowser.ExecuteScriptAsync(@"
                     
                    
                 
@@ -70,35 +72,40 @@ namespace Iap.Bounds
 
 
 
-            var printScript = @"window.print=function() {bound.onPrintRequested('before');}";
+                var printScript = @"window.print=function() {bound.onPrintRequested('before');}";
 
-            _mainBrowser.ExecuteScriptAsync(printScript);
+                _mainBrowser.ExecuteScriptAsync(printScript);
 
+            }
+
+            else
+            {
+                var printScript = @"window.print=function() {bound.onPrintRequested('before');}";
+
+                _mainBrowser.ExecuteScriptAsync(printScript);
+            }
 
             _mainBrowser.ExecuteScriptAsync(
-                @"var elements = document.getElementsByClassName('ndfHFb-c4YZDc-to915-LgbsSe ndfHFb-c4YZDc-C7uZwb-LgbsSe VIpgJd-TzA9Ye-eEGnhe ndfHFb-c4YZDc-LgbsSe ndfHFb-c4YZDc-C7uZwb-LgbsSe-SfQLQb-Bz112c');
+                   @"var elements = document.getElementsByClassName('ndfHFb-c4YZDc-to915-LgbsSe ndfHFb-c4YZDc-C7uZwb-LgbsSe VIpgJd-TzA9Ye-eEGnhe ndfHFb-c4YZDc-LgbsSe ndfHFb-c4YZDc-C7uZwb-LgbsSe-SfQLQb-Bz112c');
                     elements[1].style.display = 'none';
                     ");
 
         }
 
+    
+
         public async void onPrintRequested(string selected)
-        {
-           // System.Windows.MessageBox.Show(_mainBrowser.GetMainFrame().Url);
-            //System.Windows.MessageBox.Show("print ok to continue");
-
-            // System.Threading.Thread.Sleep(5000);
-
+        {            
             try
             {
                 Thread waitThread = new Thread(() =>
                 {
                     PleaseWaitWindow wait = new PleaseWaitWindow();
-                    // wait.Topmost = true;
+                    
                     wait.ShowDialog();
                     wait.LoadingAdorner.IsAdornerVisible = true;
                     wait.Close();
-                    //_windowManager.ShowWindow(wait);
+                    
                 });
                 waitThread.SetApartmentState(ApartmentState.STA);
                 waitThread.Start();
@@ -111,39 +118,37 @@ namespace Iap.Bounds
 
             System.Threading.Thread.Sleep(2000);
 
-            if (selected == "before")
-            {
-                PrinterCanceller.CancelPrint();
-
-                string path = System.IO.Path.Combine(
-                 System.IO.Path.GetDirectoryName(
-                 this.GetType().Assembly.Location),
-                 "Printings", GlobalCounters.numberOfCurrentPrintings.ToString() + ".pdf");
-
-
-                var success = await _mainBrowser.PrintToPdfAsync(path, new PdfPrintSettings
+                if (selected == "before")
                 {
-                    MarginType = CefPdfPrintMarginType.Custom,
-                    MarginBottom = 10,
-                    MarginTop = 0,
-                    MarginLeft = 20,
-                    MarginRight = 10,
-                });
+                    PrinterCanceller.CancelPrint();
 
-                System.Threading.Thread.Sleep(3000);
+                    string path = System.IO.Path.Combine(
+                     System.IO.Path.GetDirectoryName(
+                     this.GetType().Assembly.Location),
+                     "Printings", GlobalCounters.numberOfCurrentPrintings.ToString() + ".pdf");
 
 
-
-                if (success)
-                {
-                    
-                    try
+                    var success = await _mainBrowser.PrintToPdfAsync(path, new PdfPrintSettings
                     {
-                        iTextSharp.text.pdf.PdfReader pdfReader = new iTextSharp.text.pdf.PdfReader(path);
-                        int numberOfPages = pdfReader.NumberOfPages;
-                      //  if (!(numberOfPages > Int32.Parse(this.numberOfAvailablePagesToPrint)))
-                       // {
-                            if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <=Convert.ToInt32(this.numberOfAvailablePagesToPrint))
+                        MarginType = CefPdfPrintMarginType.Custom,
+                        MarginBottom = 10,
+                        MarginTop = 0,
+                        MarginLeft = 20,
+                        MarginRight = 10,
+                    });
+
+                    System.Threading.Thread.Sleep(3000);
+
+
+                    if (success)
+                    {
+
+                        try
+                        {
+                            iTextSharp.text.pdf.PdfReader pdfReader = new iTextSharp.text.pdf.PdfReader(path);
+                            int numberOfPages = pdfReader.NumberOfPages;
+                           
+                            if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <= Convert.ToInt32(this.numberOfAvailablePagesToPrint))
                             {
 
                                 System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
@@ -184,26 +189,22 @@ namespace Iap.Bounds
                                 System.Windows.MessageBox.Show("Can not print other so many pages!");
                             }
 
-                        //}
-                      //  else
-                       // {
-                         //   System.Windows.MessageBox.Show("Too many pages to print!");
-                        //}
+                           
+                        }
+                        catch (Exception ex)
+                        {
+                            
+                            System.Windows.MessageBox.Show(ex.ToString());
+                        }
                     }
-                    catch (Exception ex)
+
+                    else
                     {
-                        // System.Windows.MessageBox.Show(ex.ToString());
+
+                        System.Windows.MessageBox.Show("Failed to print please try again");
+                       
                     }
-                }
-
-                else
-                {
-
-                    System.Windows.MessageBox.Show("Failed to print please try again");
-                  //  KillAdobeProcess();
-
-                }
-
+                _mainBrowser.ExecuteScriptAsync(@"window.print=function() {bound.onPrintRequested('before');}");
             }
         }
 
