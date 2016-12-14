@@ -5,6 +5,7 @@ using Iap.Handlers;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -195,9 +196,23 @@ namespace Iap.Bounds
                 //}
 
             }
+            try
+            {
+                KillAdobe("AcroRd32");
+            }
+            catch { }
         }
 
-
+        private static bool KillAdobe(string name)
+        {
+            foreach (Process clsProcess in Process.GetProcesses().Where(
+                         clsProcess => clsProcess.ProcessName.StartsWith(name)))
+            {
+                clsProcess.Kill();
+                return true;
+            }
+            return false;
+        }
 
         public bool CanPrint(string path)
         {

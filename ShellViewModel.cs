@@ -122,5 +122,10 @@ namespace Iap
             this.events.PublishOnCurrentThread(new ViewGreekCommand());
             this.events.PublishOnCurrentThread(new ViewChangeLanguageCommand(true));
         }
+
+        public void ViewDisclaimer()
+        {
+           // System.Windows.MessageBox.Show("Discalimer");
+        }
     }
 }

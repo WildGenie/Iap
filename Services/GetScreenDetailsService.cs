@@ -16,28 +16,28 @@ namespace Iap.Services
     {
 
         private readonly string getScreenDetailsApi;
-        private readonly string getWciScreensApi;
+        private readonly string getIapScreensApi;
 
         private string storeType = System.Configuration.ConfigurationManager.AppSettings["storeType"];
 
 
-        public GetScreenDetailsService(string getScreenDetailsApi, string getWciScreensApi)
+        public GetScreenDetailsService(string getScreenDetailsApi, string getIapScreensApi)
         {
             this.getScreenDetailsApi = getScreenDetailsApi;
-            this.getWciScreensApi = getWciScreensApi;
+            this.getIapScreensApi = getIapScreensApi;
         }
 
         public IReadOnlyCollection<ButtonLinkModel> GetButtonLinksDetails()
         {
 
             string url;
-            if(storeType=="IAP")
+            if(storeType=="WCI")
             {
                 url = getScreenDetailsApi;
             }
-            else if(storeType=="WCI")
+            else if(storeType=="IAP")
             {
-                url = getWciScreensApi;
+                url = getIapScreensApi;
             }
 
             else
@@ -45,7 +45,10 @@ namespace Iap.Services
                 url = getScreenDetailsApi;
             }
 
-            var response = new HttpClient()
+            var client = new HttpClient();
+            client.Timeout = TimeSpan.FromSeconds(5);
+
+            var response = client
                .GetAsync(
                    url,
                    HttpCompletionOption.ResponseHeadersRead)

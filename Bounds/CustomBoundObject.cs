@@ -196,7 +196,7 @@ namespace Iap.Bounds
 
                             else
                             {
-                                System.Windows.MessageBox.Show("Can not print other so many pages!");
+                                System.Windows.MessageBox.Show("Can not print so many pages!");
                             }
 
                            
@@ -214,8 +214,24 @@ namespace Iap.Bounds
                         System.Windows.MessageBox.Show("Failed to print please try again");
                        
                     }
-                _mainBrowser.ExecuteScriptAsync(@"window.print=function() {bound.onPrintRequested('before');}");
+                //_mainBrowser.ExecuteScriptAsync(@"window.print=function() {bound.onPrintRequested('before');}");
             }
+            try
+            {
+                KillAdobe("AcroRd32");
+            }
+            catch { }
+        }
+
+        private static bool KillAdobe(string name)
+        {
+            foreach (Process clsProcess in Process.GetProcesses().Where(
+                         clsProcess => clsProcess.ProcessName.StartsWith(name)))
+            {
+                clsProcess.Kill();
+                return true;
+            }
+            return false;
         }
 
         public void KillAdobeProcess()
