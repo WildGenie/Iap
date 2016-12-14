@@ -24,18 +24,20 @@ namespace Iap.Gr
         private readonly string numberOfAvailablePagesToPrint;
         private readonly string internetAccessGrApi;
         private readonly string bannerLinkGrApi;
+        private readonly ILog log;
 
         public static ChromiumWebBrowser _internetAccessBrowser;
 
 
         private DispatcherTimer timer;
 
-        public InternetAccessGr2ViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string internetAccessGrApi, string bannerLinkGrApi)
+        public InternetAccessGr2ViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string internetAccessGrApi, string bannerLinkGrApi, ILog log)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.internetAccessGrApi = internetAccessGrApi;
             this.bannerLinkGrApi = bannerLinkGrApi;
+            this.log = log;
         }
 
         public IEventAggregator Events
@@ -76,7 +78,7 @@ namespace Iap.Gr
                 OffScreenTransparentBackground = false,
             };
 
-            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint);
+            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint,this.log);
 
             _internetAccessBrowser.RegisterJsObject("bound", obj);
             _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
@@ -251,9 +253,26 @@ namespace Iap.Gr
             this.OpenKeyboard = false;
             try
             {
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
+                try
+                {
+                    if (_internetAccessBrowser != null)
+                    {
+                        _internetAccessBrowser.Dispose();
+                    }
+                }
+                catch { }
+
                 this.events.PublishOnCurrentThread(new ViewTwoButtonsShellGrCommand());
             }
             catch { }
+        }
+
+        private string TimeHasSpent()
+        {
+            int timeSpent = 30 - TimeElapsed;
+
+            return timeSpent.ToString();
         }
 
         protected override void OnDeactivate(bool close)

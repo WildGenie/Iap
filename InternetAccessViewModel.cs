@@ -372,9 +372,26 @@ namespace Iap
                      }
                      this.events.PublishOnCurrentThread(new ViewEnglishCommand());
                  }*/
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
+                try
+                {
+                    if (_internetAccessBrowser != null)
+                    {
+                        _internetAccessBrowser.Dispose();
+                    }
+                }
+                catch { }
+
                 this.events.PublishOnCurrentThread(new ViewEnglishCommand());
             }
             catch { }
+        }
+
+        private string TimeHasSpent()
+        {
+            int timeSpent = 30 - TimeElapsed;
+
+            return timeSpent.ToString();
         }
 
         protected override void OnDeactivate(bool close)

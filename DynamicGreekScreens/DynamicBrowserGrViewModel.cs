@@ -24,6 +24,7 @@ namespace Iap.DynamicGreekScreens
     {
         private readonly IEventAggregator events;
         private readonly string numberOfAvailablePagesToPrint;
+        private readonly ILog log;
 
         private BitmapImage leftImage1;
         private BitmapImage leftImage2;
@@ -42,10 +43,11 @@ namespace Iap.DynamicGreekScreens
 
        
 
-        public DynamicBrowserGrViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint)
+        public DynamicBrowserGrViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, ILog log)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
+            this.log = log;
         }
 
         public IEventAggregator Events
@@ -157,7 +159,7 @@ namespace Iap.DynamicGreekScreens
             _internetAccessBrowser.RequestHandler = new CustomRequestHandler("");
             _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
             //var boundGrObject = new DynamicBrowserBoundObjectGr(this.numberOfAvailablePagesToPrint);
-            var boundGrObject = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint);
+            var boundGrObject = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint,this.log);
             _internetAccessBrowser.RegisterJsObject("bound", boundGrObject);
             _internetAccessBrowser.FrameLoadEnd += boundGrObject.OnFrameLoadEnd;
 
@@ -440,9 +442,26 @@ namespace Iap.DynamicGreekScreens
                      }
                      this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
                  }*/
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
+                try
+                {
+                    if (_internetAccessBrowser != null)
+                    {
+                        _internetAccessBrowser.Dispose();
+                    }
+                }
+                catch { }
+
                 this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
             }
             catch { }
+        }
+
+        private string TimeHasSpent()
+        {
+            int timeSpent = 30 - TimeElapsed;
+
+            return timeSpent.ToString();
         }
 
         public void ViewRedirect1()

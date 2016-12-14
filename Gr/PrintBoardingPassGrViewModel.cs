@@ -21,6 +21,7 @@ namespace Iap.Gr
         private readonly string boardingPassGrApi;
         private bool openKeyboard;
         private readonly string numberOfAvailablePagesToPrint;
+        private readonly ILog log;
 
         private string remainingTime;
 
@@ -29,11 +30,12 @@ namespace Iap.Gr
         
         private DispatcherTimer timer;
 
-        public PrintBoardingPassGrViewModel(IEventAggregator events, string boardingPassGrApi, string numberOfAvailablePagesToPrint)
+        public PrintBoardingPassGrViewModel(IEventAggregator events, string boardingPassGrApi, string numberOfAvailablePagesToPrint, ILog log)
         {
             this.events = events;
             this.boardingPassGrApi = boardingPassGrApi;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
+            this.log = log;
         }
 
         public IEventAggregator Events
@@ -57,7 +59,7 @@ namespace Iap.Gr
 
             _printBoardingPassBrowser.Load(this.boardingPassGrApi);
 
-            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint);
+            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint,this.log);
 
             _printBoardingPassBrowser.RegisterJsObject("bound", obj);
             _printBoardingPassBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
@@ -256,10 +258,27 @@ namespace Iap.Gr
                       }
                       this.events.PublishOnCurrentThread(new ViewGreekCommand());
                   }*/
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
+                try
+                {
+                    if (_printBoardingPassBrowser != null)
+                    {
+                        _printBoardingPassBrowser.Dispose();
+                    }
+                }
+                catch { }
+
                 this.events.PublishOnCurrentThread(new ViewGreekCommand());
             }
 
             catch { }
+        }
+
+        private string TimeHasSpent()
+        {
+            int timeSpent = 30 - TimeElapsed;
+
+            return timeSpent.ToString();
         }
 
         protected override void OnDeactivate(bool close)

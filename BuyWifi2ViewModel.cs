@@ -236,9 +236,25 @@ namespace Iap
                      }
                      this.events.PublishOnCurrentThread(new ViewEnglishCommand());
                  }*/
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
+                try
+                {
+                    if (_buyWifiBrowser != null)
+                    {
+                        _buyWifiBrowser.Dispose();
+                    }
+                }
+                catch { }
                 this.events.PublishOnCurrentThread(new ViewTwoButtonsShellEnCommand());
             }
             catch { }
+        }
+
+        private string TimeHasSpent()
+        {
+            int timeSpent = 30 - TimeElapsed;
+
+            return timeSpent.ToString();
         }
 
         protected override void OnDeactivate(bool close)

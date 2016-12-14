@@ -1,4 +1,5 @@
-﻿using CefSharp;
+﻿using Caliburn.Micro;
+using CefSharp;
 using CefSharp.Wpf;
 using Iap.AdornerControl;
 using Iap.Handlers;
@@ -17,10 +18,12 @@ namespace Iap.Bounds
     {
         private readonly string numberOfAvailablePagesToPrint;
         ChromiumWebBrowser _mainBrowser;
+        private readonly ILog log;
 
-        public CustomBoundObjectEl(string numberOfAvailablePagesToPrint)
+        public CustomBoundObjectEl(string numberOfAvailablePagesToPrint, ILog log)
         {
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
+            this.log = log;
         }
 
         public void OnFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
@@ -141,8 +144,12 @@ namespace Iap.Bounds
                        // {
                             if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <= Convert.ToInt32(this.numberOfAvailablePagesToPrint))
                             {
-
-                                System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+                            try
+                            {
+                                this.log.Info("Invoking Action: ViewPrintRequested " + numberOfPages.ToString() + " pages.");
+                            }
+                            catch { }
+                            System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
                                 info.Verb = "print";
                                 info.FileName = path;
                                 info.CreateNoWindow = true;

@@ -23,17 +23,19 @@ namespace Iap.Gr
         private bool openKeyboard;
         private readonly string numberOfAvailablePagesToPrint;
         private readonly string buyWifiGrApi;
+        private readonly ILog log;
 
         public static ChromiumWebBrowser _buyWifiBrowser;
 
        
         private DispatcherTimer timer;
 
-        public BuyWifiGrViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string buyWifiGrApi)
+        public BuyWifiGrViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string buyWifiGrApi, ILog log)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.buyWifiGrApi = buyWifiGrApi;
+            this.log = log;
         }
 
         public IEventAggregator Events
@@ -58,7 +60,7 @@ namespace Iap.Gr
 
             _buyWifiBrowser.Load(this.buyWifiGrApi);
 
-            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint);
+            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint,this.log);
 
            _buyWifiBrowser.RegisterJsObject("bound", obj);
             _buyWifiBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
@@ -258,9 +260,25 @@ namespace Iap.Gr
                       }
                       this.events.PublishOnCurrentThread(new ViewGreekCommand());
                   }*/
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
+                try
+                {
+                    if (_buyWifiBrowser != null)
+                    {
+                        _buyWifiBrowser.Dispose();
+                    }
+                }
+                catch { }
                 this.events.PublishOnCurrentThread(new ViewGreekCommand());
             }
             catch { }
+        }
+
+        private string TimeHasSpent()
+        {
+            int timeSpent = 30 - TimeElapsed;
+
+            return timeSpent.ToString();
         }
 
         protected override void OnDeactivate(bool close)

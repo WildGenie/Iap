@@ -21,6 +21,7 @@ namespace Iap.Gr
         private readonly string travelAuthorizationGrApi;
         private bool openKeyboard;
         private readonly string numberOfAvailablePagesToPrint;
+        private readonly ILog log;
 
         private string remainingTime;
 
@@ -29,11 +30,12 @@ namespace Iap.Gr
         
         private DispatcherTimer timer;
 
-        public TravelAuthorizationGrViewModel(IEventAggregator events, string travelAuthorizationGrApi, string numberOfAvailablePagesToPrint)
+        public TravelAuthorizationGrViewModel(IEventAggregator events, string travelAuthorizationGrApi, string numberOfAvailablePagesToPrint, ILog log)
         {
             this.events = events;
             this.travelAuthorizationGrApi = travelAuthorizationGrApi;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
+            this.log = log;
         }
 
         public IEventAggregator Events
@@ -58,7 +60,7 @@ namespace Iap.Gr
 
             _travelAuthorizationBrowser.Load(this.travelAuthorizationGrApi);
 
-            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint);
+            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint,this.log);
             _travelAuthorizationBrowser.RegisterJsObject("bound", obj);
             _travelAuthorizationBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 
@@ -255,9 +257,26 @@ namespace Iap.Gr
                      }
                      this.events.PublishOnCurrentThread(new ViewEnglishCommand());
                  }*/
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
+                try
+                {
+                    if (_travelAuthorizationBrowser != null)
+                    {
+                        _travelAuthorizationBrowser.Dispose();
+                    }
+                }
+                catch { }
+
                 this.events.PublishOnCurrentThread(new ViewGreekCommand());
             }
             catch { }
+        }
+
+        private string TimeHasSpent()
+        {
+            int timeSpent = 30 - TimeElapsed;
+
+            return timeSpent.ToString();
         }
 
         protected override void OnDeactivate(bool close)
@@ -274,6 +293,8 @@ namespace Iap.Gr
             catch { }
             base.OnDeactivate(close);
         }
+
+       
 
         public void ViewBuyWifi()
         {

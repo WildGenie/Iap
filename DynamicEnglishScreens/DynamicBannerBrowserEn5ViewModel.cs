@@ -657,9 +657,26 @@ namespace Iap.DynamicEnglishScreens
             this.OpenKeyboard = false;
             try
             {
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
+                try
+                {
+                    if (_internetAccessBrowser != null)
+                    {
+                        _internetAccessBrowser.Dispose();
+                    }
+                }
+                catch { }
+
                 this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
             }
             catch { }
+        }
+
+        private string TimeHasSpent()
+        {
+            int timeSpent = 30 - TimeElapsed;
+
+            return timeSpent.ToString();
         }
 
         /*  public void ViewRedirect1()

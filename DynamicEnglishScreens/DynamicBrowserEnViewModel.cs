@@ -467,6 +467,7 @@ namespace Iap.DynamicEnglishScreens
                   }
                   catch { }
               }*/
+            this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
             try
             {
                 if (_internetAccessBrowser != null)
@@ -477,6 +478,13 @@ namespace Iap.DynamicEnglishScreens
             }
             catch {
             }
+        }
+
+        private string TimeHasSpent()
+        {
+            int timeSpent = 30 - TimeElapsed;
+
+            return timeSpent.ToString();
         }
 
         public void ViewRedirect1()

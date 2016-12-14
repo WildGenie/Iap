@@ -244,25 +244,42 @@ namespace Iap
             this.OpenKeyboard = false;
             try
             {
-                if (_travelAuthorizationBrowser.CanGoBack)
-                {
-                    if(_travelAuthorizationBrowser.GetMainFrame().Url.Contains("docs.google.com"))
-                    {
-                        ViewTravelAuthorization();
-                    }
-                    _travelAuthorizationBrowser.Back();
-                }
-                else
+                /* if (_travelAuthorizationBrowser.CanGoBack)
+                 {
+                     if(_travelAuthorizationBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+                     {
+                         ViewTravelAuthorization();
+                     }
+                     _travelAuthorizationBrowser.Back();
+                 }
+                 else
+                 {
+                     if (_travelAuthorizationBrowser != null)
+                     {
+                         _travelAuthorizationBrowser.Dispose();
+                     }
+                     this.events.PublishOnCurrentThread(new ViewEnglishCommand());
+                 }*/
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
+                try
                 {
                     if (_travelAuthorizationBrowser != null)
                     {
                         _travelAuthorizationBrowser.Dispose();
                     }
-                    this.events.PublishOnCurrentThread(new ViewEnglishCommand());
                 }
+                catch { }
+
                 this.events.PublishOnCurrentThread(new ViewEnglishCommand());
             }
             catch { }
+        }
+
+        private string TimeHasSpent()
+        {
+            int timeSpent = 30 - TimeElapsed;
+
+            return timeSpent.ToString();
         }
 
         protected override void OnDeactivate(bool close)

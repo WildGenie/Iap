@@ -103,11 +103,7 @@ namespace Iap.Bounds
         {            
             try
             {
-                try
-                {
-                    this.log.Info("Invoking Action: ViewPrintRequested.");
-                }
-                catch { }
+                
                 Thread waitThread = new Thread(() =>
                 {
                     PleaseWaitWindow wait = new PleaseWaitWindow();
@@ -157,11 +153,17 @@ namespace Iap.Bounds
                         {
                             iTextSharp.text.pdf.PdfReader pdfReader = new iTextSharp.text.pdf.PdfReader(path);
                             int numberOfPages = pdfReader.NumberOfPages;
-                           
-                            if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <= Convert.ToInt32(this.numberOfAvailablePagesToPrint))
+
+                        if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <= Convert.ToInt32(this.numberOfAvailablePagesToPrint))
                             {
 
-                                System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+                            try
+                            {
+                                this.log.Info("Invoking Action: ViewPrintRequested " + numberOfPages.ToString() + " pages.");
+                            }
+                            catch { }
+
+                            System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
                                 info.Verb = "print";
                                 info.FileName = path;
                                 info.CreateNoWindow = true;
