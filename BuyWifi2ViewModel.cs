@@ -21,17 +21,18 @@ namespace Iap
         private bool openKeyboard;
         private readonly string numberOfAvailablePagesToPrint;
         private readonly string buyWifiEnApi;
-
+        private readonly ILog log;
 
         public static ChromiumWebBrowser _buyWifiBrowser;
 
         private DispatcherTimer timer;
 
-        public BuyWifi2ViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string buyWifiEnApi)
+        public BuyWifi2ViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string buyWifiEnApi, ILog log)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.buyWifiEnApi = buyWifiEnApi;
+            this.log = log;
         }
 
         public IEventAggregator Events
@@ -56,12 +57,6 @@ namespace Iap
 
             _buyWifiBrowser.Load(this.buyWifiEnApi);
 
-
-            var obj = new CustomBoundObject(this.numberOfAvailablePagesToPrint);
-
-            _buyWifiBrowser.RegisterJsObject("bound", obj);
-            _buyWifiBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
-
             _buyWifiBrowser.LifeSpanHandler = new LifeSpanHandler();
             // _buyWifiBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
             _buyWifiBrowser.RequestHandler = new CustomRequestHandler("");
@@ -78,6 +73,12 @@ namespace Iap
             _buyWifiBrowser.RequestContext = new RequestContext();
 
             _buyWifiBrowser.Focus();
+
+
+            var obj = new CustomBoundObject(this.numberOfAvailablePagesToPrint, this.log);
+            _buyWifiBrowser.RegisterJsObject("bound", obj);
+            _buyWifiBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
+
 
             GlobalCounters.ResetAll();
 

@@ -16,17 +16,38 @@ namespace Iap.Services
     {
 
         private readonly string getScreenDetailsApi;
+        private readonly string getWciScreensApi;
 
-        public GetScreenDetailsService(string getScreenDetailsApi)
+        private string storeType = System.Configuration.ConfigurationManager.AppSettings["storeType"];
+
+
+        public GetScreenDetailsService(string getScreenDetailsApi, string getWciScreensApi)
         {
             this.getScreenDetailsApi = getScreenDetailsApi;
+            this.getWciScreensApi = getWciScreensApi;
         }
 
         public IReadOnlyCollection<ButtonLinkModel> GetButtonLinksDetails()
         {
+
+            string url;
+            if(storeType=="IAP")
+            {
+                url = getScreenDetailsApi;
+            }
+            else if(storeType=="WCI")
+            {
+                url = getWciScreensApi;
+            }
+
+            else
+            {
+                url = getScreenDetailsApi;
+            }
+
             var response = new HttpClient()
                .GetAsync(
-                   this.getScreenDetailsApi,
+                   url,
                    HttpCompletionOption.ResponseHeadersRead)
                .Result;
 

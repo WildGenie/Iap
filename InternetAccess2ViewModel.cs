@@ -22,6 +22,7 @@ namespace Iap
         private readonly string numberOfAvailablePagesToPrint;
         private readonly string internetAccessEnApi;
         private readonly string bannerLinkEnApi;
+        private readonly ILog log;
 
         private bool openKeyboard;
 
@@ -29,12 +30,13 @@ namespace Iap
 
         private DispatcherTimer timer;
 
-        public InternetAccess2ViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string internetAccessEnApi, string bannerLinkEnApi)
+        public InternetAccess2ViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string internetAccessEnApi, string bannerLinkEnApi, ILog log)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.internetAccessEnApi = internetAccessEnApi;
             this.bannerLinkEnApi = bannerLinkEnApi;
+            this.log = log;
         }
 
         protected override void OnViewLoaded(object view)
@@ -82,9 +84,7 @@ namespace Iap
               _internetAccessBrowser.RegisterJsObject("bound", obj);
               _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;*/
 
-            var boundObject = new CustomBoundObject(this.numberOfAvailablePagesToPrint);
-            _internetAccessBrowser.RegisterJsObject("bound", boundObject, true);
-            _internetAccessBrowser.FrameLoadEnd += boundObject.OnFrameLoadEnd;
+           
 
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
             // _internetAccessBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
@@ -114,6 +114,13 @@ namespace Iap
 
 
             _internetAccessBrowser.Focus();
+
+
+            var boundObject = new CustomBoundObject(this.numberOfAvailablePagesToPrint, this.log);
+            _internetAccessBrowser.RegisterJsObject("bound", boundObject, true);
+            _internetAccessBrowser.FrameLoadEnd += boundObject.OnFrameLoadEnd;
+
+            GlobalCounters.ResetAll();
 
             //this.RemainingTime = "30";
 

@@ -24,6 +24,7 @@ namespace Iap.DynamicEnglishScreens
     {
         private readonly IEventAggregator events;
         private readonly string numberOfAvailablePagesToPrint;
+        private readonly ILog log;
 
         private BitmapImage leftImage1;
         private BitmapImage leftImage2;
@@ -42,10 +43,11 @@ namespace Iap.DynamicEnglishScreens
 
         
 
-        public DynamicBrowserEnViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint)
+        public DynamicBrowserEnViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, ILog log)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
+            this.log = log;
         }
 
         public IEventAggregator Events
@@ -163,9 +165,8 @@ namespace Iap.DynamicEnglishScreens
             _internetAccessBrowser.RequestHandler = new CustomRequestHandler("");
             _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
             // var boundEnObject = new DynamicBrowserBoundObjectEn(this.numberOfAvailablePagesToPrint);
-            var boundEnObject = new CustomBoundObject(this.numberOfAvailablePagesToPrint);
-            _internetAccessBrowser.RegisterJsObject("bound", boundEnObject);
-            _internetAccessBrowser.FrameLoadEnd += boundEnObject.OnFrameLoadEnd;
+
+            _internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler(log);
 
             _internetAccessBrowser.MouseDown += _internetAccessBrowser_MouseDown;
             _internetAccessBrowser.TouchDown += _internetAccessBrowser_TouchDown;
@@ -175,7 +176,13 @@ namespace Iap.DynamicEnglishScreens
 
             ((DynamicBrowserEnView)view).DynamicBrowser.Children.Add(_internetAccessBrowser);
 
-           // _internetAccessBrowser.Focus();
+            _internetAccessBrowser.Focus();
+
+            var boundEnObject = new CustomBoundObject(this.numberOfAvailablePagesToPrint, this.log);
+            _internetAccessBrowser.RegisterJsObject("bound", boundEnObject);
+            _internetAccessBrowser.FrameLoadEnd += boundEnObject.OnFrameLoadEnd;
+
+            GlobalCounters.ResetAll();
 
             this.RemainingTime = "30";
 

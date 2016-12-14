@@ -1,4 +1,5 @@
-﻿using CefSharp;
+﻿using Caliburn.Micro;
+using CefSharp;
 using CefSharp.Wpf;
 using Iap.AdornerControl;
 using Iap.Handlers;
@@ -17,17 +18,21 @@ namespace Iap.Bounds
     {
         private readonly string numberOfAvailablePagesToPrint;
         ChromiumWebBrowser _mainBrowser;
+        private readonly ILog log;
 
-
-        public CustomBoundObject(string numberOfAvailablePagesToPrint)
+        public CustomBoundObject(string numberOfAvailablePagesToPrint, ILog log)
         {
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
+            this.log = log;
         }
 
         public void OnFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
-
-
+          /*  try
+            {
+                this.log.Info("Invoking Action: ViewNavigateTo" + _mainBrowser.GetMainFrame().Url + ".");
+            }
+            catch { }*/
             _mainBrowser = sender as ChromiumWebBrowser;
 
 
@@ -98,6 +103,11 @@ namespace Iap.Bounds
         {            
             try
             {
+                try
+                {
+                    this.log.Info("Invoking Action: ViewPrintRequested.");
+                }
+                catch { }
                 Thread waitThread = new Thread(() =>
                 {
                     PleaseWaitWindow wait = new PleaseWaitWindow();

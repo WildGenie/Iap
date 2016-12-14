@@ -67,7 +67,7 @@ namespace Iap
 
         public ScreenSaverViewModel ScreenSaver { get; set; }
 
-        public IdleBrowserViewModel IdleBrowser { get; set; }
+        //public IdleBrowserViewModel IdleBrowser { get; set; }
 
         public DynamicEnShellViewModel DynamicEnShell { get; set; }
         public DynamicEnShell2ViewModel DynamicEnShell2 { get; set; }
@@ -111,26 +111,56 @@ namespace Iap
         public BuyWifiGr2ViewModel BuyWifiGr2 { get; set; }
         public InternetAccessGr2ViewModel InternetAccessGr2 { get; set; }
 
+        public IdleTimeViewModel IdleTime { get; set; }
+
         protected override void OnViewLoaded(object view)
         {
             base.ActivateItem(this.ScreenSaver);
             this.ScreenSaver.Parent = this;
 
-            
+
 
             /* EventManager.RegisterClassHandler(
                  typeof(UIElement),
                  Mouse.MouseDownEvent,
                  new MouseButtonEventHandler((s, e) =>
-                     this.IdleInput.LastMouseDownEventTicks =
+                     this.IdleBrowser.LastMouseDownEventTicks =
                          TimeProvider.Current.UtcNow.ToLocalTime().Ticks));*/
+            /* EventManager.RegisterClassHandler(
+                           typeof(ChromiumWebBrowser),
+                           Mouse.MouseDownEvent,
+                           new MouseButtonEventHandler((s, e) =>
+                               this.IdleBrowser.LastMouseDownEventTicks =
+                                   TimeProvider.Current.UtcNow.ToLocalTime().Ticks));*/
+
+            EventManager.RegisterClassHandler(
+                 typeof(UIElement),
+                 Mouse.MouseDownEvent,
+                 new MouseButtonEventHandler((s, e) =>
+                     this.IdleTime.LastMouseDownEventTime = DateTime.Now));
+
 
             EventManager.RegisterClassHandler(
              typeof(ChromiumWebBrowser),
              Mouse.MouseDownEvent,
              new MouseButtonEventHandler((s, e) =>
-                 this.IdleBrowser.LastMouseDownEventTicks =
-                     TimeProvider.Current.UtcNow.ToLocalTime().Ticks));
+                 this.IdleTime.LastMouseDownEventTime = DateTime.Now));
+
+           /* EventManager.RegisterClassHandler(
+             typeof(Iap.Keyboards.Keyboard),
+             Mouse.MouseDownEvent,
+             new MouseButtonEventHandler((s, e) =>
+                 this.IdleTime.LastMouseDownEventTime = DateTime.Now));*/
+
+            /*  var timer = new System.Windows.Threading.DispatcherTimer
+          (
+          TimeSpan.FromMinutes(1),
+          System.Windows.Threading.DispatcherPriority.ApplicationIdle,// Or DispatcherPriority.SystemIdle
+          (s, e) =>base.ActivateItem(this.ScreenSaver),
+          Application.Current.Dispatcher
+          );
+
+              timer.Start();*/
 
             try
             {
@@ -282,7 +312,7 @@ namespace Iap
         {
             if (this.buttons == null)
             {
-                if (this.storeType == "full")
+                if (this.storeType == "IAP")
                 {
                     this.events.BeginPublishOnUIThread(new ViewEnglishCommand());
                 }

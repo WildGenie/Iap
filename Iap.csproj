@@ -342,6 +342,7 @@
     <Compile Include="Handlers\PrinterCanceller.cs" />
     <Compile Include="Handlers\RequestHandler.cs" />
     <Compile Include="IdleBrowserViewModel.cs" />
+    <Compile Include="IdleTimeViewModel.cs" />
     <Compile Include="InternetAccess2View.xaml.cs">
       <DependentUpon>InternetAccess2View.xaml</DependentUpon>
     </Compile>

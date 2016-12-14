@@ -21,6 +21,7 @@ namespace Iap
         private readonly string travelAuthorizationEnApi;
         private bool openKeyboard;
         private readonly string numberOfAvailablePagesToPrint;
+        private readonly ILog log;
 
         private string remainingTime;
 
@@ -29,11 +30,12 @@ namespace Iap
        
         private DispatcherTimer timer;
 
-        public TravelAuthorizationViewModel(IEventAggregator events,string travelAuthorizationEnApi, string numberOfAvailablePagesToPrint)
+        public TravelAuthorizationViewModel(IEventAggregator events,string travelAuthorizationEnApi, string numberOfAvailablePagesToPrint, ILog log)
         {
             this.events = events;
             this.travelAuthorizationEnApi = travelAuthorizationEnApi;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
+            this.log = log;
         }
 
         public IEventAggregator Events
@@ -56,9 +58,7 @@ namespace Iap
                 OffScreenTransparentBackground = false,
             };
 
-            var obj = new CustomBoundObject(this.numberOfAvailablePagesToPrint);
-            _travelAuthorizationBrowser.RegisterJsObject("bound", obj);
-            _travelAuthorizationBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
+          
 
             _travelAuthorizationBrowser.Load(this.travelAuthorizationEnApi);
 
@@ -80,8 +80,12 @@ namespace Iap
 
             _travelAuthorizationBrowser.Focus();
 
+            var obj = new CustomBoundObject(this.numberOfAvailablePagesToPrint, log);
+            _travelAuthorizationBrowser.RegisterJsObject("bound", obj);
+            _travelAuthorizationBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 
-            
+            GlobalCounters.ResetAll();
+
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 1, 0);
             timer.Tick += TimerTick;

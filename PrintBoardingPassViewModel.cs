@@ -21,6 +21,7 @@ namespace Iap
         private readonly string boardingPassEnApi;
         private bool openKeyboard;
         private readonly string numberOfAvailablePagesToPrint;
+        private readonly ILog log;
 
         private string remainingTime;
 
@@ -29,11 +30,12 @@ namespace Iap
      
         private DispatcherTimer timer;
 
-        public PrintBoardingPassViewModel(IEventAggregator events,string boardingPassEnApi, string numberOfAvailablePagesToPrint)
+        public PrintBoardingPassViewModel(IEventAggregator events,string boardingPassEnApi, string numberOfAvailablePagesToPrint, ILog log)
         {
             this.events = events;
             this.boardingPassEnApi = boardingPassEnApi;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
+            this.log = log;
         }
 
         public IEventAggregator Events
@@ -77,14 +79,13 @@ namespace Iap
             _printBoardingPassBrowser.RequestContext = new RequestContext();
 
 
-            var obj = new CustomBoundObject(this.numberOfAvailablePagesToPrint);
+            _printBoardingPassBrowser.Focus();
+
+
+            var obj = new CustomBoundObject(this.numberOfAvailablePagesToPrint, log);
             _printBoardingPassBrowser.RegisterJsObject("bound", obj);
             _printBoardingPassBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 
-
-            _printBoardingPassBrowser.Focus();
-
-           
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 1, 0);
             timer.Tick += TimerTick;
