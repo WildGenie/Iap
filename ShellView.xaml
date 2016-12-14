@@ -43,6 +43,22 @@
             Width="126" 
             Height="86"/>
 
+        <Button
+            x:Name="ViewDisclaimer"
+            Background="Transparent"
+            HorizontalAlignment="Left"
+            Margin="1750,1000,0,0"
+            VerticalAlignment="Top"
+            Width="115" 
+            Height="64"/>
+        <Image Source="/Images/disclaimer.png"
+            Margin="1750,1000,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            IsHitTestVisible="False"
+            Width="115" 
+            Height="64"/>
+
         <Grid x:Name="GridBanner" Margin="478 785 478 0">
             <Grid.Background>
                 <ImageBrush ImageSource="{Binding Path=BannerBackground}"/>
