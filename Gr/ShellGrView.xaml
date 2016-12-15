@@ -39,25 +39,25 @@
             x:Name="ViewBuyWifi"
             EnabledChecked="/Images/AIA_FOR PNG-29.png"
             EnabledUnchecked="/Images/AIA_FOR PNG-25.png"
-            Width="320" Height="425" Margin="276,246,1324,410"
+            Width="320" Height="425" Margin="96,246,1510,409"
             />
         <i:SelectButtonEn
             x:Name="ViewPrintBoardingPass"
             EnabledChecked="/Images/AIA_FOR PNG-30.png"
             EnabledUnchecked="/Images/AIA_FOR PNG-26.png"
-            Width="320" Height="425" Margin="670,246,930,409"
+            Width="320" Height="425" Margin="570,246,1030,409"
            />
         <i:SelectButtonEn
             x:Name="ViewInternetAccess"
             EnabledChecked="/Images/AIA_FOR PNG-31.png"
             EnabledUnchecked="/Images/AIA_FOR PNG-27.png"
-            Width="320" Height="425" Margin="1070,246,530,409"
+            Width="320" Height="425" Margin="1000,246,530,409"
             />
         <i:SelectButtonEn 
             x:Name="ViewTravelAuthorization"
             EnabledChecked="/Images/AIA_FOR PNG-32.png"
             EnabledUnchecked="/Images/AIA_FOR PNG-28.png"
-            Width="320" Height="425" Margin="1486,246,114,409"
+            Width="320" Height="425" Margin="1505,246,95,409"
            />
 
         <Grid Margin="478 785 478 0" x:Name="Banner">

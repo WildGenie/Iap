@@ -6,7 +6,7 @@
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </UserControl.Resources>
     <Grid Width="1920"
-          Height="1080">
+          Height="1080" x:Name="MainScreen">
         <Grid.Background>
             <ImageBrush ImageSource="/Images/AIA_FOR PNG-01.png"/>
         </Grid.Background>
@@ -14,25 +14,25 @@
             x:Name="ViewBuyWifi"
             EnabledChecked="/Images/AIA_FOR PNG-07.png"
             EnabledUnchecked="/Images/AIA_FOR PNG-03.png"
-            Width="320" Height="425" Margin="276,246,1324,410"
+            Width="320" Height="425" Margin="96,246,1510,409"
             />
         <local:SelectButtonEn
             x:Name="ViewPrintBoardingPass"
             EnabledChecked="/Images/AIA_FOR PNG-08.png"
             EnabledUnchecked="/Images/AIA_FOR PNG-04.png"
-            Width="320" Height="425" Margin="670,246,930,409"
+            Width="320" Height="425" Margin="570,246,1030,409"
            />
         <local:SelectButtonEn
             x:Name="ViewInternetAccess"
             EnabledChecked="/Images/AIA_FOR PNG-09.png"
             EnabledUnchecked="/Images/AIA_FOR PNG-05.png"
-            Width="320" Height="425" Margin="1070,246,530,409"
+            Width="320" Height="425" Margin="1000,246,530,409"
             />
         <local:SelectButtonEn 
             x:Name="ViewTravelAuthorization"
             EnabledChecked="/Images/AIA_FOR PNG-10.png"
             EnabledUnchecked="/Images/AIA_FOR PNG-06.png"
-            Width="320" Height="425" Margin="1486,246,114,409"
+            Width="320" Height="425" Margin="1505,246,95,409"
            />
         <Button
             x:Name="ViewGreek"
@@ -63,12 +63,12 @@
             <Grid.Background>
                 <ImageBrush ImageSource="{Binding Path=BannerBackground}"/>
             </Grid.Background>
-            
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="68"/>
             </Grid.RowDefinitions>
-            
+
             <Button
                 x:Name="CloseBanner"
                 HorizontalAlignment="Left"
@@ -142,5 +142,16 @@
                 </EventTrigger>
             </Grid.Triggers>
         </Grid>
+        <Popup IsOpen="{Binding Path=OpenDisclaimer}" x:Name="pop" StaysOpen="False"
+               AllowsTransparency="True"
+                PlacementTarget="{Binding ElementName=MainScreen}"
+               Placement="Center" VerticalOffset="-80"   PopupAnimation="Fade">
+            <Grid Width="600" Height="300">
+                <Grid.Background>
+                    <ImageBrush ImageSource="/Images/disclaimer button-13.png"/>
+                </Grid.Background>
+            </Grid>
+            <!--  <local:DisclaimerScreen/>-->
+        </Popup>
     </Grid>
 </UserControl>

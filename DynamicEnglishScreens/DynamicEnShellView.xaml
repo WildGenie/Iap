@@ -11,7 +11,7 @@
         </Grid.Background>
         <Button 
             x:Name="ViewRedirect1"
-            Width="320" Height="425" Margin="276,246,1324,410"
+            Width="320" Height="425" Margin="96,246,1510,409"
             >
             <Button.Style>
                 <Style TargetType="Button">
@@ -48,7 +48,7 @@
         </Button>
         <Button
             x:Name="ViewRedirect2"
-            Width="320" Height="425" Margin="670,246,930,409">
+            Width="320" Height="425" Margin="570,246,1030,409">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Template">
@@ -84,7 +84,7 @@
         </Button>
         <Button
             x:Name="ViewRedirect3"
-            Width="320" Height="425" Margin="1070,246,530,409">
+            Width="320" Height="425" Margin="1000,246,530,409">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Template">
@@ -120,7 +120,7 @@
         </Button>
         <Button 
             x:Name="ViewRedirect4"
-            Width="320" Height="425" Margin="1486,246,114,409">
+            Width="320" Height="425" Margin="1505,246,95,409">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Template">

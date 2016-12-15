@@ -312,7 +312,7 @@ namespace Iap
         {
             if (this.buttons == null)
             {
-                if (this.storeType == "IAP")
+                if (this.storeType == "WCI")
                 {
                     this.events.BeginPublishOnUIThread(new ViewEnglishCommand());
                 }

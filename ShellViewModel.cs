@@ -15,6 +15,7 @@ namespace Iap
         private string bannerBackground;
         private bool isBannerVisible;
         private string arrow;
+        private bool openDisclaimer;
 
         private string RemainingTime = "30";
 
@@ -125,7 +126,25 @@ namespace Iap
 
         public void ViewDisclaimer()
         {
-           // System.Windows.MessageBox.Show("Discalimer");
+            if (!this.OpenDisclaimer)
+            {
+                this.OpenDisclaimer = true;
+            }
+        }
+
+        public bool OpenDisclaimer
+        {
+            set
+            {
+                this.openDisclaimer = value;
+                NotifyOfPropertyChange(() => this.OpenDisclaimer);
+            }
+            get { return this.openDisclaimer; }
+        }
+
+        public void CloseDisclaimer()
+        {
+            this.OpenDisclaimer = false;
         }
     }
 }
