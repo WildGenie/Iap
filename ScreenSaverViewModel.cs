@@ -131,8 +131,8 @@ namespace Iap
             timer.Stop();
            // this.events.PublishOnCurrentThread(new ViewEnglishCommand());
             //loopThread.Abort();
-            // this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
-            this.events.PublishOnCurrentThread(new ViewTwoButtonsShellEnCommand());
+             this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
+            //this.events.PublishOnCurrentThread(new ViewTwoButtonsShellEnCommand());
         }
     }
 }
