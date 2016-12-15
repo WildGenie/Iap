@@ -22,14 +22,22 @@ namespace Iap
 
         public TwoButtonsShellViewModel(IEventAggregator events)
         {
-            this.OpenBanner();
-            GlobalCounters.ResetAll();
             this.events = events;
         }
 
         protected override void OnViewLoaded(object view)
         {
+            this.OpenBanner();
+            GlobalCounters.ResetAll();
+
+            ((TwoButtonsShellView)view).CloseDisclaimer.Click += CloseDisclaimer_Click;
+
             base.OnViewLoaded(view);
+        }
+
+        private void CloseDisclaimer_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.OpenDisclaimer = false;
         }
 
         private IEventAggregator Events

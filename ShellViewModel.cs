@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using Iap.Commands;
 using Iap.Handlers;
+using System.Windows.Controls.Primitives;
 
 namespace Iap
 {
@@ -29,7 +30,14 @@ namespace Iap
         {
             this.OpenBanner();
             GlobalCounters.ResetAll();
+            ((ShellView)view).CloseDisclaimer.Click += CloseDisclaimer_Click;
+
             base.OnViewLoaded(view);
+        }
+
+        private void CloseDisclaimer_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.OpenDisclaimer = false;
         }
 
         public IEventAggregator Events
@@ -144,6 +152,7 @@ namespace Iap
 
         public void CloseDisclaimer()
         {
+            System.Windows.MessageBox.Show("close");
             this.OpenDisclaimer = false;
         }
     }
