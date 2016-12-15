@@ -6,6 +6,6 @@ namespace Iap.Services
 {
    public interface IGetScreenDetailsService
     {
-        IReadOnlyCollection<ButtonLinkModel> GetButtonLinksDetails();
+        IReadOnlyCollection<ButtonLinkModel> GetButtonLinksDetails(string kioskType);
     }
 }

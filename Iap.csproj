@@ -169,6 +169,7 @@
     <Compile Include="Commands\ViewDynamicEnglishShellCommand.cs" />
     <Compile Include="Commands\ViewDynamicGreekShellCommand.cs" />
     <Compile Include="Commands\ViewEnglishCommand.cs" />
+    <Compile Include="Commands\ViewFirstRegistrationCommand.cs" />
     <Compile Include="Commands\ViewGreekCommand.cs" />
     <Compile Include="Commands\ViewInternetAccess2Command.cs" />
     <Compile Include="Commands\ViewInternetAccessCommand.cs" />
@@ -375,6 +376,10 @@
     <Compile Include="SelectButtonEn.xaml.cs">
       <DependentUpon>SelectButtonEn.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SelectVersionView.xaml.cs">
+      <DependentUpon>SelectVersionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelectVersionViewModel.cs" />
     <Compile Include="Services\GetScreenDetailsService.cs" />
     <Compile Include="Services\IGetScreenDetailsService.cs" />
     <Compile Include="ShellView.xaml.cs">
@@ -633,6 +638,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SelectVersionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ShellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -702,6 +711,7 @@
     <Resource Include="Images\disclaimerscreen.png" />
     <Resource Include="Images\disclaimer button-13.png" />
     <Resource Include="Images\disclaimerscreen13.png" />
+    <Resource Include="Images\next.jpg" />
     <Content Include="Media\AIA_revised_converted.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

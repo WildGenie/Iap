@@ -27,15 +27,15 @@ namespace Iap.Services
             this.getIapScreensApi = getIapScreensApi;
         }
 
-        public IReadOnlyCollection<ButtonLinkModel> GetButtonLinksDetails()
+        public IReadOnlyCollection<ButtonLinkModel> GetButtonLinksDetails(string kioskType)
         {
 
             string url;
-            if(storeType=="WCI")
+            if(kioskType=="WCI")
             {
                 url = getScreenDetailsApi;
             }
-            else if(storeType=="IAP")
+            else if(kioskType=="IAP")
             {
                 url = getIapScreensApi;
             }

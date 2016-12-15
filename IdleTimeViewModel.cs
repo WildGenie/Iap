@@ -12,7 +12,7 @@ namespace Iap
 
         private readonly IEventAggregator events;
         private readonly double applicationIsIdleAfterMinutes;
-        private readonly Timer notifier;
+        private  Timer notifier;
 
         public IdleTimeViewModel(
             IEventAggregator events,
@@ -21,16 +21,31 @@ namespace Iap
             this.events = events;
             this.applicationIsIdleAfterMinutes = applicationIsIdleAfterMinutes;
 
-            this.notifier = new Timer(
+          /*  this.notifier = new Timer(
                this.ActiveSlideshow,
                null,
                TimeSpan.FromSeconds(0),
-               TimeSpan.FromSeconds(30));
+               TimeSpan.FromSeconds(30));*/
         }
 
         public IEventAggregator Events
         {
             get { return this.events; }
+        }
+
+        public Timer Notifier
+        {
+            set { this.notifier = value; }
+            get { return this.notifier; }
+        }
+
+        public void StartNotifier()
+        {
+            this.Notifier = new Timer(
+              this.ActiveSlideshow,
+              null,
+              TimeSpan.FromSeconds(0),
+              TimeSpan.FromSeconds(30));
         }
 
         public double ApplicationIsIdleAfterMinutes

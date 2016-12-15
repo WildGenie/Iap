@@ -37,7 +37,8 @@ namespace Iap
         IHandle<ViewBuyWifi2Command>,
         IHandle<ViewInternetAccess2Command>,
         IHandle<ViewTwoButtonsShellGrCommand>,
-        IHandle<ViewTwoButtonsAdvertCommand>
+        IHandle<ViewTwoButtonsAdvertCommand>,
+        IHandle<ViewFirstRegistrationCommand>
     {
         public IEventAggregator events;
         private bool isGreekSelected;
@@ -113,11 +114,18 @@ namespace Iap
 
         public IdleTimeViewModel IdleTime { get; set; }
 
+
+        public SelectVersionViewModel SelectVersion { get; set; }
+
+        private string KioskType { get; set; }
+
         protected override void OnViewLoaded(object view)
         {
-            base.ActivateItem(this.ScreenSaver);
-            this.ScreenSaver.Parent = this;
+            // base.ActivateItem(this.ScreenSaver);
+            //this.ScreenSaver.Parent = this;
 
+             base.ActivateItem(this.SelectVersion);
+            this.SelectVersion.Parent = this;
 
 
             /* EventManager.RegisterClassHandler(
@@ -133,7 +141,11 @@ namespace Iap
                                this.IdleBrowser.LastMouseDownEventTicks =
                                    TimeProvider.Current.UtcNow.ToLocalTime().Ticks));*/
 
-            EventManager.RegisterClassHandler(
+         //   this.IdleTime.StartNotifier();
+
+            //these below
+
+         /*   EventManager.RegisterClassHandler(
                  typeof(UIElement),
                  Mouse.MouseDownEvent,
                  new MouseButtonEventHandler((s, e) =>
@@ -144,7 +156,7 @@ namespace Iap
              typeof(ChromiumWebBrowser),
              Mouse.MouseDownEvent,
              new MouseButtonEventHandler((s, e) =>
-                 this.IdleTime.LastMouseDownEventTime = DateTime.Now));
+                 this.IdleTime.LastMouseDownEventTime = DateTime.Now));*/
 
            /* EventManager.RegisterClassHandler(
              typeof(Iap.Keyboards.Keyboard),
@@ -162,18 +174,18 @@ namespace Iap
 
               timer.Start();*/
 
-            try
+          /*  try
             {
-                this.buttons = this.parser.GetButtonLinksDetails();
+                this.buttons = this.parser.GetButtonLinksDetails(this.KioskType);
 
-               // this.DynamicEnShell.PopulateButtonLinks(buttons);
+               
 
             }
             catch(Exception ex)
             {
-              //  System.Windows.MessageBox.Show(ex.ToString());
+              
                 this.buttons = null;
-            }
+            }*/
             base.OnViewLoaded(view);
         }
 
@@ -297,7 +309,7 @@ namespace Iap
             try
             {
                 this.tempButtons = this.buttons;
-                this.buttons = this.parser.GetButtonLinksDetails();
+                this.buttons = this.parser.GetButtonLinksDetails(this.KioskType);
 
             }
             catch 
@@ -646,6 +658,41 @@ namespace Iap
                 InternetAccess2.TimeElapsed = Convert.ToInt32(message.RemainingTime);
                 InternetAccess2.ShowBannerUrl = true;
                 InternetAccess2.OpenKeyboard = false;
+            }
+        }
+
+        public void Handle(ViewFirstRegistrationCommand message)
+        {
+            this.KioskType = message.KioskType;
+             base.ActivateItem(this.ScreenSaver);
+            this.ScreenSaver.Parent = this;
+
+            this.IdleTime.StartNotifier();
+
+            EventManager.RegisterClassHandler(
+                 typeof(UIElement),
+                 Mouse.MouseDownEvent,
+                 new MouseButtonEventHandler((s, e) =>
+                     this.IdleTime.LastMouseDownEventTime = DateTime.Now));
+
+
+            EventManager.RegisterClassHandler(
+             typeof(ChromiumWebBrowser),
+             Mouse.MouseDownEvent,
+             new MouseButtonEventHandler((s, e) =>
+                 this.IdleTime.LastMouseDownEventTime = DateTime.Now));
+
+            try
+            {
+                this.buttons = this.parser.GetButtonLinksDetails(this.KioskType);
+
+                // this.DynamicEnShell.PopulateButtonLinks(buttons);
+
+            }
+            catch (Exception ex)
+            {
+                //  System.Windows.MessageBox.Show(ex.ToString());
+                this.buttons = null;
             }
         }
     }

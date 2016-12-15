@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="Iap.SelectVersionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Width="1920"
+          Height="1080">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/AIA_FOR PNG-01.png"/>
+        </Grid.Background>
+        <Grid Margin="440,315,325,250" Background="White">
+            <TextBlock Text="Please select the version of kiosk you want" FontSize="30" FontWeight="SemiBold" TextAlignment="Center"/>
+            <StackPanel Margin="110,65,255,205">
+                <Viewbox Height="50" Margin="0,0,-50,0">
+                    <RadioButton x:Name="IAP" GroupName="version" Content="IAP (Internet Access Point)"  IsChecked="True" Width="163"/>
+                </Viewbox>
+                <Label Height="40"/>
+                <Viewbox Height="50" Margin="0,0,-50,0">
+                    <RadioButton x:Name="WCI" GroupName="version" Content="WCI (Web Check In)" Width="162"  />
+                </Viewbox>
+                <Label Height="100"/>
+            </StackPanel>
+            <Button x:Name="Next" Width="150" Height="50" Margin="820,385,185,80"  FontSize="25" Content="Next">
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Ellipse Name="Ellipse" Fill="{TemplateBinding Background}"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>
