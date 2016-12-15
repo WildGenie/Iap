@@ -138,6 +138,30 @@
                 <Grid.Background>
                     <ImageBrush ImageSource="/Images/disclaimer button-13.png"/>
                 </Grid.Background>
+                <Button x:Name="CloseDisclaimer" Width="19" Height="19" Margin="540,35,41,246">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
+                                            <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
+                                        </StackPanel>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsPressed" Value="true">
+                                                <Setter Property="Background" Value="Transparent" TargetName="panel" />
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="true">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                    <Image Source="/Images/AIA_FOR PNG-12.png"/>
+                </Button>
             </Grid>
         </Popup>
     </Grid>
