@@ -12,6 +12,7 @@ namespace Iap.Gr
         private string bannerBackground;
         private bool isBannerVisible;
         private string arrow;
+        private bool openDisclaimer;
 
         private string RemainingTime = "30";
 
@@ -23,9 +24,16 @@ namespace Iap.Gr
         protected override void OnViewLoaded(object view)
         {
             this.OpenBanner();
-            // grView = ((ShellGrViewModel)view).grView;
             GlobalCounters.ResetAll();
+
+            ((ShellGrView)view).CloseDisclaimer.Click += CloseDisclaimer_Click;
+
             base.OnViewLoaded(view);
+        }
+
+        private void CloseDisclaimer_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.OpenDisclaimer = false;
         }
 
         public IEventAggregator Events
@@ -118,6 +126,29 @@ namespace Iap.Gr
         public void ViewAdvertLink()
         {
             this.events.PublishOnCurrentThread(new ViewAdvertCommand(this.RemainingTime));
+        }
+
+        public void ViewDisclaimer()
+        {
+            if (!this.OpenDisclaimer)
+            {
+                this.OpenDisclaimer = true;
+            }
+        }
+
+        public bool OpenDisclaimer
+        {
+            set
+            {
+                this.openDisclaimer = value;
+                NotifyOfPropertyChange(() => this.OpenDisclaimer);
+            }
+            get { return this.openDisclaimer; }
+        }
+
+        public void CloseDisclaimer()
+        { 
+            this.OpenDisclaimer = false;
         }
     }
 }

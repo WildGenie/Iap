@@ -152,7 +152,6 @@ namespace Iap
 
         public void CloseDisclaimer()
         {
-            System.Windows.MessageBox.Show("close");
             this.OpenDisclaimer = false;
         }
     }

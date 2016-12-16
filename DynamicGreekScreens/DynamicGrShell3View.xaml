@@ -6,7 +6,7 @@
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </UserControl.Resources>
     <Grid Width="1920"
-          Height="1080">
+          Height="1080" x:Name="MainScreen">
         <Grid.Background>
             <ImageBrush ImageSource="/Images/AIA_FOR PNG-24.png"/>
         </Grid.Background>
@@ -225,5 +225,39 @@
                 </EventTrigger>
             </Grid.Triggers>
         </Grid>
+        <Popup IsOpen="{Binding Path=OpenDisclaimer}" x:Name="pop" StaysOpen="False"
+               AllowsTransparency="True"
+                PlacementTarget="{Binding ElementName=MainScreen}"
+               Placement="Center" VerticalOffset="-80"   PopupAnimation="Fade">
+            <Grid Width="600" Height="300">
+                <Grid.Background>
+                    <ImageBrush ImageSource="/Images/disclaimer button-13.png"/>
+                </Grid.Background>
+                <Button x:Name="CloseDisclaimer" Width="19" Height="19" Margin="540,35,41,246">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <StackPanel Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" x:Name="panel">
+                                            <ContentPresenter Width="{TemplateBinding Width}" Height="{TemplateBinding Width}" />
+                                        </StackPanel>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsPressed" Value="true">
+                                                <Setter Property="Background" Value="Transparent" TargetName="panel" />
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="true">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                    <Image Source="/Images/AIA_FOR PNG-12.png"/>
+                </Button>
+            </Grid>
+        </Popup>
     </Grid>
 </UserControl>
