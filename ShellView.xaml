@@ -175,7 +175,6 @@
                     <Image Source="/Images/AIA_FOR PNG-12.png"/>
                 </Button>
             </Grid>
-            <!--  <local:DisclaimerScreen/>-->
         </Popup>
     </Grid>
 </UserControl>

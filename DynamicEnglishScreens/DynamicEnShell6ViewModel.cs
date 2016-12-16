@@ -18,6 +18,7 @@ namespace Iap.DynamicEnglishScreens
         private string bannerBackground;
         private bool isBannerVisible;
         private string arrow;
+        private bool openDisclaimer;
 
         private BitmapImage image1;
         private BitmapImage image2;
@@ -197,7 +198,15 @@ namespace Iap.DynamicEnglishScreens
         protected override void OnViewLoaded(object view)
         {
             this.OpenBanner();
+
+            ((DynamicEnShell6View)view).CloseDisclaimer.Click += CloseDisclaimer_Click;
+
             base.OnViewLoaded(view);
+        }
+
+        private void CloseDisclaimer_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.CloseDisclaimer();
         }
 
         public void ViewRedirect1()
@@ -246,6 +255,29 @@ namespace Iap.DynamicEnglishScreens
         {
             this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
             this.events.PublishOnCurrentThread(new ViewChangeLanguageCommand(true));
+        }
+
+        public void ViewDisclaimer()
+        {
+            if (!this.OpenDisclaimer)
+            {
+                this.OpenDisclaimer = true;
+            }
+        }
+
+        public bool OpenDisclaimer
+        {
+            set
+            {
+                this.openDisclaimer = value;
+                NotifyOfPropertyChange(() => this.OpenDisclaimer);
+            }
+            get { return this.openDisclaimer; }
+        }
+
+        public void CloseDisclaimer()
+        {
+            this.OpenDisclaimer = false;
         }
     }
 }
