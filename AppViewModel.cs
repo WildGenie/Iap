@@ -46,11 +46,13 @@ namespace Iap
         private string storeType = System.Configuration.ConfigurationManager.AppSettings["storeType"];
 
         private readonly IGetScreenDetailsService parser;
+        private readonly ILicenceProviderService licenceProvider;
 
-        public AppViewModel(IEventAggregator events, IGetScreenDetailsService parser)
+        public AppViewModel(IEventAggregator events, IGetScreenDetailsService parser, ILicenceProviderService licenceProvider)
         {
             this.events = events;
             this.parser = parser;
+            this.licenceProvider = licenceProvider;
         }
 
         public ShellViewModel Shell { get; set; }
@@ -124,8 +126,18 @@ namespace Iap
             // base.ActivateItem(this.ScreenSaver);
             //this.ScreenSaver.Parent = this;
 
-             base.ActivateItem(this.SelectVersion);
-            this.SelectVersion.Parent = this;
+            if (!this.licenceProvider.hasAlreadyKey())
+            {
+                base.ActivateItem(this.SelectVersion);
+                this.SelectVersion.Parent = this;
+            }
+
+            else
+            {
+                this.HandlerAndSettings();
+                base.ActivateItem(this.ScreenSaver);
+                this.ScreenSaver.Parent = this;
+            }
 
 
             /* EventManager.RegisterClassHandler(
@@ -322,9 +334,11 @@ namespace Iap
 
         public void Handle(ViewDynamicEnglishShellCommand message)
         {
+            string storeTypeFromRegistry = this.licenceProvider.RetrieveTypeFromRegistry();
+
             if (this.buttons == null)
             {
-                if (this.storeType == "WCI")
+                if (storeTypeFromRegistry == "WCI")
                 {
                     this.events.BeginPublishOnUIThread(new ViewEnglishCommand());
                 }
@@ -338,7 +352,7 @@ namespace Iap
 
                 if (this.buttons.Count == 1)
                 {
-                    if (this.storeType == "WCI")
+                    if (storeTypeFromRegistry == "WCI")
                     {
                         this.events.BeginPublishOnUIThread(new ViewEnglishCommand());
                     }
@@ -681,9 +695,14 @@ namespace Iap
         public void Handle(ViewFirstRegistrationCommand message)
         {
             this.KioskType = message.KioskType;
+            this.licenceProvider.writeKeyToRegistry(message.KioskType);
              base.ActivateItem(this.ScreenSaver);
             this.ScreenSaver.Parent = this;
+            this.HandlerAndSettings();
+        }
 
+        private void HandlerAndSettings()
+        {
             this.IdleTime.StartNotifier();
 
             EventManager.RegisterClassHandler(
@@ -703,12 +722,9 @@ namespace Iap
             {
                 this.buttons = this.parser.GetButtonLinksDetails(this.KioskType);
 
-                // this.DynamicEnShell.PopulateButtonLinks(buttons);
-
             }
-            catch (Exception ex)
+            catch
             {
-                //  System.Windows.MessageBox.Show(ex.ToString());
                 this.buttons = null;
             }
         }

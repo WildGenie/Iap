@@ -17,21 +17,23 @@ namespace Iap.Services
 
         private readonly string getScreenDetailsApi;
         private readonly string getIapScreensApi;
+        private readonly ILicenceProviderService licenceProvider;
 
         private string storeType = System.Configuration.ConfigurationManager.AppSettings["storeType"];
 
 
-        public GetScreenDetailsService(string getScreenDetailsApi, string getIapScreensApi)
+        public GetScreenDetailsService(string getScreenDetailsApi, string getIapScreensApi, ILicenceProviderService licenceProvider)
         {
             this.getScreenDetailsApi = getScreenDetailsApi;
             this.getIapScreensApi = getIapScreensApi;
+            this.licenceProvider = licenceProvider;
         }
 
         public IReadOnlyCollection<ButtonLinkModel> GetButtonLinksDetails(string kioskType)
         {
-
+            string storeTypeFroregistry = this.licenceProvider.RetrieveTypeFromRegistry();
             string url;
-            if(kioskType=="WCI")
+            if(storeTypeFroregistry=="WCI")
             {
                 url = getScreenDetailsApi;
             }
