@@ -546,6 +546,7 @@ namespace Iap.DynamicGreekScreens
 
         public void ViewRedirect1()
         {
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[0].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "1";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -555,7 +556,7 @@ namespace Iap.DynamicGreekScreens
 
         public void ViewRedirect2()
         {
-
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[1].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "2";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -565,7 +566,7 @@ namespace Iap.DynamicGreekScreens
 
         public void ViewRedirect3()
         {
-
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[2].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "3";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -575,6 +576,7 @@ namespace Iap.DynamicGreekScreens
 
         public void ViewRedirect4()
         {
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[3].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "4";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -584,6 +586,7 @@ namespace Iap.DynamicGreekScreens
 
         public void ViewRedirect5()
         {
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[4].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "5";
             NotifyOfPropertyChange(() => SelectedPosition);
