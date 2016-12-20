@@ -175,6 +175,7 @@
     <Compile Include="Commands\ViewInternetAccessCommand.cs" />
     <Compile Include="Commands\ViewPrintBoardingPassCommand.cs" />
     <Compile Include="Commands\ViewRedirectToBrowserCommand.cs" />
+    <Compile Include="Commands\ViewShutDownCommand.cs" />
     <Compile Include="Commands\ViewSrceenSaverCommand.cs" />
     <Compile Include="Commands\ViewTravelAuthorizationCommand.cs" />
     <Compile Include="Commands\ViewTwoButtonsAdvertCommand.cs" />
@@ -433,7 +434,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Include="AdornerControl\LoadingWait.xaml">

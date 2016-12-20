@@ -38,7 +38,8 @@ namespace Iap
         IHandle<ViewInternetAccess2Command>,
         IHandle<ViewTwoButtonsShellGrCommand>,
         IHandle<ViewTwoButtonsAdvertCommand>,
-        IHandle<ViewFirstRegistrationCommand>
+        IHandle<ViewFirstRegistrationCommand>,
+        IHandle<ViewShutDownCommand>
     {
         public IEventAggregator events;
         private bool isGreekSelected;
@@ -125,19 +126,18 @@ namespace Iap
         {
             // base.ActivateItem(this.ScreenSaver);
             //this.ScreenSaver.Parent = this;
+                if (!this.licenceProvider.hasAlreadyKey())
+                {
+                    base.ActivateItem(this.SelectVersion);
+                    this.SelectVersion.Parent = this;
+                }
 
-            if (!this.licenceProvider.hasAlreadyKey())
-            {
-                base.ActivateItem(this.SelectVersion);
-                this.SelectVersion.Parent = this;
-            }
-
-            else
-            {
-                this.HandlerAndSettings();
-                base.ActivateItem(this.ScreenSaver);
-                this.ScreenSaver.Parent = this;
-            }
+                else
+                {
+                    this.HandlerAndSettings();
+                    base.ActivateItem(this.ScreenSaver);
+                    this.ScreenSaver.Parent = this;
+                }
 
 
             /* EventManager.RegisterClassHandler(
@@ -695,7 +695,7 @@ namespace Iap
         public void Handle(ViewFirstRegistrationCommand message)
         {
             this.KioskType = message.KioskType;
-            this.licenceProvider.writeKeyToRegistry(message.KioskType);
+          //  this.licenceProvider.writeKeyToRegistry(message.KioskType);
              base.ActivateItem(this.ScreenSaver);
             this.ScreenSaver.Parent = this;
             this.HandlerAndSettings();
@@ -727,6 +727,11 @@ namespace Iap
             {
                 this.buttons = null;
             }
+        }
+
+        public void Handle(ViewShutDownCommand message)
+        {
+            System.Windows.Application.Current.Shutdown();
         }
     }
 }

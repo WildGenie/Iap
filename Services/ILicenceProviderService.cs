@@ -1,4 +1,7 @@
-﻿namespace Iap.Services
+﻿using System.Threading;
+using System.Threading.Tasks;
+
+namespace Iap.Services
 {
   public  interface ILicenceProviderService
     {
@@ -6,6 +9,14 @@
 
         void writeKeyToRegistry(string type);
 
+        void deleteFromRegistry();
+
         string RetrieveTypeFromRegistry();
+
+        void ShowUniqueIds();
+
+        string checkLicencesStatus();
+
+        Task<string> sendPcData(string type, CancellationToken ct);
     }
 }
