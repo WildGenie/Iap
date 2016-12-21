@@ -12,6 +12,7 @@ using Iap.Handlers;
 using Iap.Bounds;
 using System.Windows.Input;
 using System.Windows.Controls;
+using Iap.Services;
 
 namespace Iap
 {
@@ -22,6 +23,7 @@ namespace Iap
         private bool openKeyboard;
         private readonly string numberOfAvailablePagesToPrint;
         private readonly ILog log;
+        private readonly ISendStatsService sender;
 
         private string remainingTime;
 
@@ -30,12 +32,13 @@ namespace Iap
        
         private DispatcherTimer timer;
 
-        public TravelAuthorizationViewModel(IEventAggregator events,string travelAuthorizationEnApi, string numberOfAvailablePagesToPrint, ILog log)
+        public TravelAuthorizationViewModel(IEventAggregator events,string travelAuthorizationEnApi, string numberOfAvailablePagesToPrint, ILog log, ISendStatsService sender)
         {
             this.events = events;
             this.travelAuthorizationEnApi = travelAuthorizationEnApi;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.log = log;
+            this.sender = sender;
         }
 
         public IEventAggregator Events
@@ -90,6 +93,8 @@ namespace Iap
             timer.Interval = new TimeSpan(0, 1, 0);
             timer.Tick += TimerTick;
             timer.Start();
+
+            startTime = DateTime.Now;
 
             base.OnViewLoaded(view);
         }
@@ -244,23 +249,6 @@ namespace Iap
             this.OpenKeyboard = false;
             try
             {
-                /* if (_travelAuthorizationBrowser.CanGoBack)
-                 {
-                     if(_travelAuthorizationBrowser.GetMainFrame().Url.Contains("docs.google.com"))
-                     {
-                         ViewTravelAuthorization();
-                     }
-                     _travelAuthorizationBrowser.Back();
-                 }
-                 else
-                 {
-                     if (_travelAuthorizationBrowser != null)
-                     {
-                         _travelAuthorizationBrowser.Dispose();
-                     }
-                     this.events.PublishOnCurrentThread(new ViewEnglishCommand());
-                 }*/
-                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
                 try
                 {
                     if (_travelAuthorizationBrowser != null)
@@ -282,9 +270,24 @@ namespace Iap
             return timeSpent.ToString();
         }
 
+        private DateTime startTime;
+
+        private string TimeSpended()
+        {
+            DateTime endTime = DateTime.Now;
+            TimeSpan duration = endTime.Subtract(startTime);
+            return duration.ToString(@"hh\:mm\:ss");
+        }
+
         protected override void OnDeactivate(bool close)
         {
             timer.Stop();
+            try
+            {
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeSpended() + " time.");
+                this.sender.SendAction("ViewEndSession after " + TimeSpended() + " time.");
+            }
+            catch { }
             try
             {
                 if (_travelAuthorizationBrowser != null)
@@ -300,21 +303,25 @@ namespace Iap
         public void ViewBuyWifi()
         {
             this.events.PublishOnCurrentThread(new ViewBuyWifiCommand(this.TimeElapsed.ToString()));
+            this.sender.SendAction("ViewBuyWifi.");
         }
 
         public void ViewPrintBoardingPass()
         {
             this.events.PublishOnCurrentThread(new ViewPrintBoardingPassCommand(this.TimeElapsed.ToString()));
+            this.sender.SendAction("ViewPrintBoardingPass.");
         }
 
         public void ViewInternetAccess()
         {
             this.events.PublishOnCurrentThread(new ViewInternetAccessCommand(this.TimeElapsed.ToString()));
+            this.sender.SendAction("ViewInternetAccess.");
         }
 
         public void ViewTravelAuthorization()
         {
             _travelAuthorizationBrowser.Load(this.travelAuthorizationEnApi);
+            this.sender.SendAction("ViewTravelAuthorization.");
         }
     }
 }

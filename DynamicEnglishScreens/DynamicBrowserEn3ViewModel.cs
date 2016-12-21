@@ -17,6 +17,7 @@ using Iap.Models;
 using Iap.Bounds;
 using System.Windows.Input;
 using System.Windows.Controls;
+using Iap.Services;
 
 namespace Iap.DynamicEnglishScreens
 {
@@ -25,6 +26,7 @@ namespace Iap.DynamicEnglishScreens
         private readonly IEventAggregator events;
         private readonly string numberOfAvailablePagesToPrint;
         private readonly ILog log;
+        private readonly ISendStatsService sender;
 
         private BitmapImage leftImage1;
         private BitmapImage leftImage2;
@@ -42,11 +44,12 @@ namespace Iap.DynamicEnglishScreens
 
         
 
-        public DynamicBrowserEn3ViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, ILog log)
+        public DynamicBrowserEn3ViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, ILog log, ISendStatsService sender)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.log = log;
+            this.sender = sender;
         }
 
         public IEventAggregator Events
@@ -140,10 +143,10 @@ namespace Iap.DynamicEnglishScreens
 
             _internetAccessBrowser.RequestContext = new RequestContext();
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
-            // _internetAccessBrowser.RequestHandler = new DynamicBrowserRequestHandler();
+           
             _internetAccessBrowser.RequestHandler = new CustomRequestHandler("");
             _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
-            //var boundEnObject = new DynamicBrowserBoundObjectEn(this.numberOfAvailablePagesToPrint);
+            
             var boundEnObject = new CustomBoundObject(this.numberOfAvailablePagesToPrint, this.log);
             _internetAccessBrowser.RegisterJsObject("bound", boundEnObject);
             _internetAccessBrowser.FrameLoadEnd += boundEnObject.OnFrameLoadEnd;
@@ -157,17 +160,19 @@ namespace Iap.DynamicEnglishScreens
             ((DynamicBrowserEn3View)view).DynamicBrowser.Children.Add(_internetAccessBrowser);
 
 
-            // _internetAccessBrowser.Focus();
+            
 
             this.RemainingTime = "30";
 
-          //  this.OpenKeyboard = true;
+          
 
             this.TimeElapsed = 30;
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 1, 0);
             timer.Tick += TimerTick;
             timer.Start();
+
+            startTime = DateTime.Now;
 
             base.OnViewLoaded(view);
         }
@@ -267,9 +272,24 @@ namespace Iap.DynamicEnglishScreens
             }
         }
 
+        private DateTime startTime;
+
+        private string TimeSpended()
+        {
+            DateTime endTime = DateTime.Now;
+            TimeSpan duration = endTime.Subtract(startTime);
+            return duration.ToString(@"hh\:mm\:ss");
+        }
+
         protected override void OnDeactivate(bool close)
         {
             timer.Stop();
+            try
+            {
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeSpended() + " time.");
+                this.sender.SendAction("ViewEndSession after " + TimeSpended() + " time.");
+            }
+            catch { }
             try
             {
                 if (_internetAccessBrowser != null)
@@ -292,17 +312,6 @@ namespace Iap.DynamicEnglishScreens
 
         private void _internetAccessBrowser_TouchMove(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            /* int x = (int)e.GetTouchPoint(_internetAccessBrowser).Position.X;
-             int y = (int)e.GetTouchPoint(_internetAccessBrowser).Position.Y;
-
-
-             int deltax = x - lastMousePositionX;
-             int deltay = y - lastMousePositionY;
-
-             TranslateTransform transform = new TranslateTransform(x, y);
-
-             _internetAccessBrowser.SendMouseWheelEvent((int)_internetAccessBrowser.Width, (int)_internetAccessBrowser.Height, deltax, deltay, CefEventFlags.None);
-             */
             Control control = (Control)sender;
 
             var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
@@ -319,8 +328,6 @@ namespace Iap.DynamicEnglishScreens
 
         private void _internetAccessBrowser_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            //lastMousePositionX = (int)e.GetTouchPoint(_internetAccessBrowser).Position.X;
-            //lastMousePositionY = (int)e.GetTouchPoint(_internetAccessBrowser).Position.Y;
             Control control = (Control)sender;
             e.TouchDevice.Capture(control);
             windowTouchDevice = e.TouchDevice;
@@ -394,20 +401,6 @@ namespace Iap.DynamicEnglishScreens
             this.OpenKeyboard = false;
             try
             {
-                /* if (_internetAccessBrowser.CanGoBack && this.PreviousSelected == this.SelectedPosition)
-                 {
-                     _internetAccessBrowser.Back();
-                 }
-                 else
-                 {
-                     if (_internetAccessBrowser != null)
-                     {
-                         _internetAccessBrowser.Dispose();
-                     }
-                     this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
-                 }*/
-
-                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
                 try
                 {
                     if (_internetAccessBrowser != null)
@@ -431,6 +424,8 @@ namespace Iap.DynamicEnglishScreens
 
         public void ViewRedirect1()
         {
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[0].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[0].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "1";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -440,7 +435,8 @@ namespace Iap.DynamicEnglishScreens
 
         public void ViewRedirect2()
         {
-
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[1].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[1].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "2";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -450,7 +446,8 @@ namespace Iap.DynamicEnglishScreens
 
         public void ViewRedirect3()
         {
-
+            this.log.Info("Invoking Action: View" + this.ButtonsDetails[2].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[2].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "3";
             NotifyOfPropertyChange(() => SelectedPosition);

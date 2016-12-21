@@ -7,7 +7,7 @@ namespace Iap.Services
     {
         bool hasAlreadyKey();
 
-        void writeKeyToRegistry(string type);
+        bool writeKeyToRegistry(string type);
 
         void deleteFromRegistry();
 

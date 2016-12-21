@@ -384,7 +384,9 @@
     <Compile Include="Services\GetScreenDetailsService.cs" />
     <Compile Include="Services\IGetScreenDetailsService.cs" />
     <Compile Include="Services\ILicenceProviderService.cs" />
+    <Compile Include="Services\ISendStatsService.cs" />
     <Compile Include="Services\LicenceProviderService.cs" />
+    <Compile Include="Services\SendStatsService.cs" />
     <Compile Include="ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>

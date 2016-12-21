@@ -15,6 +15,7 @@ using System.Windows;
 using System.Windows.Input;
 using Iap.Unitilities;
 using System.Windows.Controls;
+using Iap.Services;
 
 namespace Iap
 {
@@ -26,6 +27,7 @@ namespace Iap
         private readonly string internetAccessEnApi;
         private readonly string bannerLinkEnApi;
         private readonly ILog log;
+        private readonly ISendStatsService sender;
 
         private bool openKeyboard;
 
@@ -36,13 +38,14 @@ namespace Iap
 
        
 
-        public InternetAccessViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string internetAccessEnApi,string bannerLinkEnApi, ILog log)
+        public InternetAccessViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string internetAccessEnApi,string bannerLinkEnApi, ILog log, ISendStatsService sender)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.internetAccessEnApi = internetAccessEnApi;
             this.bannerLinkEnApi = bannerLinkEnApi;
             this.log = log;
+            this.sender = sender;
         }
 
         protected override void OnViewLoaded(object view)
@@ -134,6 +137,8 @@ namespace Iap
             timer.Interval = new TimeSpan(0, 1, 0);
             timer.Tick += TimerTick;
             timer.Start();
+
+            startTime = DateTime.Now;
 
             base.OnViewLoaded(view);
         }
@@ -353,26 +358,6 @@ namespace Iap
             this.OpenKeyboard = false;
             try
             {
-                /* if (_internetAccessBrowser.CanGoBack)
-                 {
-                     if (_internetAccessBrowser.GetMainFrame().Url.Contains("docs.google.com"))
-                     {
-                         ViewInternetAccess();
-                     }
-                     else
-                     {
-                         _internetAccessBrowser.Back();
-                     }
-                 }
-                 else
-                 {
-                     if (_internetAccessBrowser != null)
-                     {
-                         _internetAccessBrowser.Dispose();
-                     }
-                     this.events.PublishOnCurrentThread(new ViewEnglishCommand());
-                 }*/
-                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
                 try
                 {
                     if (_internetAccessBrowser != null)
@@ -394,10 +379,25 @@ namespace Iap
             return timeSpent.ToString();
         }
 
+        private DateTime startTime;
+
+        private string TimeSpended()
+        {
+            DateTime endTime = DateTime.Now;
+            TimeSpan duration = endTime.Subtract(startTime);
+            return duration.ToString(@"hh\:mm\:ss");
+        }
+
         protected override void OnDeactivate(bool close)
         {
             this.ShowBannerUrl = false;
             timer.Stop();
+            try
+            {
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeSpended() + " time.");
+                this.sender.SendAction("ViewEndSession after " + TimeSpended() + " time.");
+            }
+            catch { }
             try
             {
                 if (_internetAccessBrowser != null)
@@ -415,21 +415,25 @@ namespace Iap
         public void ViewBuyWifi()
         {
            this.events.PublishOnCurrentThread(new ViewBuyWifiCommand(this.TimeElapsed.ToString()));
+            this.sender.SendAction("ViewBuyWifi.");
         }
 
         public void ViewPrintBoardingPass()
         {
             this.events.PublishOnCurrentThread(new ViewPrintBoardingPassCommand(this.TimeElapsed.ToString()));
+            this.sender.SendAction("ViewPrintBoardingPass.");
         }
 
         public void ViewTravelAuthorization()
         {
             this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand(this.TimeElapsed.ToString()));
+            this.sender.SendAction("ViewTravelAuthorization.");
         }
 
         public void ViewInternetAccess()
         {
             _internetAccessBrowser.Load(this.internetAccessEnApi);
+            this.sender.SendAction("ViewInternetAccess.");
         }
     }
 }

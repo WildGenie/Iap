@@ -12,6 +12,7 @@ using Iap.Handlers;
 using Iap.Commands;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Iap.Services;
 
 namespace Iap
 {
@@ -23,6 +24,7 @@ namespace Iap
         private readonly string internetAccessEnApi;
         private readonly string bannerLinkEnApi;
         private readonly ILog log;
+        private readonly ISendStatsService sender;
 
         private bool openKeyboard;
 
@@ -30,13 +32,14 @@ namespace Iap
 
         private DispatcherTimer timer;
 
-        public InternetAccess2ViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string internetAccessEnApi, string bannerLinkEnApi, ILog log)
+        public InternetAccess2ViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string internetAccessEnApi, string bannerLinkEnApi, ILog log, ISendStatsService sender)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.internetAccessEnApi = internetAccessEnApi;
             this.bannerLinkEnApi = bannerLinkEnApi;
             this.log = log;
+            this.sender = sender;
         }
 
         protected override void OnViewLoaded(object view)
@@ -131,6 +134,8 @@ namespace Iap
             timer.Interval = new TimeSpan(0, 1, 0);
             timer.Tick += TimerTick;
             timer.Start();
+
+            startTime = DateTime.Now;
 
             base.OnViewLoaded(view);
         }
@@ -290,7 +295,6 @@ namespace Iap
             this.OpenKeyboard = false;
             try
             {
-                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
                 try
                 {
                     if (_internetAccessBrowser != null)
@@ -312,10 +316,25 @@ namespace Iap
             return timeSpent.ToString();
         }
 
+        private DateTime startTime;
+
+        private string TimeSpended()
+        {
+            DateTime endTime = DateTime.Now;
+            TimeSpan duration = endTime.Subtract(startTime);
+            return duration.ToString(@"hh\:mm\:ss");
+        }
+
         protected override void OnDeactivate(bool close)
         {
             this.ShowBannerUrl = false;
             timer.Stop();
+            try
+            {
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeSpended() + " time.");
+                this.sender.SendAction("ViewEndSession after " + TimeSpended() + " time.");
+            }
+            catch { }
             try
             {
                 if (_internetAccessBrowser != null)
@@ -333,11 +352,13 @@ namespace Iap
         public void ViewBuyWifi()
         {
             this.events.PublishOnCurrentThread(new ViewBuyWifi2Command(this.TimeElapsed.ToString()));
+            this.sender.SendAction("ViewBuyWifi.");
         }
 
         public void ViewInternetAccess()
         {
             _internetAccessBrowser.Load(this.internetAccessEnApi);
+            this.sender.SendAction("ViewInternetAccess.");
         }
     }
 }

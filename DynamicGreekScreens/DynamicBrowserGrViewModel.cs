@@ -17,6 +17,7 @@ using Iap.Handlers;
 using System.Windows.Input;
 using System.Windows.Controls;
 using Iap.Bounds;
+using Iap.Services;
 
 namespace Iap.DynamicGreekScreens
 {
@@ -25,6 +26,7 @@ namespace Iap.DynamicGreekScreens
         private readonly IEventAggregator events;
         private readonly string numberOfAvailablePagesToPrint;
         private readonly ILog log;
+        private readonly ISendStatsService sender;
 
         private BitmapImage leftImage1;
         private BitmapImage leftImage2;
@@ -43,11 +45,12 @@ namespace Iap.DynamicGreekScreens
 
        
 
-        public DynamicBrowserGrViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, ILog log)
+        public DynamicBrowserGrViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, ILog log, ISendStatsService sender)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.log = log;
+            this.sender = sender;
         }
 
         public IEventAggregator Events
@@ -183,6 +186,8 @@ namespace Iap.DynamicGreekScreens
             timer.Interval = new TimeSpan(0, 1, 0);
             timer.Tick += TimerTick;
             timer.Start();
+
+            startTime = DateTime.Now;
 
             base.OnViewLoaded(view);
         }
@@ -329,9 +334,24 @@ namespace Iap.DynamicGreekScreens
             lastPoint = locationOnScreen;
         }
 
+        private DateTime startTime;
+
+        private string TimeSpended()
+        {
+            DateTime endTime = DateTime.Now;
+            TimeSpan duration = endTime.Subtract(startTime);
+            return duration.ToString(@"hh\:mm\:ss");
+        }
+
         protected override void OnDeactivate(bool close)
         {
             timer.Stop();
+            try
+            {
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeSpended() + " time.");
+                this.sender.SendAction("ViewEndSession after " + TimeSpended() + " time.");
+            }
+            catch { }
             try
             {
                 if (_internetAccessBrowser != null)
@@ -423,26 +443,6 @@ namespace Iap.DynamicGreekScreens
               this.OpenKeyboard = false;
             try
             {
-                /* if (_internetAccessBrowser.CanGoBack && this.PreviousSelected == this.SelectedPosition)
-                 {
-                     if (_internetAccessBrowser.GetMainFrame().Url.Contains("docs.google.com"))
-                     {
-                         _internetAccessBrowser.Load(this.HomeUrl);
-                     }
-                     else
-                     {
-                         _internetAccessBrowser.Back();
-                     }
-                 }
-                 else
-                 {
-                     if (_internetAccessBrowser != null)
-                     {
-                         _internetAccessBrowser.Dispose();
-                     }
-                     this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
-                 }*/
-                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
                 try
                 {
                     if (_internetAccessBrowser != null)
@@ -467,6 +467,7 @@ namespace Iap.DynamicGreekScreens
         public void ViewRedirect1()
         {
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[0].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[0].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "1";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -477,6 +478,7 @@ namespace Iap.DynamicGreekScreens
         public void ViewRedirect2()
         {
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[1].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[1].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "2";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -487,6 +489,7 @@ namespace Iap.DynamicGreekScreens
         public void ViewRedirect3()
         {
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[2].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[2].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "3";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -497,6 +500,7 @@ namespace Iap.DynamicGreekScreens
         public void ViewRedirect4()
         {
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[3].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[3].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "4";
             NotifyOfPropertyChange(() => SelectedPosition);

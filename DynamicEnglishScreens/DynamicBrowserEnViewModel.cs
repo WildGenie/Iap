@@ -17,6 +17,7 @@ using Iap.Handlers;
 using Iap.Bounds;
 using System.Windows.Input;
 using System.Windows.Controls;
+using Iap.Services;
 
 namespace Iap.DynamicEnglishScreens
 {
@@ -25,6 +26,7 @@ namespace Iap.DynamicEnglishScreens
         private readonly IEventAggregator events;
         private readonly string numberOfAvailablePagesToPrint;
         private readonly ILog log;
+        private readonly ISendStatsService sender;
 
         private BitmapImage leftImage1;
         private BitmapImage leftImage2;
@@ -43,11 +45,12 @@ namespace Iap.DynamicEnglishScreens
 
         
 
-        public DynamicBrowserEnViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, ILog log)
+        public DynamicBrowserEnViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, ILog log, ISendStatsService sender)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.log = log;
+            this.sender = sender;
         }
 
         public IEventAggregator Events
@@ -194,6 +197,8 @@ namespace Iap.DynamicEnglishScreens
             timer.Tick += TimerTick;
             timer.Start();
 
+            startTime = DateTime.Now;
+
             base.OnViewLoaded(view);
         }
 
@@ -297,7 +302,12 @@ namespace Iap.DynamicEnglishScreens
             timer.Stop();
             try
             {
-                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeSpended() + " time.");
+                this.sender.SendAction("ViewEndSession after " + TimeSpended() + " time.");
+            }
+            catch { }
+            try
+            {
                 if (_internetAccessBrowser != null)
                 {
                     _internetAccessBrowser.Dispose();
@@ -435,40 +445,7 @@ namespace Iap.DynamicEnglishScreens
 
         public void Back()
         {
-            /*  this.OpenKeyboard = false;
-              if (_internetAccessBrowser.GetMainFrame().Url.Contains(".pdf"))
-              {
-                  try
-                  {
-                      if (_internetAccessBrowser != null)
-                      {
-                          _internetAccessBrowser.Dispose();
-                      }
-                      this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
-                  }
-
-                  catch { }
-              }
-              else
-              {
-                  try
-                  {
-                      if (_internetAccessBrowser.CanGoBack && (this.PreviousSelected == this.SelectedPosition))
-                      {
-                          _internetAccessBrowser.Back();
-                      }
-                      else
-                      {
-                          if (_internetAccessBrowser != null)
-                          {
-                              _internetAccessBrowser.Dispose();
-                          }
-                          this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
-                      }
-                  }
-                  catch { }
-              }*/
-          //  this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
+            this.OpenKeyboard = false;              
             try
             {
                 if (_internetAccessBrowser != null)
@@ -481,6 +458,15 @@ namespace Iap.DynamicEnglishScreens
             }
         }
 
+        private DateTime startTime;
+
+        private string TimeSpended()
+        {
+            DateTime endTime = DateTime.Now;
+            TimeSpan duration = endTime.Subtract(startTime);
+            return duration.ToString();
+        }
+
         private string TimeHasSpent()
         {
             int timeSpent = 30 - TimeElapsed;
@@ -491,6 +477,7 @@ namespace Iap.DynamicEnglishScreens
         public void ViewRedirect1()
         {
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[0].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[0].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "1";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -501,6 +488,7 @@ namespace Iap.DynamicEnglishScreens
         public void ViewRedirect2()
         {
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[1].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[1].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "2";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -511,6 +499,7 @@ namespace Iap.DynamicEnglishScreens
         public void ViewRedirect3()
         {
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[2].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[2].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "3";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -521,6 +510,7 @@ namespace Iap.DynamicEnglishScreens
         public void ViewRedirect4()
         {
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[3].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[3].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "4";
             NotifyOfPropertyChange(() => SelectedPosition);

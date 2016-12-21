@@ -3,6 +3,7 @@ using Caliburn.Micro;
 using Iap.Commands;
 using System.Windows.Controls;
 using Iap.Handlers;
+using Iap.Services;
 
 namespace Iap.Gr
 {
@@ -16,9 +17,12 @@ namespace Iap.Gr
 
         private string RemainingTime = "30";
 
-        public ShellGrViewModel(IEventAggregator events)
+        private readonly ISendStatsService sender;
+
+        public ShellGrViewModel(IEventAggregator events, ISendStatsService sender)
         {
             this.events = events;
+            this.sender = sender;
         }
 
         protected override void OnViewLoaded(object view)
@@ -101,31 +105,37 @@ namespace Iap.Gr
         {
             this.events.PublishOnCurrentThread(new ViewEnglishCommand());
             this.events.PublishOnCurrentThread(new ViewChangeLanguageCommand(false));
+            this.sender.SendAction("ViewEnglish.");
         }
 
         public void ViewBuyWifi()
         {
             this.events.PublishOnBackgroundThread(new ViewBuyWifiCommand(this.RemainingTime));
+            this.sender.SendAction("ViewBuyWifi.");
         }
 
         public void ViewPrintBoardingPass()
         {
             this.events.PublishOnBackgroundThread(new ViewPrintBoardingPassCommand(this.RemainingTime));
+            this.sender.SendAction("ViewPrintBoardingPass.");
         }
 
         public void ViewInternetAccess()
         {
             this.events.PublishOnBackgroundThread(new ViewInternetAccessCommand(this.RemainingTime));
+            this.sender.SendAction("ViewInternetAccess.");
         }
 
         public void ViewTravelAuthorization()
         {
             this.events.PublishOnBackgroundThread(new ViewTravelAuthorizationCommand(this.RemainingTime));
+            this.sender.SendAction("ViewTravelAuthorization.");
         }
 
         public void ViewAdvertLink()
         {
             this.events.PublishOnCurrentThread(new ViewAdvertCommand(this.RemainingTime));
+            this.sender.SendAction("ViewBannerLink.");
         }
 
         public void ViewDisclaimer()

@@ -15,6 +15,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using Iap.Services;
 
 namespace Iap.DynamicGreekScreens
 {
@@ -24,6 +25,7 @@ namespace Iap.DynamicGreekScreens
         private readonly string numberOfAvailablePagesToPrint;
         private readonly string bannerLinkGrApi;
         private readonly ILog log;
+        private readonly ISendStatsService sender;
 
         private BitmapImage leftImage1;
         private BitmapImage leftImage2;
@@ -43,12 +45,13 @@ namespace Iap.DynamicGreekScreens
         private int TimeElapsed = 30;
         private DispatcherTimer timer;
 
-        public DynamicBannerBrowserGr5ViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string bannerLinkGrApi, ILog log)
+        public DynamicBannerBrowserGr5ViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string bannerLinkGrApi, ILog log, ISendStatsService sender)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.bannerLinkGrApi = bannerLinkGrApi;
             this.log = log;
+            this.sender = sender;
         }
 
         public IEventAggregator Events
@@ -209,10 +212,10 @@ namespace Iap.DynamicGreekScreens
 
             _internetAccessBrowser.RequestContext = new RequestContext();
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
-            // _internetAccessBrowser.RequestHandler = new DynamicBrowserRequestHandler();
+            
             _internetAccessBrowser.RequestHandler = new CustomRequestHandler("");
             _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
-            // var boundEnObject = new DynamicBrowserBoundObjectEn(this.numberOfAvailablePagesToPrint);
+          
             var boundEnObject = new CustomBoundObject(this.numberOfAvailablePagesToPrint,this.log);
             _internetAccessBrowser.RegisterJsObject("bound", boundEnObject);
             _internetAccessBrowser.FrameLoadEnd += boundEnObject.OnFrameLoadEnd;
@@ -233,13 +236,15 @@ namespace Iap.DynamicGreekScreens
 
             this.RemainingTime = "30";
 
-            //this.OpenKeyboard = true;
+            
 
             this.TimeElapsed = 30;
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 1, 0);
             timer.Tick += TimerTick;
             timer.Start();
+
+            startTime = DateTime.Now;
         }
 
         private Point scrollTarget;
@@ -387,9 +392,24 @@ namespace Iap.DynamicGreekScreens
             }
         }
 
+        private DateTime startTime;
+
+        private string TimeSpended()
+        {
+            DateTime endTime = DateTime.Now;
+            TimeSpan duration = endTime.Subtract(startTime);
+            return duration.ToString(@"hh\:mm\:ss");
+        }
+
         protected override void OnDeactivate(bool close)
         {
             timer.Stop();
+            try
+            {
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeSpended() + " time.");
+                this.sender.SendAction("ViewEndSession after " + TimeSpended() + " time.");
+            }
+            catch { }
             try
             {
                 if (_internetAccessBrowser != null)
@@ -551,7 +571,6 @@ namespace Iap.DynamicGreekScreens
             this.OpenKeyboard = false;
             try
             {
-                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
                 try
                 {
                     if (_internetAccessBrowser != null)
@@ -577,48 +596,56 @@ namespace Iap.DynamicGreekScreens
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[0].GrUrl, this.ButtonsDetails, "1"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[0].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[0].Title + ".");
         }
 
         public void ViewRedirect2()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[1].GrUrl, this.ButtonsDetails, "2"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[1].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[1].Title + ".");
         }
 
         public void ViewRedirect3()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[2].GrUrl, this.ButtonsDetails, "3"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[2].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[2].Title + ".");
         }
 
         public void ViewRedirect4()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[3].GrUrl, this.ButtonsDetails, "4"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[3].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[3].Title + ".");
         }
 
         public void ViewRedirect5()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[4].GrUrl, this.ButtonsDetails, "5"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[4].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[4].Title + ".");
         }
 
         public void ViewRedirect6()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[5].GrUrl, this.ButtonsDetails, "6"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[5].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[5].Title + ".");
         }
 
         public void ViewRedirect7()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[6].GrUrl, this.ButtonsDetails, "7"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[6].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[6].Title + ".");
         }
 
         public void ViewRedirect8()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[7].GrUrl, this.ButtonsDetails, "8"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[7].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[7].Title + ".");
         }
     }
 }

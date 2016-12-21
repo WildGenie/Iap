@@ -221,7 +221,7 @@ namespace Iap
 
         public void Handle(ViewGreekCommand message)
         {
-              base.ActivateItem(new ShellGrViewModel(events));
+              base.ActivateItem(this.ShellGr);
         }
 
         public void Handle(ViewEnglishCommand message)

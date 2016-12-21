@@ -57,7 +57,7 @@ namespace Iap.Services
             }
         }
 
-        public void writeKeyToRegistry(string type)
+        public bool writeKeyToRegistry(string type)
         {
             try
             {
@@ -68,10 +68,11 @@ namespace Iap.Services
                         RegistryKey Regkey = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\" + key);
                         Regkey.SetValue("Type", type);
                     }
-                    
+                return true;
             }
             catch
             {
+                return false;
             }
         }
 

@@ -12,6 +12,7 @@ using Iap.Handlers;
 using Iap.Bounds;
 using System.Windows.Input;
 using System.Windows.Controls;
+using Iap.Services;
 
 namespace Iap.Gr
 {
@@ -25,19 +26,21 @@ namespace Iap.Gr
         private readonly string internetAccessGrApi;
         private readonly string bannerLinkGrApi;
         private readonly ILog log;
+        private readonly ISendStatsService sender;
 
         public static ChromiumWebBrowser _internetAccessBrowser;
 
        
         private DispatcherTimer timer;
 
-        public InternetAccessGrViewModel(IEventAggregator events,string numberOfAvailablePagesToPrint, string internetAccessGrApi,string bannerLinkGrApi, ILog log)
+        public InternetAccessGrViewModel(IEventAggregator events,string numberOfAvailablePagesToPrint, string internetAccessGrApi,string bannerLinkGrApi, ILog log, ISendStatsService sender)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.internetAccessGrApi = internetAccessGrApi;
             this.bannerLinkGrApi = bannerLinkGrApi;
             this.log = log;
+            this.sender = sender;
         }
 
         public IEventAggregator Events
@@ -102,6 +105,8 @@ namespace Iap.Gr
             timer.Interval = new TimeSpan(0, 1, 0);
             timer.Tick += TimerTick;
             timer.Start();
+
+            startTime = DateTime.Now;
 
             base.OnViewLoaded(view);
         }
@@ -263,27 +268,6 @@ namespace Iap.Gr
             this.OpenKeyboard = false;
             try
             {
-                /* if (_internetAccessBrowser.CanGoBack)
-                 {
-                     if (_internetAccessBrowser.GetMainFrame().Url.Contains("docs.google.com"))
-                     {
-                         ViewInternetAccess();
-                     }
-                     else
-                     {
-                         _internetAccessBrowser.Back();
-                     }
-                 }
-
-                 else
-                 {
-                     if (_internetAccessBrowser != null)
-                     {
-                         _internetAccessBrowser.Dispose();
-                     }
-                     this.events.PublishOnCurrentThread(new ViewGreekCommand());
-                 }*/
-                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
                 try
                 {
                     if (_internetAccessBrowser != null)
@@ -296,7 +280,7 @@ namespace Iap.Gr
                 this.events.PublishOnCurrentThread(new ViewGreekCommand());
             }
             catch { }
-        }
+        }      
 
         private string TimeHasSpent()
         {
@@ -305,9 +289,24 @@ namespace Iap.Gr
             return timeSpent.ToString();
         }
 
+        private DateTime startTime;
+
+        private string TimeSpended()
+        {
+            DateTime endTime = DateTime.Now;
+            TimeSpan duration = endTime.Subtract(startTime);
+            return duration.ToString(@"hh\:mm\:ss");
+        }
+
         protected override void OnDeactivate(bool close)
         {
             timer.Stop();
+            try
+            {
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeSpended() + " time.");
+                this.sender.SendAction("ViewEndSession after " + TimeSpended() + " time.");
+            }
+            catch { }
             try
             {
                 if (_internetAccessBrowser != null)
@@ -322,21 +321,25 @@ namespace Iap.Gr
         public void ViewBuyWifi()
         {
             this.events.PublishOnCurrentThread(new ViewBuyWifiCommand(this.TimeElapsed.ToString()));
+            this.sender.SendAction("ViewBuyWifi.");
         }
 
         public void ViewPrintBoardingPass()
         {
             this.events.PublishOnCurrentThread(new ViewPrintBoardingPassCommand(this.TimeElapsed.ToString()));
+            this.sender.SendAction("ViewPrintBoardingPass.");
         }
 
         public void ViewTravelAuthorization()
         {
             this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand(this.TimeElapsed.ToString()));
+            this.sender.SendAction("ViewTravelAuthorization.");
         }
 
         public void ViewInternetAccess()
         {
             _internetAccessBrowser.Load(this.internetAccessGrApi);
+            this.sender.SendAction("ViewInternetAccess.");
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using Iap.Commands;
 using Iap.Handlers;
+using Iap.Services;
 
 namespace Iap.Gr
 {
@@ -19,9 +20,12 @@ namespace Iap.Gr
 
         private string RemainingTime = "30";
 
-        public TwoButtonsShellGrViewModel(IEventAggregator events)
+        private readonly ISendStatsService sender;
+
+        public TwoButtonsShellGrViewModel(IEventAggregator events, ISendStatsService sender)
         {
             this.events = events;
+            this.sender = sender;
         }
 
         protected override void OnViewLoaded(object view)
@@ -104,21 +108,25 @@ namespace Iap.Gr
         {
             this.events.PublishOnCurrentThread(new ViewTwoButtonsShellEnCommand());
             this.events.PublishOnCurrentThread(new ViewChangeLanguageCommand(false));
+            this.sender.SendAction("ViewEnglish.");
         }
 
         public void ViewBuyWifi()
         {
             this.events.PublishOnBackgroundThread(new ViewBuyWifi2Command(this.RemainingTime));
+            this.sender.SendAction("ViewBuyWifi.");
         }
 
         public void ViewInternetAccess()
         {
             this.events.PublishOnBackgroundThread(new ViewInternetAccess2Command(this.RemainingTime));
+            this.sender.SendAction("ViewInternetAccess.");
         }
 
         public void ViewAdvertLink()
         {
             this.events.PublishOnCurrentThread(new ViewTwoButtonsAdvertCommand(this.RemainingTime));
+            this.sender.SendAction("ViewBannerLink.");
         }
 
         public void ViewDisclaimer()

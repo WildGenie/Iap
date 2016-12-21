@@ -12,6 +12,7 @@ using Iap.Handlers;
 using Iap.Bounds;
 using System.Windows.Input;
 using System.Windows.Controls;
+using Iap.Services;
 
 namespace Iap.Gr
 {
@@ -22,6 +23,7 @@ namespace Iap.Gr
         private bool openKeyboard;
         private readonly string numberOfAvailablePagesToPrint;
         private readonly ILog log;
+        private readonly ISendStatsService sender;
 
         private string remainingTime;
 
@@ -30,12 +32,13 @@ namespace Iap.Gr
         
         private DispatcherTimer timer;
 
-        public PrintBoardingPassGrViewModel(IEventAggregator events, string boardingPassGrApi, string numberOfAvailablePagesToPrint, ILog log)
+        public PrintBoardingPassGrViewModel(IEventAggregator events, string boardingPassGrApi, string numberOfAvailablePagesToPrint, ILog log, ISendStatsService sender)
         {
             this.events = events;
             this.boardingPassGrApi = boardingPassGrApi;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.log = log;
+            this.sender = sender;
         }
 
         public IEventAggregator Events
@@ -85,6 +88,8 @@ namespace Iap.Gr
             timer.Interval = new TimeSpan(0, 1, 0);
             timer.Tick += TimerTick;
             timer.Start();
+
+            startTime = DateTime.Now;
 
             base.OnViewLoaded(view);
         }
@@ -242,23 +247,6 @@ namespace Iap.Gr
             this.OpenKeyboard = false;
             try
             {
-                /*  if (_printBoardingPassBrowser.CanGoBack)
-                  {
-                      if(_printBoardingPassBrowser.GetMainFrame().Url.Contains("docs.google.com"))
-                      {
-                          ViewPrintBoardingPass();
-                      }
-                      _printBoardingPassBrowser.Back();
-                  }
-                  else
-                  {
-                      if (_printBoardingPassBrowser != null)
-                      {
-                          _printBoardingPassBrowser.Dispose();
-                      }
-                      this.events.PublishOnCurrentThread(new ViewGreekCommand());
-                  }*/
-                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
                 try
                 {
                     if (_printBoardingPassBrowser != null)
@@ -281,9 +269,24 @@ namespace Iap.Gr
             return timeSpent.ToString();
         }
 
+        private DateTime startTime;
+
+        private string TimeSpended()
+        {
+            DateTime endTime = DateTime.Now;
+            TimeSpan duration = endTime.Subtract(startTime);
+            return duration.ToString(@"hh\:mm\:ss");
+        }
+
         protected override void OnDeactivate(bool close)
         {
             timer.Stop();
+            try
+            {
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeSpended() + " time.");
+                this.sender.SendAction("ViewEndSession after " + TimeSpended() + " time.");
+            }
+            catch { }
             try
             {
                 if (_printBoardingPassBrowser != null)
@@ -298,21 +301,25 @@ namespace Iap.Gr
         public void ViewBuyWifi()
         {
             this.events.PublishOnCurrentThread(new ViewBuyWifiCommand(this.TimeElapsed.ToString()));
+            this.sender.SendAction("ViewBuyWifi.");
         }
 
         public void ViewInternetAccess()
         {
             this.events.PublishOnCurrentThread(new ViewInternetAccessCommand(this.TimeElapsed.ToString()));
+            this.sender.SendAction("ViewInternetAccess.");
         }
 
         public void ViewTravelAuthorization()
         {
             this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand(this.TimeElapsed.ToString()));
+            this.sender.SendAction("ViewTravelAuthorization.");
         }
 
         public void ViewPrintBoardingPass()
         {
             _printBoardingPassBrowser.Load(this.boardingPassGrApi);
+            this.sender.SendAction("ViewPrintBoardingPass.");
         }
     }
 }

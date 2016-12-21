@@ -7,6 +7,7 @@ using Caliburn.Micro;
 using System.Windows.Media.Imaging;
 using Iap.Models;
 using Iap.Commands;
+using Iap.Services;
 
 namespace Iap.DynamicGreekScreens
 {
@@ -19,13 +20,16 @@ namespace Iap.DynamicGreekScreens
         private string arrow;
         private bool openDisclaimer;
 
+        private readonly ISendStatsService sender;
+
         private BitmapImage image1;
         private BitmapImage image2;
 
-        public DynamicGrShell2ViewModel(IEventAggregator events, ILog log)
+        public DynamicGrShell2ViewModel(IEventAggregator events, ILog log, ISendStatsService sender)
         {
             this.events = events;
             this.log = log;
+            this.sender = sender;
         }
 
         public BitmapImage Image1
@@ -147,18 +151,21 @@ namespace Iap.DynamicGreekScreens
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[0].GrUrl, this.ButtonsDetails, "1"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[0].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[0].Title + ".");
         }
 
         public void ViewRedirect2()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[1].GrUrl, this.ButtonsDetails, "2"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[1].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[1].Title + ".");
         }
 
         public void ViewAdvertLink()
         {
             this.events.PublishOnBackgroundThread(new ViewDynamicBannerEnCommand(this.ButtonsDetails));
-          //  this.log.Info("Invoking Action: ViewBannerLink");
+            this.sender.SendAction("ViewBannerLink.");
+            this.log.Info("Invoking Action: ViewBannerLink");
         }
 
         public void ViewEnglish()

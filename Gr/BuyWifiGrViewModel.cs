@@ -12,6 +12,7 @@ using Iap.Handlers;
 using Iap.Bounds;
 using System.Windows.Input;
 using System.Windows.Controls;
+using Iap.Services;
 
 namespace Iap.Gr
 {
@@ -24,18 +25,20 @@ namespace Iap.Gr
         private readonly string numberOfAvailablePagesToPrint;
         private readonly string buyWifiGrApi;
         private readonly ILog log;
+        private readonly ISendStatsService sender;
 
         public static ChromiumWebBrowser _buyWifiBrowser;
 
        
         private DispatcherTimer timer;
 
-        public BuyWifiGrViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string buyWifiGrApi, ILog log)
+        public BuyWifiGrViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string buyWifiGrApi, ILog log, ISendStatsService sender)
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.buyWifiGrApi = buyWifiGrApi;
             this.log = log;
+            this.sender = sender;
         }
 
         public IEventAggregator Events
@@ -85,6 +88,8 @@ namespace Iap.Gr
             timer.Interval = new TimeSpan(0, 1, 0);
             timer.Tick += TimerTick;
             timer.Start();
+
+            startTime = DateTime.Now;
         }
 
         public int TimeElapsed
@@ -241,26 +246,6 @@ namespace Iap.Gr
             this.OpenKeyboard = false;
             try
             {
-                /*  if (_buyWifiBrowser.CanGoBack)
-                  {
-                      if (_buyWifiBrowser.GetMainFrame().Url.Contains("docs.google.com"))
-                      {
-                          ViewBuyWifi();
-                      }
-                      else
-                      {
-                          _buyWifiBrowser.Back();
-                      }
-                  }
-                  else
-                  {
-                      if (_buyWifiBrowser != null)
-                      {
-                          _buyWifiBrowser.Dispose();
-                      }
-                      this.events.PublishOnCurrentThread(new ViewGreekCommand());
-                  }*/
-                this.log.Info("Invoking Action: ViewEndSession after " + TimeHasSpent() + " minutes.");
                 try
                 {
                     if (_buyWifiBrowser != null)
@@ -281,9 +266,25 @@ namespace Iap.Gr
             return timeSpent.ToString();
         }
 
+        private DateTime startTime;
+
+        private string TimeSpended()
+        {
+            DateTime endTime = DateTime.Now;
+            TimeSpan duration = endTime.Subtract(startTime);
+            return duration.ToString(@"hh\:mm\:ss");
+        }
+
+
         protected override void OnDeactivate(bool close)
         {
             timer.Stop();
+            try
+            {
+                this.log.Info("Invoking Action: ViewEndSession after " + TimeSpended() + " time.");
+                this.sender.SendAction("ViewEndSession after " + TimeSpended() + " time.");
+            }
+            catch { }
             try
             {
                 if (_buyWifiBrowser != null)
@@ -298,21 +299,25 @@ namespace Iap.Gr
         public void ViewPrintBoardingPass()
         {
             this.events.PublishOnCurrentThread(new ViewPrintBoardingPassCommand(this.TimeElapsed.ToString()));
+            this.sender.SendAction("ViewPrintBoardingPass.");
         }
 
         public void ViewInternetAccess()
         {
             this.events.PublishOnCurrentThread(new ViewInternetAccessCommand(this.TimeElapsed.ToString()));
+            this.sender.SendAction("ViewInternetAccess.");
         }
 
         public void ViewTravelAuthorization()
         {
             this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand(this.TimeElapsed.ToString()));
+            this.sender.SendAction("ViewTravelAuthorization.");
         }
 
         public void ViewBuyWifi()
         {
             _buyWifiBrowser.Load(this.buyWifiGrApi);
+            this.sender.SendAction("ViewBuyWifi.");
         }
     }
 }

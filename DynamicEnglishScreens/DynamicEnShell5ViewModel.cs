@@ -7,6 +7,7 @@ using Caliburn.Micro;
 using System.Windows.Media.Imaging;
 using Iap.Models;
 using Iap.Commands;
+using Iap.Services;
 
 namespace Iap.DynamicEnglishScreens
 {
@@ -19,16 +20,19 @@ namespace Iap.DynamicEnglishScreens
         private string arrow;
         private bool openDisclaimer;
 
+        private readonly ISendStatsService sender;
+
         private BitmapImage image1;
         private BitmapImage image2;
         private BitmapImage image3;
         private BitmapImage image4;
         private BitmapImage image5;
 
-        public DynamicEnShell5ViewModel(IEventAggregator events, ILog log)
+        public DynamicEnShell5ViewModel(IEventAggregator events, ILog log, ISendStatsService sender)
         {
             this.events = events;
             this.log = log;
+            this.sender = sender;
         }
 
         public IEventAggregator Events
@@ -192,36 +196,42 @@ namespace Iap.DynamicEnglishScreens
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[0].EnUrl, this.ButtonsDetails, "1"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[0].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[0].Title + ".");
         }
 
         public void ViewRedirect2()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[1].EnUrl, this.ButtonsDetails, "2"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[1].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[1].Title + ".");
         }
 
         public void ViewRedirect3()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[2].EnUrl, this.ButtonsDetails, "3"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[2].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[2].Title + ".");
         }
 
         public void ViewRedirect4()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[3].EnUrl, this.ButtonsDetails, "4"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[3].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[3].Title + ".");
         }
 
         public void ViewRedirect5()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[4].EnUrl, this.ButtonsDetails, "5"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[4].Title + ".");
+            this.sender.SendAction("View" + this.ButtonsDetails[4].Title + ".");
         }
 
         public void ViewAdvertLink()
         {
             this.events.PublishOnBackgroundThread(new ViewDynamicBannerEnCommand(this.ButtonsDetails));
-           // this.log.Info("Invoking Action: ViewBannerLink");
+            this.sender.SendAction("ViewBannerLink.");
+            this.log.Info("Invoking Action: ViewBannerLink");
         }
 
         public void ViewGreek()

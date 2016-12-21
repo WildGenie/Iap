@@ -55,9 +55,6 @@ namespace Iap
             get { return this.events; }
         }
 
-
-        public bool complete;
-
        
         public  void Next()
         {
@@ -90,52 +87,64 @@ namespace Iap
             cts.CancelAfter(TimeSpan.FromSeconds(20));
 
             bool canInstall = this.licenceProvider.checkLicencesStatus() == "1" ? true : false;
-
+            
             if(canInstall)
             {
-                try
+                if (this.licenceProvider.writeKeyToRegistry(type))
                 {
-
-                    this.licenceProvider.writeKeyToRegistry(type);
-
-
-                    string response = await this.licenceProvider.sendPcData(type, cts.Token);
-                    if(response.TrimStart().TrimEnd()=="OK")
+                    try
                     {
-                        this.events.PublishOnCurrentThread(new ViewFirstRegistrationCommand(type));
-                    }
 
-                    else
+                        this.licenceProvider.writeKeyToRegistry(type);
+
+
+                        string response = await this.licenceProvider.sendPcData(type, cts.Token);
+                        if (response.TrimStart().TrimEnd() == "OK")
+                        {
+                            this.events.PublishOnCurrentThread(new ViewFirstRegistrationCommand(type));
+                        }
+
+                        else
+                        {
+                            System.Windows.MessageBox.Show("Error, please try later");
+                            this.events.PublishOnCurrentThread(new ViewShutDownCommand());
+                            try
+                            {
+                                this.licenceProvider.deleteFromRegistry();
+                            }
+                            catch { }
+                        }
+                    }
+                    catch (OperationCanceledException)
                     {
                         System.Windows.MessageBox.Show("Error, please try later");
                         this.events.PublishOnCurrentThread(new ViewShutDownCommand());
+                    }
+
+                    catch (Exception)
+                    {
                         try
                         {
                             this.licenceProvider.deleteFromRegistry();
                         }
                         catch { }
+                        System.Windows.MessageBox.Show("Error, please try later");
+                        this.events.PublishOnCurrentThread(new ViewShutDownCommand());
                     }
                 }
-                catch(OperationCanceledException)
+                else
                 {
-                    System.Windows.MessageBox.Show("Error, please try later");
-                    this.events.PublishOnCurrentThread(new ViewShutDownCommand());
-                }
-
-                catch(Exception ex)
-                {
-                    try
-                    {
-                        this.licenceProvider.deleteFromRegistry();
-                    }
-                    catch { }
-                    System.Windows.MessageBox.Show("Error, please try later");
+                    System.Windows.MessageBox.Show("Error, try to run as an administrator");
                     this.events.PublishOnCurrentThread(new ViewShutDownCommand());
                 }
                 
             }
 
-            complete = true;
+            else
+            {
+                System.Windows.MessageBox.Show("Can not install another version");
+                this.events.PublishOnCurrentThread(new ViewShutDownCommand());
+            }
         }
 
     }
