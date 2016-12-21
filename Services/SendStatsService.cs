@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
@@ -12,7 +13,24 @@ namespace Iap.Services
         public SendStatsService(string sendActionsApi)
         {
             this.sendActionsApi = sendActionsApi;
+            this.kioskID = RetrieveIDFromRegistry();
         }
+
+        private string RetrieveIDFromRegistry()
+        {
+            string key = "Kiosk";
+            RegistryKey keyToRetr = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\" + key);
+            if (keyToRetr != null)
+            {
+                return keyToRetr.GetValue("ID").ToString();
+            }
+            else
+            {
+                return "null";
+            }
+        }
+
+        private string kioskID;
 
         public void SendAction(string action)
         {
@@ -23,6 +41,9 @@ namespace Iap.Services
 
         private void SendActionAsync(string action, CancellationToken ct)
         {
+
+           // string kioskID = this.RetrieveIDFromRegistry();
+
             var response =
                 new HttpClient()
                 .GetAsync(
@@ -32,6 +53,7 @@ namespace Iap.Services
             var httpClient = new HttpClient();
             var parameters = new Dictionary<string, string>();
             parameters["action"] = action;
+            parameters["id"] = kioskID;
             httpClient.PostAsync(this.sendActionsApi, new FormUrlEncodedContent(parameters), ct);
         }
     }

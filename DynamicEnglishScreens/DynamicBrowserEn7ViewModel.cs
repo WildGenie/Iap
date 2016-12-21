@@ -193,10 +193,10 @@ namespace Iap.DynamicEnglishScreens
 
             _internetAccessBrowser.RequestContext = new RequestContext();
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
-            // _internetAccessBrowser.RequestHandler = new DynamicBrowserRequestHandler();
+           
             _internetAccessBrowser.RequestHandler = new CustomRequestHandler("");
             _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
-            //var boundEnObject = new DynamicBrowserBoundObjectEn(this.numberOfAvailablePagesToPrint);
+            
             var boundEnObject = new CustomBoundObject(this.numberOfAvailablePagesToPrint, this.log);
             _internetAccessBrowser.RegisterJsObject("bound", boundEnObject);
             _internetAccessBrowser.FrameLoadEnd += boundEnObject.OnFrameLoadEnd;
@@ -388,17 +388,6 @@ namespace Iap.DynamicEnglishScreens
 
         private void _internetAccessBrowser_TouchMove(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            /*  int x = (int)e.GetTouchPoint(_internetAccessBrowser).Position.X;
-              int y = (int)e.GetTouchPoint(_internetAccessBrowser).Position.Y;
-
-
-              int deltax = x - lastMousePositionX;
-              int deltay = y - lastMousePositionY;
-
-              TranslateTransform transform = new TranslateTransform(x, y);
-
-              _internetAccessBrowser.SendMouseWheelEvent((int)_internetAccessBrowser.Width, (int)_internetAccessBrowser.Height, deltax, deltay, CefEventFlags.None);
-              */
             Control control = (Control)sender;
 
             var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
@@ -415,8 +404,6 @@ namespace Iap.DynamicEnglishScreens
 
         private void _internetAccessBrowser_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            //lastMousePositionX = (int)e.GetTouchPoint(_internetAccessBrowser).Position.X;
-            //lastMousePositionY = (int)e.GetTouchPoint(_internetAccessBrowser).Position.Y;
             Control control = (Control)sender;
             e.TouchDevice.Capture(control);
             windowTouchDevice = e.TouchDevice;

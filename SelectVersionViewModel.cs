@@ -90,18 +90,77 @@ namespace Iap
             
             if(canInstall)
             {
-                if (this.licenceProvider.writeKeyToRegistry(type))
+                string response = await this.licenceProvider.sendPcData(type, cts.Token);
+                if(response.TrimStart().TrimEnd()!=null)
+                {
+                    try
+                    {
+                        string licenceID = response.TrimStart().TrimEnd();
+
+                        if(this.licenceProvider.writeKeyToRegistry(type,licenceID))
+                        {
+                            this.events.PublishOnCurrentThread(new ViewFirstRegistrationCommand(type));
+                        }
+                        else
+                        {
+                            System.Windows.MessageBox.Show("Error: Please try to run as administrator");
+                        }
+                    }
+
+                    catch (OperationCanceledException)
+                    {
+                        System.Windows.MessageBox.Show("Error, please try later");
+                        this.events.PublishOnCurrentThread(new ViewShutDownCommand());
+                    }
+
+                    catch {
+                        try
+                        {
+                            this.licenceProvider.deleteFromRegistry();
+                        }
+                        catch { }
+                    }
+                }
+              /*  if (this.licenceProvider.writeKeyToRegistry(type))
                 {
                     try
                     {
 
-                        this.licenceProvider.writeKeyToRegistry(type);
+                       // this.licenceProvider.writeKeyToRegistry(type);
 
 
                         string response = await this.licenceProvider.sendPcData(type, cts.Token);
-                        if (response.TrimStart().TrimEnd() == "OK")
+                        if (response.TrimStart().TrimEnd()!=null)
                         {
-                            this.events.PublishOnCurrentThread(new ViewFirstRegistrationCommand(type));
+                            try
+                            {
+                                string licenceID = response.TrimStart().TrimEnd();
+                               // System.Windows.MessageBox.Show(licenceID);
+                                if (this.licenceProvider.writeIdToRegistry(licenceID))
+                                {
+                                    this.events.PublishOnCurrentThread(new ViewFirstRegistrationCommand(type));
+                                }
+                                else
+                                {
+                                    System.Windows.MessageBox.Show("Error, please try later");
+                                    this.events.PublishOnCurrentThread(new ViewShutDownCommand());
+                                    try
+                                    {
+                                        this.licenceProvider.deleteFromRegistry();
+                                    }
+                                    catch { }
+                                }
+                            }
+                            catch
+                            {
+                                System.Windows.MessageBox.Show("Error, please try later");
+                                this.events.PublishOnCurrentThread(new ViewShutDownCommand());
+                                try
+                                {
+                                    this.licenceProvider.deleteFromRegistry();
+                                }
+                                catch { }
+                            }
                         }
 
                         else
@@ -137,7 +196,7 @@ namespace Iap
                     System.Windows.MessageBox.Show("Error, try to run as an administrator");
                     this.events.PublishOnCurrentThread(new ViewShutDownCommand());
                 }
-                
+                */
             }
 
             else

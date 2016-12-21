@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Linq;
 using Iap.Unitilities;
+using Microsoft.Win32;
 
 namespace Iap
 {
@@ -56,7 +57,7 @@ namespace Iap
                     {
                         var logMessage =
                             "[" + TimeProvider.Current.UtcNow
-                                .ToLocalTime().ToString("dd/MM/yyyy HH:mm:ss tt", this.culture) + "] " +
+                                .ToLocalTime().ToString("dd/MM/yyyy HH:mm:ss tt", this.culture) + "] " + 
                             
                              string.Format(format, args);
                        
