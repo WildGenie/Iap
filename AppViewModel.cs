@@ -44,7 +44,7 @@ namespace Iap
         public IEventAggregator events;
         private bool isGreekSelected;
 
-      //  private string storeType = System.Configuration.ConfigurationManager.AppSettings["storeType"];
+     
 
         private readonly IGetScreenDetailsService parser;
         private readonly ILicenceProviderService licenceProvider;
@@ -57,7 +57,7 @@ namespace Iap
         }
 
         public ShellViewModel Shell { get; set; }
-      //  public IdleInputViewModel IdleInput { get; set; }
+    
         public ShellGrViewModel ShellGr {get;set;}
 
         public PrintBoardingPassViewModel PrintBoardingPass { get; set; }
@@ -71,7 +71,7 @@ namespace Iap
 
         public ScreenSaverViewModel ScreenSaver { get; set; }
 
-        //public IdleBrowserViewModel IdleBrowser { get; set; }
+     
 
         public DynamicEnShellViewModel DynamicEnShell { get; set; }
         public DynamicEnShell2ViewModel DynamicEnShell2 { get; set; }
@@ -124,8 +124,7 @@ namespace Iap
 
         protected override void OnViewLoaded(object view)
         {
-            // base.ActivateItem(this.ScreenSaver);
-            //this.ScreenSaver.Parent = this;
+            
                 if (!this.licenceProvider.hasAlreadyKey())
                 {
                     base.ActivateItem(this.SelectVersion);
@@ -139,65 +138,6 @@ namespace Iap
                     this.ScreenSaver.Parent = this;
                 }
 
-
-            /* EventManager.RegisterClassHandler(
-                 typeof(UIElement),
-                 Mouse.MouseDownEvent,
-                 new MouseButtonEventHandler((s, e) =>
-                     this.IdleBrowser.LastMouseDownEventTicks =
-                         TimeProvider.Current.UtcNow.ToLocalTime().Ticks));*/
-            /* EventManager.RegisterClassHandler(
-                           typeof(ChromiumWebBrowser),
-                           Mouse.MouseDownEvent,
-                           new MouseButtonEventHandler((s, e) =>
-                               this.IdleBrowser.LastMouseDownEventTicks =
-                                   TimeProvider.Current.UtcNow.ToLocalTime().Ticks));*/
-
-         //   this.IdleTime.StartNotifier();
-
-            //these below
-
-         /*   EventManager.RegisterClassHandler(
-                 typeof(UIElement),
-                 Mouse.MouseDownEvent,
-                 new MouseButtonEventHandler((s, e) =>
-                     this.IdleTime.LastMouseDownEventTime = DateTime.Now));
-
-
-            EventManager.RegisterClassHandler(
-             typeof(ChromiumWebBrowser),
-             Mouse.MouseDownEvent,
-             new MouseButtonEventHandler((s, e) =>
-                 this.IdleTime.LastMouseDownEventTime = DateTime.Now));*/
-
-           /* EventManager.RegisterClassHandler(
-             typeof(Iap.Keyboards.Keyboard),
-             Mouse.MouseDownEvent,
-             new MouseButtonEventHandler((s, e) =>
-                 this.IdleTime.LastMouseDownEventTime = DateTime.Now));*/
-
-            /*  var timer = new System.Windows.Threading.DispatcherTimer
-          (
-          TimeSpan.FromMinutes(1),
-          System.Windows.Threading.DispatcherPriority.ApplicationIdle,// Or DispatcherPriority.SystemIdle
-          (s, e) =>base.ActivateItem(this.ScreenSaver),
-          Application.Current.Dispatcher
-          );
-
-              timer.Start();*/
-
-          /*  try
-            {
-                this.buttons = this.parser.GetButtonLinksDetails(this.KioskType);
-
-               
-
-            }
-            catch(Exception ex)
-            {
-              
-                this.buttons = null;
-            }*/
             base.OnViewLoaded(view);
         }
 
@@ -247,14 +187,7 @@ namespace Iap
 
         public void Handle(ViewPrintBoardingPassCommand message)
         {
-            /* if (this.isGreekSelected)
-             {
-                 base.ActivateItem(new PrintBoardingPassGrViewModel(events,this.boardingPassGrApi));
-             }
-             else
-             {
-                 base.ActivateItem(new PrintBoardingPassViewModel(events,this.boardingPassApi));
-             }*/
+          
             if (this.isGreekSelected)
             {
                 base.ChangeActiveItem(PrintBoardingPassGr, true);
@@ -289,14 +222,7 @@ namespace Iap
 
         public void Handle(ViewTravelAuthorizationCommand message)
         {
-            /*if (this.isGreekSelected)
-            {
-                base.ActivateItem(new TravelAuthorizationGrViewModel(events,this.travelAuthorizationGrApi));
-            }
-            else
-            {
-                base.ActivateItem(new TravelAuthorizationViewModel(events,this.travelAuthorizationApi));
-            }*/
+            
             if (this.isGreekSelected)
             {
                 base.ChangeActiveItem(this.TravelAuthorizationGr, true);

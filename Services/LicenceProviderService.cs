@@ -27,7 +27,7 @@ namespace Iap.Services
             try
             {
                 string key = "Kiosk";
-                RegistryKey keyToRetr = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\" + key);
+                RegistryKey keyToRetr = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\" + key);
                 if (keyToRetr != null)
                 {
                     return true;
@@ -52,13 +52,20 @@ namespace Iap.Services
 
         public string RetrieveTypeFromRegistry()
         {
-            string key = "Kiosk";
-            RegistryKey keyToRetr = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\" + key);
-            if (keyToRetr != null)
+            try
             {
-                return keyToRetr.GetValue("Type").ToString();
+                string key = "Kiosk";
+                RegistryKey keyToRetr = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\" + key);
+                if (keyToRetr != null)
+                {
+                    return keyToRetr.GetValue("Type").ToString();
+                }
+                else
+                {
+                    return "null";
+                }
             }
-            else
+            catch
             {
                 return "null";
             }
@@ -69,10 +76,10 @@ namespace Iap.Services
             try
             {
                 string key = "Kiosk";
-                    RegistryKey keyToRetr = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\" + key);
+                    RegistryKey keyToRetr = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\" + key);
                     if (keyToRetr == null)
                     {
-                        RegistryKey Regkey = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\" + key);
+                        RegistryKey Regkey = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\" + key);
                         Regkey.SetValue("Type", type);
                         Regkey.SetValue("ID", id);
                     }

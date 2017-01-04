@@ -43,14 +43,7 @@ namespace Iap
 
                 ScreenSaverVideo = ((ScreenSaverView)view).ScreenSaverVideo;
 
-                /* ((ScreenSaverView)view).ScreenSaverVideo.Source = new Uri(path);
-
-                 ((ScreenSaverView)view).ScreenSaverVideo.ScrubbingEnabled = true;
-                 ((ScreenSaverView)view).ScreenSaverVideo.Play();
-
-                 ((ScreenSaverView)view).ScreenSaverVideo.MediaEnded += ScreenSaverVideo_MediaEnded;
-
-                 ((ScreenSaverView)view).ScreenSaverVideo.MouseDown += ScreenSaverVideo_MouseDown;*/
+               
 
                 ScreenSaverVideo.Source = new Uri(path);
 
@@ -118,10 +111,6 @@ namespace Iap
 
         private void ScreenSaverVideo_MediaEnded(object sender, System.Windows.RoutedEventArgs e)
         {
-            /* System.Threading.Thread.Sleep(TimeSpan.FromMinutes(2));
-             MediaElement video = sender as MediaElement;
-             video.Position = TimeSpan.FromSeconds(0);
-             video.Play();*/
             TimeElapsed = 0;
             timer.Start();
         }
