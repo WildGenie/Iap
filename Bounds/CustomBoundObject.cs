@@ -206,7 +206,7 @@ namespace Iap.Bounds
                         catch (Exception ex)
                         {
                             
-                            System.Windows.MessageBox.Show(ex.ToString());
+                            //System.Windows.MessageBox.Show(ex.ToString());
                         }
                     }
 

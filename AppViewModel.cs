@@ -44,7 +44,7 @@ namespace Iap
         public IEventAggregator events;
         private bool isGreekSelected;
 
-        private string storeType = System.Configuration.ConfigurationManager.AppSettings["storeType"];
+      //  private string storeType = System.Configuration.ConfigurationManager.AppSettings["storeType"];
 
         private readonly IGetScreenDetailsService parser;
         private readonly ILicenceProviderService licenceProvider;

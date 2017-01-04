@@ -145,13 +145,13 @@ $('body').append(s);
 
         public void PrintFound()
         {
-            System.Windows.MessageBox.Show("print request");
+           // System.Windows.MessageBox.Show("print request");
         }
 
         public async void onPrintRequested(string selected, string noOfPages)
         {
 
-            System.Windows.MessageBox.Show("print requested");
+           // System.Windows.MessageBox.Show("print requested");
 
 
             if (selected == "before")

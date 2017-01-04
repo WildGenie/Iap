@@ -37,6 +37,13 @@ namespace Iap.Services
                     return false;
                 }
             }
+
+            catch(UnauthorizedAccessException e)
+            {
+                System.Windows.MessageBox.Show("run as administrator");
+                System.Windows.Application.Current.Shutdown();
+                return false;
+            }
             catch
             {
                 return false;
@@ -146,7 +153,7 @@ namespace Iap.Services
             string procID = this.getProcessorID();
             string diskID = this.getUniquePcId();
 
-            System.Windows.MessageBox.Show(procID + "---" + diskID);
+            //System.Windows.MessageBox.Show(procID + "---" + diskID);
         }
 
         public string checkLicencesStatus()

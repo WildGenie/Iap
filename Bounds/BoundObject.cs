@@ -163,7 +163,7 @@ mediaQueryList.addListener(function(mql) {
         public async void onPrintRequested(string selected, string noOfPages)
         {
 
-             System.Windows.MessageBox.Show("print ok to continue");
+           //  System.Windows.MessageBox.Show("print ok to continue");
 
            // System.Threading.Thread.Sleep(5000);
             
