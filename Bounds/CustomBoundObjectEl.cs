@@ -87,20 +87,17 @@ namespace Iap.Bounds
         public async void onPrintRequested(string selected)
         {
 
-            // System.Windows.MessageBox.Show("print ok to continue");
-
-            // System.Threading.Thread.Sleep(5000);
 
             try
             {
                 Thread waitThread = new Thread(() =>
                 {
                     PleaseWaitWindow wait = new PleaseWaitWindow();
-                    // wait.Topmost = true;
+                   
                     wait.ShowDialog();
                     wait.LoadingAdorner.IsAdornerVisible = true;
                     wait.Close();
-                    //_windowManager.ShowWindow(wait);
+                    
                 });
                 waitThread.SetApartmentState(ApartmentState.STA);
                 waitThread.Start();
@@ -140,8 +137,7 @@ namespace Iap.Bounds
                     {
                         iTextSharp.text.pdf.PdfReader pdfReader = new iTextSharp.text.pdf.PdfReader(path);
                         int numberOfPages = pdfReader.NumberOfPages;
-                      //  if (!(numberOfPages > 6))
-                       // {
+                      
                             if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <= Convert.ToInt32(this.numberOfAvailablePagesToPrint))
                             {
                             try
@@ -187,20 +183,13 @@ namespace Iap.Bounds
                                 System.Windows.MessageBox.Show("Μεγάλος αριθμός σελίδων για εκτύπωση");
                             }
 
-                       // }
+                       
                     }
                     catch (Exception ex)
                     {
-                        // System.Windows.MessageBox.Show(ex.ToString());
+                      
                     }
                 }
-
-               // else
-                //{
-
-                  //  System.Windows.MessageBox.Show("Αποτυχία εκτύπωσης. Παρακαλούμε δοκιμάστε ξανά.");
-
-                //}
 
             }
             try

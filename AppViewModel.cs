@@ -133,9 +133,18 @@ namespace Iap
 
                 else
                 {
-                    this.HandlerAndSettings();
-                    base.ActivateItem(this.ScreenSaver);
-                    this.ScreenSaver.Parent = this;
+                string checkLicence = this.licenceProvider.checkPcLicence();
+                    if (checkLicence == "1")
+                        {
+                            this.HandlerAndSettings();
+                            base.ActivateItem(this.ScreenSaver);
+                            this.ScreenSaver.Parent = this;
+                        }
+                    else
+                        {
+                            System.Windows.MessageBox.Show("you have nota a used licence");
+                            System.Windows.Application.Current.Shutdown();
+                        }
                 }
 
             base.OnViewLoaded(view);

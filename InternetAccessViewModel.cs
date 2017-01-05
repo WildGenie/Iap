@@ -169,45 +169,6 @@ namespace Iap
             set;
         }
 
-        private void _internetAccessBrowser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
-        {
-            _internetAccessBrowser.SetZoomLevel(20);
-            /* var browser = sender as ChromiumWebBrowser;
-             if (browser.GetMainFrame().Url.Contains("print=true"))
-             {
-                 browser.Load(browser.GetMainFrame().Url.Replace("print=true", "print=false"));
-             }*/
-            /*  var browser = sender as ChromiumWebBrowser;
-
-              var script = @"var beforePrint = function(){
-
-                  alert('before');
-              };
-
-              var afterPrint = function() {
-                  alert('after');
-              };
-
-              if (window.matchMedia)
-              {
-                  var mediaQueryList = window.matchMedia('print');
-                  mediaQueryList.addListener(function(mql) {
-                      if (mql.matches)
-                      {
-                          beforePrint();
-                      }
-                      else
-                      {
-                          afterPrint();
-                      }
-                  });
-              }
-
-              window.onbeforeprint = beforePrint;
-              window.onafterprint = afterPrint;";
-
-              browser.ExecuteScriptAsync(script);*/
-        }
 
         private void _internetAccessBrowser_ManipulationDelta(object sender, System.Windows.Input.ManipulationDeltaEventArgs e)
         {
@@ -231,7 +192,6 @@ namespace Iap
 
         private void _internetAccessBrowser_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
             try
             {
                 string script =

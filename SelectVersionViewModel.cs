@@ -63,18 +63,11 @@ namespace Iap
             if(wciRadio.IsChecked==true)
             {
                 CheckAndValidate("WCI");
-                //System.Windows.MessageBox.Show(this.licenceProvider.checkLicencesStatus());
-               /* this.licenceProvider.ShowUniqueIds();
-
-                this.licenceProvider.writeKeyToRegistry("WCI");
-                this.events.PublishOnCurrentThread(new ViewFirstRegistrationCommand("WCI"));*/
+               
             }
             else if(iapRadio.IsChecked==true)
             {
                 CheckAndValidate("IAP");
-               // System.Windows.MessageBox.Show(this.licenceProvider.checkLicencesStatus());
-                /* this.licenceProvider.writeKeyToRegistry("IAP");
-                 this.events.PublishOnCurrentThread(new ViewFirstRegistrationCommand("IAP"));*/
             }
             
         }
@@ -121,82 +114,6 @@ namespace Iap
                         catch { }
                     }
                 }
-              /*  if (this.licenceProvider.writeKeyToRegistry(type))
-                {
-                    try
-                    {
-
-                       // this.licenceProvider.writeKeyToRegistry(type);
-
-
-                        string response = await this.licenceProvider.sendPcData(type, cts.Token);
-                        if (response.TrimStart().TrimEnd()!=null)
-                        {
-                            try
-                            {
-                                string licenceID = response.TrimStart().TrimEnd();
-                               // System.Windows.MessageBox.Show(licenceID);
-                                if (this.licenceProvider.writeIdToRegistry(licenceID))
-                                {
-                                    this.events.PublishOnCurrentThread(new ViewFirstRegistrationCommand(type));
-                                }
-                                else
-                                {
-                                    System.Windows.MessageBox.Show("Error, please try later");
-                                    this.events.PublishOnCurrentThread(new ViewShutDownCommand());
-                                    try
-                                    {
-                                        this.licenceProvider.deleteFromRegistry();
-                                    }
-                                    catch { }
-                                }
-                            }
-                            catch
-                            {
-                                System.Windows.MessageBox.Show("Error, please try later");
-                                this.events.PublishOnCurrentThread(new ViewShutDownCommand());
-                                try
-                                {
-                                    this.licenceProvider.deleteFromRegistry();
-                                }
-                                catch { }
-                            }
-                        }
-
-                        else
-                        {
-                            System.Windows.MessageBox.Show("Error, please try later");
-                            this.events.PublishOnCurrentThread(new ViewShutDownCommand());
-                            try
-                            {
-                                this.licenceProvider.deleteFromRegistry();
-                            }
-                            catch { }
-                        }
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        System.Windows.MessageBox.Show("Error, please try later");
-                        this.events.PublishOnCurrentThread(new ViewShutDownCommand());
-                    }
-
-                    catch (Exception)
-                    {
-                        try
-                        {
-                            this.licenceProvider.deleteFromRegistry();
-                        }
-                        catch { }
-                        System.Windows.MessageBox.Show("Error, please try later");
-                        this.events.PublishOnCurrentThread(new ViewShutDownCommand());
-                    }
-                }
-                else
-                {
-                    System.Windows.MessageBox.Show("Error, try to run as an administrator");
-                    this.events.PublishOnCurrentThread(new ViewShutDownCommand());
-                }
-                */
             }
 
             else

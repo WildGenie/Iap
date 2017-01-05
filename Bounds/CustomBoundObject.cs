@@ -206,7 +206,7 @@ namespace Iap.Bounds
                         catch (Exception ex)
                         {
                             
-                            //System.Windows.MessageBox.Show(ex.ToString());
+                            
                         }
                     }
 
@@ -216,7 +216,7 @@ namespace Iap.Bounds
                         System.Windows.MessageBox.Show("Failed to print please try again");
                        
                     }
-                //_mainBrowser.ExecuteScriptAsync(@"window.print=function() {bound.onPrintRequested('before');}");
+               
             }
             try
             {

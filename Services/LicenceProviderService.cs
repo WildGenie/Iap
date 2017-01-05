@@ -15,11 +15,13 @@ namespace Iap.Services
     {
         private readonly string statusLicencesApi;
         private readonly string sendPCDataApi;
+        private readonly string checkLicenceApi;
 
-        public LicenceProviderService(string statusLicencesApi, string sendPCDataApi)
+        public LicenceProviderService(string statusLicencesApi, string sendPCDataApi, string checkLicenceApi)
         {
             this.statusLicencesApi = statusLicencesApi;
             this.sendPCDataApi = sendPCDataApi;
+            this.checkLicenceApi = checkLicenceApi;
         }
 
         public bool hasAlreadyKey()
@@ -159,8 +161,6 @@ namespace Iap.Services
         {
             string procID = this.getProcessorID();
             string diskID = this.getUniquePcId();
-
-            //System.Windows.MessageBox.Show(procID + "---" + diskID);
         }
 
         public string checkLicencesStatus()
@@ -191,6 +191,24 @@ namespace Iap.Services
             var response = await httpClient.PostAsync(this.sendPCDataApi, new FormUrlEncodedContent(parameters), ct);
             var contents = await response.Content.ReadAsStringAsync();
             return contents.ToString();
+        }
+
+        public string checkPcLicence()
+        {
+            string hdID = this.getUniquePcId();
+            var parameters = new Dictionary<string, string>();
+            parameters["hdid"] = hdID;
+            using (HttpClient client = new HttpClient())
+            {
+                var response =
+                   client
+                   .PostAsync(
+                   this.checkLicenceApi,
+               new FormUrlEncodedContent(parameters)).Result;
+
+                return response.Content.ReadAsStringAsync().Result;
+
+            }
         }
     }
 }

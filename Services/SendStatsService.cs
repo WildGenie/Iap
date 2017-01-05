@@ -32,29 +32,32 @@ namespace Iap.Services
 
         private string kioskID;
 
-        public void SendAction(string action)
+        public  void SendAction(string action)
         {
             CancellationTokenSource cts = new CancellationTokenSource();
             cts.CancelAfter(TimeSpan.FromSeconds(20));
             SendActionAsync(action,cts.Token);
         }
 
-        private void SendActionAsync(string action, CancellationToken ct)
+        private async void SendActionAsync(string action, CancellationToken ct)
         {
 
-           // string kioskID = this.RetrieveIDFromRegistry();
+            // string kioskID = this.RetrieveIDFromRegistry();
+            try
+            {
+              /*  var response =
+                    new HttpClient()
+                    .GetAsync(
+                    this.sendActionsApi,
+                HttpCompletionOption.ResponseHeadersRead, ct).Result;*/
 
-            var response =
-                new HttpClient()
-                .GetAsync(
-                this.sendActionsApi,
-            HttpCompletionOption.ResponseHeadersRead, ct).Result;
-
-            var httpClient = new HttpClient();
-            var parameters = new Dictionary<string, string>();
-            parameters["action"] = action;
-            parameters["id"] = kioskID;
-            httpClient.PostAsync(this.sendActionsApi, new FormUrlEncodedContent(parameters), ct);
+                var httpClient = new HttpClient();
+                var parameters = new Dictionary<string, string>();
+                parameters["action"] = action;
+                parameters["id"] = kioskID;
+               await httpClient.PostAsync(this.sendActionsApi, new FormUrlEncodedContent(parameters), ct);
+            }
+            catch { }
         }
     }
 }
