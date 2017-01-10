@@ -133,6 +133,7 @@ namespace Iap.Gr
         {
             if (!this.OpenDisclaimer)
             {
+                this.sender.SendAction("ViewDisclaimer.");
                 this.OpenDisclaimer = true;
             }
         }

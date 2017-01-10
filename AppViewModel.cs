@@ -16,6 +16,7 @@ using Iap.DynamicGreekScreens;
 using CefSharp.Wpf;
 using CefSharp;
 using System.IO;
+using System.Threading;
 
 namespace Iap
 {
@@ -120,11 +121,16 @@ namespace Iap
 
         public SelectVersionViewModel SelectVersion { get; set; }
 
+        public LoadingViewModel Loading { get; set; }
+
         private string KioskType { get; set; }
 
-        protected override void OnViewLoaded(object view)
+        protected async override void OnViewLoaded(object view)
         {
-            
+            CancellationTokenSource ct = new CancellationTokenSource();
+
+            base.ActivateItem(this.Loading);
+
                 if (!this.licenceProvider.hasAlreadyKey())
                 {
                     base.ActivateItem(this.SelectVersion);
@@ -133,16 +139,22 @@ namespace Iap
 
                 else
                 {
-                string checkLicence = this.licenceProvider.checkPcLicence();
+                string checkLicence = await this.licenceProvider.checkPcLicence(ct);
+               
                     if (checkLicence == "1")
                         {
                             this.HandlerAndSettings();
                             base.ActivateItem(this.ScreenSaver);
                             this.ScreenSaver.Parent = this;
                         }
+                    else if(checkLicence=="error")
+                        {
+                            System.Windows.MessageBox.Show("An error occured. Please contact the administrator");
+                            System.Windows.Application.Current.Shutdown();
+                        }
                     else
                         {
-                            System.Windows.MessageBox.Show("you have nota a used licence");
+                            System.Windows.MessageBox.Show("you have not a a used licence");
                             System.Windows.Application.Current.Shutdown();
                         }
                 }

@@ -372,6 +372,16 @@
     <Compile Include="Keyboards\Keyboard2.xaml.cs">
       <DependentUpon>Keyboard2.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LoadingControl\Block.xaml.cs">
+      <DependentUpon>Block.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoadingControl\LoadingAnimation.xaml.cs">
+      <DependentUpon>LoadingAnimation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoadingView.xaml.cs">
+      <DependentUpon>LoadingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoadingViewModel.cs" />
     <Compile Include="Models\ButtonLinkModel.cs" />
     <Compile Include="Models\OuterEnglishScreenViewModel.cs" />
     <Compile Include="Models\OuterGreekScreenViewModel.cs" />
@@ -640,6 +650,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Keyboards\Keyboard2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoadingControl\Block.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoadingControl\LoadingAnimation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoadingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

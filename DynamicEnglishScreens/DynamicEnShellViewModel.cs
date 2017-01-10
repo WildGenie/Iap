@@ -221,12 +221,14 @@ namespace Iap.DynamicEnglishScreens
         {
             this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
             this.events.PublishOnCurrentThread(new ViewChangeLanguageCommand(true));
+            this.sender.SendAction("ViewGreek.");
         }
 
         public void ViewDisclaimer()
         {
             if (!this.OpenDisclaimer)
             {
+                this.sender.SendAction("ViewDisclaimer.");
                 this.OpenDisclaimer = true;
             }
         }

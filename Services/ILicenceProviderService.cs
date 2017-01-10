@@ -17,7 +17,7 @@ namespace Iap.Services
 
         string checkLicencesStatus();
 
-        string checkPcLicence();
+        Task<string> checkPcLicence(CancellationTokenSource ct);
 
         Task<string> sendPcData(string type, CancellationToken ct);
     }

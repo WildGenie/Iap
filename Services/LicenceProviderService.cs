@@ -193,21 +193,37 @@ namespace Iap.Services
             return contents.ToString();
         }
 
-        public string checkPcLicence()
+        public async Task<string> checkPcLicence(CancellationTokenSource ct)
         {
-            string hdID = this.getUniquePcId();
-            var parameters = new Dictionary<string, string>();
-            parameters["hdid"] = hdID;
-            using (HttpClient client = new HttpClient())
+            ct.CancelAfter(TimeSpan.FromSeconds(15));
+            try
             {
-                var response =
-                   client
-                   .PostAsync(
-                   this.checkLicenceApi,
-               new FormUrlEncodedContent(parameters)).Result;
+                string hdID = this.getUniquePcId();
+                var parameters = new Dictionary<string, string>();
+                parameters["hdid"] = hdID;
+                /* using (HttpClient client = new HttpClient())
+                 {
+                     var response =
+                     client
+                        .PostAsync(
+                        this.checkLicenceApi,
+                    new FormUrlEncodedContent(parameters), ct.Token).Result;
+                     return response.Content.ReadAsStringAsync().Result;
+                 }*/
+                var httpClient = new HttpClient();
+                var response = await httpClient.PostAsync(this.checkLicenceApi,
+                    new FormUrlEncodedContent(parameters), ct.Token);
+                var contents = await response.Content.ReadAsStringAsync();
+                return  contents.ToString();
+            }
+            catch(TaskCanceledException)
+            {
+                return "error";
+            }
 
-                return response.Content.ReadAsStringAsync().Result;
-
+            catch
+            {
+                return "0";
             }
         }
     }

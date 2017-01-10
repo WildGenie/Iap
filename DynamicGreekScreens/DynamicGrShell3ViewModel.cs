@@ -195,12 +195,14 @@ namespace Iap.DynamicGreekScreens
         {
             this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
             this.events.PublishOnCurrentThread(new ViewChangeLanguageCommand(false));
+            this.sender.SendAction("ViewEnglish.");
         }
 
         public void ViewDisclaimer()
         {
             if (!this.OpenDisclaimer)
             {
+                this.sender.SendAction("ViewDisclaimer.");
                 this.OpenDisclaimer = true;
             }
         }

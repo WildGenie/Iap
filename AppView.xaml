@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="Iap.AppView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:control="clr-namespace:Iap.LoadingControl"
              Width="1920" Height="1080">
     <UserControl.Resources>
         <Style
@@ -51,5 +52,6 @@
                         ImageSource="{Binding SlideshowImage}" />
             </Border.Background>
         </Border>
+       <!-- <control:LoadingAnimation VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
     </Grid>
 </UserControl>
