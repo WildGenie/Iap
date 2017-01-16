@@ -17,6 +17,7 @@ using CefSharp.Wpf;
 using CefSharp;
 using System.IO;
 using System.Threading;
+using Microsoft.Win32;
 
 namespace Iap
 {
@@ -648,8 +649,24 @@ namespace Iap
             this.HandlerAndSettings();
         }
 
+        private string RetrieveIDFromRegistry()
+        {
+            string key = "Kiosk";
+            RegistryKey keyToRetr = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\" + key);
+            if (keyToRetr != null)
+            {
+                return keyToRetr.GetValue("ID").ToString();
+            }
+            else
+            {
+                return "null";
+            }
+        }
+
         private void HandlerAndSettings()
         {
+            Handlers.GlobalCounters.kioskID = RetrieveIDFromRegistry();
+
             this.IdleTime.StartNotifier();
 
             EventManager.RegisterClassHandler(

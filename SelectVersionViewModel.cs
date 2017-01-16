@@ -72,6 +72,13 @@ namespace Iap
             
         }
 
+        private bool IsNumeric(string licence)
+        {
+            int n;
+            bool isNumeric = int.TryParse("123", out n);
+            return isNumeric;
+        }
+
         private async void CheckAndValidate(string type)
         {
 
@@ -84,19 +91,29 @@ namespace Iap
             if(canInstall)
             {
                 string response = await this.licenceProvider.sendPcData(type, cts.Token);
+
                 if(response.TrimStart().TrimEnd()!=null)
                 {
                     try
                     {
                         string licenceID = response.TrimStart().TrimEnd();
-
-                        if(this.licenceProvider.writeKeyToRegistry(type,licenceID))
+                        if (licenceID != "")
                         {
-                            this.events.PublishOnCurrentThread(new ViewFirstRegistrationCommand(type));
+
+                            if (this.licenceProvider.writeKeyToRegistry(type, licenceID))
+                            {
+                                Handlers.GlobalCounters.kioskID = licenceID;
+                                this.events.PublishOnCurrentThread(new ViewFirstRegistrationCommand(type));
+                            }
+                            else
+                            {
+                                System.Windows.MessageBox.Show("Error: Please try to run as administrator");
+                            }
                         }
                         else
                         {
-                            System.Windows.MessageBox.Show("Error: Please try to run as administrator");
+                            System.Windows.MessageBox.Show("Error, please try later");
+                            this.events.PublishOnCurrentThread(new ViewShutDownCommand());
                         }
                     }
 

@@ -13,13 +13,13 @@ namespace Iap.Services
         public SendStatsService(string sendActionsApi)
         {
             this.sendActionsApi = sendActionsApi;
-            this.kioskID = RetrieveIDFromRegistry();
+           // this.kioskID = RetrieveIDFromRegistry();
         }
 
         private string RetrieveIDFromRegistry()
         {
             string key = "Kiosk";
-            RegistryKey keyToRetr = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\" + key);
+            RegistryKey keyToRetr = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\" + key);
             if (keyToRetr != null)
             {
                 return keyToRetr.GetValue("ID").ToString();
@@ -31,6 +31,8 @@ namespace Iap.Services
         }
 
         private string kioskID;
+
+       
 
         public  void SendAction(string action)
         {
@@ -54,7 +56,7 @@ namespace Iap.Services
                 var httpClient = new HttpClient();
                 var parameters = new Dictionary<string, string>();
                 parameters["action"] = action;
-                parameters["id"] = kioskID;
+                parameters["id"] = Iap.Handlers.GlobalCounters.kioskID;
                await httpClient.PostAsync(this.sendActionsApi, new FormUrlEncodedContent(parameters), ct);
             }
             catch { }

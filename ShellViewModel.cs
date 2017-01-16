@@ -147,6 +147,7 @@ namespace Iap
             if (!this.OpenDisclaimer)
             {
                 this.OpenDisclaimer = true;
+                this.sender.SendAction("ViewDisclaimer.");
             }
         }
 

@@ -20,5 +20,11 @@ namespace Iap.Handlers
         {
            
         }
+
+        public static string kioskID
+        {
+            get;
+            set;
+        }
       }
 }

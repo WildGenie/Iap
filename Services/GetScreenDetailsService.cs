@@ -37,7 +37,7 @@ namespace Iap.Services
             {
                 url = getScreenDetailsApi;
             }
-            else if(kioskType=="IAP")
+            else if(storeTypeFroregistry=="IAP")
             {
                 url = getIapScreensApi;
             }
