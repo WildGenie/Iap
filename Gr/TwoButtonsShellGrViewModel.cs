@@ -7,13 +7,17 @@ using Caliburn.Micro;
 using Iap.Commands;
 using Iap.Handlers;
 using Iap.Services;
+using System.Windows.Media;
+using System.IO;
+using System.Windows.Media.Imaging;
+using Iap.Envy;
 
 namespace Iap.Gr
 {
    public class TwoButtonsShellGrViewModel:Screen
     {
         private readonly IEventAggregator events;
-        private string bannerBackground;
+        private ImageSource bannerBackground;
         private bool isBannerVisible;
         private string arrow;
         private bool openDisclaimer;
@@ -51,7 +55,7 @@ namespace Iap.Gr
             }
         }
 
-        public string BannerBackground
+        public ImageSource BannerBackground
         {
             set
             {
@@ -92,14 +96,21 @@ namespace Iap.Gr
 
         public void OpenBanner()
         {
-            this.BannerBackground = "/Images/AIA_FOR_20PNG-1111111.png";
+            var imageFileNames =
+           Path.Combine(
+               Path.GetDirectoryName(
+                   this.GetType().Assembly.Location),
+               "Media")
+           .EnumerateImageFiles()
+           .ToArray();
+            this.BannerBackground = imageFileNames.Where(x => Path.GetFileNameWithoutExtension(x) == "banner").Select(x => new BitmapImage(new Uri(x))).SingleOrDefault();
             this.Arrow = null;
             this.IsBannerVisible = true;
         }
 
         public void CloseBanner()
         {
-            this.BannerBackground = "";
+            this.BannerBackground = null;
             this.Arrow = "/Images/AIA_FOR PNG-02.png";
             this.IsBannerVisible = false;
         }
