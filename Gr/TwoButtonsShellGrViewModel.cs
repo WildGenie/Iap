@@ -153,5 +153,13 @@ namespace Iap.Gr
             this.OpenDisclaimer = false;
         }
 
+        public string DisclaimerGreek
+        {
+            get
+            {
+                return GlobalText.DisclaimerGreek;
+            }
+        }
+
     }
 }

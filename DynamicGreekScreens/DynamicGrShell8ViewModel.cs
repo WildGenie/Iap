@@ -331,5 +331,13 @@ namespace Iap.DynamicGreekScreens
         {
             this.OpenDisclaimer = false;
         }
+
+        public string DisclaimerGreek
+        {
+            get
+            {
+                return GlobalText.DisclaimerGreek;
+            }
+        }
     }
 }

@@ -264,5 +264,13 @@ namespace Iap.DynamicEnglishScreens
         {
             this.OpenDisclaimer = false;
         }
+
+        public string DisclaimerEnglish
+        {
+            get
+            {
+                return GlobalText.DisclaimerEnglish;
+            }
+        }
     }
 }

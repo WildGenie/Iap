@@ -18,6 +18,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -30,7 +31,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -314,6 +314,7 @@
       <DependentUpon>DynamicGrShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DynamicGreekScreens\DynamicGrShellViewModel.cs" />
+    <Compile Include="GlobalText.cs" />
     <Compile Include="Gr\BuyWifiGr2View.xaml.cs">
       <DependentUpon>BuyWifiGr2View.xaml</DependentUpon>
     </Compile>
@@ -751,6 +752,7 @@
     <Resource Include="Images\disclaimer button-13.png" />
     <Resource Include="Images\disclaimerscreen13.png" />
     <Resource Include="Images\next.jpg" />
+    <Resource Include="Images\disclaimer button-13-new.png" />
     <Content Include="Media\AIA_revised_converted.mp4">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
