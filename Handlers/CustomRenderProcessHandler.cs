@@ -11,16 +11,14 @@ namespace Iap.Handlers
    public class CustomRenderProcessHandler : IRenderProcessMessageHandler
     {
 
-        private readonly ILog log;
+       
 
-        public CustomRenderProcessHandler(ILog log)
+        public CustomRenderProcessHandler()
         {
-            this.log = log;
         }
 
         public void OnContextCreated(IWebBrowser browserControl, IBrowser browser, IFrame frame)
         {
-            this.log.Info("Invoking Action: ViewNavigateTo" + browserControl.GetMainFrame().Url + ".");
         }
 
         public void OnFocusedNodeChanged(IWebBrowser browserControl, IBrowser browser, IFrame frame, IDomNode node)

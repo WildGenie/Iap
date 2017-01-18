@@ -28,11 +28,7 @@ namespace Iap.Bounds
 
         public void OnFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
-          /*  try
-            {
-                this.log.Info("Invoking Action: ViewNavigateTo" + _mainBrowser.GetMainFrame().Url + ".");
-            }
-            catch { }*/
+          
             _mainBrowser = sender as ChromiumWebBrowser;
 
 
