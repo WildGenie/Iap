@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.IO;
 using Iap.Envy;
 using System.Linq;
+using System.Windows.Media.Imaging;
 
 namespace Iap.Gr
 {
