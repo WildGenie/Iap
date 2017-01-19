@@ -12,7 +12,6 @@ namespace Iap
    public class SelectVersionViewModel:Screen
     {
         private readonly IEventAggregator events;
-        private readonly ILicenceProviderService licenceProvider;
         private bool nextEnabled;
       
 
