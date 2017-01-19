@@ -64,7 +64,6 @@ namespace Iap
            
 
             _buyWifiBrowser.LifeSpanHandler = new LifeSpanHandler();
-            // _buyWifiBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
             _buyWifiBrowser.RequestHandler = new CustomRequestHandler("");
             _buyWifiBrowser.DialogHandler = new CustomDialogHandler();
 
@@ -80,7 +79,7 @@ namespace Iap
 
             _buyWifiBrowser.Focus();
 
-            var obj = new CustomBoundObject(this.numberOfAvailablePagesToPrint, this.log);
+            var obj = new CustomBoundObject(this.numberOfAvailablePagesToPrint, this.log,sender);
 
             _buyWifiBrowser.RegisterJsObject("bound", obj);
             _buyWifiBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;

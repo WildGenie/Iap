@@ -41,7 +41,8 @@ namespace Iap
         IHandle<ViewTwoButtonsShellGrCommand>,
         IHandle<ViewTwoButtonsAdvertCommand>,
         IHandle<ViewFirstRegistrationCommand>,
-        IHandle<ViewShutDownCommand>
+        IHandle<ViewShutDownCommand>,
+        IHandle<ViewInstallationCommand>
     {
         public IEventAggregator events;
         private bool isGreekSelected;
@@ -116,6 +117,8 @@ namespace Iap
         public InternetAccess2ViewModel InternetAccess2 { get; set; }
         public BuyWifiGr2ViewModel BuyWifiGr2 { get; set; }
         public InternetAccessGr2ViewModel InternetAccessGr2 { get; set; }
+
+        public InstallingViewModel Installing { get; set; }
 
         public IdleTimeViewModel IdleTime { get; set; }
 
@@ -643,7 +646,6 @@ namespace Iap
         public void Handle(ViewFirstRegistrationCommand message)
         {
             this.KioskType = message.KioskType;
-          //  this.licenceProvider.writeKeyToRegistry(message.KioskType);
              base.ActivateItem(this.ScreenSaver);
             this.ScreenSaver.Parent = this;
             this.HandlerAndSettings();
@@ -651,11 +653,13 @@ namespace Iap
 
         private string RetrieveIDFromRegistry()
         {
-            string key = "Kiosk";
-            RegistryKey keyToRetr = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\" + key);
-            if (keyToRetr != null)
+            var directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            var path = Path.Combine(directory, "iapSettings.txt");
+            if (File.Exists(path))
             {
-                return keyToRetr.GetValue("ID").ToString();
+                string line = File.ReadAllLines(path).Where(x => x.ToString().StartsWith("ID=")).FirstOrDefault();
+                string type = line.Replace("ID=", "");
+                return type;
             }
             else
             {
@@ -696,6 +700,12 @@ namespace Iap
         public void Handle(ViewShutDownCommand message)
         {
             System.Windows.Application.Current.Shutdown();
+        }
+
+        public  void Handle(ViewInstallationCommand message)
+        {
+            base.ActivateItem(this.Installing);
+            this.Installing.CheckAndValidate(message.Type);
         }
     }
 }

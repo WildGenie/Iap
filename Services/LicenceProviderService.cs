@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Management;
 using System.Net;
@@ -28,27 +29,13 @@ namespace Iap.Services
 
         public bool hasAlreadyKey()
         {
-            try
+            var directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            var path = Path.Combine(directory, "iapSettings.txt");
+            if(File.Exists(path))
             {
-                string key = "Kiosk";
-                RegistryKey keyToRetr = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\" + key);
-                if (keyToRetr != null)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return true;
             }
-
-            catch(UnauthorizedAccessException e)
-            {
-                System.Windows.MessageBox.Show("run as administrator");
-                System.Windows.Application.Current.Shutdown();
-                return false;
-            }
-            catch
+            else
             {
                 return false;
             }
@@ -56,20 +43,15 @@ namespace Iap.Services
 
         public string RetrieveTypeFromRegistry()
         {
-            try
+            var directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            var path = Path.Combine(directory, "iapSettings.txt");
+            if(File.Exists(path))
             {
-                string key = "Kiosk";
-                RegistryKey keyToRetr = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\" + key);
-                if (keyToRetr != null)
-                {
-                    return keyToRetr.GetValue("Type").ToString();
-                }
-                else
-                {
-                    return "null";
-                }
+                string line = File.ReadAllLines(path).Where(x => x.ToString().StartsWith("Type=")).FirstOrDefault();
+                string type = line.Replace("Type=", "");
+                return type;
             }
-            catch
+            else
             {
                 return "null";
             }
@@ -79,31 +61,36 @@ namespace Iap.Services
         {
             try
             {
-                string key = "Kiosk";
-                    RegistryKey keyToRetr = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\" + key);
-                    if (keyToRetr == null)
+                var directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+                var path = Path.Combine(directory, "iapSettings.txt");
+                if (!File.Exists(path))
+                {
+                    using (StreamWriter sw = File.CreateText(path))
                     {
-                        RegistryKey Regkey = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\" + key);
-                        Regkey.SetValue("Type", type);
-                        Regkey.SetValue("ID", id);
+                        sw.WriteLine("Type=" + type);
+                        sw.WriteLine("ID=" + id);
                     }
+                }
                 return true;
             }
-            catch
-            {
-                return false;
-            }
+            catch { return false; }
         }
 
         public void deleteFromRegistry()
         {
-
             try
             {
-                string key = "kiosk";
-                Registry.CurrentUser.DeleteSubKey(@"SOFTWARE\" + key);
+                var directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+                var path = Path.Combine(directory, "iapSettings.txt");
+                if(File.Exists(path))
+                {
+                    File.Delete(path);
+                }
             }
-            catch { }
+            catch
+            {
+
+            }
         }
 
 
@@ -143,13 +130,12 @@ namespace Iap.Services
                 {
                     if (cpuID == "")
                     {
-                        //Remark gets only the first CPU ID
                         cpuID = mo.Properties["processorID"].Value.ToString();
 
                     }
                 }
 
-                return cpuID;
+                return cpuID+"-"+System.Environment.MachineName;
             }
             catch
             {
@@ -202,80 +188,6 @@ namespace Iap.Services
                   System.Windows.MessageBox.Show(ex.ToString());
                   return "no";
               }
-
-            //  string procID = this.getProcessorID();
-            // string hdID = this.getUniquePcId();
-            /* using (var client = new HttpClient())
-                         {
-                             var values = new Dictionary<string, string>
-                             {
-                                 { "type", type },
-                                 { "prid", procID },
-                                 { "hdid", hdID }
-                             };
-
-                 var content = new FormUrlEncodedContent(values);
-               string url = "https://mpassltd.gr/internet-kiosk/licence.php?type=x&amp;prid=x&amp;hdid=x";
-                 url = url.Replace("type=", "type=" + type).Replace("prid=", "prid=" + procID).Replace("hdid=", "hdid=" + hdID);
-                 var response = await client.PostAsync(url, content);
-
-                 var responseString = await response.Content.ReadAsStringAsync();
-                 return responseString;
-             }*/
-            //  string URI = "http://109.228.18.53/internet-kiosk/licence.php";
-            // string myParameters = "type="+type+"&prid="+procID+"&hdid="+hdID;
-            //string url = "https://mpassltd.gr/internet-kiosk/licence.php?type=x&amp;prid=x&amp;hdid=x";
-            //url = url.Replace("type=x", "type=" + type).Replace("prid=x", "prid=" + procID).Replace("hdid=x", "hdid=" + hdID);
-            //     using (WebClient wc = new WebClient())
-            // {
-            // wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-            // string HtmlResult = wc.UploadString(URI, myParameters);
-            //string HtmlResult = await wc.UploadStringTaskAsync(new Uri(URI), myParameters);
-            //return HtmlResult;
-            //  }
-
-            /*  var oWeb = new System.Net.WebClient();
-              oWeb.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-              byte[] bytArguments;
-              byte[] bytRetData;
-
-
-              bytArguments =
-                  Encoding.ASCII.GetBytes(url);
-              bytRetData = oWeb.UploadData(url, "POST",
-                                           bytArguments);
-              string result = Encoding.ASCII.GetString(bytRetData);
-              return result;*/
-         /*   string procID = this.getProcessorID();
-            string hdID = this.getUniquePcId();
-            IEnumerable<KeyValuePair<string, string>> queries = new System.Collections.Generic.List<KeyValuePair<string, string>>()
-            {
-                new KeyValuePair<string, string>("type",type),
-                new KeyValuePair<string, string>("prid",procID),
-                new KeyValuePair<string, string>("hdid",hdID)
-            };
-            HttpContent q = new FormUrlEncodedContent(queries);
-            System.Windows.MessageBox.Show(this.sendPCDataApi);
-            try
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    using (HttpResponseMessage response = await client.PostAsync(this.sendPCDataApi, q))
-                    {
-                        using (HttpContent content = response.Content)
-                        {
-                            string myContent = await content.ReadAsStringAsync();
-                            HttpContentHeaders headers = content.Headers;
-                            return myContent;
-                        }
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                System.Windows.MessageBox.Show(ex.ToString());
-                return "no";
-            }*/
         }
 
         public async Task<string> checkPcLicence(CancellationTokenSource ct)
@@ -286,15 +198,7 @@ namespace Iap.Services
                 string hdID = this.getUniquePcId();
                 var parameters = new Dictionary<string, string>();
                 parameters["hdid"] = hdID;
-                /* using (HttpClient client = new HttpClient())
-                 {
-                     var response =
-                     client
-                        .PostAsync(
-                        this.checkLicenceApi,
-                    new FormUrlEncodedContent(parameters), ct.Token).Result;
-                     return response.Content.ReadAsStringAsync().Result;
-                 }*/
+               
                 var httpClient = new HttpClient();
                 var response = await httpClient.PostAsync(this.checkLicenceApi,
                     new FormUrlEncodedContent(parameters), ct.Token);

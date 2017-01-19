@@ -3,6 +3,7 @@ using CefSharp;
 using CefSharp.Wpf;
 using Iap.AdornerControl;
 using Iap.Handlers;
+using Iap.Services;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
@@ -19,11 +20,13 @@ namespace Iap.Bounds
         private readonly string numberOfAvailablePagesToPrint;
         ChromiumWebBrowser _mainBrowser;
         private readonly ILog log;
+        private readonly ISendStatsService sender;
 
-        public CustomBoundObject(string numberOfAvailablePagesToPrint, ILog log)
+        public CustomBoundObject(string numberOfAvailablePagesToPrint, ILog log, ISendStatsService sender)
         {
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.log = log;
+            this.sender = sender;
         }
 
         public void OnFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
@@ -188,6 +191,8 @@ namespace Iap.Bounds
                                     catch { }
                                 }
 
+                            this.sender.SendAction("Printed " + numberOfPages + " pages.");
+
                                 GlobalCounters.numberOfCurrentPrintings += numberOfPages;
 
                             }
@@ -201,8 +206,8 @@ namespace Iap.Bounds
                         }
                         catch (Exception ex)
                         {
-                            
-                            
+
+                        this.log.Info("Exception: " + ex.ToString());
                         }
                     }
 

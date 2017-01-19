@@ -1,6 +1,8 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading;
 
@@ -18,11 +20,24 @@ namespace Iap.Services
 
         private string RetrieveIDFromRegistry()
         {
-            string key = "Kiosk";
-            RegistryKey keyToRetr = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\" + key);
-            if (keyToRetr != null)
+            /* string key = "Kiosk";
+             RegistryKey keyToRetr = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\" + key);
+             if (keyToRetr != null)
+             {
+                 return keyToRetr.GetValue("ID").ToString();
+             }
+             else
+             {
+                 return "null";
+             }*/
+            var directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            var path = Path.Combine(directory, "iapSettings.txt");
+            if (File.Exists(path))
             {
-                return keyToRetr.GetValue("ID").ToString();
+                // string line = File.ReadLines(path).Skip(1).Take(1).First();
+                string line = File.ReadAllLines(path).Where(x => x.ToString().StartsWith("ID=")).FirstOrDefault();
+                string type = line.Replace("ID=", "");
+                return type;
             }
             else
             {
