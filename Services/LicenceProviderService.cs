@@ -29,30 +29,6 @@ namespace Iap.Services
 
         public bool hasAlreadyKey()
         {
-            /*try
-            {
-                string key = "Kiosk";
-                RegistryKey keyToRetr = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\" + key);
-                if (keyToRetr != null)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-
-            catch(UnauthorizedAccessException e)
-            {
-                System.Windows.MessageBox.Show("run as administrator");
-                System.Windows.Application.Current.Shutdown();
-                return false;
-            }
-            catch
-            {
-                return false;
-            }*/
             var directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
             var path = Path.Combine(directory, "iapSettings.txt");
             if(File.Exists(path))
@@ -67,28 +43,10 @@ namespace Iap.Services
 
         public string RetrieveTypeFromRegistry()
         {
-            /*  try
-              {
-                  string key = "Kiosk";
-                  RegistryKey keyToRetr = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\" + key);
-                  if (keyToRetr != null)
-                  {
-                      return keyToRetr.GetValue("Type").ToString();
-                  }
-                  else
-                  {
-                      return "null";
-                  }
-              }
-              catch
-              {
-                  return "null";
-              }*/
             var directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
             var path = Path.Combine(directory, "iapSettings.txt");
             if(File.Exists(path))
             {
-               // string line = File.ReadLines(path).Skip(1).Take(1).First();
                 string line = File.ReadAllLines(path).Where(x => x.ToString().StartsWith("Type=")).FirstOrDefault();
                 string type = line.Replace("Type=", "");
                 return type;
@@ -101,22 +59,6 @@ namespace Iap.Services
 
         public bool writeKeyToRegistry(string type, string id)
         {
-            /*  try
-              {
-                  string key = "Kiosk";
-                      RegistryKey keyToRetr = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\" + key);
-                      if (keyToRetr == null)
-                      {
-                          RegistryKey Regkey = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\" + key);
-                          Regkey.SetValue("Type", type);
-                          Regkey.SetValue("ID", id);
-                      }
-                  return true;
-              }
-              catch
-              {
-                  return false;
-              }*/
             try
             {
                 var directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
@@ -136,13 +78,6 @@ namespace Iap.Services
 
         public void deleteFromRegistry()
         {
-
-          /*  try
-            {
-                string key = "kiosk";
-                Registry.CurrentUser.DeleteSubKey(@"SOFTWARE\" + key);
-            }
-            catch { }*/
             try
             {
                 var directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
@@ -200,7 +135,7 @@ namespace Iap.Services
                     }
                 }
 
-                return cpuID;
+                return cpuID+"-"+System.Environment.MachineName;
             }
             catch
             {

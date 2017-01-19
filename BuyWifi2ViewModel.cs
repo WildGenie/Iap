@@ -78,7 +78,7 @@ namespace Iap
             _buyWifiBrowser.Focus();
 
 
-            var obj = new CustomBoundObject(this.numberOfAvailablePagesToPrint, this.log);
+            var obj = new CustomBoundObject(this.numberOfAvailablePagesToPrint, this.log,sender);
             _buyWifiBrowser.RegisterJsObject("bound", obj);
             _buyWifiBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 

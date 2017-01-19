@@ -643,7 +643,6 @@ namespace Iap
         public void Handle(ViewFirstRegistrationCommand message)
         {
             this.KioskType = message.KioskType;
-          //  this.licenceProvider.writeKeyToRegistry(message.KioskType);
              base.ActivateItem(this.ScreenSaver);
             this.ScreenSaver.Parent = this;
             this.HandlerAndSettings();
@@ -651,11 +650,13 @@ namespace Iap
 
         private string RetrieveIDFromRegistry()
         {
-            string key = "Kiosk";
-            RegistryKey keyToRetr = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\" + key);
-            if (keyToRetr != null)
+            var directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            var path = Path.Combine(directory, "iapSettings.txt");
+            if (File.Exists(path))
             {
-                return keyToRetr.GetValue("ID").ToString();
+                string line = File.ReadAllLines(path).Where(x => x.ToString().StartsWith("ID=")).FirstOrDefault();
+                string type = line.Replace("ID=", "");
+                return type;
             }
             else
             {

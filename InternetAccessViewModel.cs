@@ -122,7 +122,7 @@ namespace Iap
             //_internetAccessBrowser.ManipulationDelta += _internetAccessBrowser_ManipulationDelta;
 
 
-            var boundObject = new CustomBoundObject(this.numberOfAvailablePagesToPrint, this.log);
+            var boundObject = new CustomBoundObject(this.numberOfAvailablePagesToPrint, this.log, sender);
             _internetAccessBrowser.RegisterJsObject("bound", boundObject, true);
             _internetAccessBrowser.FrameLoadEnd += boundObject.OnFrameLoadEnd;
 

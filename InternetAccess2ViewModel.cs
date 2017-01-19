@@ -119,7 +119,7 @@ namespace Iap
             _internetAccessBrowser.Focus();
 
 
-            var boundObject = new CustomBoundObject(this.numberOfAvailablePagesToPrint, this.log);
+            var boundObject = new CustomBoundObject(this.numberOfAvailablePagesToPrint, this.log,sender);
             _internetAccessBrowser.RegisterJsObject("bound", boundObject, true);
             _internetAccessBrowser.FrameLoadEnd += boundObject.OnFrameLoadEnd;
 

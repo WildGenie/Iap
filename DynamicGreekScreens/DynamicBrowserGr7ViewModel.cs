@@ -194,7 +194,7 @@ namespace Iap.DynamicGreekScreens
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
             _internetAccessBrowser.RequestHandler = new CustomRequestHandler("");
             _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
-            var boundGrObject = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint,this.log);
+            var boundGrObject = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint,this.log,sender);
             _internetAccessBrowser.RegisterJsObject("bound", boundGrObject);
             _internetAccessBrowser.FrameLoadEnd += boundGrObject.OnFrameLoadEnd;
 
