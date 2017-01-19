@@ -181,6 +181,7 @@
     <Compile Include="Commands\ViewEnglishCommand.cs" />
     <Compile Include="Commands\ViewFirstRegistrationCommand.cs" />
     <Compile Include="Commands\ViewGreekCommand.cs" />
+    <Compile Include="Commands\ViewInstallationCommand.cs" />
     <Compile Include="Commands\ViewInternetAccess2Command.cs" />
     <Compile Include="Commands\ViewInternetAccessCommand.cs" />
     <Compile Include="Commands\ViewPrintBoardingPassCommand.cs" />
@@ -359,6 +360,10 @@
     <Compile Include="Handlers\RequestHandler.cs" />
     <Compile Include="IdleBrowserViewModel.cs" />
     <Compile Include="IdleTimeViewModel.cs" />
+    <Compile Include="InstallingView.xaml.cs">
+      <DependentUpon>InstallingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InstallingViewModel.cs" />
     <Compile Include="InternetAccess2View.xaml.cs">
       <DependentUpon>InternetAccess2View.xaml</DependentUpon>
     </Compile>
@@ -635,6 +640,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Gr\TwoButtonsShellGrView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InstallingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

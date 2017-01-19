@@ -41,7 +41,8 @@ namespace Iap
         IHandle<ViewTwoButtonsShellGrCommand>,
         IHandle<ViewTwoButtonsAdvertCommand>,
         IHandle<ViewFirstRegistrationCommand>,
-        IHandle<ViewShutDownCommand>
+        IHandle<ViewShutDownCommand>,
+        IHandle<ViewInstallationCommand>
     {
         public IEventAggregator events;
         private bool isGreekSelected;
@@ -116,6 +117,8 @@ namespace Iap
         public InternetAccess2ViewModel InternetAccess2 { get; set; }
         public BuyWifiGr2ViewModel BuyWifiGr2 { get; set; }
         public InternetAccessGr2ViewModel InternetAccessGr2 { get; set; }
+
+        public InstallingViewModel Installing { get; set; }
 
         public IdleTimeViewModel IdleTime { get; set; }
 
@@ -697,6 +700,12 @@ namespace Iap
         public void Handle(ViewShutDownCommand message)
         {
             System.Windows.Application.Current.Shutdown();
+        }
+
+        public  void Handle(ViewInstallationCommand message)
+        {
+            base.ActivateItem(this.Installing);
+            this.Installing.CheckAndValidate(message.Type);
         }
     }
 }
