@@ -153,7 +153,7 @@ namespace Iap
                         }
                     else if(checkLicence=="error")
                         {
-                            System.Windows.MessageBox.Show("An error occured. Please contact the administrator");
+                            System.Windows.MessageBox.Show("An error occured. Please check net connection or contact the administrator");
                             System.Windows.Application.Current.Shutdown();
                         }
                     else

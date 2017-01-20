@@ -192,7 +192,7 @@ namespace Iap.Services
 
         public async Task<string> checkPcLicence(CancellationTokenSource ct)
         {
-            ct.CancelAfter(TimeSpan.FromSeconds(15));
+            ct.CancelAfter(TimeSpan.FromSeconds(25));
             try
             {
                 string hdID = this.getUniquePcId();
