@@ -307,6 +307,15 @@ namespace Iap
                 this.events.PublishOnCurrentThread(new ViewTwoButtonsShellEnCommand());
             }
             catch { }
+
+            try
+            {
+                this.log.Info("Invoking Action: ViewEndNavigateSession  after " + (30 - this.TimeElapsed).ToString() + " minutes.");
+                this.sender.SendAction("ViewEndNavigateSession after " + (30 - this.TimeElapsed).ToString() + " minutes.");
+            }
+
+            catch
+            { }
         }
 
         private string TimeHasSpent()
@@ -331,8 +340,8 @@ namespace Iap
             timer.Stop();
             try
             {
-                this.log.Info("Invoking Action: ViewEndSession from InternetAccess after " + TimeSpended() + " time.");
-                this.sender.SendAction("ViewEndSession from InternetAccess after " + TimeSpended() + " time.");
+                this.log.Info("Invoking Action: ViewClose InternetAccess after " + TimeSpended() + " time.");
+                this.sender.SendAction("ViewClose InternetAccess after " + TimeSpended() + " time.");
             }
             catch { }
             try

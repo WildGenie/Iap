@@ -252,6 +252,7 @@ namespace Iap.DynamicEnglishScreens
             timer.Start();
 
             startTime = DateTime.Now;
+            UnitStartTime = DateTime.Now;
 
             base.OnViewLoaded(view);
         }
@@ -449,6 +450,15 @@ namespace Iap.DynamicEnglishScreens
         {
             DateTime endTime = DateTime.Now;
             TimeSpan duration = endTime.Subtract(startTime);
+            return duration.Minutes.ToString();
+        }
+
+        private DateTime UnitStartTime;
+
+        private string CalculateUnitSession()
+        {
+            DateTime endTime = DateTime.Now;
+            TimeSpan duration = endTime.Subtract(UnitStartTime);
             return duration.ToString(@"hh\:mm\:ss");
         }
 
@@ -456,12 +466,12 @@ namespace Iap.DynamicEnglishScreens
         protected override void OnDeactivate(bool close)
         {
             timer.Stop();
-            try
+         /*   try
             {
                 this.log.Info("Invoking Action: ViewEndSession after " + TimeSpended() + " time.");
                 this.sender.SendAction("ViewEndSession after " + TimeSpended() + " time.");
             }
-            catch { }
+            catch { }*/
             try
             {
                 if (_internetAccessBrowser != null)
@@ -682,6 +692,13 @@ namespace Iap.DynamicEnglishScreens
                 this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
             }
             catch { }
+
+            try
+            {
+                this.log.Info("Invoking Action: ViewEndNavigateSession after " + TimeSpended() + " minutes.");
+                this.sender.SendAction("ViewEndNavigateSession after " + TimeSpended() + " minutes.");
+            }
+            catch { }
         }
 
         private string TimeHasSpent()
@@ -693,6 +710,13 @@ namespace Iap.DynamicEnglishScreens
 
         public void ViewRedirect1()
         {
+            try
+            {
+                this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                this.UnitStartTime = DateTime.Now;
+            }
+            catch { }
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[0].Title + ".");
             this.sender.SendAction("View" + this.ButtonsDetails[0].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
@@ -704,6 +728,14 @@ namespace Iap.DynamicEnglishScreens
 
         public void ViewRedirect2()
         {
+            try
+            {
+                this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                this.UnitStartTime = DateTime.Now;
+            }
+            catch { }
+
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[1].Title + ".");
             this.sender.SendAction("View" + this.ButtonsDetails[1].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
@@ -715,6 +747,14 @@ namespace Iap.DynamicEnglishScreens
 
         public void ViewRedirect3()
         {
+            try
+            {
+                this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                this.UnitStartTime = DateTime.Now;
+            }
+            catch { }
+
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[2].Title + ".");
             this.sender.SendAction("View" + this.ButtonsDetails[2].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
@@ -726,6 +766,14 @@ namespace Iap.DynamicEnglishScreens
 
         public void ViewRedirect4()
         {
+            try
+            {
+                this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                this.UnitStartTime = DateTime.Now;
+            }
+            catch { }
+
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[3].Title + ".");
             this.sender.SendAction("View" + this.ButtonsDetails[3].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
@@ -737,6 +785,14 @@ namespace Iap.DynamicEnglishScreens
 
         public void ViewRedirect5()
         {
+            try
+            {
+                this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                this.UnitStartTime = DateTime.Now;
+            }
+            catch { }
+
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[4].Title + ".");
             this.sender.SendAction("View" + this.ButtonsDetails[4].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
@@ -748,6 +804,14 @@ namespace Iap.DynamicEnglishScreens
 
         public void ViewRedirect6()
         {
+            try
+            {
+                this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                this.UnitStartTime = DateTime.Now;
+            }
+            catch { }
+
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[5].Title + ".");
             this.sender.SendAction("View" + this.ButtonsDetails[5].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
@@ -759,6 +823,14 @@ namespace Iap.DynamicEnglishScreens
 
         public void ViewRedirect7()
         {
+            try
+            {
+                this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                this.UnitStartTime = DateTime.Now;
+            }
+            catch { }
+
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[6].Title + ".");
             this.sender.SendAction("View" + this.ButtonsDetails[6].Title + ".");
             this.PreviousSelected = this.SelectedPosition;
@@ -770,6 +842,14 @@ namespace Iap.DynamicEnglishScreens
 
         public void ViewRedirect8()
         {
+            try
+            {
+                this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                this.UnitStartTime = DateTime.Now;
+            }
+            catch { }
+
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[7].Title + ".");
             this.sender.SendAction("View" + this.ButtonsDetails[7].Title + ".");
             this.PreviousSelected = this.SelectedPosition;

@@ -261,6 +261,15 @@ namespace Iap
                 this.events.PublishOnCurrentThread(new ViewEnglishCommand());
             }
             catch { }
+
+            try
+            {
+                this.log.Info("Invoking Action: ViewEndNavigateSession  after " + (30 - this.TimeElapsed).ToString() + " minutes.");
+                this.sender.SendAction("ViewEndNavigateSession after " + (30 - this.TimeElapsed).ToString() + " minutes.");
+            }
+
+            catch
+            { }
         }
 
         private string TimeHasSpent()
@@ -284,8 +293,8 @@ namespace Iap
             timer.Stop();
             try
             {
-                this.log.Info("Invoking Action: ViewEndSession from TravelAuthorization after " + TimeSpended() + " time.");
-                this.sender.SendAction("ViewEndSession from TravelAuthorization after " + TimeSpended() + " time.");
+                this.log.Info("Invoking Action: ViewClose TravelAuthorization after " + TimeSpended() + " time.");
+                this.sender.SendAction("ViewClose TravelAuthorization after " + TimeSpended() + " time.");
             }
             catch { }
             try
