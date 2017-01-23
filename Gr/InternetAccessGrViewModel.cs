@@ -312,8 +312,16 @@ namespace Iap.Gr
             timer.Stop();
             try
             {
-                this.log.Info("Invoking Action: ViewClose InternetAccess after " + TimeSpended() + " time.");
-                this.sender.SendAction("ViewClose InternetAccess after" + TimeSpended() + " time.");
+                if (this.ShowBannerUrl)
+                {
+                    this.log.Info("Invoking Action: ViewClose BannerLink after " + TimeSpended() + " time.");
+                    this.sender.SendAction("ViewClose BannerLink after " + TimeSpended() + " time.");
+                }
+                else
+                {
+                    this.log.Info("Invoking Action: ViewClose InternetAccess after " + TimeSpended() + " time.");
+                    this.sender.SendAction("ViewClose InternetAccess after" + TimeSpended() + " time.");
+                }
             }
             catch { }
             try

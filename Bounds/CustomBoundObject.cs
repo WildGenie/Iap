@@ -163,10 +163,11 @@ namespace Iap.Bounds
                             catch { }
 
                             System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+                                info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
                                 info.Verb = "print";
                                 info.FileName = path;
                                 info.CreateNoWindow = true;
-                                info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                                
 
                                 System.Diagnostics.Process p = new System.Diagnostics.Process();
                                 p.StartInfo = info;

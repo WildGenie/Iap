@@ -616,8 +616,16 @@ namespace Iap.DynamicEnglishScreens
         {
             try
             {
-                this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
-                this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                if (this.SelectedPosition == "banner")
+                {
+                    this.log.Info("Invoking Action: ViewClose BannerLink  after " + CalculateUnitSession() + " time.");
+                    this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                }
+                else
+                {
+                    this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                }
                 this.UnitStartTime = DateTime.Now;
             }
             catch { }
@@ -631,8 +639,16 @@ namespace Iap.DynamicEnglishScreens
         {
             try
             {
-                this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
-                this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                if (this.SelectedPosition == "banner")
+                {
+                    this.log.Info("Invoking Action: ViewClose BannerLink  after " + CalculateUnitSession() + " time.");
+                    this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                }
+                else
+                {
+                    this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                }
                 this.UnitStartTime = DateTime.Now;
             }
             catch { }
@@ -646,8 +662,16 @@ namespace Iap.DynamicEnglishScreens
         {
             try
             {
-                this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
-                this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                if (this.SelectedPosition == "banner")
+                {
+                    this.log.Info("Invoking Action: ViewClose BannerLink  after " + CalculateUnitSession() + " time.");
+                    this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                }
+                else
+                {
+                    this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                }
                 this.UnitStartTime = DateTime.Now;
             }
             catch { }
@@ -661,8 +685,16 @@ namespace Iap.DynamicEnglishScreens
         {
             try
             {
-                this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
-                this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                if (this.SelectedPosition == "banner")
+                {
+                    this.log.Info("Invoking Action: ViewClose BannerLink  after " + CalculateUnitSession() + " time.");
+                    this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                }
+                else
+                {
+                    this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                }
                 this.UnitStartTime = DateTime.Now;
             }
             catch { }
@@ -676,8 +708,16 @@ namespace Iap.DynamicEnglishScreens
         {
             try
             {
-                this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
-                this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                if (this.SelectedPosition == "banner")
+                {
+                    this.log.Info("Invoking Action: ViewClose BannerLink  after " + CalculateUnitSession() + " time.");
+                    this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                }
+                else
+                {
+                    this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                }
                 this.UnitStartTime = DateTime.Now;
             }
             catch { }
@@ -691,8 +731,16 @@ namespace Iap.DynamicEnglishScreens
         {
             try
             {
-                this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
-                this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                if (this.SelectedPosition == "banner")
+                {
+                    this.log.Info("Invoking Action: ViewClose BannerLink  after " + CalculateUnitSession() + " time.");
+                    this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                }
+                else
+                {
+                    this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                }
                 this.UnitStartTime = DateTime.Now;
             }
             catch { }
@@ -706,8 +754,16 @@ namespace Iap.DynamicEnglishScreens
         {
             try
             {
-                this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
-                this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                if (this.SelectedPosition == "banner")
+                {
+                    this.log.Info("Invoking Action: ViewClose BannerLink  after " + CalculateUnitSession() + " time.");
+                    this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                }
+                else
+                {
+                    this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                }
                 this.UnitStartTime = DateTime.Now;
             }
             catch { }
@@ -721,8 +777,16 @@ namespace Iap.DynamicEnglishScreens
         {
             try
             {
-                this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
-                this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                if (this.SelectedPosition == "banner")
+                {
+                    this.log.Info("Invoking Action: ViewClose BannerLink  after " + CalculateUnitSession() + " time.");
+                    this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                }
+                else
+                {
+                    this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                }
                 this.UnitStartTime = DateTime.Now;
             }
             catch { }

@@ -567,13 +567,13 @@ namespace Iap
             if (this.isGreekSelected)
             {
                 base.ChangeActiveItem(this.DynamicBannerBrowserGr5, true);
-                this.DynamicBannerBrowserGr5.SelectedPosition = "none";
+                this.DynamicBannerBrowserGr5.SelectedPosition = "banner";
                 this.DynamicBannerBrowserGr5.ButtonsDetails = message.ButtonDetails;
             }
             else
             {
                 base.ChangeActiveItem(this.DynamicBannerBrowserEn5, true);
-                this.DynamicBannerBrowserEn5.SelectedPosition = "none";
+                this.DynamicBannerBrowserEn5.SelectedPosition = "banner";
                 this.DynamicBannerBrowserEn5.ButtonsDetails = message.ButtonDetails;
             }
             
