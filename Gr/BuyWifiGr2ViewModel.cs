@@ -271,8 +271,8 @@ namespace Iap.Gr
             timer.Stop();
             try
             {
-                this.log.Info("Invoking Action: ViewEndSession after " + TimeSpended() + " time.");
-                this.sender.SendAction("ViewEndSession after " + TimeSpended() + " time.");
+                this.log.Info("Invoking Action: ViewEndSession from BuyWifi after " + TimeSpended() + " time.");
+                this.sender.SendAction("ViewEndSession from BuyWifi after " + TimeSpended() + " time.");
             }
             catch { }
             try

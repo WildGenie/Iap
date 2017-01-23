@@ -288,8 +288,8 @@ namespace Iap
             timer.Stop();
             try
             {
-                this.log.Info("Invoking Action: ViewEndSession after " + TimeSpended() + " time.");
-                this.sender.SendAction("ViewEndSession after " + TimeSpended() + " time.");
+                this.log.Info("Invoking Action: ViewEndSession  from PrintBoardingPass after " + TimeSpended() + " time.");
+                this.sender.SendAction("ViewEndSession from PrintBoardingPass after " + TimeSpended() + " time.");
             }
             catch { }
             try

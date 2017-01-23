@@ -284,8 +284,8 @@ namespace Iap
             timer.Stop();
             try
             {
-                this.log.Info("Invoking Action: ViewEndSession after " + TimeSpended() + " time.");
-                this.sender.SendAction("ViewEndSession after " + TimeSpended() + " time.");
+                this.log.Info("Invoking Action: ViewEndSession from TravelAuthorization after " + TimeSpended() + " time.");
+                this.sender.SendAction("ViewEndSession from TravelAuthorization after " + TimeSpended() + " time.");
             }
             catch { }
             try
