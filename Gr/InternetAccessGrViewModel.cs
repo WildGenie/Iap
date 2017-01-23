@@ -304,6 +304,7 @@ namespace Iap.Gr
             try
             {
                 this.log.Info("Invoking Action: ViewEndSession from InternetAccess after " + TimeSpended() + " time.");
+                this.sender.SendAction("ViewEndSession from InternetAccess after" + TimeSpended() + " time.");
             }
             catch { }
             try
