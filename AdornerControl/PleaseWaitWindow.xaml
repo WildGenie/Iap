@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Iap.AdornerControl"
         mc:Ignorable="d"
         Title="PleaseWaitWindow" AllowsTransparency="True" Loaded="Window_Loaded"
-        Height="1000" Width="1900" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Height="1108" Width="1900" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Window.Background>
         <SolidColorBrush Opacity="0.5" Color="White"/>
     </Window.Background>

@@ -70,6 +70,7 @@ namespace Iap.Handlers
             if (this.previousUrl != "")
             {
                 ChromiumWebBrowser mainBrowser = sender as ChromiumWebBrowser;
+               
                 if (mainBrowser.GetMainFrame().Url.Contains("print"))
                 {
                     string path = System.IO.Path.Combine(

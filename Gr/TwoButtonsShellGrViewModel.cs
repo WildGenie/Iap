@@ -36,10 +36,34 @@ namespace Iap.Gr
         {
             this.OpenBanner();
             GlobalCounters.ResetAll();
+            DeletePdfFiles();
 
             ((TwoButtonsShellGrView)view).CloseDisclaimer.Click += CloseDisclaimer_Click;
 
             base.OnViewLoaded(view);
+        }
+
+        public void DeletePdfFiles()
+        {
+            try
+            {
+                string path = System.IO.Path.Combine(
+                              System.IO.Path.GetDirectoryName(
+                              this.GetType().Assembly.Location),
+                              "Printings");
+
+
+                System.IO.DirectoryInfo di = new DirectoryInfo(path);
+
+                if (Directory.Exists(path))
+                {
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        file.Delete();
+                    }
+                }
+            }
+            catch { }
         }
 
         private void CloseDisclaimer_Click(object sender, System.Windows.RoutedEventArgs e)

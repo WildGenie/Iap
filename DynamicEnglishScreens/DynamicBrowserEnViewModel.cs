@@ -185,7 +185,7 @@ namespace Iap.DynamicEnglishScreens
             _internetAccessBrowser.RegisterJsObject("bound", boundEnObject);
             _internetAccessBrowser.FrameLoadEnd += boundEnObject.OnFrameLoadEnd;
 
-            GlobalCounters.ResetAll();
+          //  GlobalCounters.ResetAll();
 
             this.RemainingTime = "30";
 
