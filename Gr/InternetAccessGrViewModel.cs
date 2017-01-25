@@ -227,40 +227,38 @@ namespace Iap.Gr
 
         private void _internetAccessBrowser_TouchMove(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            /* int x = (int)e.GetTouchPoint(_internetAccessBrowser).Position.X;
-              int y = (int)e.GetTouchPoint(_internetAccessBrowser).Position.Y;
+            try
+            {
+                Control control = (Control)sender;
 
+                var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
 
-              int deltax = x - lastMousePositionX;
-              int deltay = y - lastMousePositionY;
+                var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
 
-              _internetAccessBrowser.SendMouseWheelEvent((int)_internetAccessBrowser.Width, (int)_internetAccessBrowser.Height, deltax, deltay, CefEventFlags.None);*/
-            Control control = (Control)sender;
+                var deltaX = locationOnScreen.X - lastPoint.X;
+                var deltaY = locationOnScreen.Y - lastPoint.Y;
 
-            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+                lastPoint = locationOnScreen;
 
-            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
-
-            var deltaX = locationOnScreen.X - lastPoint.X;
-            var deltaY = locationOnScreen.Y - lastPoint.Y;
-
-            lastPoint = locationOnScreen;
-
-            _internetAccessBrowser.SendMouseWheelEvent((int)lastPoint.X, (int)lastPoint.Y, (int)deltaX, (int)deltaY, CefEventFlags.None);
+                _internetAccessBrowser.SendMouseWheelEvent((int)lastPoint.X, (int)lastPoint.Y, (int)deltaX, (int)deltaY, CefEventFlags.None);
+            }
+            catch { }
         }
 
         private void _internetAccessBrowser_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            //  lastMousePositionX = (int)e.GetTouchPoint(_internetAccessBrowser).Position.X;
-            //  lastMousePositionY = (int)e.GetTouchPoint(_internetAccessBrowser).Position.Y;
-            Control control = (Control)sender;
-            e.TouchDevice.Capture(control);
-            windowTouchDevice = e.TouchDevice;
-            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+            try
+            {
+                Control control = (Control)sender;
+                e.TouchDevice.Capture(control);
+                windowTouchDevice = e.TouchDevice;
+                var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
 
 
-            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
-            lastPoint = locationOnScreen;
+                var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
+                lastPoint = locationOnScreen;
+            }
+            catch { }
         }
 
         public void Back()
@@ -315,12 +313,20 @@ namespace Iap.Gr
                 if (this.ShowBannerUrl)
                 {
                     this.log.Info("Invoking Action: ViewClose BannerLink after " + TimeSpended() + " time.");
-                    this.sender.SendAction("ViewClose BannerLink after " + TimeSpended() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose BannerLink after " + TimeSpended() + " time.");
+                    }
+                    catch { }
                 }
                 else
                 {
                     this.log.Info("Invoking Action: ViewClose InternetAccess after " + TimeSpended() + " time.");
-                    this.sender.SendAction("ViewClose InternetAccess after" + TimeSpended() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose InternetAccess after" + TimeSpended() + " time.");
+                    }
+                    catch { }
                 }
             }
             catch { }
@@ -338,25 +344,41 @@ namespace Iap.Gr
         public void ViewBuyWifi()
         {
             this.events.PublishOnCurrentThread(new ViewBuyWifiCommand(this.TimeElapsed.ToString()));
-            this.sender.SendAction("ViewBuyWifi.");
+            try
+            {
+                this.sender.SendAction("ViewBuyWifi.");
+            }
+            catch { }
         }
 
         public void ViewPrintBoardingPass()
         {
             this.events.PublishOnCurrentThread(new ViewPrintBoardingPassCommand(this.TimeElapsed.ToString()));
-            this.sender.SendAction("ViewPrintBoardingPass.");
+            try
+            {
+                this.sender.SendAction("ViewPrintBoardingPass.");
+            }
+            catch { }
         }
 
         public void ViewTravelAuthorization()
         {
             this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand(this.TimeElapsed.ToString()));
-            this.sender.SendAction("ViewTravelAuthorization.");
+            try
+            {
+                this.sender.SendAction("ViewTravelAuthorization.");
+            }
+            catch { }
         }
 
         public void ViewInternetAccess()
         {
             _internetAccessBrowser.Load(this.internetAccessGrApi);
-            this.sender.SendAction("ViewInternetAccess.");
+            try
+            {
+                this.sender.SendAction("ViewInternetAccess.");
+            }
+            catch { }
         }
     }
 }

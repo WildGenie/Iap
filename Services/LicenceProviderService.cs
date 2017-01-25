@@ -185,7 +185,7 @@ namespace Iap.Services
               }
               catch(Exception ex)
               {
-                  System.Windows.MessageBox.Show(ex.ToString());
+                 // System.Windows.MessageBox.Show(ex.ToString());
                   return "no";
               }
         }
@@ -203,7 +203,7 @@ namespace Iap.Services
                 var response = await httpClient.PostAsync(this.checkLicenceApi,
                     new FormUrlEncodedContent(parameters), ct.Token);
                 var contents = await response.Content.ReadAsStringAsync();
-                return  contents.ToString();
+                return  contents.ToString().TrimStart().TrimEnd();
             }
             catch(TaskCanceledException)
             {
@@ -212,7 +212,7 @@ namespace Iap.Services
 
             catch
             {
-                return "0";
+                return "error";
             }
         }
     }

@@ -275,44 +275,56 @@ namespace Iap.DynamicEnglishScreens
 
         private void Scroller_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            ScrollViewer scrollViewer = sender as ScrollViewer;
-            if (drag)
+            try
             {
-                e.Handled = true;
-            }
+                ScrollViewer scrollViewer = sender as ScrollViewer;
+                if (drag)
+                {
+                    e.Handled = true;
+                }
 
-            drag = false;
+                drag = false;
+            }
+            catch { }
         }
 
         private void Scroller_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            ScrollViewer scrollViewer = sender as ScrollViewer;
-
-            Point currentPoint = e.GetPosition(scrollViewer);
-
-            Point delta = new Point(scrollStartPoint.X - currentPoint.X,
-                scrollStartPoint.Y - currentPoint.Y);
-
-            scrollTarget.X = scrollStartOffset.X + delta.X;
-            scrollTarget.Y = scrollStartOffset.Y + delta.Y;
-
-            scrollViewer.ScrollToHorizontalOffset(scrollTarget.X);
-            scrollViewer.ScrollToVerticalOffset(scrollTarget.Y);
-
-            var moveTo = currentPoint.Y - scrollStartPoint.Y;
-            if(Math.Abs(moveTo)>1)
+            try
             {
-                drag = true;
+                ScrollViewer scrollViewer = sender as ScrollViewer;
+
+                Point currentPoint = e.GetPosition(scrollViewer);
+
+                Point delta = new Point(scrollStartPoint.X - currentPoint.X,
+                    scrollStartPoint.Y - currentPoint.Y);
+
+                scrollTarget.X = scrollStartOffset.X + delta.X;
+                scrollTarget.Y = scrollStartOffset.Y + delta.Y;
+
+                scrollViewer.ScrollToHorizontalOffset(scrollTarget.X);
+                scrollViewer.ScrollToVerticalOffset(scrollTarget.Y);
+
+                var moveTo = currentPoint.Y - scrollStartPoint.Y;
+                if (Math.Abs(moveTo) > 1)
+                {
+                    drag = true;
+                }
             }
+            catch { }
         }
 
         private void Scroller_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            ScrollViewer scrollViewer = sender as ScrollViewer;
-            drag = false;
-            scrollStartPoint = e.GetPosition(scrollViewer);
-            scrollStartOffset.X = scrollViewer.HorizontalOffset;
-            scrollStartOffset.Y = scrollViewer.VerticalOffset;
+            try
+            {
+                ScrollViewer scrollViewer = sender as ScrollViewer;
+                drag = false;
+                scrollStartPoint = e.GetPosition(scrollViewer);
+                scrollStartOffset.X = scrollViewer.HorizontalOffset;
+                scrollStartOffset.Y = scrollViewer.VerticalOffset;
+            }
+            catch { }
         }
 
         private void _internetAccessBrowser_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -418,30 +430,38 @@ namespace Iap.DynamicEnglishScreens
 
         private void _internetAccessBrowser_TouchMove(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            Control control = (Control)sender;
+            try
+            {
+                Control control = (Control)sender;
 
-            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+                var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
 
-            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
+                var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
 
-            var deltaX = locationOnScreen.X - lastPoint.X;
-            var deltaY = locationOnScreen.Y - lastPoint.Y;
+                var deltaX = locationOnScreen.X - lastPoint.X;
+                var deltaY = locationOnScreen.Y - lastPoint.Y;
 
-            lastPoint = locationOnScreen;
+                lastPoint = locationOnScreen;
 
-            _internetAccessBrowser.SendMouseWheelEvent((int)lastPoint.X, (int)lastPoint.Y, (int)deltaX, (int)deltaY, CefEventFlags.None);
+                _internetAccessBrowser.SendMouseWheelEvent((int)lastPoint.X, (int)lastPoint.Y, (int)deltaX, (int)deltaY, CefEventFlags.None);
+            }
+            catch { }
         }
 
         private void _internetAccessBrowser_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            Control control = (Control)sender;
-            e.TouchDevice.Capture(control);
-            windowTouchDevice = e.TouchDevice;
-            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+            try
+            {
+                Control control = (Control)sender;
+                e.TouchDevice.Capture(control);
+                windowTouchDevice = e.TouchDevice;
+                var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
 
 
-            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
-            lastPoint = locationOnScreen;
+                var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
+                lastPoint = locationOnScreen;
+            }
+            catch { }
         }
 
         private DateTime startTime;
@@ -718,7 +738,11 @@ namespace Iap.DynamicEnglishScreens
             }
             catch { }
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[0].Title + ".");
-            this.sender.SendAction("View" + this.ButtonsDetails[0].Title + ".");
+            try
+            {
+                this.sender.SendAction("View" + this.ButtonsDetails[0].Title + ".");
+            }
+            catch { }
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "1";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -737,7 +761,11 @@ namespace Iap.DynamicEnglishScreens
             catch { }
 
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[1].Title + ".");
-            this.sender.SendAction("View" + this.ButtonsDetails[1].Title + ".");
+            try
+            {
+                this.sender.SendAction("View" + this.ButtonsDetails[1].Title + ".");
+            }
+            catch { }
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "2";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -756,7 +784,11 @@ namespace Iap.DynamicEnglishScreens
             catch { }
 
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[2].Title + ".");
-            this.sender.SendAction("View" + this.ButtonsDetails[2].Title + ".");
+            try
+            {
+                this.sender.SendAction("View" + this.ButtonsDetails[2].Title + ".");
+            }
+            catch { }
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "3";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -775,7 +807,11 @@ namespace Iap.DynamicEnglishScreens
             catch { }
 
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[3].Title + ".");
-            this.sender.SendAction("View" + this.ButtonsDetails[3].Title + ".");
+            try
+            {
+                this.sender.SendAction("View" + this.ButtonsDetails[3].Title + ".");
+            }
+            catch { }
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "4";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -794,7 +830,11 @@ namespace Iap.DynamicEnglishScreens
             catch { }
 
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[4].Title + ".");
-            this.sender.SendAction("View" + this.ButtonsDetails[4].Title + ".");
+            try
+            {
+                this.sender.SendAction("View" + this.ButtonsDetails[4].Title + ".");
+            }
+            catch { }
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "5";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -813,7 +853,11 @@ namespace Iap.DynamicEnglishScreens
             catch { }
 
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[5].Title + ".");
-            this.sender.SendAction("View" + this.ButtonsDetails[5].Title + ".");
+            try
+            {
+                this.sender.SendAction("View" + this.ButtonsDetails[5].Title + ".");
+            }
+            catch { }
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "6";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -832,7 +876,11 @@ namespace Iap.DynamicEnglishScreens
             catch { }
 
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[6].Title + ".");
-            this.sender.SendAction("View" + this.ButtonsDetails[6].Title + ".");
+            try
+            {
+                this.sender.SendAction("View" + this.ButtonsDetails[6].Title + ".");
+            }
+            catch { }
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "7";
             NotifyOfPropertyChange(() => SelectedPosition);
@@ -851,7 +899,11 @@ namespace Iap.DynamicEnglishScreens
             catch { }
 
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[7].Title + ".");
-            this.sender.SendAction("View" + this.ButtonsDetails[7].Title + ".");
+            try
+            {
+                this.sender.SendAction("View" + this.ButtonsDetails[7].Title + ".");
+            }
+            catch { }
             this.PreviousSelected = this.SelectedPosition;
             this.SelectedPosition = "8";
             NotifyOfPropertyChange(() => SelectedPosition);

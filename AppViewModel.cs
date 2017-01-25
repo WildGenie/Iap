@@ -46,17 +46,18 @@ namespace Iap
     {
         public IEventAggregator events;
         private bool isGreekSelected;
-
+        private readonly ILog log;
      
 
         private readonly IGetScreenDetailsService parser;
         private readonly ILicenceProviderService licenceProvider;
 
-        public AppViewModel(IEventAggregator events, IGetScreenDetailsService parser, ILicenceProviderService licenceProvider)
+        public AppViewModel(IEventAggregator events, IGetScreenDetailsService parser, ILicenceProviderService licenceProvider, ILog log)
         {
             this.events = events;
             this.parser = parser;
             this.licenceProvider = licenceProvider;
+            this.log = log;
         }
 
         public ShellViewModel Shell { get; set; }
@@ -152,15 +153,25 @@ namespace Iap
                             this.ScreenSaver.Parent = this;
                         }
                     else if(checkLicence=="error")
-                        {
-                            System.Windows.MessageBox.Show("An error occured. Please check net connection or contact the administrator");
+
+                {
+                    this.log.Info("Invoking Action: View An error occured. Return from checkLicence is: " + checkLicence);
+                           // System.Windows.MessageBox.Show("An error occured. Please check net connection or contact the administrator");
                             System.Windows.Application.Current.Shutdown();
-                        }
+                 }
+
+                else if(checkLicence=="0")
+                        {
+                    this.log.Info("Invoking Action: View no valid licence. Return from checkLicence is: " + checkLicence);
+                          //  System.Windows.MessageBox.Show("you have not a a used licence");
+                            System.Windows.Application.Current.Shutdown();
+                       }
                     else
-                        {
-                            System.Windows.MessageBox.Show("you have not a a used licence");
-                            System.Windows.Application.Current.Shutdown();
-                        }
+                {
+                    this.log.Info("Invoking Action: View An error occured. Return from checkLicence is: " + checkLicence);
+                    //System.Windows.MessageBox.Show("An error occured. Please check net connection or contact the administrator");
+                    System.Windows.Application.Current.Shutdown();
+                }
                 }
 
             base.OnViewLoaded(view);

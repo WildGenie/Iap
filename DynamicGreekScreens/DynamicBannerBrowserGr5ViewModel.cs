@@ -221,7 +221,8 @@ namespace Iap.DynamicGreekScreens
             _internetAccessBrowser.FrameLoadEnd += boundEnObject.OnFrameLoadEnd;
 
             _internetAccessBrowser.MouseDown += _internetAccessBrowser_MouseDown;
-
+            _internetAccessBrowser.TouchDown += _internetAccessBrowser_TouchDown;
+            _internetAccessBrowser.TouchMove += _internetAccessBrowser_TouchMove;
 
             currentView.scroller.PreviewMouseDown += Scroller_PreviewMouseDown;
             currentView.scroller.PreviewMouseMove += Scroller_PreviewMouseMove;
@@ -248,6 +249,45 @@ namespace Iap.DynamicGreekScreens
             UnitStartTime = DateTime.Now;
         }
 
+        private TouchDevice windowTouchDevice;
+        private System.Windows.Point lastPoint;
+
+        private void _internetAccessBrowser_TouchMove(object sender, TouchEventArgs e)
+        {
+            try
+            {
+                Control control = (Control)sender;
+
+                var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+
+                var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
+
+                var deltaX = locationOnScreen.X - lastPoint.X;
+                var deltaY = locationOnScreen.Y - lastPoint.Y;
+
+                lastPoint = locationOnScreen;
+
+                _internetAccessBrowser.SendMouseWheelEvent((int)lastPoint.X, (int)lastPoint.Y, (int)deltaX, (int)deltaY, CefEventFlags.None);
+            }
+            catch { }
+        }
+
+        private void _internetAccessBrowser_TouchDown(object sender, TouchEventArgs e)
+        {
+            try
+            {
+                Control control = (Control)sender;
+                e.TouchDevice.Capture(control);
+                windowTouchDevice = e.TouchDevice;
+                var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+
+
+                var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
+                lastPoint = locationOnScreen;
+            }
+            catch { }
+        }
+
         private Point scrollTarget;
 
         private Point scrollStartPoint;
@@ -258,44 +298,56 @@ namespace Iap.DynamicGreekScreens
 
         private void Scroller_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            ScrollViewer scrollViewer = sender as ScrollViewer;
-            if (drag)
+            try
             {
-                e.Handled = true;
-            }
+                ScrollViewer scrollViewer = sender as ScrollViewer;
+                if (drag)
+                {
+                    e.Handled = true;
+                }
 
-            drag = false;
+                drag = false;
+            }
+            catch { }
         }
 
         private void Scroller_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            ScrollViewer scrollViewer = sender as ScrollViewer;
-
-            Point currentPoint = e.GetPosition(scrollViewer);
-
-            Point delta = new Point(scrollStartPoint.X - currentPoint.X,
-                scrollStartPoint.Y - currentPoint.Y);
-
-            scrollTarget.X = scrollStartOffset.X + delta.X;
-            scrollTarget.Y = scrollStartOffset.Y + delta.Y;
-
-            scrollViewer.ScrollToHorizontalOffset(scrollTarget.X);
-            scrollViewer.ScrollToVerticalOffset(scrollTarget.Y);
-
-            var moveTo = currentPoint.Y - scrollStartPoint.Y;
-            if (Math.Abs(moveTo) > 1)
+            try
             {
-                drag = true;
+                ScrollViewer scrollViewer = sender as ScrollViewer;
+
+                Point currentPoint = e.GetPosition(scrollViewer);
+
+                Point delta = new Point(scrollStartPoint.X - currentPoint.X,
+                    scrollStartPoint.Y - currentPoint.Y);
+
+                scrollTarget.X = scrollStartOffset.X + delta.X;
+                scrollTarget.Y = scrollStartOffset.Y + delta.Y;
+
+                scrollViewer.ScrollToHorizontalOffset(scrollTarget.X);
+                scrollViewer.ScrollToVerticalOffset(scrollTarget.Y);
+
+                var moveTo = currentPoint.Y - scrollStartPoint.Y;
+                if (Math.Abs(moveTo) > 1)
+                {
+                    drag = true;
+                }
             }
+            catch { }
         }
 
         private void Scroller_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            ScrollViewer scrollViewer = sender as ScrollViewer;
-            drag = false;
-            scrollStartPoint = e.GetPosition(scrollViewer);
-            scrollStartOffset.X = scrollViewer.HorizontalOffset;
-            scrollStartOffset.Y = scrollViewer.VerticalOffset;
+            try
+            {
+                ScrollViewer scrollViewer = sender as ScrollViewer;
+                drag = false;
+                scrollStartPoint = e.GetPosition(scrollViewer);
+                scrollStartOffset.X = scrollViewer.HorizontalOffset;
+                scrollStartOffset.Y = scrollViewer.VerticalOffset;
+            }
+            catch { }
         }
 
         private void _internetAccessBrowser_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -616,12 +668,20 @@ namespace Iap.DynamicGreekScreens
                 if (this.SelectedPosition == "banner")
                 {
                     this.log.Info("Invoking Action: ViewClose BannerLink  after " + CalculateUnitSession() + " time.");
-                    this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                    }
+                    catch { }
                 }
                 else
                 {
                     this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
-                    this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    }
+                    catch { }
                 }
                 this.UnitStartTime = DateTime.Now;
             }
@@ -629,7 +689,11 @@ namespace Iap.DynamicGreekScreens
 
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[0].GrUrl, this.ButtonsDetails, "1"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[0].Title + ".");
-            this.sender.SendAction("View" + this.ButtonsDetails[0].Title + ".");
+            try
+            {
+                this.sender.SendAction("View" + this.ButtonsDetails[0].Title + ".");
+            }
+            catch { }
         }
 
         public void ViewRedirect2()
@@ -639,12 +703,20 @@ namespace Iap.DynamicGreekScreens
                 if (this.SelectedPosition == "banner")
                 {
                     this.log.Info("Invoking Action: ViewClose BannerLink  after " + CalculateUnitSession() + " time.");
-                    this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                    }
+                    catch { }
                 }
                 else
                 {
                     this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
-                    this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    }
+                    catch { }
                 }
                 this.UnitStartTime = DateTime.Now;
             }
@@ -652,7 +724,11 @@ namespace Iap.DynamicGreekScreens
 
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[1].GrUrl, this.ButtonsDetails, "2"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[1].Title + ".");
-            this.sender.SendAction("View" + this.ButtonsDetails[1].Title + ".");
+            try
+            {
+                this.sender.SendAction("View" + this.ButtonsDetails[1].Title + ".");
+            }
+            catch { }
         }
 
         public void ViewRedirect3()
@@ -662,19 +738,31 @@ namespace Iap.DynamicGreekScreens
                 if (this.SelectedPosition == "banner")
                 {
                     this.log.Info("Invoking Action: ViewClose BannerLink  after " + CalculateUnitSession() + " time.");
-                    this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                    }
+                    catch { }
                 }
                 else
                 {
                     this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
-                    this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    }
+                    catch { }
                 }
                 this.UnitStartTime = DateTime.Now;
             }
             catch { }
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[2].GrUrl, this.ButtonsDetails, "3"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[2].Title + ".");
-            this.sender.SendAction("View" + this.ButtonsDetails[2].Title + ".");
+            try
+            {
+                this.sender.SendAction("View" + this.ButtonsDetails[2].Title + ".");
+            }
+            catch { }
         }
 
         public void ViewRedirect4()
@@ -684,19 +772,31 @@ namespace Iap.DynamicGreekScreens
                 if (this.SelectedPosition == "banner")
                 {
                     this.log.Info("Invoking Action: ViewClose BannerLink  after " + CalculateUnitSession() + " time.");
-                    this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                    }
+                    catch { }
                 }
                 else
                 {
                     this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
-                    this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    }
+                    catch { }
                 }
                 this.UnitStartTime = DateTime.Now;
             }
             catch { }
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[3].GrUrl, this.ButtonsDetails, "4"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[3].Title + ".");
-            this.sender.SendAction("View" + this.ButtonsDetails[3].Title + ".");
+            try
+            {
+                this.sender.SendAction("View" + this.ButtonsDetails[3].Title + ".");
+            }
+            catch { }
         }
 
         public void ViewRedirect5()
@@ -706,19 +806,31 @@ namespace Iap.DynamicGreekScreens
                 if (this.SelectedPosition == "banner")
                 {
                     this.log.Info("Invoking Action: ViewClose BannerLink  after " + CalculateUnitSession() + " time.");
-                    this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                    }
+                    catch { }
                 }
                 else
                 {
                     this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
-                    this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    }
+                    catch { }
                 }
                 this.UnitStartTime = DateTime.Now;
             }
             catch { }
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[4].GrUrl, this.ButtonsDetails, "5"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[4].Title + ".");
-            this.sender.SendAction("View" + this.ButtonsDetails[4].Title + ".");
+            try
+            {
+                this.sender.SendAction("View" + this.ButtonsDetails[4].Title + ".");
+            }
+            catch { }
         }
 
         public void ViewRedirect6()
@@ -728,19 +840,31 @@ namespace Iap.DynamicGreekScreens
                 if (this.SelectedPosition == "banner")
                 {
                     this.log.Info("Invoking Action: ViewClose BannerLink  after " + CalculateUnitSession() + " time.");
-                    this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                    }
+                    catch { }
                 }
                 else
                 {
                     this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
-                    this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    }
+                    catch { }
                 }
                 this.UnitStartTime = DateTime.Now;
             }
             catch { }
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[5].GrUrl, this.ButtonsDetails, "6"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[5].Title + ".");
-            this.sender.SendAction("View" + this.ButtonsDetails[5].Title + ".");
+            try
+            {
+                this.sender.SendAction("View" + this.ButtonsDetails[5].Title + ".");
+            }
+            catch { }
         }
 
         public void ViewRedirect7()
@@ -750,19 +874,31 @@ namespace Iap.DynamicGreekScreens
                 if (this.SelectedPosition == "banner")
                 {
                     this.log.Info("Invoking Action: ViewClose BannerLink  after " + CalculateUnitSession() + " time.");
-                    this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                    }
+                    catch { }
                 }
                 else
                 {
                     this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
-                    this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    }
+                    catch { }
                 }
                 this.UnitStartTime = DateTime.Now;
             }
             catch { }
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[6].GrUrl, this.ButtonsDetails, "7"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[6].Title + ".");
-            this.sender.SendAction("View" + this.ButtonsDetails[6].Title + ".");
+            try
+            {
+                this.sender.SendAction("View" + this.ButtonsDetails[6].Title + ".");
+            }
+            catch { }
         }
 
         public void ViewRedirect8()
@@ -772,19 +908,31 @@ namespace Iap.DynamicGreekScreens
                 if (this.SelectedPosition == "banner")
                 {
                     this.log.Info("Invoking Action: ViewClose BannerLink  after " + CalculateUnitSession() + " time.");
-                    this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose BannerLink after " + CalculateUnitSession() + " time.");
+                    }
+                    catch { }
                 }
                 else
                 {
                     this.log.Info("Invoking Action: ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
-                    this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose " + this.ButtonsDetails[Int32.Parse(this.SelectedPosition) - 1].Title + " after " + CalculateUnitSession() + " time.");
+                    }
+                    catch { }
                 }
                 this.UnitStartTime = DateTime.Now;
             }
             catch { }
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[7].GrUrl, this.ButtonsDetails, "8"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[7].Title + ".");
-            this.sender.SendAction("View" + this.ButtonsDetails[7].Title + ".");
+            try
+            {
+                this.sender.SendAction("View" + this.ButtonsDetails[7].Title + ".");
+            }
+            catch { }
         }
     }
 }

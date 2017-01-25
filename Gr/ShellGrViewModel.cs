@@ -117,44 +117,72 @@ namespace Iap.Gr
         {
             this.events.PublishOnCurrentThread(new ViewEnglishCommand());
             this.events.PublishOnCurrentThread(new ViewChangeLanguageCommand(false));
-            this.sender.SendAction("ViewEnglish.");
+            try
+            {
+                this.sender.SendAction("ViewEnglish.");
+            }
+            catch { }
         }
 
         public void ViewBuyWifi()
         {
             this.events.PublishOnBackgroundThread(new ViewBuyWifiCommand(this.RemainingTime));
-            this.sender.SendAction("ViewBuyWifi.");
+            try
+            {
+                this.sender.SendAction("ViewBuyWifi.");
+            }
+            catch { }
         }
 
         public void ViewPrintBoardingPass()
         {
             this.events.PublishOnBackgroundThread(new ViewPrintBoardingPassCommand(this.RemainingTime));
-            this.sender.SendAction("ViewPrintBoardingPass.");
+            try
+            {
+                this.sender.SendAction("ViewPrintBoardingPass.");
+            }
+            catch { }
         }
 
         public void ViewInternetAccess()
         {
             this.events.PublishOnBackgroundThread(new ViewInternetAccessCommand(this.RemainingTime));
-            this.sender.SendAction("ViewInternetAccess.");
+            try
+            {
+                this.sender.SendAction("ViewInternetAccess.");
+            }
+            catch { }
         }
 
         public void ViewTravelAuthorization()
         {
             this.events.PublishOnBackgroundThread(new ViewTravelAuthorizationCommand(this.RemainingTime));
-            this.sender.SendAction("ViewTravelAuthorization.");
+            try
+            {
+                this.sender.SendAction("ViewTravelAuthorization.");
+            }
+            catch { }
         }
 
         public void ViewAdvertLink()
         {
             this.events.PublishOnCurrentThread(new ViewAdvertCommand(this.RemainingTime));
-            this.sender.SendAction("ViewBannerLink.");
+            try
+            {
+                this.sender.SendAction("ViewBannerLink.");
+            }
+            catch { }
         }
 
         public void ViewDisclaimer()
         {
             if (!this.OpenDisclaimer)
             {
-                this.sender.SendAction("ViewDisclaimer.");
+                try
+                {
+                    this.sender.SendAction("ViewDisclaimer.");
+                }
+                catch { }
                 this.OpenDisclaimer = true;
             }
         }

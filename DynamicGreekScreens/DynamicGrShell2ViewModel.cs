@@ -161,20 +161,32 @@ namespace Iap.DynamicGreekScreens
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[0].GrUrl, this.ButtonsDetails, "1"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[0].Title + ".");
-            this.sender.SendAction("View" + this.ButtonsDetails[0].Title + ".");
+            try
+            {
+                this.sender.SendAction("View" + this.ButtonsDetails[0].Title + ".");
+            }
+            catch { }
         }
 
         public void ViewRedirect2()
         {
             this.events.PublishOnBackgroundThread(new ViewRedirectToBrowserCommand("", this.ButtonsDetails[1].GrUrl, this.ButtonsDetails, "2"));
             this.log.Info("Invoking Action: View" + this.ButtonsDetails[1].Title + ".");
-            this.sender.SendAction("View" + this.ButtonsDetails[1].Title + ".");
+            try
+            {
+                this.sender.SendAction("View" + this.ButtonsDetails[1].Title + ".");
+            }
+            catch { }
         }
 
         public void ViewAdvertLink()
         {
             this.events.PublishOnBackgroundThread(new ViewDynamicBannerEnCommand(this.ButtonsDetails));
-            this.sender.SendAction("ViewBannerLink.");
+            try
+            {
+                this.sender.SendAction("ViewBannerLink.");
+            }
+            catch { }
             this.log.Info("Invoking Action: ViewBannerLink");
         }
 
@@ -182,14 +194,22 @@ namespace Iap.DynamicGreekScreens
         {
             this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
             this.events.PublishOnCurrentThread(new ViewChangeLanguageCommand(false));
-            this.sender.SendAction("ViewEnglish.");
+            try
+            {
+                this.sender.SendAction("ViewEnglish.");
+            }
+            catch { }
         }
 
         public void ViewDisclaimer()
         {
             if (!this.OpenDisclaimer)
             {
-                this.sender.SendAction("ViewDisclaimer.");
+                try
+                {
+                    this.sender.SendAction("ViewDisclaimer.");
+                }
+                catch { }
                 this.OpenDisclaimer = true;
             }
         }

@@ -227,30 +227,38 @@ namespace Iap.Gr
 
         private void _internetAccessBrowser_TouchMove(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            Control control = (Control)sender;
+            try
+            {
+                Control control = (Control)sender;
 
-            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+                var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
 
-            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
+                var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
 
-            var deltaX = locationOnScreen.X - lastPoint.X;
-            var deltaY = locationOnScreen.Y - lastPoint.Y;
+                var deltaX = locationOnScreen.X - lastPoint.X;
+                var deltaY = locationOnScreen.Y - lastPoint.Y;
 
-            lastPoint = locationOnScreen;
+                lastPoint = locationOnScreen;
 
-            _internetAccessBrowser.SendMouseWheelEvent((int)lastPoint.X, (int)lastPoint.Y, (int)deltaX, (int)deltaY, CefEventFlags.None);
+                _internetAccessBrowser.SendMouseWheelEvent((int)lastPoint.X, (int)lastPoint.Y, (int)deltaX, (int)deltaY, CefEventFlags.None);
+            }
+            catch { }
         }
 
         private void _internetAccessBrowser_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            Control control = (Control)sender;
-            e.TouchDevice.Capture(control);
-            windowTouchDevice = e.TouchDevice;
-            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+            try
+            {
+                Control control = (Control)sender;
+                e.TouchDevice.Capture(control);
+                windowTouchDevice = e.TouchDevice;
+                var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
 
 
-            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
-            lastPoint = locationOnScreen;
+                var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
+                lastPoint = locationOnScreen;
+            }
+            catch { }
         }
 
         public void Back()
@@ -328,13 +336,21 @@ namespace Iap.Gr
         public void ViewBuyWifi()
         {
             this.events.PublishOnCurrentThread(new ViewBuyWifi2Command(this.TimeElapsed.ToString()));
-            this.sender.SendAction("ViewBuyWifi.");
+            try
+            {
+                this.sender.SendAction("ViewBuyWifi.");
+            }
+            catch { }
         }
 
         public void ViewInternetAccess()
         {
             _internetAccessBrowser.Load(this.internetAccessGrApi);
-            this.sender.SendAction("ViewInternetAccess.");
+            try
+            {
+                this.sender.SendAction("ViewInternetAccess.");
+            }
+            catch { }
         }
     }
 }

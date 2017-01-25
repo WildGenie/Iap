@@ -255,31 +255,38 @@ namespace Iap
         private System.Windows.Point lastPoint;
         private void _internetAccessBrowser_TouchMove(object sender, System.Windows.Input.TouchEventArgs e)
         {
+            try
+            {
+                Control control = (Control)sender;
 
-            Control control = (Control)sender;
+                var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
 
-            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+                var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
 
-            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
+                var deltaX = locationOnScreen.X - lastPoint.X;
+                var deltaY = locationOnScreen.Y - lastPoint.Y;
 
-            var deltaX = locationOnScreen.X - lastPoint.X;
-            var deltaY = locationOnScreen.Y - lastPoint.Y;
+                lastPoint = locationOnScreen;
 
-            lastPoint = locationOnScreen;
-
-            _internetAccessBrowser.SendMouseWheelEvent((int)lastPoint.X, (int)lastPoint.Y, (int)deltaX, (int)deltaY, CefEventFlags.None);
+                _internetAccessBrowser.SendMouseWheelEvent((int)lastPoint.X, (int)lastPoint.Y, (int)deltaX, (int)deltaY, CefEventFlags.None);
+            }
+            catch { }
         }
 
         private void _internetAccessBrowser_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            Control control = (Control)sender;
-            e.TouchDevice.Capture(control);
-            windowTouchDevice = e.TouchDevice;
-            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+            try
+            {
+                Control control = (Control)sender;
+                e.TouchDevice.Capture(control);
+                windowTouchDevice = e.TouchDevice;
+                var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
 
 
-            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
-            lastPoint = locationOnScreen;
+                var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
+                lastPoint = locationOnScreen;
+            }
+            catch { }
         }
 
         public IEventAggregator Events
@@ -343,12 +350,20 @@ namespace Iap
                 if (this.ShowBannerUrl)
                 {
                     this.log.Info("Invoking Action: ViewClose BannerLink after " + TimeSpended() + " time.");
-                    this.sender.SendAction("ViewClose BannerLink after " + TimeSpended() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose BannerLink after " + TimeSpended() + " time.");
+                    }
+                    catch { }
                 }
                 else
                 {
                     this.log.Info("Invoking Action: ViewClose InternetAccess after " + TimeSpended() + " time.");
-                    this.sender.SendAction("ViewClose InternetAccess after " + TimeSpended() + " time.");
+                    try
+                    {
+                        this.sender.SendAction("ViewClose InternetAccess after " + TimeSpended() + " time.");
+                    }
+                    catch { }
                 }
             }
             catch { }
@@ -369,13 +384,21 @@ namespace Iap
         public void ViewBuyWifi()
         {
             this.events.PublishOnCurrentThread(new ViewBuyWifi2Command(this.TimeElapsed.ToString()));
-            this.sender.SendAction("ViewBuyWifi.");
+            try
+            {
+                this.sender.SendAction("ViewBuyWifi.");
+            }
+            catch { }
         }
 
         public void ViewInternetAccess()
         {
             _internetAccessBrowser.Load(this.internetAccessEnApi);
-            this.sender.SendAction("ViewInternetAccess.");
+            try
+            {
+                this.sender.SendAction("ViewInternetAccess.");
+            }
+            catch { }
         }
     }
 }

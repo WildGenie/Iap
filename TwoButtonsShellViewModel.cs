@@ -119,33 +119,53 @@ namespace Iap
         public void ViewBuyWifi()
         {
             this.events.PublishOnBackgroundThread(new ViewBuyWifi2Command(this.RemainingTime));
-            this.sender.SendAction("ViewBuyWifi.");
+            try
+            {
+                this.sender.SendAction("ViewBuyWifi.");
+            }
+            catch { }
         }
 
         public void ViewInternetAccess()
         {
             this.events.PublishOnBackgroundThread(new ViewInternetAccess2Command(this.RemainingTime));
-            this.sender.SendAction("ViewInternetAccess.");
+            try
+            {
+                this.sender.SendAction("ViewInternetAccess.");
+            }
+            catch { }
         }
 
         public void ViewGreek()
         {
             this.events.PublishOnCurrentThread(new ViewTwoButtonsShellGrCommand());
             this.events.PublishOnCurrentThread(new ViewChangeLanguageCommand(true));
-            this.sender.SendAction("ViewGreek.");
+            try
+            {
+                this.sender.SendAction("ViewGreek.");
+            }
+            catch { }
         }
 
         public void ViewAdvertLink()
         {
             this.events.PublishOnCurrentThread(new ViewTwoButtonsAdvertCommand(this.RemainingTime));
-            this.sender.SendAction("ViewBannerLink.");
+            try
+            {
+                this.sender.SendAction("ViewBannerLink.");
+            }
+            catch { }
         }
 
         public void ViewDisclaimer()
         {
             if (!this.OpenDisclaimer)
             {
-                this.sender.SendAction("ViewDisclaimer.");
+                try
+                {
+                    this.sender.SendAction("ViewDisclaimer.");
+                }
+                catch { }
                 this.OpenDisclaimer = true;
             }
         }

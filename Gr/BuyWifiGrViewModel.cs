@@ -197,48 +197,43 @@ namespace Iap.Gr
 
      
 
-        public int lastMousePositionX;
-        public int lastMousePositionY;
-
         private TouchDevice windowTouchDevice;
         private System.Windows.Point lastPoint;
 
         private void _buyWifiBrowser_TouchMove(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            /* int x = (int)e.GetTouchPoint(_buyWifiBrowser).Position.X;
-             int y = (int)e.GetTouchPoint(_buyWifiBrowser).Position.Y;
+            try
+            {
+                Control control = (Control)sender;
 
+                var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
 
-             int deltax = x - lastMousePositionX;
-             int deltay = y - lastMousePositionY;
+                var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
 
-             _buyWifiBrowser.SendMouseWheelEvent((int)_buyWifiBrowser.Width, (int)_buyWifiBrowser.Height, deltax, deltay, CefEventFlags.None);*/
-            Control control = (Control)sender;
+                var deltaX = locationOnScreen.X - lastPoint.X;
+                var deltaY = locationOnScreen.Y - lastPoint.Y;
 
-            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+                lastPoint = locationOnScreen;
 
-            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
-
-            var deltaX = locationOnScreen.X - lastPoint.X;
-            var deltaY = locationOnScreen.Y - lastPoint.Y;
-
-            lastPoint = locationOnScreen;
-
-            _buyWifiBrowser.SendMouseWheelEvent((int)lastPoint.X, (int)lastPoint.Y, (int)deltaX, (int)deltaY, CefEventFlags.None);
+                _buyWifiBrowser.SendMouseWheelEvent((int)lastPoint.X, (int)lastPoint.Y, (int)deltaX, (int)deltaY, CefEventFlags.None);
+            }
+            catch { }
         }
 
         private void _buyWifiBrowser_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            // lastMousePositionX = (int)e.GetTouchPoint(_buyWifiBrowser).Position.X;
-            // lastMousePositionY = (int)e.GetTouchPoint(_buyWifiBrowser).Position.Y;
-            Control control = (Control)sender;
-            e.TouchDevice.Capture(control);
-            windowTouchDevice = e.TouchDevice;
-            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+            try
+            {
+                Control control = (Control)sender;
+                e.TouchDevice.Capture(control);
+                windowTouchDevice = e.TouchDevice;
+                var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
 
 
-            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
-            lastPoint = locationOnScreen;
+                var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
+                lastPoint = locationOnScreen;
+            }
+            catch { }
         }
 
         public void Back()
@@ -308,25 +303,41 @@ namespace Iap.Gr
         public void ViewPrintBoardingPass()
         {
             this.events.PublishOnCurrentThread(new ViewPrintBoardingPassCommand(this.TimeElapsed.ToString()));
-            this.sender.SendAction("ViewPrintBoardingPass.");
+            try
+            {
+                this.sender.SendAction("ViewPrintBoardingPass.");
+            }
+            catch { }
         }
 
         public void ViewInternetAccess()
         {
             this.events.PublishOnCurrentThread(new ViewInternetAccessCommand(this.TimeElapsed.ToString()));
-            this.sender.SendAction("ViewInternetAccess.");
+            try
+            {
+                this.sender.SendAction("ViewInternetAccess.");
+            }
+            catch { }
         }
 
         public void ViewTravelAuthorization()
         {
             this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand(this.TimeElapsed.ToString()));
-            this.sender.SendAction("ViewTravelAuthorization.");
+            try
+            {
+                this.sender.SendAction("ViewTravelAuthorization.");
+            }
+            catch { }
         }
 
         public void ViewBuyWifi()
         {
             _buyWifiBrowser.Load(this.buyWifiGrApi);
-            this.sender.SendAction("ViewBuyWifi.");
+            try
+            {
+                this.sender.SendAction("ViewBuyWifi.");
+            }
+            catch { }
         }
     }
 }

@@ -206,40 +206,38 @@ namespace Iap.Gr
 
         private void _printBoardingPassBrowser_TouchMove(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            /* int x = (int)e.GetTouchPoint(_printBoardingPassBrowser).Position.X;
-             int y = (int)e.GetTouchPoint(_printBoardingPassBrowser).Position.Y;
+            try
+            {
+                Control control = (Control)sender;
 
+                var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
 
-             int deltax = x - lastMousePositionX;
-             int deltay = y - lastMousePositionY;
+                var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
 
-             _printBoardingPassBrowser.SendMouseWheelEvent((int)_printBoardingPassBrowser.Width, (int)_printBoardingPassBrowser.Height, deltax, deltay, CefEventFlags.None);*/
-            Control control = (Control)sender;
+                var deltaX = locationOnScreen.X - lastPoint.X;
+                var deltaY = locationOnScreen.Y - lastPoint.Y;
 
-            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+                lastPoint = locationOnScreen;
 
-            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
-
-            var deltaX = locationOnScreen.X - lastPoint.X;
-            var deltaY = locationOnScreen.Y - lastPoint.Y;
-
-            lastPoint = locationOnScreen;
-
-            _printBoardingPassBrowser.SendMouseWheelEvent((int)lastPoint.X, (int)lastPoint.Y, (int)deltaX, (int)deltaY, CefEventFlags.None);
+                _printBoardingPassBrowser.SendMouseWheelEvent((int)lastPoint.X, (int)lastPoint.Y, (int)deltaX, (int)deltaY, CefEventFlags.None);
+            }
+            catch { }
         }
 
         private void _printBoardingPassBrowser_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            // lastMousePositionX = (int)e.GetTouchPoint(_printBoardingPassBrowser).Position.X;
-            // lastMousePositionY = (int)e.GetTouchPoint(_printBoardingPassBrowser).Position.Y;
-            Control control = (Control)sender;
-            e.TouchDevice.Capture(control);
-            windowTouchDevice = e.TouchDevice;
-            var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
+            try
+            {
+                Control control = (Control)sender;
+                e.TouchDevice.Capture(control);
+                windowTouchDevice = e.TouchDevice;
+                var currentTouchPoint = windowTouchDevice.GetTouchPoint(null);
 
 
-            var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
-            lastPoint = locationOnScreen;
+                var locationOnScreen = control.PointToScreen(new System.Windows.Point(currentTouchPoint.Position.X, currentTouchPoint.Position.Y));
+                lastPoint = locationOnScreen;
+            }
+            catch { }
         }
 
         public void Back()
@@ -310,25 +308,41 @@ namespace Iap.Gr
         public void ViewBuyWifi()
         {
             this.events.PublishOnCurrentThread(new ViewBuyWifiCommand(this.TimeElapsed.ToString()));
-            this.sender.SendAction("ViewBuyWifi.");
+            try
+            {
+                this.sender.SendAction("ViewBuyWifi.");
+            }
+            catch { }
         }
 
         public void ViewInternetAccess()
         {
             this.events.PublishOnCurrentThread(new ViewInternetAccessCommand(this.TimeElapsed.ToString()));
-            this.sender.SendAction("ViewInternetAccess.");
+            try
+            {
+                this.sender.SendAction("ViewInternetAccess.");
+            }
+            catch { }
         }
 
         public void ViewTravelAuthorization()
         {
             this.events.PublishOnCurrentThread(new ViewTravelAuthorizationCommand(this.TimeElapsed.ToString()));
-            this.sender.SendAction("ViewTravelAuthorization.");
+            try
+            {
+                this.sender.SendAction("ViewTravelAuthorization.");
+            }
+            catch { }
         }
 
         public void ViewPrintBoardingPass()
         {
             _printBoardingPassBrowser.Load(this.boardingPassGrApi);
-            this.sender.SendAction("ViewPrintBoardingPass.");
+            try
+            {
+                this.sender.SendAction("ViewPrintBoardingPass.");
+            }
+            catch { }
         }
     }
 }
