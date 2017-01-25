@@ -34,6 +34,10 @@ namespace Iap.Bounds
           
             _mainBrowser = sender as ChromiumWebBrowser;
 
+            if (_mainBrowser.GetMainFrame().Url.Contains("print=true"))
+            {
+                _mainBrowser.Load(_mainBrowser.GetMainFrame().Url.Replace("print=true", "print=false"));
+            }
 
             _mainBrowser.ExecuteScriptAsync(@"document.onselectstart = function()
         {
@@ -161,13 +165,13 @@ namespace Iap.Bounds
                                 this.log.Info("Invoking Action: ViewPrintRequested " + numberOfPages.ToString() + " pages.");
                             }
                             catch { }
-
-                            System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+                           
+                                System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
                                 info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
                                 info.Verb = "print";
                                 info.FileName = path;
                                 info.CreateNoWindow = true;
-                                
+
 
                                 System.Diagnostics.Process p = new System.Diagnostics.Process();
                                 p.StartInfo = info;
@@ -175,7 +179,8 @@ namespace Iap.Bounds
 
                                 p.WaitForInputIdle();
                                 System.Threading.Thread.Sleep(3000);
-                                if (false == p.CloseMainWindow())
+
+                            if (false == p.CloseMainWindow())
                                 {
                                     try
                                     {
@@ -191,6 +196,7 @@ namespace Iap.Bounds
                                     }
                                     catch { }
                                 }
+                            
 
                             this.sender.SendAction("Printed " + numberOfPages + " pages.");
 
@@ -200,7 +206,7 @@ namespace Iap.Bounds
 
                             else
                             {
-                                System.Windows.MessageBox.Show("Can not print so many pages!");
+                                System.Windows.MessageBox.Show("Unfortunately, you can not print so many pages! Please press OK to continue.");
                             }
 
                            
@@ -212,12 +218,12 @@ namespace Iap.Bounds
                         }
                     }
 
-                    else
-                    {
+                //else
+                //{
 
-                        System.Windows.MessageBox.Show("Failed to print please try again");
-                       
-                    }
+                //  System.Windows.MessageBox.Show("Failed to print cause unexptected problem! Please try again..");
+
+                //}
                
             }
             try
