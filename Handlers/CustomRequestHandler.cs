@@ -56,6 +56,7 @@ namespace Iap.Handlers
         public bool OnOpenUrlFromTab(IWebBrowser browserControl, IBrowser browser, IFrame frame, string targetUrl, WindowOpenDisposition targetDisposition, bool userGesture)
         {
             previousUrl = browserControl.GetMainFrame().Url;
+           
            // previousUrl = GlobalText.beforeStartPrintingUrl;
             if (browser.IsPopup)
             {
@@ -65,6 +66,9 @@ namespace Iap.Handlers
                 {
                     browserControl.Load(targetUrl.Replace("print=true", "print=false"));
                 }
+
+             //   System.Threading.Thread.Sleep(2000);
+               // browserControl.Load(GlobalText.beforeStartPrintingUrl);
 
                 browserControl.FrameLoadEnd += BrowserControl_FrameLoadEnd;
 

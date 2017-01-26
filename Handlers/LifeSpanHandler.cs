@@ -45,6 +45,7 @@ namespace Iap.Handlers
             }
             else
             {
+              //  GlobalText.beforeStartPrintingUrl = browserControl.GetMainFrame().Url;
                 newBrowser = null;
                 browserControl.Load(targetUrl);
                 return false;

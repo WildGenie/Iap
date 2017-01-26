@@ -104,7 +104,6 @@ namespace Iap.Bounds
 
         public async void onPrintRequested(string selected)
         {
-             
             try
             {
                 
@@ -181,6 +180,7 @@ namespace Iap.Bounds
                                 p.Start();
 
                                 p.WaitForInputIdle();
+                            p.CloseMainWindow();
                                 System.Threading.Thread.Sleep(10000);
 
                             if (false == p.CloseMainWindow())
