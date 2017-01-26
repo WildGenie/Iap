@@ -178,7 +178,7 @@ namespace Iap.Bounds
                                 p.Start();
 
                                 p.WaitForInputIdle();
-                                System.Threading.Thread.Sleep(3000);
+                                System.Threading.Thread.Sleep(10000);
 
                             if (false == p.CloseMainWindow())
                                 {

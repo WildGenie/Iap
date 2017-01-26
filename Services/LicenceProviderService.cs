@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Caliburn.Micro;
+using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -19,12 +20,14 @@ namespace Iap.Services
         private readonly string statusLicencesApi;
         private readonly string sendPCDataApi;
         private readonly string checkLicenceApi;
+        private readonly ILog log;
 
-        public LicenceProviderService(string statusLicencesApi, string sendPCDataApi, string checkLicenceApi)
+        public LicenceProviderService(string statusLicencesApi, string sendPCDataApi, string checkLicenceApi, ILog log)
         {
             this.statusLicencesApi = statusLicencesApi;
             this.sendPCDataApi = sendPCDataApi;
             this.checkLicenceApi = checkLicenceApi;
+            this.log = log;
         }
 
         public bool hasAlreadyKey()
@@ -198,20 +201,22 @@ namespace Iap.Services
                 string hdID = this.getUniquePcId();
                 var parameters = new Dictionary<string, string>();
                 parameters["hdid"] = hdID;
-               
+                this.log.Info("Invoking Action: DiskID=" + hdID);
                 var httpClient = new HttpClient();
                 var response = await httpClient.PostAsync(this.checkLicenceApi,
                     new FormUrlEncodedContent(parameters), ct.Token);
                 var contents = await response.Content.ReadAsStringAsync();
                 return  contents.ToString().TrimStart().TrimEnd();
             }
-            catch(TaskCanceledException)
+            catch(TaskCanceledException ex1)
             {
+                this.log.Info("Invoking Action: " +ex1.ToString());
                 return "error";
             }
 
-            catch
+            catch(Exception ex)
             {
+                this.log.Info("Invoking Action: "+ex.ToString());
                 return "error";
             }
         }

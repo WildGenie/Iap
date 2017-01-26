@@ -145,8 +145,10 @@ namespace Iap
                 else
                 {
                 string checkLicence = await this.licenceProvider.checkPcLicence(ct);
-               
-                    if (checkLicence == "1")
+
+                this.log.Info("Invoking Action: Return from checkLicence is" + checkLicence);
+
+                if (checkLicence == "1")
                         {
                             this.HandlerAndSettings();
                             base.ActivateItem(this.ScreenSaver);

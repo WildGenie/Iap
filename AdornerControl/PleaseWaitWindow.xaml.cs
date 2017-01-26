@@ -33,7 +33,7 @@ namespace Iap.AdornerControl
         private void StartCloseTimer()
         {
             DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(20);
+            timer.Interval = TimeSpan.FromSeconds(25);
             timer.Tick += TimerTick;
             timer.Start();
         }
