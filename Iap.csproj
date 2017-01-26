@@ -350,7 +350,6 @@
     </Compile>
     <Compile Include="Gr\TwoButtonsShellGrViewModel.cs" />
     <Compile Include="Handlers\CustomDialogHandler.cs" />
-    <Compile Include="Handlers\CustomJsDialog.cs" />
     <Compile Include="Handlers\CustomMenuHandler.cs" />
     <Compile Include="Handlers\CustomRenderProcessHandler.cs" />
     <Compile Include="Handlers\CustomRequestHandler.cs" />
@@ -358,7 +357,6 @@
     <Compile Include="Handlers\GlobalCounters.cs" />
     <Compile Include="Handlers\LifeSpanHandler.cs" />
     <Compile Include="Handlers\PrinterCanceller.cs" />
-    <Compile Include="Handlers\RequestHandler.cs" />
     <Compile Include="IdleBrowserViewModel.cs" />
     <Compile Include="IdleTimeViewModel.cs" />
     <Compile Include="InstallingView.xaml.cs">

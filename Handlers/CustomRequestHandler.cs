@@ -17,6 +17,12 @@ namespace Iap.Handlers
             this.previousUrl = previousUrl;
         }
 
+        public string beforePrintPdfUrl
+        {
+            get;
+            set;
+        }
+
         public bool GetAuthCredentials(IWebBrowser browserControl, IBrowser browser, IFrame frame, bool isProxy, string host, int port, string realm, string scheme, IAuthCallback callback)
         {
             return false;
@@ -50,6 +56,7 @@ namespace Iap.Handlers
         public bool OnOpenUrlFromTab(IWebBrowser browserControl, IBrowser browser, IFrame frame, string targetUrl, WindowOpenDisposition targetDisposition, bool userGesture)
         {
             previousUrl = browserControl.GetMainFrame().Url;
+           // previousUrl = GlobalText.beforeStartPrintingUrl;
             if (browser.IsPopup)
             {
                 browser.MainFrame.ExecuteJavaScriptAsync(@"window.close()");
@@ -61,6 +68,10 @@ namespace Iap.Handlers
 
                 browserControl.FrameLoadEnd += BrowserControl_FrameLoadEnd;
 
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("browser is not popup");
             }
             return false;
         }
@@ -80,8 +91,9 @@ namespace Iap.Handlers
 
                     mainBrowser.PrintToPdfAsync(path);
 
-                    mainBrowser.Load(this.previousUrl);
-
+                    // mainBrowser.Load(this.previousUrl);
+                    // mainBrowser.Load(beforePrintPdfUrl);
+                    mainBrowser.Load(GlobalText.beforeStartPrintingUrl);
                 }
                 this.previousUrl = "";
             }
@@ -117,6 +129,8 @@ namespace Iap.Handlers
             if (request.Url.EndsWith(".doc"))
             {
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
+                beforePrintPdfUrl = toNavigate;
+                GlobalText.beforeStartPrintingUrl = toNavigate;
                 browserControl.Load(toNavigate);
             }
 
@@ -124,6 +138,8 @@ namespace Iap.Handlers
             {
                 // string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=true&fullscreen=yes";
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
+                beforePrintPdfUrl = toNavigate;
+                GlobalText.beforeStartPrintingUrl = toNavigate;
                 browserControl.Load(toNavigate);
             }
 
@@ -131,12 +147,16 @@ namespace Iap.Handlers
             {
                 //string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=true&fullscreen=yes";
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
+                beforePrintPdfUrl = toNavigate;
+                GlobalText.beforeStartPrintingUrl = toNavigate;
                 browserControl.Load(toNavigate);
             }
 
             else if (request.Url.EndsWith(".pdf"))
             {
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
+                beforePrintPdfUrl = toNavigate;
+                GlobalText.beforeStartPrintingUrl = toNavigate;
                 browserControl.Load(toNavigate);
             }
         }

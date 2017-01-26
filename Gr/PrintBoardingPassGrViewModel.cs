@@ -70,9 +70,11 @@ namespace Iap.Gr
             ((PrintBoardingPassGrView)view).InternetAccessBrowser.Children.Add(_printBoardingPassBrowser);
 
             _printBoardingPassBrowser.LifeSpanHandler = new LifeSpanHandler();
-            _printBoardingPassBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(this.numberOfAvailablePagesToPrint));
+            _printBoardingPassBrowser.RequestHandler = new CustomRequestHandler("");
+          //  _printBoardingPassBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(this.numberOfAvailablePagesToPrint));
             _printBoardingPassBrowser.RequestContext = new RequestContext();
             _printBoardingPassBrowser.DialogHandler = new CustomDialogHandler();
+            _printBoardingPassBrowser.MenuHandler = new CustomMenuHandler();
 
             _printBoardingPassBrowser.TouchDown += _printBoardingPassBrowser_TouchDown;
 

@@ -167,9 +167,11 @@ namespace Iap.DynamicEnglishScreens
            
             _internetAccessBrowser.RequestHandler = new CustomRequestHandler("");
             _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
-          
 
-           // _internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler();
+            _internetAccessBrowser.MenuHandler = new CustomMenuHandler();
+
+
+            // _internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler();
 
             _internetAccessBrowser.MouseDown += _internetAccessBrowser_MouseDown;
             _internetAccessBrowser.TouchDown += _internetAccessBrowser_TouchDown;

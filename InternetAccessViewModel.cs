@@ -93,20 +93,20 @@ namespace Iap
               _internetAccessBrowser.RegisterJsObject("bound", obj);
               _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;*/
 
-          
 
-            _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
+
+
             // _internetAccessBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
-
+            _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
             _internetAccessBrowser.RequestHandler = new CustomRequestHandler("");
-
             _internetAccessBrowser.MenuHandler = new CustomMenuHandler();
-         //   _internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler();
-            _internetAccessBrowser.JsDialogHandler = new CustomJsDialog();
-
             _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
-           // _internetAccessBrowser.FrameLoadEnd += _internetAccessBrowser_FrameLoadEnd;
-            
+            //   _internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler();
+            //  _internetAccessBrowser.JsDialogHandler = new CustomJsDialog();
+
+
+            // _internetAccessBrowser.FrameLoadEnd += _internetAccessBrowser_FrameLoadEnd;
+
 
             ((InternetAccessView)view).InternetAccessBrowser.Children.Add(_internetAccessBrowser);
 

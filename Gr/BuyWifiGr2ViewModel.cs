@@ -81,6 +81,7 @@ namespace Iap.Gr
             // _buyWifiBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
             _buyWifiBrowser.RequestHandler = new CustomRequestHandler("");
             _buyWifiBrowser.DialogHandler = new CustomDialogHandler();
+            _buyWifiBrowser.MenuHandler = new CustomMenuHandler();
             _buyWifiBrowser.Focus();
 
 

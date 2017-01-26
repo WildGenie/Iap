@@ -11,5 +11,7 @@ namespace Iap
         public static string DisclaimerEnglish = System.Configuration.ConfigurationManager.AppSettings["disclaimerEn"];
 
         public static string DisclaimerGreek = System.Configuration.ConfigurationManager.AppSettings["disclaimerGr"];
+
+        public static string beforeStartPrintingUrl = "";
     }
 }

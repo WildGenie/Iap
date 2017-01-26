@@ -103,7 +103,8 @@ namespace Iap.Bounds
     
 
         public async void onPrintRequested(string selected)
-        {            
+        {
+             
             try
             {
                 
@@ -164,9 +165,11 @@ namespace Iap.Bounds
                             {
                                 this.log.Info("Invoking Action: ViewPrintRequested " + numberOfPages.ToString() + " pages.");
                             }
-                            catch { }
+                            catch
+                            { }
                            
                                 System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+                            info.UseShellExecute = true;
                                 info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
                                 info.Verb = "print";
                                 info.FileName = path;
@@ -196,10 +199,13 @@ namespace Iap.Bounds
                                     }
                                     catch { }
                                 }
-                            
 
-                            this.sender.SendAction("Printed " + numberOfPages + " pages.");
+                            try
+                            {
+                                this.sender.SendAction("Printed " + numberOfPages + " pages.");
 
+                            }
+                            catch { }
                                 GlobalCounters.numberOfCurrentPrintings += numberOfPages;
 
                             }

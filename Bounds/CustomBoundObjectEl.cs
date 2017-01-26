@@ -218,12 +218,23 @@ namespace Iap.Bounds
             }
         }*/
 
+        /*    private bool NotInDocs(string url)
+        {
+            return url.Contains(".pdf") && !url.Contains("docs.google.com")
+                || url.Contains("print=true");
+        }*/
+
         public void OnFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
-
+            
             _mainBrowser = sender as ChromiumWebBrowser;
-
-
+                
+         /*   if(NotInDocs(_mainBrowser.GetMainFrame().Url))
+            {
+                string toNavigate = "http://docs.google.com/gview?url=" + _mainBrowser.GetMainFrame().Url + "&embedded=false";
+                _mainBrowser.Load(toNavigate);
+            }
+            */
             _mainBrowser.ExecuteScriptAsync(@"document.onselectstart = function()
         {
             return false;
@@ -362,7 +373,8 @@ namespace Iap.Bounds
                             p.StartInfo = info;
                             p.Start();
 
-                            p.WaitForInputIdle();
+                            // p.WaitForInputIdle();
+                            p.WaitForExit();
                             System.Threading.Thread.Sleep(10000);
                             if (false == p.CloseMainWindow())
                             {
@@ -381,9 +393,12 @@ namespace Iap.Bounds
                                 catch { }
                             }
 
+                            try
+                            {
+                                this.sender.SendAction("Printed " + numberOfPages + " pages.");
 
-                            this.sender.SendAction("Printed " + numberOfPages + " pages.");
-
+                            }
+                            catch { }
                             GlobalCounters.numberOfCurrentPrintings += numberOfPages;
 
                         }

@@ -99,6 +99,7 @@ namespace Iap.Gr
             //  _internetAccessBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
             _internetAccessBrowser.RequestHandler = new CustomRequestHandler("");
             _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
+            _internetAccessBrowser.MenuHandler = new CustomMenuHandler();
             _internetAccessBrowser.Focus();
    
             timer = new DispatcherTimer();
