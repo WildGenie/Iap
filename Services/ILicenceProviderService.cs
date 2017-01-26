@@ -7,7 +7,7 @@ namespace Iap.Services
     {
         bool hasAlreadyKey();
 
-        bool writeKeyToRegistry(string type, string id);
+        bool writeKeyToRegistry(string type, string id, string licenceName);
 
         void deleteFromRegistry();
 
@@ -19,6 +19,6 @@ namespace Iap.Services
 
         Task<string> checkPcLicence(CancellationTokenSource ct);
 
-        Task<string> sendPcData(string type, CancellationToken ct);
+        Task<string> sendPcData(string type, string licenceName, CancellationToken ct);
     }
 }

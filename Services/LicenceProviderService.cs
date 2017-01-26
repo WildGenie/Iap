@@ -60,7 +60,23 @@ namespace Iap.Services
             }
         }
 
-        public bool writeKeyToRegistry(string type, string id)
+        public string retrieveLicenceNameFromRegistry()
+        {
+            var directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            var path = Path.Combine(directory, "iapSettings.txt");
+            if (File.Exists(path))
+            {
+                string line = File.ReadAllLines(path).Where(x => x.ToString().StartsWith("licenceName=")).FirstOrDefault();
+                string type = line.Replace("licenceName=", "");
+                return type;
+            }
+            else
+            {
+                return "null";
+            }
+        }
+
+        public bool writeKeyToRegistry(string type, string id, string licenceName)
         {
             try
             {
@@ -72,6 +88,7 @@ namespace Iap.Services
                     {
                         sw.WriteLine("Type=" + type);
                         sw.WriteLine("ID=" + id);
+                        sw.WriteLine("licenceName=" + licenceName);
                     }
                 }
                 return true;
@@ -96,30 +113,6 @@ namespace Iap.Services
             }
         }
 
-
-        public string getUniquePcId()
-        {
-            try
-            {
-                ManagementObjectSearcher searcher = new
-         ManagementObjectSearcher("SELECT * FROM Win32_PhysicalMedia");
-
-                string serialNo = "";
-
-                foreach (ManagementObject wmi_HD in searcher.Get())
-                {
-
-                    if (wmi_HD["SerialNumber"] != null)
-                        serialNo += wmi_HD["SerialNumber"].ToString();
-                }
-
-                return serialNo.Replace(" ", "");
-            }
-            catch
-            {
-                return "";
-            }
-        }
 
         public string getProcessorID()
         {
@@ -151,7 +144,6 @@ namespace Iap.Services
         public void ShowUniqueIds()
         {
             string procID = this.getProcessorID();
-            string diskID = this.getUniquePcId();
         }
 
         public string checkLicencesStatus()
@@ -168,19 +160,19 @@ namespace Iap.Services
             }
         }
 
-        public async Task<string> sendPcData(string type, CancellationToken ct)
+        public async Task<string> sendPcData(string type, string licenceName, CancellationToken ct)
         {
               try
               {
                   string procID = this.getProcessorID();
-                  string hdID = this.getUniquePcId();
+                // string hdID = this.getUniquePcId();
                   var httpClient = new HttpClient();
 
 
                   var parameters = new Dictionary<string, string>();
                   parameters["type"] = type;
                   parameters["prid"] = procID;
-                  parameters["hdid"] = hdID;
+                  parameters["hdid"] = licenceName;
 
                   var response = await httpClient.PostAsync(this.sendPCDataApi, new FormUrlEncodedContent(parameters), ct);
                   var contents = await response.Content.ReadAsStringAsync();
@@ -198,10 +190,11 @@ namespace Iap.Services
             ct.CancelAfter(TimeSpan.FromSeconds(25));
             try
             {
-                string hdID = this.getUniquePcId();
+                // string hdID = this.getUniquePcId();
+                string lName = this.retrieveLicenceNameFromRegistry();
                 var parameters = new Dictionary<string, string>();
-                parameters["hdid"] = hdID;
-                this.log.Info("Invoking Action: DiskID=" + hdID);
+                parameters["hdid"] = lName;
+               //this.log.Info("Invoking Action: DiskID=" + hdID);
                 var httpClient = new HttpClient();
                 var response = await httpClient.PostAsync(this.checkLicenceApi,
                     new FormUrlEncodedContent(parameters), ct.Token);
@@ -220,5 +213,7 @@ namespace Iap.Services
                 return "error";
             }
         }
+
+       
     }
 }

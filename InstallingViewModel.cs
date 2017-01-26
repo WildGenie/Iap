@@ -35,6 +35,15 @@ namespace Iap
             set;
         }
 
+        private string generateRandomLicence()
+        {
+            Random random = new Random();
+            int length = 16;
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
         public async void CheckAndValidate(string type)
         {
               CancellationTokenSource cts;
@@ -45,7 +54,9 @@ namespace Iap
 
            if(canInstall)
            {
-               string response = await this.licenceProvider.sendPcData(type, cts.Token);
+                string randomLicenceName = this.generateRandomLicence();
+
+               string response = await this.licenceProvider.sendPcData(type, randomLicenceName, cts.Token);
 
                if(response.TrimStart().TrimEnd()!=null)
                {
@@ -55,7 +66,7 @@ namespace Iap
                        if (licenceID != "")
                        {
 
-                           if (this.licenceProvider.writeKeyToRegistry(type, licenceID))
+                           if (this.licenceProvider.writeKeyToRegistry(type, licenceID, randomLicenceName))
                            {
                                Handlers.GlobalCounters.kioskID = licenceID;
                                this.events.PublishOnCurrentThread(new ViewFirstRegistrationCommand(type));
