@@ -308,7 +308,7 @@ namespace Iap.Bounds
                     PleaseWaitWindow wait = new PleaseWaitWindow();
 
                     wait.ShowDialog();
-                    wait.LoadingAdorner.IsAdornerVisible = true;
+                   // wait.LoadingAdorner.IsAdornerVisible = true;
                     wait.Close();
 
                 });

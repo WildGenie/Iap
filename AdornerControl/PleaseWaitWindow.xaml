@@ -4,17 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Iap.AdornerControl"
+        xmlns:localy="clr-namespace:Iap.LoadingControl"
         mc:Ignorable="d"
         Title="PleaseWaitWindow" AllowsTransparency="True" Loaded="Window_Loaded"
         Height="1108" Width="1900" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Window.Background>
         <SolidColorBrush Opacity="0.5" Color="White"/>
     </Window.Background>
-    <StackPanel>
+   <!-- <StackPanel>
         <local:AdornedControl x:Name="LoadingAdorner">
             <local:AdornedControl.Content>
                 <local:LoadingWait></local:LoadingWait>
             </local:AdornedControl.Content>
         </local:AdornedControl>
-    </StackPanel>
+    </StackPanel>-->
+    <Grid>
+        <localy:PrintingAnimation HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Grid>
 </Window>

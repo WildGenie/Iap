@@ -384,6 +384,9 @@
     <Compile Include="LoadingControl\LoadingAnimation.xaml.cs">
       <DependentUpon>LoadingAnimation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LoadingControl\PrintingAnimation.xaml.cs">
+      <DependentUpon>PrintingAnimation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LoadingView.xaml.cs">
       <DependentUpon>LoadingView.xaml</DependentUpon>
     </Compile>
@@ -668,6 +671,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LoadingControl\LoadingAnimation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoadingControl\PrintingAnimation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
