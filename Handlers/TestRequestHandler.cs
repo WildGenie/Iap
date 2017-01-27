@@ -1,20 +1,23 @@
-﻿using CefSharp;
-using CefSharp.Wpf;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CefSharp;
+using CefSharp.Wpf;
+using Caliburn.Micro;
 
 namespace Iap.Handlers
 {
-    public class CustomRequestHandler : IRequestHandler
+   public class TestRequestHandler:IRequestHandler
     {
         private string previousUrl;
+        private readonly ILog log;
 
-        public CustomRequestHandler(string previousUrl)
+        public TestRequestHandler(string previousUrl, ILog log)
         {
             this.previousUrl = previousUrl;
+            this.log = log;
         }
 
         public string beforePrintPdfUrl
@@ -30,33 +33,34 @@ namespace Iap.Handlers
 
         public IResponseFilter GetResourceResponseFilter(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response)
         {
-         /*   if(request.Url.EndsWith(".pdf"))
-            {
-                string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
-                browserControl.Load(toNavigate);
-                GlobalText.beforeStartPrintingUrl = toNavigate;
-            }
+            /*   if(request.Url.EndsWith(".pdf"))
+               {
+                   string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
+                   browserControl.Load(toNavigate);
+                   GlobalText.beforeStartPrintingUrl = toNavigate;
+               }
 
-            else if(request.Url.EndsWith(".doc"))
-            {
-                string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
-                browserControl.Load(toNavigate);
-                GlobalText.beforeStartPrintingUrl = toNavigate;
-            }
+               else if(request.Url.EndsWith(".doc"))
+               {
+                   string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
+                   browserControl.Load(toNavigate);
+                   GlobalText.beforeStartPrintingUrl = toNavigate;
+               }
 
-           else if(request.Url.EndsWith(".xls"))
-            {
-                string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
-                browserControl.Load(toNavigate);
-                GlobalText.beforeStartPrintingUrl = toNavigate;
-            }
+              else if(request.Url.EndsWith(".xls"))
+               {
+                   string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
+                   browserControl.Load(toNavigate);
+                   GlobalText.beforeStartPrintingUrl = toNavigate;
+               }
 
-            else if(request.Url.EndsWith(".ppt"))
-            {
-                string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
-                browserControl.Load(toNavigate);
-                GlobalText.beforeStartPrintingUrl = toNavigate;
-            }*/
+               else if(request.Url.EndsWith(".ppt"))
+               {
+                   string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
+                   browserControl.Load(toNavigate);
+                   GlobalText.beforeStartPrintingUrl = toNavigate;
+               }*/
+            this.log.Info("Invoking Action: View request url is " +request.Url);
 
             return null;
         }
@@ -78,9 +82,10 @@ namespace Iap.Handlers
 
         public bool OnOpenUrlFromTab(IWebBrowser browserControl, IBrowser browser, IFrame frame, string targetUrl, WindowOpenDisposition targetDisposition, bool userGesture)
         {
+            this.log.Info("Invoking Action: View Target url is " + targetUrl);
             previousUrl = browserControl.GetMainFrame().Url;
-           
-           // previousUrl = GlobalText.beforeStartPrintingUrl;
+
+            // previousUrl = GlobalText.beforeStartPrintingUrl;
             if (browser.IsPopup)
             {
                 browser.MainFrame.ExecuteJavaScriptAsync(@"window.close()");
@@ -90,22 +95,22 @@ namespace Iap.Handlers
                     browserControl.Load(targetUrl.Replace("print=true", "print=false"));
                 }
 
-             //   System.Threading.Thread.Sleep(2000);
-               // browserControl.Load(GlobalText.beforeStartPrintingUrl);
+                //   System.Threading.Thread.Sleep(2000);
+                // browserControl.Load(GlobalText.beforeStartPrintingUrl);
 
-                browserControl.FrameLoadEnd += BrowserControl_FrameLoadEnd;
+                browserControl.FrameLoadEnd +=(s,e)=> BrowserControl_FrameLoadEnd(previousUrl,s,e);
 
             }
             
             return false;
         }
 
-        private void BrowserControl_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
+        public  void BrowserControl_FrameLoadEnd(string previous,object sender, FrameLoadEndEventArgs e)
         {
             if (this.previousUrl != "")
             {
                 ChromiumWebBrowser mainBrowser = sender as ChromiumWebBrowser;
-               
+
                 if (mainBrowser.GetMainFrame().Url.Contains("print"))
                 {
                     string path = System.IO.Path.Combine(
@@ -117,21 +122,27 @@ namespace Iap.Handlers
 
                     // mainBrowser.Load(this.previousUrl);
                     // mainBrowser.Load(beforePrintPdfUrl);
+                    this.log.Info("Invoking Action: View Final Url is " + mainBrowser.GetMainFrame().Url);
+                    this.log.Info("Invoking Action: View FinalFromMe is " + previousUrl);
                     // mainBrowser.Load(GlobalText.beforeStartPrintingUrl);
                     mainBrowser.Load(previousUrl);
-                    if (mainBrowser.GetMainFrame().Url.Contains(".googleusercontent.com"))
+                    if(mainBrowser.GetMainFrame().Url.Contains(".googleusercontent.com"))
                     {
-                       //this.log.Info("Invoking Action: View sos i must redirect");
+                        this.log.Info("Invoking Action: View sos i must redirect");
                         mainBrowser.GetMainFrame().LoadUrl(previousUrl);
                     }
                 }
                // this.previousUrl = "";
             }
+            else
+            {
+                this.log.Info("InvokingAction: View no previous url");
+            }
         }
 
         public void OnPluginCrashed(IWebBrowser browserControl, IBrowser browser, string pluginPath)
         {
-            
+
         }
 
         public bool OnProtocolExecution(IWebBrowser browserControl, IBrowser browser, string url)
@@ -146,12 +157,12 @@ namespace Iap.Handlers
 
         public void OnRenderProcessTerminated(IWebBrowser browserControl, IBrowser browser, CefTerminationStatus status)
         {
-            
+
         }
 
         public void OnRenderViewReady(IWebBrowser browserControl, IBrowser browser)
         {
-            
+
         }
 
         public void OnResourceLoadComplete(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response, UrlRequestStatus status, long receivedContentLength)
@@ -160,7 +171,7 @@ namespace Iap.Handlers
             {
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
                 //beforePrintPdfUrl = toNavigate;
-               // GlobalText.beforeStartPrintingUrl = toNavigate;
+                // GlobalText.beforeStartPrintingUrl = toNavigate;
                 browserControl.Load(toNavigate);
             }
 
@@ -177,7 +188,7 @@ namespace Iap.Handlers
             {
                 //string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=true&fullscreen=yes";
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
-               // beforePrintPdfUrl = toNavigate;
+                // beforePrintPdfUrl = toNavigate;
                 //GlobalText.beforeStartPrintingUrl = toNavigate;
                 browserControl.Load(toNavigate);
             }
@@ -193,7 +204,7 @@ namespace Iap.Handlers
 
         public void OnResourceRedirect(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, ref string newUrl)
         {
-            
+
         }
 
         public bool OnResourceResponse(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response)

@@ -50,8 +50,6 @@ namespace Iap.Bounds
 
                 _mainBrowser.ExecuteScriptAsync(@"
                     
-                   
-                
                 
                 var beforePrint=function(){
 
@@ -104,6 +102,7 @@ namespace Iap.Bounds
 
         public async void onPrintRequested(string selected)
         {
+            //GlobalText.beforeStartPrintingUrl = url;
             try
             {
                 
@@ -232,11 +231,11 @@ namespace Iap.Bounds
                 //}
                
             }
-            try
+          /*  try
             {
                 KillAdobe("AcroRd32");
             }
-            catch { }
+            catch { }*/
         }
 
         private static bool KillAdobe(string name)

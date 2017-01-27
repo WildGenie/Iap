@@ -425,11 +425,11 @@ namespace Iap.Bounds
                 //}
 
             }
-            try
+          /*  try
             {
                 KillAdobe("AcroRd32");
             }
-            catch { }
+            catch { }*/
         }
 
         private static bool KillAdobe(string name)
