@@ -34,6 +34,14 @@ namespace Iap.Bounds
           
             _mainBrowser = sender as ChromiumWebBrowser;
 
+            
+
+           /* if (_mainBrowser.GetMainFrame().Url.EndsWith(".pdf") && !_mainBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+            {
+                _mainBrowser.GetMainFrame().LoadUrl("http://docs.google.com/gview?url=" + _mainBrowser.GetMainFrame().Url + "&embedded=false");
+            }*/
+
+
             if (_mainBrowser.GetMainFrame().Url.Contains("print=true"))
             {
                 _mainBrowser.Load(_mainBrowser.GetMainFrame().Url.Replace("print=true", "print=false"));
@@ -124,11 +132,11 @@ namespace Iap.Bounds
                 
             }
 
-            System.Threading.Thread.Sleep(2000);
+           // System.Threading.Thread.Sleep(2000);
 
                 if (selected == "before")
                 {
-                    PrinterCanceller.CancelPrint();
+                   // PrinterCanceller.CancelPrint();
 
                     string path = System.IO.Path.Combine(
                      System.IO.Path.GetDirectoryName(
@@ -180,7 +188,15 @@ namespace Iap.Bounds
 
                                 p.WaitForInputIdle();
                             p.CloseMainWindow();
-                                System.Threading.Thread.Sleep(10000);
+
+                            if (numberOfPages < Int32.Parse(this.numberOfAvailablePagesToPrint))
+                            {
+                                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(3));
+                            }
+                            else
+                            {
+                                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+                            }
 
                             if (false == p.CloseMainWindow())
                                 {

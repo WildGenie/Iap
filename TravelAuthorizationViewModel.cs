@@ -77,7 +77,7 @@ namespace Iap
 
             _travelAuthorizationBrowser.LifeSpanHandler = new LifeSpanHandler();
             _travelAuthorizationBrowser.MenuHandler = new CustomMenuHandler();
-            _travelAuthorizationBrowser.RequestHandler = new CustomRequestHandler("");
+            _travelAuthorizationBrowser.RequestHandler = new CustomRequestHandler("",log,sender,this.numberOfAvailablePagesToPrint);
             _travelAuthorizationBrowser.DialogHandler = new CustomDialogHandler();
 
             _travelAuthorizationBrowser.Focus();

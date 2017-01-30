@@ -19,6 +19,7 @@ namespace Iap.Handlers
 
         public void OnContextCreated(IWebBrowser browserControl, IBrowser browser, IFrame frame)
         {
+            
         }
 
         public void OnFocusedNodeChanged(IWebBrowser browserControl, IBrowser browser, IFrame frame, IDomNode node)

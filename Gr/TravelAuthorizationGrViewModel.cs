@@ -80,7 +80,7 @@ namespace Iap.Gr
             _travelAuthorizationBrowser.LifeSpanHandler = new LifeSpanHandler();
            // _travelAuthorizationBrowser.RequestHandler = new CustomRequestHandler("");
            // _travelAuthorizationBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
-            _travelAuthorizationBrowser.RequestHandler = new CustomRequestHandler("");
+            _travelAuthorizationBrowser.RequestHandler = new CustomRequestHandler("",log,sender,this.numberOfAvailablePagesToPrint);
             _travelAuthorizationBrowser.MenuHandler = new CustomMenuHandler();
             _travelAuthorizationBrowser.DialogHandler = new CustomDialogHandler();
 

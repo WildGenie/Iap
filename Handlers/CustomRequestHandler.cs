@@ -1,20 +1,34 @@
 ﻿using CefSharp;
 using CefSharp.Wpf;
+using Iap.AdornerControl;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Caliburn.Micro;
+using Iap.Services;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Iap.Handlers
 {
     public class CustomRequestHandler : IRequestHandler
     {
         private string previousUrl;
+        private readonly ILog log;
+        private readonly ISendStatsService sender;
+        private string numberOfAvailabelPagesToPrint;
 
-        public CustomRequestHandler(string previousUrl)
+        public CustomRequestHandler(string previousUrl, ILog log, ISendStatsService sender, string numberOfAvailabelPagesToPrint)
         {
             this.previousUrl = previousUrl;
+            this.log = log;
+            this.sender = sender;
+            this.numberOfAvailabelPagesToPrint = numberOfAvailabelPagesToPrint;
         }
 
         public string beforePrintPdfUrl
@@ -30,33 +44,33 @@ namespace Iap.Handlers
 
         public IResponseFilter GetResourceResponseFilter(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response)
         {
-         /*   if(request.Url.EndsWith(".pdf"))
+            if(request.Url.EndsWith(".pdf"))
             {
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
                 browserControl.Load(toNavigate);
-                GlobalText.beforeStartPrintingUrl = toNavigate;
+              //  GlobalText.beforeStartPrintingUrl = toNavigate;
             }
 
             else if(request.Url.EndsWith(".doc"))
             {
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
                 browserControl.Load(toNavigate);
-                GlobalText.beforeStartPrintingUrl = toNavigate;
+                //GlobalText.beforeStartPrintingUrl = toNavigate;
             }
 
            else if(request.Url.EndsWith(".xls"))
             {
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
                 browserControl.Load(toNavigate);
-                GlobalText.beforeStartPrintingUrl = toNavigate;
+               // GlobalText.beforeStartPrintingUrl = toNavigate;
             }
 
             else if(request.Url.EndsWith(".ppt"))
             {
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
                 browserControl.Load(toNavigate);
-                GlobalText.beforeStartPrintingUrl = toNavigate;
-            }*/
+             //   GlobalText.beforeStartPrintingUrl = toNavigate;
+            }
 
             return null;
         }
@@ -78,56 +92,192 @@ namespace Iap.Handlers
 
         public bool OnOpenUrlFromTab(IWebBrowser browserControl, IBrowser browser, IFrame frame, string targetUrl, WindowOpenDisposition targetDisposition, bool userGesture)
         {
-            previousUrl = browserControl.GetMainFrame().Url;
-           
-           // previousUrl = GlobalText.beforeStartPrintingUrl;
+            //  previousUrl = browserControl.GetMainFrame().Url;
+            //System.Windows.MessageBox.Show("from tab");
+            // previousUrl = GlobalText.beforeStartPrintingUrl;
             if (browser.IsPopup)
             {
+                
                 browser.MainFrame.ExecuteJavaScriptAsync(@"window.close()");
 
                 if (targetUrl.Contains("print=true"))
                 {
-                    browserControl.Load(targetUrl.Replace("print=true", "print=false"));
+                    string UrlToDownload = targetUrl.Replace("print=true", "print=false");
+                    // browserControl.Load(targetUrl.Replace("print=true", "print=false"));
+                    Thread downLoadThread = new Thread(() =>
+                    ConvertToStream(UrlToDownload));
+                    downLoadThread.Start();
                 }
 
-             //   System.Threading.Thread.Sleep(2000);
-               // browserControl.Load(GlobalText.beforeStartPrintingUrl);
+                //   System.Threading.Thread.Sleep(2000);
+                // browserControl.Load(GlobalText.beforeStartPrintingUrl);
 
-                browserControl.FrameLoadEnd += BrowserControl_FrameLoadEnd;
-
+                //browserControl.FrameLoadEnd += BrowserControl_FrameLoadEnd;
+                
             }
             
             return false;
         }
 
-        private void BrowserControl_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
+        private  void ConvertToStream(string fileUrl)
         {
-            if (this.previousUrl != "")
+            try
             {
-                ChromiumWebBrowser mainBrowser = sender as ChromiumWebBrowser;
-               
-                if (mainBrowser.GetMainFrame().Url.Contains("print"))
+
+                Thread waitThread = new Thread(() =>
                 {
-                    string path = System.IO.Path.Combine(
-                               System.IO.Path.GetDirectoryName(
-                               this.GetType().Assembly.Location),
-                               "Printings", "test.pdf");
+                    PleaseWaitWindow wait = new PleaseWaitWindow();
 
-                    mainBrowser.PrintToPdfAsync(path);
+                    wait.ShowDialog();
+                    // wait.LoadingAdorner.IsAdornerVisible = true;
+                    wait.Close();
 
-                    // mainBrowser.Load(this.previousUrl);
-                    // mainBrowser.Load(beforePrintPdfUrl);
-                    // mainBrowser.Load(GlobalText.beforeStartPrintingUrl);
-                    mainBrowser.Load(previousUrl);
-                    if (mainBrowser.GetMainFrame().Url.Contains(".googleusercontent.com"))
-                    {
-                       //this.log.Info("Invoking Action: View sos i must redirect");
-                        mainBrowser.GetMainFrame().LoadUrl(previousUrl);
-                    }
+                });
+                waitThread.SetApartmentState(ApartmentState.STA);
+                waitThread.Start();
+            }
+
+            catch
+            {
+
+            }
+
+            System.Threading.Thread.Sleep(2000);
+
+            try {
+
+                ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(AcceptAllCertifications);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(fileUrl);
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+
+
+                var theStream = new object();
+                string fileName = AppDomain.CurrentDomain.BaseDirectory + "Printings" + @"\toPrint.pdf";
+
+
+                using (var stream = File.Create(fileName))
+                {
+                    File.SetAttributes(fileName, FileAttributes.Normal);
+                    response.GetResponseStream().CopyTo(stream);
                 }
-               // this.previousUrl = "";
+
+                iTextSharp.text.pdf.PdfReader pdfReader = new iTextSharp.text.pdf.PdfReader(fileName);
+                int numberOfPages = pdfReader.NumberOfPages;
+
+                if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <= Convert.ToInt32(this.numberOfAvailabelPagesToPrint))
+                {
+
+                    try
+                    {
+                        this.log.Info("Invoking Action: ViewPrintRequested " + numberOfPages.ToString() + " pages.");
+                    }
+                    catch
+                    { }
+
+                    System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+                    info.UseShellExecute = true;
+                    info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                    info.Verb = "print";
+                    info.FileName = fileName;
+                    info.CreateNoWindow = true;
+
+
+                    System.Diagnostics.Process p = new System.Diagnostics.Process();
+                    p.StartInfo = info;
+                    p.Start();
+
+                    p.WaitForInputIdle();
+                    p.CloseMainWindow();
+                    /*  if (numberOfPages < Int32.Parse(this.numberOfAvailabelPagesToPrint))
+                      {
+                          System.Threading.Thread.Sleep(TimeSpan.FromSeconds(numberOfPages));
+                      }
+                      else
+                      {
+                          System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
+                      }*/
+                    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+
+                    if (false == p.CloseMainWindow())
+                    {
+                        try
+                        {
+                            p.Kill();
+                        }
+                        catch { }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            p.Kill();
+                        }
+                        catch { }
+                    }
+
+                    try
+                    {
+                        this.sender.SendAction("Printed " + numberOfPages + " pages.");
+
+                    }
+                    catch { }
+                    GlobalCounters.numberOfCurrentPrintings += numberOfPages;
+                }
+
+                else
+                {
+                    System.Windows.MessageBox.Show("Unfortunately, you can not print so many pages! Please press OK to continue.");
+                }
+
+
+            }
+            catch(Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString());
+                //System.Windows.MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+
+                //response.Close();
             }
         }
+
+        private bool AcceptAllCertifications(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        {
+            return true;
+        }
+
+        /*     private void BrowserControl_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
+             {
+                 if (this.previousUrl != "")
+                 {
+                     ChromiumWebBrowser mainBrowser = sender as ChromiumWebBrowser;
+
+                     if (mainBrowser.GetMainFrame().Url.Contains("print"))
+                     {
+                         string path = System.IO.Path.Combine(
+                                    System.IO.Path.GetDirectoryName(
+                                    this.GetType().Assembly.Location),
+                                    "Printings", "test.pdf");
+
+                         mainBrowser.PrintToPdfAsync(path);
+
+                         // mainBrowser.Load(this.previousUrl);
+                         // mainBrowser.Load(beforePrintPdfUrl);
+                         // mainBrowser.Load(GlobalText.beforeStartPrintingUrl);
+                         mainBrowser.Load(previousUrl);
+                         if (mainBrowser.GetMainFrame().Url.Contains(".googleusercontent.com"))
+                         {
+                            //this.log.Info("Invoking Action: View sos i must redirect");
+                             mainBrowser.GetMainFrame().LoadUrl(previousUrl);
+                         }
+                     }
+                    // this.previousUrl = "";
+                 }
+             }*/
 
         public void OnPluginCrashed(IWebBrowser browserControl, IBrowser browser, string pluginPath)
         {
@@ -159,36 +309,35 @@ namespace Iap.Handlers
             if (request.Url.EndsWith(".doc"))
             {
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
-                //beforePrintPdfUrl = toNavigate;
-               // GlobalText.beforeStartPrintingUrl = toNavigate;
+               
                 browserControl.Load(toNavigate);
             }
 
             else if (request.Url.EndsWith(".ppt"))
             {
-                // string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=true&fullscreen=yes";
+                
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
-                //beforePrintPdfUrl = toNavigate;
-                //GlobalText.beforeStartPrintingUrl = toNavigate;
+                
                 browserControl.Load(toNavigate);
             }
 
             else if (request.Url.EndsWith(".xls"))
             {
-                //string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=true&fullscreen=yes";
+                
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
-               // beforePrintPdfUrl = toNavigate;
-                //GlobalText.beforeStartPrintingUrl = toNavigate;
+               
                 browserControl.Load(toNavigate);
             }
 
             else if (request.Url.EndsWith(".pdf"))
             {
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
-                //beforePrintPdfUrl = toNavigate;
-                //GlobalText.beforeStartPrintingUrl = toNavigate;
+                
                 browserControl.Load(toNavigate);
+                
             }
+
+            
         }
 
         public void OnResourceRedirect(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, ref string newUrl)

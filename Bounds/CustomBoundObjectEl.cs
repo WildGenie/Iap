@@ -325,7 +325,7 @@ namespace Iap.Bounds
 
             if (selected == "before")
             {
-                PrinterCanceller.CancelPrint();
+               // PrinterCanceller.CancelPrint();
 
                 string path = System.IO.Path.Combine(
                  System.IO.Path.GetDirectoryName(
