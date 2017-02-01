@@ -186,16 +186,17 @@ namespace Iap.Bounds
                                 p.StartInfo = info;
                                 p.Start();
 
-                                p.WaitForInputIdle();
+                            // p.WaitForInputIdle();
+                            p.WaitForExit();
                             p.CloseMainWindow();
 
                             if (numberOfPages < Int32.Parse(this.numberOfAvailablePagesToPrint))
                             {
-                                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(3));
+                                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(6));
                             }
                             else
                             {
-                                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+                                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(6));
                             }
 
                             if (false == p.CloseMainWindow())

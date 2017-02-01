@@ -140,7 +140,7 @@ namespace Iap.Handlers
                       {
                           System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
                       }*/
-                    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(6));
 
                     if (false == p.CloseMainWindow())
                     {

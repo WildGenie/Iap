@@ -146,7 +146,7 @@ namespace Iap.Handlers
 
             try {
 
-                ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(AcceptAllCertifications);
+              //  ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(AcceptAllCertifications);
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(fileUrl);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
@@ -188,7 +188,7 @@ namespace Iap.Handlers
                     p.StartInfo = info;
                     p.Start();
 
-                    p.WaitForInputIdle();
+                    p.WaitForExit();
                     p.CloseMainWindow();
                     /*  if (numberOfPages < Int32.Parse(this.numberOfAvailabelPagesToPrint))
                       {
@@ -198,7 +198,7 @@ namespace Iap.Handlers
                       {
                           System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
                       }*/
-                    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(6));
 
                     if (false == p.CloseMainWindow())
                     {
@@ -235,8 +235,7 @@ namespace Iap.Handlers
             }
             catch(Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
-                //System.Windows.MessageBox.Show(ex.ToString());
+                this.log.Info("InvokingAction: ViewException " + ex.ToString());
             }
             finally
             {
@@ -245,10 +244,10 @@ namespace Iap.Handlers
             }
         }
 
-        private bool AcceptAllCertifications(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+    /*    private bool AcceptAllCertifications(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
             return true;
-        }
+        }*/
 
         /*     private void BrowserControl_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
              {
