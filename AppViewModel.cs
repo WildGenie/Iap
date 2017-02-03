@@ -42,22 +42,25 @@ namespace Iap
         IHandle<ViewTwoButtonsAdvertCommand>,
         IHandle<ViewFirstRegistrationCommand>,
         IHandle<ViewShutDownCommand>,
-        IHandle<ViewInstallationCommand>
+        IHandle<ViewInstallationCommand>,
+        IHandle<ViewStartPrintProgressCommand>
     {
         public IEventAggregator events;
         private bool isGreekSelected;
         private readonly ILog log;
+        private readonly IWindowManager windowManager;
      
 
         private readonly IGetScreenDetailsService parser;
         private readonly ILicenceProviderService licenceProvider;
 
-        public AppViewModel(IEventAggregator events, IGetScreenDetailsService parser, ILicenceProviderService licenceProvider, ILog log)
+        public AppViewModel(IEventAggregator events, IGetScreenDetailsService parser, ILicenceProviderService licenceProvider, ILog log, IWindowManager windowManager)
         {
             this.events = events;
             this.parser = parser;
             this.licenceProvider = licenceProvider;
             this.log = log;
+            this.windowManager = windowManager;
         }
 
         public ShellViewModel Shell { get; set; }
@@ -128,10 +131,16 @@ namespace Iap
 
         public LoadingViewModel Loading { get; set; }
 
+        public PrintWaitView PrintWait { get; set; }
+
         private string KioskType { get; set; }
+
+        private AppView mainView;
+
 
         protected async override void OnViewLoaded(object view)
         {
+            mainView = ((AppView)view);
             CancellationTokenSource ct = new CancellationTokenSource();
 
             base.ActivateItem(this.Loading);
@@ -719,6 +728,12 @@ namespace Iap
         {
             base.ActivateItem(this.Installing);
             this.Installing.CheckAndValidate(message.Type);
+        }
+
+        public void Handle(ViewStartPrintProgressCommand message)
+        {
+            mainView.Focus();
+            windowManager.ShowWindow(this.PrintWait);
         }
     }
 }

@@ -188,6 +188,7 @@
     <Compile Include="Commands\ViewRedirectToBrowserCommand.cs" />
     <Compile Include="Commands\ViewShutDownCommand.cs" />
     <Compile Include="Commands\ViewSrceenSaverCommand.cs" />
+    <Compile Include="Commands\ViewStartPrintProgressCommand.cs" />
     <Compile Include="Commands\ViewTravelAuthorizationCommand.cs" />
     <Compile Include="Commands\ViewTwoButtonsAdvertCommand.cs" />
     <Compile Include="Commands\ViewTwoButtonsShellEnCommand.cs" />
@@ -399,6 +400,10 @@
       <DependentUpon>PrintBoardingPassView.xaml</DependentUpon>
     </Compile>
     <Compile Include="PrintBoardingPassViewModel.cs" />
+    <Compile Include="PrintWaitView.xaml.cs">
+      <DependentUpon>PrintWaitView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PrintWaitViewModel.cs" />
     <Compile Include="ScreenSaverView.xaml.cs">
       <DependentUpon>ScreenSaverView.xaml</DependentUpon>
     </Compile>
@@ -683,6 +688,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PrintBoardingPassView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PrintWaitView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

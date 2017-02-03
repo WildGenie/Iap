@@ -99,7 +99,7 @@ namespace Iap
             // _internetAccessBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
            // _internetAccessBrowser.RequestHandler = new TestRequestHandler("",log);
-            _internetAccessBrowser.RequestHandler = new CustomRequestHandler("",log,sender,this.numberOfAvailablePagesToPrint);
+            _internetAccessBrowser.RequestHandler = new CustomRequestHandler("",log,sender,this.numberOfAvailablePagesToPrint,events);
             _internetAccessBrowser.MenuHandler = new CustomMenuHandler();
             _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
             _internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler();

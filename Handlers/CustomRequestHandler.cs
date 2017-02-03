@@ -13,6 +13,7 @@ using Caliburn.Micro;
 using Iap.Services;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using Iap.Commands;
 
 namespace Iap.Handlers
 {
@@ -22,13 +23,15 @@ namespace Iap.Handlers
         private readonly ILog log;
         private readonly ISendStatsService sender;
         private string numberOfAvailabelPagesToPrint;
+        private readonly IEventAggregator events;
 
-        public CustomRequestHandler(string previousUrl, ILog log, ISendStatsService sender, string numberOfAvailabelPagesToPrint)
+        public CustomRequestHandler(string previousUrl, ILog log, ISendStatsService sender, string numberOfAvailabelPagesToPrint, IEventAggregator events)
         {
             this.previousUrl = previousUrl;
             this.log = log;
             this.sender = sender;
             this.numberOfAvailabelPagesToPrint = numberOfAvailabelPagesToPrint;
+            this.events = events;
         }
 
         public string beforePrintPdfUrl
@@ -124,22 +127,22 @@ namespace Iap.Handlers
             try
             {
 
-                Thread waitThread = new Thread(() =>
-                {
-                    PleaseWaitWindow wait = new PleaseWaitWindow();
+                /*   Thread waitThread = new Thread(() =>
+                   {
+                       PleaseWaitWindow wait = new PleaseWaitWindow();
 
-                    wait.ShowDialog();
-                    // wait.LoadingAdorner.IsAdornerVisible = true;
-                    wait.Close();
+                       wait.ShowDialog();
+                       wait.Close();
 
-                });
-                waitThread.SetApartmentState(ApartmentState.STA);
-                waitThread.Start();
+                   });
+                   waitThread.SetApartmentState(ApartmentState.STA);
+                   waitThread.Start();*/
+                this.events.PublishOnUIThread(new ViewStartPrintProgressCommand());
             }
 
-            catch
+            catch(Exception ex)
             {
-
+                System.Windows.MessageBox.Show(ex.ToString());
             }
 
             System.Threading.Thread.Sleep(2000);
@@ -177,7 +180,7 @@ namespace Iap.Handlers
                     { }
 
                     System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
-                    info.UseShellExecute = true;
+                  //  info.UseShellExecute = true;
                     info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
                     info.Verb = "print";
                     info.FileName = fileName;
