@@ -12,6 +12,8 @@ namespace Iap
     {
         private readonly IEventAggregator events;
 
+        PrintWaitView myView;
+
         public PrintWaitViewModel(IEventAggregator events)
         {
             this.events = events;
@@ -19,6 +21,8 @@ namespace Iap
 
         protected override void OnViewLoaded(object view)
         {
+            myView = ((PrintWaitView)view);
+            ((PrintWaitView)view).Focus();
             this.StartCloseTimer();
             base.OnViewLoaded(view);
         }

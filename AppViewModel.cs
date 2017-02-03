@@ -131,7 +131,7 @@ namespace Iap
 
         public LoadingViewModel Loading { get; set; }
 
-        public PrintWaitView PrintWait { get; set; }
+        public PrintWaitViewModel PrintWait { get; set; }
 
         private string KioskType { get; set; }
 
