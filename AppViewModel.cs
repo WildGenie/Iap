@@ -734,6 +734,11 @@ namespace Iap
         {
             mainView.Focus();
             windowManager.ShowWindow(this.PrintWait);
+            try
+            {
+                TaskbarManager.HideTaskbar();
+            }
+            catch { }
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Iap.Gr
 
             _travelAuthorizationBrowser.Load(this.travelAuthorizationGrApi);
 
-            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint,this.log,sender);
+            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint,this.log,sender,events);
             _travelAuthorizationBrowser.RegisterJsObject("bound", obj);
             _travelAuthorizationBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 

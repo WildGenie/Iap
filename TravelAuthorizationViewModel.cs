@@ -82,7 +82,7 @@ namespace Iap
 
             _travelAuthorizationBrowser.Focus();
 
-            var obj = new CustomBoundObject(this.numberOfAvailablePagesToPrint, log,sender);
+            var obj = new CustomBoundObject(this.numberOfAvailablePagesToPrint, log,sender,events);
             _travelAuthorizationBrowser.RegisterJsObject("bound", obj);
             _travelAuthorizationBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 

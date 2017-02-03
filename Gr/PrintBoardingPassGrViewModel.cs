@@ -62,7 +62,7 @@ namespace Iap.Gr
 
             _printBoardingPassBrowser.Load(this.boardingPassGrApi);
 
-            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint,this.log,sender);
+            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint,this.log,sender,events);
 
             _printBoardingPassBrowser.RegisterJsObject("bound", obj);
             _printBoardingPassBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;

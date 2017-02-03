@@ -63,7 +63,7 @@ namespace Iap.Gr
 
             _buyWifiBrowser.Load(this.buyWifiGrApi);
 
-            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint,this.log,sender);
+            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint,this.log,sender,events);
 
             _buyWifiBrowser.RegisterJsObject("bound", obj);
             _buyWifiBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;

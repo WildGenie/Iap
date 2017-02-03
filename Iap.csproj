@@ -425,6 +425,7 @@
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ShellViewModel.cs" />
+    <Compile Include="TaskbarManager.cs" />
     <Compile Include="TravelAuthorizationView.xaml.cs">
       <DependentUpon>TravelAuthorizationView.xaml</DependentUpon>
     </Compile>

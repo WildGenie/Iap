@@ -14,6 +14,8 @@ namespace Iap
 
         PrintWaitView myView;
 
+        DispatcherTimer hideBarTimer;
+
         public PrintWaitViewModel(IEventAggregator events)
         {
             this.events = events;
@@ -23,8 +25,25 @@ namespace Iap
         {
             myView = ((PrintWaitView)view);
             ((PrintWaitView)view).Focus();
+
+            hideBarTimer = new DispatcherTimer();
+            hideBarTimer.Interval = TimeSpan.FromMilliseconds(1);
+            hideBarTimer.Tick += HideBarTimer_Tick;
+            hideBarTimer.Start();
+
             this.StartCloseTimer();
             base.OnViewLoaded(view);
+        }
+
+        private void HideBarTimer_Tick(object sender, EventArgs e)
+        {
+            DispatcherTimer hideTimer = (DispatcherTimer)sender;
+            try
+            {
+                TaskbarManager.HideTaskbar();
+            }
+            catch { }
+            hideTimer.Tick -= TimerTick;
         }
 
         private void StartCloseTimer()
@@ -41,6 +60,7 @@ namespace Iap
             timer.Stop();
             timer.Tick -= TimerTick;
             // Close();
+            hideBarTimer.Stop();
             this.TryClose();
         }
     }

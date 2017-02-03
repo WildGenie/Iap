@@ -179,6 +179,12 @@ namespace Iap.Handlers
                     catch
                     { }
 
+                    try
+                    {
+                        TaskbarManager.HideTaskbar();
+                    }
+                    catch { }
+
                     System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
                   //  info.UseShellExecute = true;
                     info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
@@ -193,6 +199,12 @@ namespace Iap.Handlers
 
                     p.WaitForExit();
                     p.CloseMainWindow();
+
+                    try
+                    {
+                        TaskbarManager.HideTaskbar();
+                    }
+                    catch { }
                     /*  if (numberOfPages < Int32.Parse(this.numberOfAvailabelPagesToPrint))
                       {
                           System.Threading.Thread.Sleep(TimeSpan.FromSeconds(numberOfPages));
@@ -202,6 +214,12 @@ namespace Iap.Handlers
                           System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
                       }*/
                     System.Threading.Thread.Sleep(TimeSpan.FromSeconds(6));
+
+                    try
+                    {
+                        TaskbarManager.HideTaskbar();
+                    }
+                    catch { }
 
                     if (false == p.CloseMainWindow())
                     {

@@ -86,7 +86,7 @@ namespace Iap
             _printBoardingPassBrowser.Focus();
 
 
-            var obj = new CustomBoundObject(this.numberOfAvailablePagesToPrint, log,sender);
+            var obj = new CustomBoundObject(this.numberOfAvailablePagesToPrint, log,sender,events);
             _printBoardingPassBrowser.RegisterJsObject("bound", obj);
             _printBoardingPassBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 

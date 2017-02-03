@@ -149,7 +149,7 @@ namespace Iap.DynamicEnglishScreens
 
             _internetAccessBrowser.MenuHandler = new CustomMenuHandler();
 
-            var boundEnObject = new CustomBoundObject(this.numberOfAvailablePagesToPrint, this.log,sender);
+            var boundEnObject = new CustomBoundObject(this.numberOfAvailablePagesToPrint, this.log,sender,events);
             _internetAccessBrowser.RegisterJsObject("bound", boundEnObject);
             _internetAccessBrowser.FrameLoadEnd += boundEnObject.OnFrameLoadEnd;
 

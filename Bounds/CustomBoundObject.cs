@@ -2,6 +2,7 @@
 using CefSharp;
 using CefSharp.Wpf;
 using Iap.AdornerControl;
+using Iap.Commands;
 using Iap.Handlers;
 using Iap.Services;
 using iTextSharp.text.pdf;
@@ -21,12 +22,14 @@ namespace Iap.Bounds
         ChromiumWebBrowser _mainBrowser;
         private readonly ILog log;
         private readonly ISendStatsService sender;
+        private readonly IEventAggregator events;
 
-        public CustomBoundObject(string numberOfAvailablePagesToPrint, ILog log, ISendStatsService sender)
+        public CustomBoundObject(string numberOfAvailablePagesToPrint, ILog log, ISendStatsService sender, IEventAggregator events)
         {
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.log = log;
             this.sender = sender;
+            this.events = events;
         }
 
         public void OnFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
@@ -110,21 +113,20 @@ namespace Iap.Bounds
 
         public async void onPrintRequested(string selected)
         {
-            //GlobalText.beforeStartPrintingUrl = url;
             try
             {
-                
-                Thread waitThread = new Thread(() =>
-                {
-                    PleaseWaitWindow wait = new PleaseWaitWindow();
-                    
-                    wait.ShowDialog();
-                   // wait.LoadingAdorner.IsAdornerVisible = true;
-                    wait.Close();
-                    
-                });
-                waitThread.SetApartmentState(ApartmentState.STA);
-                waitThread.Start();
+
+                /* Thread waitThread = new Thread(() =>
+                 {
+                     PleaseWaitWindow wait = new PleaseWaitWindow();
+
+                     wait.ShowDialog();
+                     wait.Close();
+
+                 });
+                 waitThread.SetApartmentState(ApartmentState.STA);
+                 waitThread.Start();*/
+                this.events.PublishOnUIThread(new ViewStartPrintProgressCommand());
             }
 
             catch
@@ -173,8 +175,14 @@ namespace Iap.Bounds
                             }
                             catch
                             { }
-                           
-                                System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+
+                            try
+                            {
+                                TaskbarManager.HideTaskbar();
+                            }
+                            catch { }
+
+                            System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
                             info.UseShellExecute = true;
                                 info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
                                 info.Verb = "print";
@@ -190,6 +198,12 @@ namespace Iap.Bounds
                             p.WaitForExit();
                             p.CloseMainWindow();
 
+                            try
+                            {
+                                TaskbarManager.HideTaskbar();
+                            }
+                            catch { }
+
                             if (numberOfPages < Int32.Parse(this.numberOfAvailablePagesToPrint))
                             {
                                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(6));
@@ -198,6 +212,12 @@ namespace Iap.Bounds
                             {
                                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(6));
                             }
+
+                            try
+                            {
+                                TaskbarManager.HideTaskbar();
+                            }
+                            catch { }
 
                             if (false == p.CloseMainWindow())
                                 {

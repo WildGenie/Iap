@@ -81,7 +81,7 @@ namespace Iap.Gr
                 OffScreenTransparentBackground = false,
             };
 
-            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint,this.log,sender);
+            var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint,this.log,sender,events);
 
             _internetAccessBrowser.RegisterJsObject("bound", obj,true);
             _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;

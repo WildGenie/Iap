@@ -2,6 +2,7 @@
 using CefSharp;
 using CefSharp.Wpf;
 using Iap.AdornerControl;
+using Iap.Commands;
 using Iap.Handlers;
 using Iap.Services;
 using iTextSharp.text.pdf;
@@ -21,12 +22,14 @@ namespace Iap.Bounds
         ChromiumWebBrowser _mainBrowser;
         private readonly ILog log;
         private readonly ISendStatsService sender;
+        private readonly IEventAggregator events;
 
-        public CustomBoundObjectEl(string numberOfAvailablePagesToPrint, ILog log, ISendStatsService sender)
+        public CustomBoundObjectEl(string numberOfAvailablePagesToPrint, ILog log, ISendStatsService sender, IEventAggregator events)
         {
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
             this.log = log;
             this.sender = sender;
+            this.events = events;
         }
 
         /*   public void OnFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
@@ -303,17 +306,17 @@ namespace Iap.Bounds
             try
             {
 
-                Thread waitThread = new Thread(() =>
-                {
-                    PleaseWaitWindow wait = new PleaseWaitWindow();
+                /* Thread waitThread = new Thread(() =>
+                 {
+                     PleaseWaitWindow wait = new PleaseWaitWindow();
 
-                    wait.ShowDialog();
-                   // wait.LoadingAdorner.IsAdornerVisible = true;
-                    wait.Close();
+                     wait.ShowDialog();
+                     wait.Close();
 
-                });
-                waitThread.SetApartmentState(ApartmentState.STA);
-                waitThread.Start();
+                 });
+                 waitThread.SetApartmentState(ApartmentState.STA);
+                 waitThread.Start();*/
+                this.events.PublishOnUIThread(new ViewStartPrintProgressCommand());
             }
 
             catch
@@ -368,6 +371,11 @@ namespace Iap.Bounds
                             info.FileName = path;
                             info.CreateNoWindow = true;
 
+                            try
+                            {
+                                TaskbarManager.HideTaskbar();
+                            }
+                            catch { }
 
                             System.Diagnostics.Process p = new System.Diagnostics.Process();
                             p.StartInfo = info;
@@ -375,7 +383,25 @@ namespace Iap.Bounds
 
                             // p.WaitForInputIdle();
                             p.WaitForExit();
+                            p.CloseMainWindow();
+                            try
+                            {
+                                TaskbarManager.HideTaskbar();
+                            }
+                            catch { }
+                            try
+                            {
+                                TaskbarManager.HideTaskbar();
+                            }
+                            catch { }
                             System.Threading.Thread.Sleep(6000);
+
+                            try
+                            {
+                                TaskbarManager.HideTaskbar();
+                            }
+                            catch { }
+
                             if (false == p.CloseMainWindow())
                             {
                                 try
