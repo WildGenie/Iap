@@ -83,7 +83,7 @@ namespace Iap.Gr
 
             var obj = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint,this.log,sender,events);
 
-            _internetAccessBrowser.RegisterJsObject("bound", obj,true);
+            _internetAccessBrowser.RegisterJsObject("bound", obj);
             _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;
 
             ((InternetAccessGrView)view).InternetAccessBrowser.Children.Add(_internetAccessBrowser);

@@ -120,7 +120,7 @@ namespace Iap
 
 
             var boundObject = new CustomBoundObject(this.numberOfAvailablePagesToPrint, this.log,sender,events);
-            _internetAccessBrowser.RegisterJsObject("bound", boundObject, true);
+            _internetAccessBrowser.RegisterJsObject("bound", boundObject);
             _internetAccessBrowser.FrameLoadEnd += boundObject.OnFrameLoadEnd;
 
             GlobalCounters.ResetAll();
