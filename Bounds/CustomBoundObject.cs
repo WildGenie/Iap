@@ -37,12 +37,17 @@ namespace Iap.Bounds
           
             _mainBrowser = sender as ChromiumWebBrowser;
 
-            
-
-           /* if (_mainBrowser.GetMainFrame().Url.EndsWith(".pdf") && !_mainBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+            try
             {
-                _mainBrowser.GetMainFrame().LoadUrl("http://docs.google.com/gview?url=" + _mainBrowser.GetMainFrame().Url + "&embedded=false");
-            }*/
+                string scriptToHideOldVersion = "document.getElementsByClassName('pdp-psy og-pdp')[0].style.visibility = 'hidden'";
+                _mainBrowser.ExecuteScriptAsync(scriptToHideOldVersion);
+            }
+            catch { }
+
+            /* if (_mainBrowser.GetMainFrame().Url.EndsWith(".pdf") && !_mainBrowser.GetMainFrame().Url.Contains("docs.google.com"))
+             {
+                 _mainBrowser.GetMainFrame().LoadUrl("http://docs.google.com/gview?url=" + _mainBrowser.GetMainFrame().Url + "&embedded=false");
+             }*/
 
 
             if (_mainBrowser.GetMainFrame().Url.Contains("print=true"))
