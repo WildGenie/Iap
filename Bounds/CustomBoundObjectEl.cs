@@ -231,13 +231,21 @@ namespace Iap.Bounds
         {
             
             _mainBrowser = sender as ChromiumWebBrowser;
-                
-         /*   if(NotInDocs(_mainBrowser.GetMainFrame().Url))
+
+            /*   if(NotInDocs(_mainBrowser.GetMainFrame().Url))
+               {
+                   string toNavigate = "http://docs.google.com/gview?url=" + _mainBrowser.GetMainFrame().Url + "&embedded=false";
+                   _mainBrowser.Load(toNavigate);
+               }
+               */
+
+            try
             {
-                string toNavigate = "http://docs.google.com/gview?url=" + _mainBrowser.GetMainFrame().Url + "&embedded=false";
-                _mainBrowser.Load(toNavigate);
+                string scriptToHideOldVersion = "document.getElementsByClassName('pdp-psy og-pdp')[0].style.visibility = 'hidden'";
+                _mainBrowser.ExecuteScriptAsync(scriptToHideOldVersion);
             }
-            */
+            catch { }
+
             _mainBrowser.ExecuteScriptAsync(@"document.onselectstart = function()
         {
             return false;
