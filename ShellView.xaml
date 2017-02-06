@@ -174,14 +174,17 @@
                     </Button.Style>
                     <Image Source="/Images/AIA_FOR PNG-12.png"/>
                 </Button>
-                <TextBlock 
-                    Margin="45 65"
+                <ScrollViewer PanningMode="Both" Margin="55 65">
+                    <StackPanel>
+                        <TextBlock 
                     TextWrapping="Wrap"
                     TextAlignment="Center"
                     Text="{Binding Path=DisclaimerEnglish}"
                     FontWeight="Bold"
                     FontSize="25"
                     />
+                    </StackPanel>
+                </ScrollViewer>
             </Grid>
         </Popup>
     </Grid>

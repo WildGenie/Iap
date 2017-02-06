@@ -233,7 +233,7 @@ namespace Iap
         {
             get
             {
-                return GlobalText.DisclaimerEnglish;
+                return GlobalText.getDiscalimerEnglishText();
             }
         }
     }
