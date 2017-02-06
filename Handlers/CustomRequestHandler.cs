@@ -96,7 +96,7 @@ namespace Iap.Handlers
         public bool OnOpenUrlFromTab(IWebBrowser browserControl, IBrowser browser, IFrame frame, string targetUrl, WindowOpenDisposition targetDisposition, bool userGesture)
         {
             //  previousUrl = browserControl.GetMainFrame().Url;
-            //System.Windows.MessageBox.Show("from tab");
+            //System.Windows.MessageBox.Show("from tab");           
             // previousUrl = GlobalText.beforeStartPrintingUrl;
             if (browser.IsPopup)
             {
