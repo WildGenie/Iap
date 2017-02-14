@@ -146,6 +146,8 @@ namespace Iap.DynamicGreekScreens
             _internetAccessBrowser.TouchDown += _internetAccessBrowser_TouchDown;
             _internetAccessBrowser.TouchMove += _internetAccessBrowser_TouchMove;
 
+            _internetAccessBrowser.PreviewMouseUp += _internetAccessBrowser_PreviewMouseUp;
+
             _internetAccessBrowser.Focus();
 
             this.RemainingTime = "30";
@@ -161,6 +163,55 @@ namespace Iap.DynamicGreekScreens
             UnitStartTime = DateTime.Now;
 
             base.OnViewLoaded(view);
+        }
+
+        private void _internetAccessBrowser_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                string script =
+                                @"(function ()
+                    {
+                        var isText = false;
+                        var activeElement = document.activeElement;
+                        if (activeElement) {
+                            if (activeElement.tagName.toLowerCase() === 'textarea') {                              
+                                isText = true;
+                            } else {
+                                if (activeElement.tagName.toLowerCase() === 'input') {
+                                    isText=true;
+                                }
+                            }
+                        }
+                        return isText;
+                    })();";
+
+                var task = _internetAccessBrowser.EvaluateScriptAsync(script, TimeSpan.FromSeconds(10));
+                task.Wait();
+
+                var response = task.Result;
+
+                var result = response.Success ? (response.Result ?? "null") : response.Message;
+
+
+                if (Convert.ToBoolean(result) == true)
+                {
+                    OpenKeyboard = true;
+                    NotifyOfPropertyChange(() => this.OpenKeyboard);
+                }
+
+                else
+                {
+                    OpenKeyboard = false;
+                    NotifyOfPropertyChange(() => this.OpenKeyboard);
+                }
+            }
+            catch
+            {
+
+            }
+
+            e.Handled = false;
         }
 
         private void _internetAccessBrowser_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

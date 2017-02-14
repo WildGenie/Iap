@@ -102,7 +102,7 @@ namespace Iap
             _internetAccessBrowser.RequestHandler = new CustomRequestHandler("",log,sender,this.numberOfAvailablePagesToPrint,events);
             _internetAccessBrowser.MenuHandler = new CustomMenuHandler();
             _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
-            _internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler();
+            //_internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler();
             //   _internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler();
             //  _internetAccessBrowser.JsDialogHandler = new CustomJsDialog();
 
@@ -117,6 +117,8 @@ namespace Iap
             _internetAccessBrowser.TouchMove += _internetAccessBrowser_TouchMove;
 
             _internetAccessBrowser.MouseDown += _internetAccessBrowser_MouseDown;
+
+            _internetAccessBrowser.PreviewMouseUp += _internetAccessBrowser_PreviewMouseUp;
 
             _internetAccessBrowser.RequestContext = new RequestContext();
             //_internetAccessBrowser.IsManipulationEnabled = true;
@@ -143,6 +145,55 @@ namespace Iap
             startTime = DateTime.Now;
 
             base.OnViewLoaded(view);
+        }
+
+        private void _internetAccessBrowser_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                string script =
+                                @"(function ()
+                    {
+                        var isText = false;
+                        var activeElement = document.activeElement;
+                        if (activeElement) {
+                            if (activeElement.tagName.toLowerCase() === 'textarea') {                              
+                                isText = true;
+                            } else {
+                                if (activeElement.tagName.toLowerCase() === 'input') {
+                                    isText=true;
+                                }
+                            }
+                        }
+                        return isText;
+                    })();";
+
+                var task = _internetAccessBrowser.EvaluateScriptAsync(script, TimeSpan.FromSeconds(10));
+                task.Wait();
+
+                var response = task.Result;
+
+                var result = response.Success ? (response.Result ?? "null") : response.Message;
+
+
+                if (Convert.ToBoolean(result) == true)
+                {
+                    OpenKeyboard = true;
+                    NotifyOfPropertyChange(() => this.OpenKeyboard);
+                }
+
+                else
+                {
+                    OpenKeyboard = false;
+                    NotifyOfPropertyChange(() => this.OpenKeyboard);
+                }
+            }
+            catch
+            {
+
+            }
+
+            e.Handled = false;
         }
 
         public int TimeElapsed

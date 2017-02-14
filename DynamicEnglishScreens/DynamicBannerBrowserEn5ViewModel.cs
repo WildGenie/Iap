@@ -228,6 +228,8 @@ namespace Iap.DynamicEnglishScreens
             currentView.scroller.PreviewMouseMove += Scroller_PreviewMouseMove;
             currentView.scroller.PreviewMouseUp += Scroller_PreviewMouseUp;
 
+            _internetAccessBrowser.PreviewMouseUp += _internetAccessBrowser_PreviewMouseUp;
+
             ((DynamicBannerBrowserEn5View)view).DynamicBrowser.Children.Add(_internetAccessBrowser);
 
 
@@ -247,6 +249,55 @@ namespace Iap.DynamicEnglishScreens
 
             startTime = DateTime.Now;
             UnitStartTime = DateTime.Now;
+        }
+
+        private void _internetAccessBrowser_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                string script =
+                                @"(function ()
+                    {
+                        var isText = false;
+                        var activeElement = document.activeElement;
+                        if (activeElement) {
+                            if (activeElement.tagName.toLowerCase() === 'textarea') {                              
+                                isText = true;
+                            } else {
+                                if (activeElement.tagName.toLowerCase() === 'input') {
+                                    isText=true;
+                                }
+                            }
+                        }
+                        return isText;
+                    })();";
+
+                var task = _internetAccessBrowser.EvaluateScriptAsync(script, TimeSpan.FromSeconds(10));
+                task.Wait();
+
+                var response = task.Result;
+
+                var result = response.Success ? (response.Result ?? "null") : response.Message;
+
+
+                if (Convert.ToBoolean(result) == true)
+                {
+                    OpenKeyboard = true;
+                    NotifyOfPropertyChange(() => this.OpenKeyboard);
+                }
+
+                else
+                {
+                    OpenKeyboard = false;
+                    NotifyOfPropertyChange(() => this.OpenKeyboard);
+                }
+            }
+            catch
+            {
+
+            }
+
+            e.Handled = false;
         }
 
         private TouchDevice windowTouchDevice;

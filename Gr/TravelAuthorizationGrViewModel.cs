@@ -76,6 +76,8 @@ namespace Iap.Gr
 
             _travelAuthorizationBrowser.MouseDown += _travelAuthorizationBrowser_MouseDown;
 
+            _travelAuthorizationBrowser.PreviewMouseUp += _travelAuthorizationBrowser_PreviewMouseUp;
+
             _travelAuthorizationBrowser.RequestContext = new RequestContext();
             _travelAuthorizationBrowser.LifeSpanHandler = new LifeSpanHandler();
            // _travelAuthorizationBrowser.RequestHandler = new CustomRequestHandler("");
@@ -97,6 +99,55 @@ namespace Iap.Gr
             startTime = DateTime.Now;
 
             base.OnViewLoaded(view);
+        }
+
+        private void _travelAuthorizationBrowser_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                string script =
+                                @"(function ()
+                    {
+                        var isText = false;
+                        var activeElement = document.activeElement;
+                        if (activeElement) {
+                            if (activeElement.tagName.toLowerCase() === 'textarea') {                              
+                                isText = true;
+                            } else {
+                                if (activeElement.tagName.toLowerCase() === 'input') {
+                                    isText=true;
+                                }
+                            }
+                        }
+                        return isText;
+                    })();";
+
+                var task = _travelAuthorizationBrowser.EvaluateScriptAsync(script, TimeSpan.FromSeconds(10));
+                task.Wait();
+
+                var response = task.Result;
+
+                var result = response.Success ? (response.Result ?? "null") : response.Message;
+
+
+                if (Convert.ToBoolean(result) == true)
+                {
+                    OpenKeyboard = true;
+                    NotifyOfPropertyChange(() => this.OpenKeyboard);
+                }
+
+                else
+                {
+                    OpenKeyboard = false;
+                    NotifyOfPropertyChange(() => this.OpenKeyboard);
+                }
+            }
+            catch
+            {
+
+            }
+
+            e.Handled = false;
         }
 
         public int TimeElapsed
