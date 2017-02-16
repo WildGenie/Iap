@@ -1,0 +1,62 @@
+﻿					Terms & Conditions of Use of AIA e-Services
+By proceeding further on this page to make use of the e-Services provided to you by Athens International Airport S.A. (AIA e-Services), you are deemed to explicitly and unreservedly accept to comply with the following AIA e-Services Terms & Conditions. Moreover, additional promotional and marketing material will be made available to you upon your agreement;
+
+1. Internet Access Terms & Conditions
+  1.1.	By accessing the e-Services, you acknowledge that you connect to the internet and therefore further navigation and use of e-Services is carried out entirely at your own discretion and responsibility.
+  1.2.	We have no responsibility for, or control over any electronic content you access and therefore Athens International Airport S.A. (AIA) as provider of the present electronic platform does not guarantee that any related content contains errors, or is virus free.
+  1.3.	AIA has no responsibility for, or control over, the information you transmit, or receive via the e-Services.
+  1.4.	AIA does not provide any explicit or implicit guarantee as to:
+    1.4.1.	 The availability of the e-Services; under any circumstances, the uninterrupted or fault free operation of the e-Services.
+    1.4.2.	The speed at which data may be transmitted, or received via the E-Services.
+    1.4.3.	The availability and content of a third-party site or electronic platform, to the extent that it may be necessary to be redirected thereto for the purpose of obtaining the services offered thereat. 
+  1.5.	Whilst we take reasonable steps to ensure the security of the e-Services and to prevent unlawful access to information transmitted or received using the e-Services, we do not guarantee the security of the information which you may transmit, or receive using the e-Services and you accept that it is your responsibility to protect your information and to ensure the security, integrity and confidentiality of your information and data.
+  1.6.	We reserve the right at all times to discontinue the e-Services, change the specifications or functionality and/or user interface of the e-Services, change access codes, usernames, passwords, or other security information that may be necessary to access the e-Services.
+  1.7.	You must not use the e-Services to access Internet content which:
+    1.7.1.	May be defamatory, offensive, threatening, intimidating or which could be considered as harassment;
+    1.7.2.	Contain obscene, profane or abusive language or material;
+    1.7.3.	Contain pornographic material (that is text, pictures, films, video clips of a sexually explicit or arousing nature);
+    1.7.4.	Contain offensive or derogatory images regarding sex, race, religion, colour, origin, age, physical or mental disability, medical condition or sexual orientation;
+    1.7.5.	Contain material which infringe third party’s rights (including intellectual property rights);
+    1.7.6.	In our reasonable opinion, may adversely affect the manner in which we carry out our business; or
+    1.7.7.	Are otherwise unlawful, or inappropriate;
+    1.8.	In compliance with term 7.5. hereunder, e-services may be terminated, or temporarily suspended should there be any breach of the above internet access terms.
+    1.9.	We recommend that you do not use the e-Services to transmit or receive any confidential or private information, or data and should you choose to do so you do so at your own risk.
+    1.10.	The e-Services are  intended for consumer use only. In the event that you use the e-Services for commercial purposes we would specifically refer you to clause 9.2 below.
+
+2. Extent of the Web Check-in Kiosk E-Services
+  2.1.	AIA accepts no responsibility for any disruption or failure of web check-in services, as same may be linked hereto and offered by the respective Airlines, at any given time, nor for the content and legitimacy or use of other sites that it may refer or link-up to. AIA further, waives any liability towards the visitors of any Airline web check-in service, with respect to respective web content thereof.
+  2.2. Since airlines are exclusively responsible to post and adhere to their own flight schedule, AIA cannot be held responsible for any changes, adjustments, or cancellations in any flight, whether announced or not, made on behalf of the airline. All users of the web check-in service must contact their airline in time for the latest status updates of their flight. 
+  2.3.	The printers installed at Web Check – in kiosks should be used only for printing boarding passes and ESTA Visas.
+ 
+ 3. Special Disclaimer regarding access to the “Electronic System for Travel Authorization”, or “ESTA”, introduced by the Government of the Unites States of America   
+  3.1. Should you use the AIA e-Services in order to fill out and submit the information required for your travel to the USA, under the ESTA program, , further to your unconditional acceptance of the above Terms and Conditions of Use , you additionally acknowledge and state that  you remain solely responsible for the use and information provided for ESTA purposes, as well for any consequences thereof, including but not limited to the rejection of your respective travel request, thus fully discharging AIA  against any  potential claim for said consequences    
+
+4. Criminal Activity
+  4.1.	You must not use the e-Services to engage in any activity which constitutes, or is capable of constituting a criminal offence, either in Greece, or in any state throughout the world.
+  4.2.	You agree and acknowledge that we may be required to provide assistance and information to law enforcement, governmental agencies and other authorities.
+  4.3.	You further agree we are entitled to co-operate with law enforcement authorities and rights-holders in the investigation of any suspected or alleged illegal activity by you which may include, but is not limited to, disclosure of such information as we have and are entitled to provide by law, to law enforcement authorities or rights-holders.
+
+
+5. Prohibition of Physical Tamper/Vandalism
+  5.1.	You are prohibited from any attempt to physically access and/or tamper with any of our equipment. Such an attempt, will be considered as vandalism and will be prosecuted/fined accordingly under Greek Laws.
+
+6. Our Use of your Information
+  6.1.	Subject to clauses 4.2 and 4.3 above, we may use the contact details you provide to us solely for the purposes of contacting you with marketing information, updates, promotions and special offers relating to our business.
+
+7. Privacy
+  7.1.	Each web session is carried out in privacy mode, meaning that we do not keep history of your visits neither we store information about your session in the specific kiosk.
+  7.2.	All information transmitted through our systems, leave electronic traces, specifically, which website and IP addresses have been visited cumulatively by the e-Services provided.
+  7.3.	The e-Services keeps logs of system events for the purpose of troubleshooting the installed software, rather than events constituting the websites visited per se. 
+  7.4.	Each open web session will expire after a period of inactivity on behalf of the user, this is a precautionary step towards protecting the user’s open session. Session inactivity will also log-of the user from their active log-in environments including all open windows and user initiated sessions. 
+  7.5.	AIA information security mechanisms are automatically applied to the provided web e-Services, meaning that the use of the e-Services is moderated automatically and various sites might be blocked (especially those falling to the aforementioned categories).
+
+8. Situational Awareness
+  8.1. You are kindly advised to be mindful of other people that they might be prying on your session as they might try to visually intercept information depicted or typed while you are engaged on your web experience.
+
+9. Other Terms
+  9.1. The e-Services should be not allowed for the use by minors without parental supervision as the website you may visit are partially restricted for offensive material as laid out in the previous sections of these terms of use. 
+  9.2. You agree to compensate us fully for any claims or legal action made or threatened against us by someone else because you have used the e-Services in breach of these terms and conditions, and in particular clause 4.1 and 5.1 above.
+  9.3. Whilst we do not seek to limit our responsibility for fraudulent misrepresentation or if you are injured or die as a result of our negligence we have no  responsibility (to the maximum extent permitted by law) to compensate you (whether or not we are negligent) for any direct financial loss, loss of profit, revenue, time, anticipated savings or profit or revenue, opportunity, data, use, business, wasted expenditure, business interruption, loss arising from disclosure of confidential information, loss arising from or in connection with use of the e-Services, or inability to use or access the e-Services or a failure, suspension or withdrawal of all or part of the e-Services at any time or damage to physical property or for any other similar direct loss that may arise in relation to this agreement whether or not we were advised in advance of the possibility of such loss or damage.
+  9.4. By accessing the e-Services, I expressly confirm that I fully and unreservedly accept these terms and conditions as the basis of my use of the internet access provided.
+
+AIA has applied all reasonable endeavors to ensure that the e-Services provided hereunder comply with the applicable Hellenic Data Protection Laws  2472 and 2477/1997, EU General Data Protection Regulation and any mailings comply with the Privacy and Electronic Communications (EC Directive) Regulations 2003.

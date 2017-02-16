@@ -182,6 +182,7 @@
                     Text="{Binding Path=DisclaimerEnglish}"
                     FontWeight="Bold"
                     FontSize="25"
+                    ScrollViewer.PanningMode="Both"
                     />
                     </StackPanel>
                 </ScrollViewer>
