@@ -230,7 +230,7 @@ namespace Iap.Gr
         {
             get
             {
-                return GlobalText.DisclaimerGreek;
+                return GlobalText.getDiscalimerGreekText();
             }
         }
     }

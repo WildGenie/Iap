@@ -193,9 +193,6 @@
     <Compile Include="Commands\ViewTwoButtonsAdvertCommand.cs" />
     <Compile Include="Commands\ViewTwoButtonsShellEnCommand.cs" />
     <Compile Include="Commands\ViewTwoButtonsShellGrCommand.cs" />
-    <Compile Include="DisclaimerScreen.xaml.cs">
-      <DependentUpon>DisclaimerScreen.xaml</DependentUpon>
-    </Compile>
     <Compile Include="DynamicEnglishScreens\DynamicBannerBrowserEn5View.xaml.cs">
       <DependentUpon>DynamicBannerBrowserEn5View.xaml</DependentUpon>
     </Compile>
@@ -496,10 +493,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DisclaimerScreen.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="DynamicEnglishScreens\DynamicBannerBrowserEn5View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -770,21 +763,15 @@
     <Folder Include="Printings\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\adding.jpg" />
-    <Resource Include="Images\adding1111.png" />
-    <Resource Include="Images\AIA_FOR_20PNG-1111111.png" />
     <Resource Include="Images\disclaimer.png" />
-    <Resource Include="Images\disclaimerscreen.png" />
-    <Resource Include="Images\disclaimer button-13.png" />
     <Resource Include="Images\disclaimerscreen13.png" />
-    <Resource Include="Images\next.jpg" />
-    <Resource Include="Images\disclaimer button-13-new.png" />
     <Content Include="DiscalimerEn.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="DiscalimerGr.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\disclaimer-gr.png" />
     <Content Include="Media\banner.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

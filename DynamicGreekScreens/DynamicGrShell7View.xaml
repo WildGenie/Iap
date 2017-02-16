@@ -386,22 +386,22 @@
             VerticalAlignment="Top"
             Width="115" 
             Height="64"/>
-        <Image Source="/Images/disclaimer.png"
+        <Image Source="/Images/disclaimer-gr.png"
             Margin="1750,1000,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             IsHitTestVisible="False"
             Width="115" 
             Height="64"/>
-        <Popup IsOpen="{Binding Path=OpenDisclaimer}" x:Name="pop" StaysOpen="False"
+        <Popup  IsOpen="{Binding Path=OpenDisclaimer}" x:Name="pop" StaysOpen="False"
                AllowsTransparency="True"
                 PlacementTarget="{Binding ElementName=MainScreen}"
-               Placement="Center" VerticalOffset="-80"   PopupAnimation="Fade">
-            <Grid Width="600" Height="300">
+               Placement="Center" VerticalOffset="-80" HorizontalOffset="10"  PopupAnimation="Fade">
+            <Grid Width="1200" Height="600">
                 <Grid.Background>
                     <ImageBrush ImageSource="/Images/disclaimerscreen13.png"/>
                 </Grid.Background>
-                <Button x:Name="CloseDisclaimer" Width="19" Height="19" Margin="540,35,41,246">
+                <Button x:Name="CloseDisclaimer" Width="19" Height="19" Margin="1120,35,41,546">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Template">
@@ -425,14 +425,19 @@
                     </Button.Style>
                     <Image Source="/Images/AIA_FOR PNG-12.png"/>
                 </Button>
-                <TextBlock 
-                    Margin="45 65"
+                <ScrollViewer PanningMode="Both" Margin="55 70 55 90">
+                    <StackPanel>
+                        <TextBlock 
+                    
                     TextWrapping="Wrap"
-                    TextAlignment="Center"
-                    Text="{Binding Path=DisclaimerGreek}"
+                    TextAlignment="Left"
+                  Text="{Binding Path=DisclaimerGreek}"
                     FontWeight="Bold"
-                    FontSize="25"
+                    FontSize="15"
+                            ScrollViewer.PanningMode="Both"
                     />
+                    </StackPanel>
+                </ScrollViewer>
             </Grid>
         </Popup>
     </Grid>

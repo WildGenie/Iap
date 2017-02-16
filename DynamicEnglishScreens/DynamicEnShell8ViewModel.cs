@@ -416,7 +416,7 @@ namespace Iap.DynamicEnglishScreens
         {
             get
             {
-                return GlobalText.DisclaimerEnglish;
+                return GlobalText.getDiscalimerEnglishText();
             }
         }
     }

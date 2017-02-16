@@ -259,7 +259,7 @@ namespace Iap.DynamicGreekScreens
         {
             get
             {
-                return GlobalText.DisclaimerGreek;
+                return GlobalText.getDiscalimerGreekText();
             }
         }
     }
