@@ -76,30 +76,18 @@ namespace Iap
             _internetAccessBrowser.BrowserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
             _internetAccessBrowser.BrowserSettings.WebSecurity = CefState.Enabled;
             _internetAccessBrowser.BrowserSettings.Javascript = CefState.Enabled;
-
-
-
-
-            // var obj = new BoundTest(6,0,"en");
-
-            /*  var obj = new BoundObject("en",Convert.ToInt32(numberOfAvailablePagesToPrint));
-
-              _internetAccessBrowser.RegisterJsObject("bound", obj);
-              _internetAccessBrowser.FrameLoadEnd += obj.OnFrameLoadEnd;*/
-
            
 
             _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
-            // _internetAccessBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(numberOfAvailablePagesToPrint));
+            
 
             _internetAccessBrowser.RequestHandler = new CustomRequestHandler("",log,sender,this.numberOfAvailablePagesToPrint,events);
 
             _internetAccessBrowser.MenuHandler = new CustomMenuHandler();
-            //   _internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler();
-           // _internetAccessBrowser.JsDialogHandler = new CustomJsDialog();
+            
 
             _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
-            // _internetAccessBrowser.FrameLoadEnd += _internetAccessBrowser_FrameLoadEnd;
+           
 
 
             ((InternetAccess2View)view).InternetAccessBrowser.Children.Add(_internetAccessBrowser);
@@ -113,9 +101,7 @@ namespace Iap
             _internetAccessBrowser.PreviewMouseUp += _internetAccessBrowser_PreviewMouseUp;
 
             _internetAccessBrowser.RequestContext = new RequestContext();
-            //_internetAccessBrowser.IsManipulationEnabled = true;
-            //_internetAccessBrowser.ReleaseAllTouchCaptures();
-            //_internetAccessBrowser.ManipulationDelta += _internetAccessBrowser_ManipulationDelta;
+            
 
 
             _internetAccessBrowser.Focus();
@@ -127,11 +113,7 @@ namespace Iap
 
             GlobalCounters.ResetAll();
 
-            //this.RemainingTime = "30";
-
-
-
-            //this.TimeElapsed = 30;
+            
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 1, 0);
             timer.Tick += TimerTick;

@@ -47,6 +47,10 @@ namespace Iap.Services
                 url = getScreenDetailsApi;
             }
 
+            ServicePointManager
+     .ServerCertificateValidationCallback +=
+     (sender, cert, chain, sslPolicyErrors) => true;
+
             var client = new HttpClient();
             client.Timeout = TimeSpan.FromSeconds(5);
 
@@ -102,7 +106,9 @@ namespace Iap.Services
 
         public static BitmapImage getBitmapImage(string imageUrl)
         {
-
+            ServicePointManager
+     .ServerCertificateValidationCallback +=
+     (sender, cert, chain, sslPolicyErrors) => true;
             var buffer = new WebClient().DownloadData(imageUrl);
             var bitmap = new BitmapImage();
 

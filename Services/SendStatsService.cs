@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 
@@ -15,26 +16,14 @@ namespace Iap.Services
         public SendStatsService(string sendActionsApi)
         {
             this.sendActionsApi = sendActionsApi;
-           // this.kioskID = RetrieveIDFromRegistry();
         }
 
         private string RetrieveIDFromRegistry()
         {
-            /* string key = "Kiosk";
-             RegistryKey keyToRetr = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\" + key);
-             if (keyToRetr != null)
-             {
-                 return keyToRetr.GetValue("ID").ToString();
-             }
-             else
-             {
-                 return "null";
-             }*/
             var directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
             var path = Path.Combine(directory, "iapSettings.txt");
             if (File.Exists(path))
             {
-                // string line = File.ReadLines(path).Skip(1).Take(1).First();
                 string line = File.ReadAllLines(path).Where(x => x.ToString().StartsWith("ID=")).FirstOrDefault();
                 string type = line.Replace("ID=", "");
                 return type;
@@ -43,11 +32,7 @@ namespace Iap.Services
             {
                 return "null";
             }
-        }
-
-        private string kioskID;
-
-       
+        } 
 
         public  void SendAction(string action)
         {
@@ -58,15 +43,11 @@ namespace Iap.Services
 
         private async void SendActionAsync(string action, CancellationToken ct)
         {
-
-            // string kioskID = this.RetrieveIDFromRegistry();
             try
             {
-              /*  var response =
-                    new HttpClient()
-                    .GetAsync(
-                    this.sendActionsApi,
-                HttpCompletionOption.ResponseHeadersRead, ct).Result;*/
+                ServicePointManager
+       .ServerCertificateValidationCallback +=
+       (sender, cert, chain, sslPolicyErrors) => true;
 
                 var httpClient = new HttpClient();
                 var parameters = new Dictionary<string, string>();

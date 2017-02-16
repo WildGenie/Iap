@@ -76,7 +76,7 @@ namespace Iap
             _printBoardingPassBrowser.PreviewMouseUp += _printBoardingPassBrowser_PreviewMouseUp;
 
             _printBoardingPassBrowser.LifeSpanHandler = new LifeSpanHandler();
-            // _printBoardingPassBrowser.RequestHandler = new RequestHandler(Convert.ToInt32(this.numberOfAvailablePagesToPrint));
+           
 
             _printBoardingPassBrowser.RequestHandler = new CustomRequestHandler("",log,sender,this.numberOfAvailablePagesToPrint,events);
             _printBoardingPassBrowser.DialogHandler = new CustomDialogHandler();

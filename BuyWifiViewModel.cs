@@ -261,18 +261,7 @@ namespace Iap
         private System.Windows.Point lastPoint;
         private void _buyWifiBrowser_TouchMove(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            /* try
-             {
-                 int x = (int)e.GetTouchPoint(_buyWifiBrowser).Position.X;
-                 int y = (int)e.GetTouchPoint(_buyWifiBrowser).Position.Y;
-
-
-                 int deltax = x - lastMousePositionX;
-                 int deltay = y - lastMousePositionY;
-
-                 _buyWifiBrowser.SendMouseWheelEvent((int)_buyWifiBrowser.Width, (int)_buyWifiBrowser.Height, deltax, deltay, CefEventFlags.None);
-             }
-             catch { }*/
+           
             try
             {
                 Control control = (Control)sender;
@@ -296,12 +285,7 @@ namespace Iap
 
         private void _buyWifiBrowser_TouchDown(object sender, System.Windows.Input.TouchEventArgs e)
         {
-            /* try
-             {
-                 lastMousePositionX = (int)e.GetTouchPoint(_buyWifiBrowser).Position.X;
-                 lastMousePositionY = (int)e.GetTouchPoint(_buyWifiBrowser).Position.Y;
-             }
-             catch { }*/
+            
             try
             {
                 Control control = (Control)sender;

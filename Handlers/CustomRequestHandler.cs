@@ -51,28 +51,24 @@ namespace Iap.Handlers
             {
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
                 browserControl.Load(toNavigate);
-              //  GlobalText.beforeStartPrintingUrl = toNavigate;
             }
 
             else if(request.Url.EndsWith(".doc"))
             {
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
                 browserControl.Load(toNavigate);
-                //GlobalText.beforeStartPrintingUrl = toNavigate;
             }
 
            else if(request.Url.EndsWith(".xls"))
             {
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
                 browserControl.Load(toNavigate);
-               // GlobalText.beforeStartPrintingUrl = toNavigate;
             }
 
             else if(request.Url.EndsWith(".ppt"))
             {
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
                 browserControl.Load(toNavigate);
-             //   GlobalText.beforeStartPrintingUrl = toNavigate;
             }
 
             return null;
@@ -95,27 +91,20 @@ namespace Iap.Handlers
 
         public bool OnOpenUrlFromTab(IWebBrowser browserControl, IBrowser browser, IFrame frame, string targetUrl, WindowOpenDisposition targetDisposition, bool userGesture)
         {
-            //  previousUrl = browserControl.GetMainFrame().Url;
-            //System.Windows.MessageBox.Show("from tab");           
-            // previousUrl = GlobalText.beforeStartPrintingUrl;
+            
             if (browser.IsPopup)
-            {
-                
+            {               
                 browser.MainFrame.ExecuteJavaScriptAsync(@"window.close()");
 
                 if (targetUrl.Contains("print=true"))
                 {
                     string UrlToDownload = targetUrl.Replace("print=true", "print=false");
-                    // browserControl.Load(targetUrl.Replace("print=true", "print=false"));
                     Thread downLoadThread = new Thread(() =>
                     ConvertToStream(UrlToDownload));
                     downLoadThread.Start();
                 }
 
-                //   System.Threading.Thread.Sleep(2000);
-                // browserControl.Load(GlobalText.beforeStartPrintingUrl);
-
-                //browserControl.FrameLoadEnd += BrowserControl_FrameLoadEnd;
+               
                 
             }
             
@@ -126,17 +115,6 @@ namespace Iap.Handlers
         {
             try
             {
-
-                /*   Thread waitThread = new Thread(() =>
-                   {
-                       PleaseWaitWindow wait = new PleaseWaitWindow();
-
-                       wait.ShowDialog();
-                       wait.Close();
-
-                   });
-                   waitThread.SetApartmentState(ApartmentState.STA);
-                   waitThread.Start();*/
                 this.events.PublishOnUIThread(new ViewStartPrintProgressCommand());
             }
 
@@ -149,7 +127,9 @@ namespace Iap.Handlers
 
             try {
 
-              //  ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(AcceptAllCertifications);
+                ServicePointManager
+        .ServerCertificateValidationCallback +=
+        (sender, cert, chain, sslPolicyErrors) => true;
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(fileUrl);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
@@ -205,14 +185,7 @@ namespace Iap.Handlers
                         TaskbarManager.HideTaskbar();
                     }
                     catch { }
-                    /*  if (numberOfPages < Int32.Parse(this.numberOfAvailabelPagesToPrint))
-                      {
-                          System.Threading.Thread.Sleep(TimeSpan.FromSeconds(numberOfPages));
-                      }
-                      else
-                      {
-                          System.Threading.Thread.Sleep(TimeSpan.FromSeconds(10));
-                      }*/
+                    
                     System.Threading.Thread.Sleep(TimeSpan.FromSeconds(6));
 
                     try
@@ -261,43 +234,8 @@ namespace Iap.Handlers
             finally
             {
 
-                //response.Close();
             }
         }
-
-    /*    private bool AcceptAllCertifications(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-        {
-            return true;
-        }*/
-
-        /*     private void BrowserControl_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
-             {
-                 if (this.previousUrl != "")
-                 {
-                     ChromiumWebBrowser mainBrowser = sender as ChromiumWebBrowser;
-
-                     if (mainBrowser.GetMainFrame().Url.Contains("print"))
-                     {
-                         string path = System.IO.Path.Combine(
-                                    System.IO.Path.GetDirectoryName(
-                                    this.GetType().Assembly.Location),
-                                    "Printings", "test.pdf");
-
-                         mainBrowser.PrintToPdfAsync(path);
-
-                         // mainBrowser.Load(this.previousUrl);
-                         // mainBrowser.Load(beforePrintPdfUrl);
-                         // mainBrowser.Load(GlobalText.beforeStartPrintingUrl);
-                         mainBrowser.Load(previousUrl);
-                         if (mainBrowser.GetMainFrame().Url.Contains(".googleusercontent.com"))
-                         {
-                            //this.log.Info("Invoking Action: View sos i must redirect");
-                             mainBrowser.GetMainFrame().LoadUrl(previousUrl);
-                         }
-                     }
-                    // this.previousUrl = "";
-                 }
-             }*/
 
         public void OnPluginCrashed(IWebBrowser browserControl, IBrowser browser, string pluginPath)
         {

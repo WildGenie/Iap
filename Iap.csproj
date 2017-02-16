@@ -356,7 +356,6 @@
     <Compile Include="Handlers\LifeSpanHandler.cs" />
     <Compile Include="Handlers\PrinterCanceller.cs" />
     <Compile Include="Handlers\TestRequestHandler.cs" />
-    <Compile Include="IdleBrowserViewModel.cs" />
     <Compile Include="IdleTimeViewModel.cs" />
     <Compile Include="InstallingView.xaml.cs">
       <DependentUpon>InstallingView.xaml</DependentUpon>

@@ -387,12 +387,7 @@ namespace Iap.DynamicGreekScreens
         protected override void OnDeactivate(bool close)
         {
             timer.Stop();
-          /*  try
-            {
-                this.log.Info("Invoking Action: ViewEndSession after " + TimeSpended() + " time.");
-                this.sender.SendAction("ViewEndSession after " + TimeSpended() + " time.");
-            }
-            catch { }*/
+          
             try
             {
                 if (_internetAccessBrowser != null)
