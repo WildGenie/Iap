@@ -170,7 +170,7 @@ namespace Iap.Bounds
                         {
                             iTextSharp.text.pdf.PdfReader pdfReader = new iTextSharp.text.pdf.PdfReader(path);
                             int numberOfPages = pdfReader.NumberOfPages;
-
+                       
                         if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <= Convert.ToInt32(this.numberOfAvailablePagesToPrint))
                             {
 
@@ -187,8 +187,10 @@ namespace Iap.Bounds
                             }
                             catch { }
 
-                            System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
-                            info.UseShellExecute = true;
+                            try
+                            {
+                                System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+                                info.UseShellExecute = true;
                                 info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
                                 info.Verb = "print";
                                 info.FileName = path;
@@ -199,32 +201,12 @@ namespace Iap.Bounds
                                 p.StartInfo = info;
                                 p.Start();
 
-                            // p.WaitForInputIdle();
-                            p.WaitForExit();
-                            p.CloseMainWindow();
+                                // p.WaitForInputIdle();
+                                p.WaitForExit();
+                                p.CloseMainWindow();
 
-                            try
-                            {
-                                TaskbarManager.HideTaskbar();
-                            }
-                            catch { }
 
-                            if (numberOfPages < Int32.Parse(this.numberOfAvailablePagesToPrint))
-                            {
-                                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(6));
-                            }
-                            else
-                            {
-                                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(6));
-                            }
-
-                            try
-                            {
-                                TaskbarManager.HideTaskbar();
-                            }
-                            catch { }
-
-                            if (false == p.CloseMainWindow())
+                                if (false == p.CloseMainWindow())
                                 {
                                     try
                                     {
@@ -240,6 +222,29 @@ namespace Iap.Bounds
                                     }
                                     catch { }
                                 }
+                            }
+                            catch { }
+
+                            GlobalCounters.numberOfCurrentPrintings += numberOfPages;
+
+                            try
+                            {
+                                TaskbarManager.HideTaskbar();
+                            }
+                            catch { }
+
+                           
+                            
+                                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(6));
+                            
+
+                            try
+                            {
+                                TaskbarManager.HideTaskbar();
+                            }
+                            catch { }
+
+                           
 
                             try
                             {
@@ -247,7 +252,7 @@ namespace Iap.Bounds
 
                             }
                             catch { }
-                                GlobalCounters.numberOfCurrentPrintings += numberOfPages;
+                                
 
                             }
 

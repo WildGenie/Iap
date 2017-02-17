@@ -180,19 +180,6 @@ namespace Iap.Handlers
                     p.WaitForExit();
                     p.CloseMainWindow();
 
-                    try
-                    {
-                        TaskbarManager.HideTaskbar();
-                    }
-                    catch { }
-                    
-                    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(6));
-
-                    try
-                    {
-                        TaskbarManager.HideTaskbar();
-                    }
-                    catch { }
 
                     if (false == p.CloseMainWindow())
                     {
@@ -211,13 +198,31 @@ namespace Iap.Handlers
                         catch { }
                     }
 
+                    GlobalCounters.numberOfCurrentPrintings += numberOfPages;
+
+                    try
+                    {
+                        TaskbarManager.HideTaskbar();
+                    }
+                    catch { }
+                    
+                    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(6));
+
+                    try
+                    {
+                        TaskbarManager.HideTaskbar();
+                    }
+                    catch { }
+
+                   
+
                     try
                     {
                         this.sender.SendAction("Printed " + numberOfPages + " pages.");
 
                     }
                     catch { }
-                    GlobalCounters.numberOfCurrentPrintings += numberOfPages;
+                   
                 }
 
                 else

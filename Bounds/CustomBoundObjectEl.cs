@@ -379,11 +379,7 @@ namespace Iap.Bounds
                             info.FileName = path;
                             info.CreateNoWindow = true;
 
-                            try
-                            {
-                                TaskbarManager.HideTaskbar();
-                            }
-                            catch { }
+                            
 
                             System.Diagnostics.Process p = new System.Diagnostics.Process();
                             p.StartInfo = info;
@@ -392,6 +388,25 @@ namespace Iap.Bounds
                             // p.WaitForInputIdle();
                             p.WaitForExit();
                             p.CloseMainWindow();
+
+
+                            if (false == p.CloseMainWindow())
+                            {
+                                try
+                                {
+                                    p.Kill();
+                                }
+                                catch { }
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    p.Kill();
+                                }
+                                catch { }
+                            }
+
                             try
                             {
                                 TaskbarManager.HideTaskbar();
@@ -410,22 +425,7 @@ namespace Iap.Bounds
                             }
                             catch { }
 
-                            if (false == p.CloseMainWindow())
-                            {
-                                try
-                                {
-                                    p.Kill();
-                                }
-                                catch { }
-                            }
-                            else
-                            {
-                                try
-                                {
-                                    p.Kill();
-                                }
-                                catch { }
-                            }
+                           
 
                             try
                             {
