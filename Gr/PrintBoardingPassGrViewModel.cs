@@ -298,28 +298,32 @@ namespace Iap.Gr
             this.OpenKeyboard = false;
             try
             {
-                try
+                if (_printBoardingPassBrowser.CanGoBack)
                 {
-                    if (_printBoardingPassBrowser != null)
-                    {
-                        _printBoardingPassBrowser.Dispose();
-                    }
+                    _printBoardingPassBrowser.Back();
                 }
-                catch { }
+                else
+                {
+                    try
+                    {
+                        if (_printBoardingPassBrowser != null)
+                        {
+                            _printBoardingPassBrowser.Dispose();
+                        }
+                    }
+                    catch { }
+                    try
+                    {
+                        this.log.Info("Invoking Action: ViewEndNavigateSession  after " + (30 - this.TimeElapsed).ToString() + " minutes.");
+                        this.sender.SendAction("ViewEndNavigateSession after " + (30 - this.TimeElapsed).ToString() + " minutes.");
+                    }
 
-                this.events.PublishOnCurrentThread(new ViewGreekCommand());
+                    catch
+                    { }
+                    this.events.PublishOnCurrentThread(new ViewGreekCommand());
+                }
             }
-
             catch { }
-
-            try
-            {
-                this.log.Info("Invoking Action: ViewEndNavigateSession  after " + (30 - this.TimeElapsed).ToString() + " minutes.");
-                this.sender.SendAction("ViewEndNavigateSession after " + (30 - this.TimeElapsed).ToString() + " minutes.");
-            }
-
-            catch
-            { }
         }
 
         private string TimeHasSpent()

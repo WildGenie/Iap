@@ -296,27 +296,32 @@ namespace Iap.Gr
             this.OpenKeyboard = false;
             try
             {
-                try
+                if (_buyWifiBrowser.CanGoBack)
                 {
-                    if (_buyWifiBrowser != null)
-                    {
-                        _buyWifiBrowser.Dispose();
-                    }
+                    _buyWifiBrowser.Back();
                 }
-                catch { }
+                else
+                {
+                    try
+                    {
+                        if (_buyWifiBrowser != null)
+                        {
+                            _buyWifiBrowser.Dispose();
+                        }
+                    }
+                    catch { }
+                    try
+                    {
+                        this.log.Info("Invoking Action: ViewEndNavigateSession  after " + (30 - this.TimeElapsed).ToString() + " minutes.");
+                        this.sender.SendAction("ViewEndNavigateSession after " + (30 - this.TimeElapsed).ToString() + " minutes.");
+                    }
 
-                this.events.PublishOnCurrentThread(new ViewTwoButtonsShellGrCommand());
+                    catch
+                    { }
+                    this.events.PublishOnCurrentThread(new ViewTwoButtonsShellGrCommand());
+                }
             }
             catch { }
-
-            try
-            {
-                this.log.Info("Invoking Action: ViewEndNavigateSession  after " + (30 - this.TimeElapsed).ToString() + " minutes.");
-                this.sender.SendAction("ViewEndNavigateSession after " + (30 - this.TimeElapsed).ToString() + " minutes.");
-            }
-
-            catch
-            { }
         }
 
         private string TimeHasSpent()

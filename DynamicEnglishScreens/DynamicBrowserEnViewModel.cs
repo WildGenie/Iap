@@ -171,8 +171,6 @@ namespace Iap.DynamicEnglishScreens
             _internetAccessBrowser.MenuHandler = new CustomMenuHandler();
 
 
-            // _internetAccessBrowser.RenderProcessMessageHandler = new CustomRenderProcessHandler();
-
             _internetAccessBrowser.MouseDown += _internetAccessBrowser_MouseDown;
             _internetAccessBrowser.TouchDown += _internetAccessBrowser_TouchDown;
             _internetAccessBrowser.TouchMove += _internetAccessBrowser_TouchMove;
@@ -189,7 +187,6 @@ namespace Iap.DynamicEnglishScreens
             _internetAccessBrowser.RegisterJsObject("bound", boundEnObject);
             _internetAccessBrowser.FrameLoadEnd += boundEnObject.OnFrameLoadEnd;
 
-          //  GlobalCounters.ResetAll();
 
             this.RemainingTime = "30";
 
@@ -205,6 +202,12 @@ namespace Iap.DynamicEnglishScreens
             UnitStartTime = DateTime.Now;
 
             base.OnViewLoaded(view);
+        }
+
+
+        private void InitializeBrowser(string url)
+        {
+
         }
 
         private void _internetAccessBrowser_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -492,22 +495,33 @@ namespace Iap.DynamicEnglishScreens
 
         public void Back()
         {
-            this.OpenKeyboard = false;              
+            this.OpenKeyboard = false;
             try
             {
-                if (_internetAccessBrowser != null)
+                if (_internetAccessBrowser.CanGoBack)
                 {
-                    _internetAccessBrowser.Dispose();
+                    _internetAccessBrowser.Back();
                 }
-                this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
-            }
-            catch {
-            }
+                else
+                {
+                    try
+                    {
+                        if (_internetAccessBrowser != null)
+                        {
+                            _internetAccessBrowser.Dispose();
+                        }
+                    }
+                    catch { }
+                    try
+                    {
+                        this.log.Info("Invoking Action: ViewEndNavigateSession  after " + (30 - this.TimeElapsed).ToString() + " minutes.");
+                        this.sender.SendAction("ViewEndNavigateSession after " + (30 - this.TimeElapsed).ToString() + " minutes.");
+                    }
 
-            try
-            {
-                this.log.Info("Invoking Action: ViewEndNavigateSession after " + TimeSpended() + " minutes.");
-                this.sender.SendAction("ViewEndNavigateSession after " + TimeSpended() + " minutes.");
+                    catch
+                    { }
+                    this.events.PublishOnCurrentThread(new ViewDynamicEnglishShellCommand());
+                }
             }
             catch { }
         }
@@ -558,7 +572,7 @@ namespace Iap.DynamicEnglishScreens
             this.SelectedPosition = "1";
             NotifyOfPropertyChange(() => SelectedPosition);
             PopulatePanel(currentView);
-            _internetAccessBrowser.Load(this.ButtonsDetails[0].EnUrl);
+            _internetAccessBrowser.Load(this.ButtonsDetails[0].EnUrl);  
         }
 
         public void ViewRedirect2()
