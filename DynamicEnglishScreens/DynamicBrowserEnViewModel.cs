@@ -204,12 +204,6 @@ namespace Iap.DynamicEnglishScreens
             base.OnViewLoaded(view);
         }
 
-
-        private void InitializeBrowser(string url)
-        {
-
-        }
-
         private void _internetAccessBrowser_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             try
@@ -514,8 +508,8 @@ namespace Iap.DynamicEnglishScreens
                     catch { }
                     try
                     {
-                        this.log.Info("Invoking Action: ViewEndNavigateSession  after " + (30 - this.TimeElapsed).ToString() + " minutes.");
-                        this.sender.SendAction("ViewEndNavigateSession after " + (30 - this.TimeElapsed).ToString() + " minutes.");
+                        this.log.Info("Invoking Action: ViewEndNavigateSession after " + TimeSpended() + " minutes.");
+                        this.sender.SendAction("ViewEndNavigateSession after " + TimeSpended() + " minutes.");
                     }
 
                     catch
@@ -552,6 +546,52 @@ namespace Iap.DynamicEnglishScreens
             return duration.ToString(@"hh\:mm\:ss");
         }
 
+
+        private void InitializeBrowserAgain(string url)
+        {
+            _internetAccessBrowser = new ChromiumWebBrowser()
+            {
+                Address = url
+            };
+
+
+            _internetAccessBrowser.BrowserSettings = new CefSharp.BrowserSettings()
+            {
+                OffScreenTransparentBackground = false,
+            };
+
+            _internetAccessBrowser.Load(url);
+
+            _internetAccessBrowser.BrowserSettings.FileAccessFromFileUrls = CefState.Enabled;
+            _internetAccessBrowser.BrowserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
+            _internetAccessBrowser.BrowserSettings.WebSecurity = CefState.Enabled;
+            _internetAccessBrowser.BrowserSettings.Javascript = CefState.Enabled;
+
+
+            _internetAccessBrowser.RequestContext = new RequestContext();
+            _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
+
+            _internetAccessBrowser.RequestHandler = new CustomRequestHandler("", log, sender, this.numberOfAvailablePagesToPrint, events);
+            _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
+
+            _internetAccessBrowser.MenuHandler = new CustomMenuHandler();
+
+
+            _internetAccessBrowser.MouseDown += _internetAccessBrowser_MouseDown;
+            _internetAccessBrowser.TouchDown += _internetAccessBrowser_TouchDown;
+            _internetAccessBrowser.TouchMove += _internetAccessBrowser_TouchMove;
+
+            _internetAccessBrowser.PreviewMouseUp += _internetAccessBrowser_PreviewMouseUp;
+
+            currentView.DynamicBrowser.Children.Add(_internetAccessBrowser);
+
+            _internetAccessBrowser.Focus();
+
+            var boundEnObject = new CustomBoundObject(this.numberOfAvailablePagesToPrint, this.log, sender, events);
+            _internetAccessBrowser.RegisterJsObject("bound", boundEnObject);
+            _internetAccessBrowser.FrameLoadEnd += boundEnObject.OnFrameLoadEnd;
+        }
+
         public void ViewRedirect1()
         {
             try
@@ -572,7 +612,14 @@ namespace Iap.DynamicEnglishScreens
             this.SelectedPosition = "1";
             NotifyOfPropertyChange(() => SelectedPosition);
             PopulatePanel(currentView);
-            _internetAccessBrowser.Load(this.ButtonsDetails[0].EnUrl);  
+            InitializeBrowserAgain(this.ButtonsDetails[0].EnUrl);
+            // _internetAccessBrowser.Load(this.ButtonsDetails[0].EnUrl); 
+            try
+            {
+                _internetAccessBrowser.Dispose();
+            }
+            catch { }
+            InitializeBrowserAgain(this.ButtonsDetails[0].EnUrl); 
         }
 
         public void ViewRedirect2()
@@ -595,7 +642,13 @@ namespace Iap.DynamicEnglishScreens
             this.SelectedPosition = "2";
             NotifyOfPropertyChange(() => SelectedPosition);
             PopulatePanel(currentView);
-            _internetAccessBrowser.Load(this.ButtonsDetails[1].EnUrl);
+            // _internetAccessBrowser.Load(this.ButtonsDetails[1].EnUrl);
+            try
+            {
+                _internetAccessBrowser.Dispose();
+            }
+            catch { }
+            InitializeBrowserAgain(this.ButtonsDetails[1].EnUrl);
         }
 
         public void ViewRedirect3()
@@ -618,7 +671,13 @@ namespace Iap.DynamicEnglishScreens
             this.SelectedPosition = "3";
             NotifyOfPropertyChange(() => SelectedPosition);
             PopulatePanel(currentView);
-            _internetAccessBrowser.Load(this.ButtonsDetails[2].EnUrl);
+            // _internetAccessBrowser.Load(this.ButtonsDetails[2].EnUrl);
+            try
+            {
+                _internetAccessBrowser.Dispose();
+            }
+            catch { }
+            InitializeBrowserAgain(this.ButtonsDetails[2].EnUrl);
         }
 
         public void ViewRedirect4()
@@ -641,7 +700,13 @@ namespace Iap.DynamicEnglishScreens
             this.SelectedPosition = "4";
             NotifyOfPropertyChange(() => SelectedPosition);
             PopulatePanel(currentView);
-            _internetAccessBrowser.Load(this.ButtonsDetails[3].EnUrl);
+            // _internetAccessBrowser.Load(this.ButtonsDetails[3].EnUrl);
+            try
+            {
+                _internetAccessBrowser.Dispose();
+            }
+            catch { }
+            InitializeBrowserAgain(this.ButtonsDetails[3].EnUrl);
         }
     }
 }

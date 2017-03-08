@@ -686,23 +686,30 @@ namespace Iap.DynamicGreekScreens
             this.OpenKeyboard = false;
             try
             {
-                try
+                if (_internetAccessBrowser.CanGoBack)
                 {
-                    if (_internetAccessBrowser != null)
-                    {
-                        _internetAccessBrowser.Dispose();
-                    }
+                    _internetAccessBrowser.Back();
                 }
-                catch { }
+                else
+                {
+                    try
+                    {
+                        if (_internetAccessBrowser != null)
+                        {
+                            _internetAccessBrowser.Dispose();
+                        }
+                    }
+                    catch { }
+                    try
+                    {
+                        this.log.Info("Invoking Action: ViewEndNavigateSession after " + TimeSpended() + " minutes.");
+                        this.sender.SendAction("ViewEndNavigateSession after " + TimeSpended() + " minutes.");
+                    }
 
-                this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
-            }
-            catch { }
-
-            try
-            {
-                this.log.Info("Invoking Action: ViewEndNavigateSession after " + TimeSpended() + " minutes.");
-                this.sender.SendAction("ViewEndNavigateSession after " + TimeSpended() + " minutes.");
+                    catch
+                    { }
+                    this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
+                }
             }
             catch { }
         }

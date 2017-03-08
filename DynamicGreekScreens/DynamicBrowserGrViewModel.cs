@@ -491,25 +491,33 @@ namespace Iap.DynamicGreekScreens
 
         public void Back()
         {
-              this.OpenKeyboard = false;
+            this.OpenKeyboard = false;
             try
             {
-                try
+                if (_internetAccessBrowser.CanGoBack)
                 {
-                    if (_internetAccessBrowser != null)
-                    {
-                        _internetAccessBrowser.Dispose();
-                    }
+                    _internetAccessBrowser.Back();
                 }
-                catch { }
+                else
+                {
+                    try
+                    {
+                        if (_internetAccessBrowser != null)
+                        {
+                            _internetAccessBrowser.Dispose();
+                        }
+                    }
+                    catch { }
+                    try
+                    {
+                        this.log.Info("Invoking Action: ViewEndNavigateSession after " + TimeSpended() + " minutes.");
+                        this.sender.SendAction("ViewEndNavigateSession after " + TimeSpended() + " minutes.");
+                    }
 
-                this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
-            }
-            catch { }
-            try
-            {
-                this.log.Info("Invoking Action: ViewEndNavigateSession after " + TimeSpended() + " minutes.");
-                this.sender.SendAction("ViewEndNavigateSession after " + TimeSpended() + " minutes.");
+                    catch
+                    { }
+                    this.events.PublishOnCurrentThread(new ViewDynamicGreekShellCommand());
+                }
             }
             catch { }
         }
@@ -519,6 +527,51 @@ namespace Iap.DynamicGreekScreens
             int timeSpent = 30 - TimeElapsed;
 
             return timeSpent.ToString();
+        }
+
+        private void InitializeBrowserAgain(string url)
+        {
+            _internetAccessBrowser = new ChromiumWebBrowser()
+            {
+                Address = url
+            };
+
+
+            _internetAccessBrowser.BrowserSettings = new CefSharp.BrowserSettings()
+            {
+                OffScreenTransparentBackground = false,
+            };
+
+            _internetAccessBrowser.Load(url);
+
+            _internetAccessBrowser.BrowserSettings.FileAccessFromFileUrls = CefState.Enabled;
+            _internetAccessBrowser.BrowserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
+            _internetAccessBrowser.BrowserSettings.WebSecurity = CefState.Enabled;
+            _internetAccessBrowser.BrowserSettings.Javascript = CefState.Enabled;
+
+
+            _internetAccessBrowser.RequestContext = new RequestContext();
+            _internetAccessBrowser.LifeSpanHandler = new LifeSpanHandler();
+
+            _internetAccessBrowser.RequestHandler = new CustomRequestHandler("", log, sender, this.numberOfAvailablePagesToPrint, events);
+            _internetAccessBrowser.DialogHandler = new CustomDialogHandler();
+
+            _internetAccessBrowser.MenuHandler = new CustomMenuHandler();
+
+
+            _internetAccessBrowser.MouseDown += _internetAccessBrowser_MouseDown;
+            _internetAccessBrowser.TouchDown += _internetAccessBrowser_TouchDown;
+            _internetAccessBrowser.TouchMove += _internetAccessBrowser_TouchMove;
+
+            _internetAccessBrowser.PreviewMouseUp += _internetAccessBrowser_PreviewMouseUp;
+
+            currentView.DynamicBrowser.Children.Add(_internetAccessBrowser);
+
+            _internetAccessBrowser.Focus();
+
+            var boundEnObject = new CustomBoundObjectEl(this.numberOfAvailablePagesToPrint, this.log, sender, events);
+            _internetAccessBrowser.RegisterJsObject("bound", boundEnObject);
+            _internetAccessBrowser.FrameLoadEnd += boundEnObject.OnFrameLoadEnd;
         }
 
         public void ViewRedirect1()
@@ -541,7 +594,13 @@ namespace Iap.DynamicGreekScreens
             this.SelectedPosition = "1";
             NotifyOfPropertyChange(() => SelectedPosition);
             PopulatePanel(currentView);
-            _internetAccessBrowser.Load(this.ButtonsDetails[0].GrUrl);
+            //_internetAccessBrowser.Load(this.ButtonsDetails[0].GrUrl);
+            try
+            {
+                _internetAccessBrowser.Dispose();
+            }
+            catch { }
+            InitializeBrowserAgain(this.ButtonsDetails[0].GrUrl);
         }
 
         public void ViewRedirect2()
@@ -564,7 +623,13 @@ namespace Iap.DynamicGreekScreens
             this.SelectedPosition = "2";
             NotifyOfPropertyChange(() => SelectedPosition);
             PopulatePanel(currentView);
-            _internetAccessBrowser.Load(this.ButtonsDetails[1].GrUrl);
+            //_internetAccessBrowser.Load(this.ButtonsDetails[1].GrUrl);
+            try
+            {
+                _internetAccessBrowser.Dispose();
+            }
+            catch { }
+            InitializeBrowserAgain(this.ButtonsDetails[1].GrUrl);
         }
 
         public void ViewRedirect3()
@@ -587,7 +652,13 @@ namespace Iap.DynamicGreekScreens
             this.SelectedPosition = "3";
             NotifyOfPropertyChange(() => SelectedPosition);
             PopulatePanel(currentView);
-            _internetAccessBrowser.Load(this.ButtonsDetails[2].GrUrl);
+            // _internetAccessBrowser.Load(this.ButtonsDetails[2].GrUrl);
+            try
+            {
+                _internetAccessBrowser.Dispose();
+            }
+            catch { }
+            InitializeBrowserAgain(this.ButtonsDetails[2].GrUrl);
         }
 
         public void ViewRedirect4()
@@ -610,7 +681,13 @@ namespace Iap.DynamicGreekScreens
             this.SelectedPosition = "4";
             NotifyOfPropertyChange(() => SelectedPosition);
             PopulatePanel(currentView);
-            _internetAccessBrowser.Load(this.ButtonsDetails[3].GrUrl);
+            //_internetAccessBrowser.Load(this.ButtonsDetails[3].GrUrl);
+            try
+            {
+                _internetAccessBrowser.Dispose();
+            }
+            catch { }
+            InitializeBrowserAgain(this.ButtonsDetails[3].GrUrl);
         }
     }
 }
