@@ -9,7 +9,7 @@
         <Button
             x:Name="One"
             HorizontalAlignment="Left"
-            Margin="84,27,0,0"
+            Margin="67,23,0,0"
             VerticalAlignment="Top"
             Width="68"
             Height="61"
@@ -20,7 +20,7 @@
             />
         <Button x:Name="Two"
             HorizontalAlignment="Left"
-            Margin="157,27,0,0"
+            Margin="150,23,0,0"
             VerticalAlignment="Top"
             Width="63"
             Height="61"
@@ -32,7 +32,7 @@
         <Button
             x:Name="Three"
             HorizontalAlignment="Left"
-            Margin="225,27,0,0"
+            Margin="227,23,0,0"
             VerticalAlignment="Top"
             Width="66"
             Height="61"
@@ -43,7 +43,7 @@
             />
         <Button x:Name="Four"
             HorizontalAlignment="Left"
-            Margin="301,27,0,0"
+            Margin="307,23,0,0"
             VerticalAlignment="Top"
             Width="66"
             Height="61"
@@ -54,7 +54,7 @@
                 />
         <Button x:Name="Five"
                 HorizontalAlignment="Left"
-                Margin="367,27,0,0"
+                Margin="387,23,0,0"
                 VerticalAlignment="Top"
                 Width="65"
                 Height="61"
@@ -65,7 +65,7 @@
                 />
         <Button x:Name="Six"
                 HorizontalAlignment="Left"
-                Margin="437,27,0,0"
+                Margin="467,23,0,0"
                 VerticalAlignment="Top"
                 Width="65"
                 Height="61"
@@ -76,7 +76,7 @@
                 />
         <Button x:Name="Seven"
                 HorizontalAlignment="Left"
-                Margin="507,27,0,0"
+                Margin="545,23,0,0"
                 VerticalAlignment="Top"
                 Width="66"
                 Height="61"
@@ -88,7 +88,7 @@
         <Button 
             x:Name="Eight" 
             HorizontalAlignment="Left"
-            Margin="580,27,0,0"
+            Margin="624,23,0,0"
             VerticalAlignment="Top"
             Width="63"
             Height="61"
@@ -100,7 +100,7 @@
         <Button 
             x:Name="Nine"
             HorizontalAlignment="Left"
-            Margin="648,27,0,0"
+            Margin="702,23,0,0"
             VerticalAlignment="Top"
             Width="69"
             Height="61"
@@ -112,7 +112,7 @@
         <Button
             x:Name="Zero"
             HorizontalAlignment="Left"
-            Margin="722,27,0,0"
+            Margin="782,23,0,0"
             VerticalAlignment="Top"
             Width="66"
             Height="61"
@@ -122,21 +122,9 @@
             Focusable="False"
             />
         <Button 
-            x:Name="Backspace"
-            HorizontalAlignment="Left"
-            Margin="793,27,0,0"
-            VerticalAlignment="Top"
-            Width="119"
-            Height="61"
-            Click="cmdSymbolButtonClick"
-            ClickMode="Release"
-            Background="Transparent"
-            Focusable="False"
-            />
-        <Button 
             x:Name="Q" 
             HorizontalAlignment="Left"
-            Margin="40,93,0,0"
+            Margin="67,93,0,0"
             VerticalAlignment="Top"
             Width="68"
             Height="65"
@@ -148,7 +136,7 @@
         <Button 
             x:Name="W"
             HorizontalAlignment="Left"
-            Margin="113,93,0,0"
+            Margin="146,93,0,0"
             VerticalAlignment="Top"
             Width="66"
             Height="65"
@@ -160,7 +148,7 @@
         <Button 
             x:Name="E"
             HorizontalAlignment="Left"
-            Margin="184,93,0,0"
+            Margin="226,93,0,0"
             VerticalAlignment="Top"
             Width="63"
             Height="65"
@@ -172,7 +160,7 @@
         <Button 
             x:Name="R"
             HorizontalAlignment="Left"
-            Margin="252,93,0,0"
+            Margin="308,93,0,0"
             VerticalAlignment="Top"
             Width="63"
             Height="65"
@@ -184,7 +172,7 @@
         <Button
             x:Name="T"
             HorizontalAlignment="Left"
-            Margin="320,93,0,0"
+            Margin="382,93,0,0"
             VerticalAlignment="Top"
             Width="70"
             Height="65"
@@ -196,7 +184,7 @@
         <Button 
             x:Name="Y"
             HorizontalAlignment="Left"
-            Margin="395,93,0,0"
+            Margin="465,93,0,0"
             VerticalAlignment="Top"
             Width="64"
             Height="65"
@@ -208,7 +196,7 @@
         <Button 
             x:Name="U"
             HorizontalAlignment="Left"
-            Margin="464,93,0,0"
+            Margin="544,93,0,0"
             VerticalAlignment="Top"
             Width="64"
             Height="65"
@@ -220,7 +208,7 @@
         <Button
             x:Name="I"
             HorizontalAlignment="Left"
-            Margin="533,93,0,0"
+            Margin="622,93,0,0"
             VerticalAlignment="Top"
             Width="69"
             Height="65"
@@ -232,7 +220,7 @@
         <Button
             x:Name="O"
             HorizontalAlignment="Left"
-            Margin="607,93,0,0"
+            Margin="704,93,0,0"
             VerticalAlignment="Top"
             Width="65" 
             Height="65"
@@ -244,7 +232,7 @@
         <Button 
             x:Name="P"
             HorizontalAlignment="Left"
-            Margin="677,93,0,0"
+            Margin="782,93,0,0"
             VerticalAlignment="Top"
             Width="67"
             Height="65"
@@ -253,7 +241,7 @@
             Background="Transparent"
             Focusable="False"
             />
-        <Button 
+        <!--<Button 
             x:Name="LeftBracket"
             HorizontalAlignment="Left"
             Margin="749,93,0,0"
@@ -264,8 +252,8 @@
             ClickMode="Release"
             Background="Transparent"
             Focusable="False"
-            />
-        <Button 
+            />-->
+       <!-- <Button 
             x:Name="RightBracket" 
             HorizontalAlignment="Left"
             Margin="817,93,0,0"
@@ -276,8 +264,8 @@
             ClickMode="Release"
             Background="Transparent"
             Focusable="False"
-            />
-        <Button 
+            />-->
+        <!--<Button 
             x:Name="Slash" 
             HorizontalAlignment="Left"
             Margin="889,93,0,0"
@@ -288,13 +276,13 @@
             ClickMode="Release"
             Background="Transparent"
             Focusable="False"
-            />
+            />-->
         <Button 
             x:Name="A"
             HorizontalAlignment="Left"
-            Margin="40,161,0,0"
+            Margin="68,167,0,0"
             VerticalAlignment="Top"
-            Width="75"
+            Width="65"
             Height="65"
             Click="cmdCharButton_Click"
             ClickMode="Release"
@@ -304,7 +292,7 @@
         <Button 
             x:Name="S"
             HorizontalAlignment="Left"
-            Margin="122,161,0,0"
+            Margin="148,167,0,0"
             VerticalAlignment="Top"
             Width="65"
             Height="65"
@@ -316,7 +304,7 @@
         <Button 
             x:Name="D"
             HorizontalAlignment="Left"
-            Margin="192,161,0,0"
+            Margin="226,167,0,0"
             VerticalAlignment="Top"
             Width="65"
             Height="65"
@@ -328,7 +316,7 @@
         <Button 
             x:Name="F"
             HorizontalAlignment="Left"
-            Margin="262,161,0,0"
+            Margin="305,167,0,0"
             VerticalAlignment="Top"
             Width="66"
             Height="65"
@@ -340,7 +328,7 @@
         <Button
             x:Name="G"
             HorizontalAlignment="Left"
-            Margin="333,161,0,0"
+            Margin="385,167,0,0"
             VerticalAlignment="Top"
             Width="65"
             Height="65"
@@ -352,7 +340,7 @@
         <Button 
             x:Name="H"
             HorizontalAlignment="Left"
-            Margin="403,161,0,0"
+            Margin="465,167,0,0"
             VerticalAlignment="Top"
             Width="65"
             Height="65"
@@ -364,7 +352,7 @@
         <Button
             x:Name="J" 
             HorizontalAlignment="Left"
-            Margin="473,161,0,0"
+            Margin="543,167,0,0"
             VerticalAlignment="Top"
             Width="67"
             Height="65"
@@ -376,7 +364,7 @@
         <Button
             x:Name="K"
             HorizontalAlignment="Left"
-            Margin="545,161,0,0"
+            Margin="623,167,0,0"
             VerticalAlignment="Top"
             Width="65"
             Height="65"
@@ -388,7 +376,7 @@
         <Button
             x:Name="L" 
             HorizontalAlignment="Left"
-            Margin="615,161,0,0"
+            Margin="703,167,0,0"
             VerticalAlignment="Top"
             Width="65"
             Height="65"
@@ -398,6 +386,18 @@
             Focusable="False"
             />
         <Button 
+            x:Name="Backspace"
+            HorizontalAlignment="Left"
+            Margin="782,167,0,0"
+            VerticalAlignment="Top"
+            Width="145"
+            Height="65"
+            Click="cmdSymbolButtonClick"
+            ClickMode="Release"
+            Background="Transparent"
+            Focusable="False"
+            />
+        <!--<Button 
             x:Name="semicolon" 
             HorizontalAlignment="Left"
             Margin="685,161,0,0"
@@ -408,8 +408,8 @@
             ClickMode="Release"
             Background="Transparent"
             Focusable="False"
-            />
-        <Button
+            />-->
+       <!-- <Button
             x:Name="apostrophe"
             HorizontalAlignment="Left"
             Margin="755,161,0,0"
@@ -420,24 +420,14 @@
             ClickMode="Release"
             Background="Transparent"
             Focusable="False"
-            />
-        <Button x:Name="enter"
-                HorizontalAlignment="Left"
-                Margin="825,161,0,0"
-                VerticalAlignment="Top"
-                Width="124"
-                Height="65"
-                Click="cmdSymbolButtonClick"
-                ClickMode="Release"
-                Background="Transparent"
-                Focusable="False"
-                />
+            />-->
+        
         <Button 
             x:Name="Caps" 
             HorizontalAlignment="Left"
-            Margin="24,231,0,0"
+            Margin="68,240,0,0"
             VerticalAlignment="Top"
-            Width="114"
+            Width="134"
             Height="65"
             Background="Transparent"
             Focusable="False"
@@ -446,7 +436,7 @@
         <Button 
             x:Name="Z"
             HorizontalAlignment="Left"
-            Margin="147,231,0,0"
+            Margin="226,240,0,0"
             VerticalAlignment="Top"
             Width="65"
             Height="65"
@@ -458,10 +448,10 @@
         <Button 
             x:Name="X"
             HorizontalAlignment="Left"
-            Margin="218,226,0,0"
+            Margin="306,240,0,0"
             VerticalAlignment="Top"
             Width="65"
-            Height="70"
+            Height="65"
             Click="cmdCharButton_Click"
             ClickMode="Release"
             Background="Transparent"
@@ -470,10 +460,10 @@
         <Button 
             x:Name="C"
             HorizontalAlignment="Left"
-            Margin="288,228,0,0"
+            Margin="385,240,0,0"
             VerticalAlignment="Top"
             Width="65"
-            Height="70"
+            Height="65"
             Click="cmdCharButton_Click"
             ClickMode="Release"
             Background="Transparent"
@@ -482,7 +472,7 @@
         <Button 
             x:Name="V"
             HorizontalAlignment="Left"
-            Margin="358,231,0,0"
+            Margin="465,240,0,0"
             VerticalAlignment="Top"
             Width="65"
             Height="65"
@@ -494,7 +484,7 @@
         <Button
             x:Name="B"
             HorizontalAlignment="Left"
-            Margin="430,231,0,0"
+            Margin="545,240,0,0"
             VerticalAlignment="Top"
             Width="65"
             Height="63"
@@ -506,7 +496,7 @@
         <Button
             x:Name="N"
             HorizontalAlignment="Left"
-            Margin="500,231,0,0"
+            Margin="623,240,0,0"
             VerticalAlignment="Top"
             Width="66"
             Height="65"
@@ -518,7 +508,7 @@
         <Button
             x:Name="M"
             HorizontalAlignment="Left"
-            Margin="575,231,0,0"
+            Margin="702,240,0,0"
             VerticalAlignment="Top"
             Width="65"
             Height="65"
@@ -527,7 +517,7 @@
             Background="Transparent"
             Focusable="False"
             />
-        <Button
+      <!--  <Button
             x:Name="comma"
             HorizontalAlignment="Left"
             Margin="645,231,0,0"
@@ -538,8 +528,8 @@
             ClickMode="Release"
             Background="Transparent"
             Focusable="False"
-            />
-        <Button
+            />-->
+       <!-- <Button
             x:Name="Dot"
             HorizontalAlignment="Left"
             Margin="715,231,0,0"
@@ -550,8 +540,8 @@
             ClickMode="Release"
             Background="Transparent"
             Focusable="False"
-            />
-        <Button
+            />-->
+       <!-- <Button
             x:Name="forwslash" 
             HorizontalAlignment="Left"
             Margin="785,231,0,0"
@@ -562,8 +552,8 @@
             ClickMode="Release"
             Background="Transparent"
             Focusable="False"
-            />
-        <Button 
+            />-->
+        <!--<Button 
             x:Name="At"
             HorizontalAlignment="Left"
             Margin="860,231,0,0"
@@ -574,13 +564,24 @@
             Focusable="False"
             Click="cmdSymbolButtonClick"
             ClickMode="Release"
+            />-->
+        <Button 
+            x:Name="ViewSymbolicAlphanumeric"
+            HorizontalAlignment="Left"
+            Margin="782,240,0,0"
+            VerticalAlignment="Top"
+            Width="145"
+            Height="65"
+            Background="Transparent"
+            Focusable="False"
+            Click="ViewSymbolicAlphanumeric_Click"
             />
         <Button 
             x:Name="Space" 
             HorizontalAlignment="Left"
-            Margin="252,305,0,0"
+            Margin="226,312,0,0"
             VerticalAlignment="Top"
-            Width="498"
+            Width="462"
             Height="65"
             Click="cmdSymbolButtonClick"
             ClickMode="Release"
@@ -590,13 +591,24 @@
         <Button 
             x:Name="changelang" 
             HorizontalAlignment="Left"
-            Margin="24,305,0,0"
+            Margin="68,312,0,0"
             VerticalAlignment="Top"
-            Width="114"
+            Width="134"
             Height="65"
             Background="Transparent"
             Focusable="False"
             Click="changelang_Click"
             />
+        <Button x:Name="enter"
+                HorizontalAlignment="Left"
+                Margin="705,312,0,0"
+                VerticalAlignment="Top"
+                Width="140"
+                Height="65"
+                Click="cmdSymbolButtonClick"
+                ClickMode="Release"
+                Background="Transparent"
+                Focusable="False"
+                />
     </Grid>
 </UserControl>

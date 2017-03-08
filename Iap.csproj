@@ -771,6 +771,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Images\disclaimer-gr.png" />
+    <Resource Include="Images\AIA_FOR PNG-44.png" />
     <Content Include="Media\banner.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
