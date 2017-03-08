@@ -99,6 +99,7 @@ namespace Iap.Keyboards
         private const byte VK_APOSTROPHE = 0xDE;
         private const byte VK_BACKTICK = 0xC0;
         private const byte VK_EQUALS = 0xBB;
+        private const byte VK_MINUS = 0xBD;
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -150,6 +151,18 @@ namespace Iap.Keyboards
                             keybd_event(VK_APOSTROPHE, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
 
                             keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+                            keybd_event(VK_APOSTROPHE, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_APOSTROPHE, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_BACK, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
                             e.Handled = true;
                         }
                         break;
@@ -240,6 +253,13 @@ namespace Iap.Keyboards
                         {
                             keybd_event(VK_APOSTROPHE, 0, 0, (UIntPtr)0);
                             keybd_event(VK_APOSTROPHE, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_APOSTROPHE, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_APOSTROPHE, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_BACK, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
                             e.Handled = true;
                         }
                         break;
@@ -313,83 +333,243 @@ namespace Iap.Keyboards
                 switch(key.Name)
                 {
                     case "A":
-                        keybd_event(VK_A, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_A, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_A, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_A, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                        else
+                        {
+                            keybd_event(VK_EQUALS, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_EQUALS, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "B":
-                        keybd_event(VK_B, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_B, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_B, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_B, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "C":
-                        keybd_event(VK_C, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_C, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
-                        e.Handled = true;
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_C, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_C, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                            e.Handled = true;
+                        }
+                        else
+                        {
+                            keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+                            keybd_event(VK_2, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_2, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         break;
                     case "D":
-                        keybd_event(VK_D, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_D, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_D, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_D, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                        else
+                        {
+                            keybd_event(VK_LEFT_BRACKET, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_LEFT_BRACKET, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "E":
-                        keybd_event(VK_E, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_E, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
-                        e.Handled = true;
-                        break;
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_E, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_E, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                        else
+                        {
+                            keybd_event(VK_COMMA, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_COMMA, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                            e.Handled = true;
+                            break;
                     case "F":
-                        keybd_event(VK_F, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_F, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_F, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_F, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                        else
+                        {
+                            keybd_event(VK_RIGHT_BRACKET, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_RIGHT_BRACKET, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "G":
-                        keybd_event(VK_G, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_G, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
-                        e.Handled = true;
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_G, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_G, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                            e.Handled = true;
+                        }
+                        else
+                        {
+                            keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+                            keybd_event(VK_6, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_6, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+                            keybd_event(VK_6, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_6, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_BACK, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         break;
                     case "H":
-                        keybd_event(VK_H, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_H, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_H, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_H, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                        else
+                        {
+                            keybd_event(VK_SLASH, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_SLASH, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "I":
-                        keybd_event(VK_I, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_I, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_I, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_I, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                        else
+                        {
+                            keybd_event(VK_SEMICOLON, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_SEMICOLON, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "J":
-                        keybd_event(VK_J, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_J, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_J, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_J, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                        else
+                        {
+                            keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+                            keybd_event(VK_MINUS, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_MINUS, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "K":
-                        keybd_event(VK_K, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_K, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_K, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_K, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                        else
+                        {
+                            keybd_event(VK_BACKTICK, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_BACKTICK, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_BACKTICK, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_BACKTICK, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_BACK, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "L":
-                        keybd_event(VK_L, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_L, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_L, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_L, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                        else
+                        {
+                            keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+                            keybd_event(VK_SLASH, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_SLASH, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "M":
-                        keybd_event(VK_M, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_M, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_M, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_M, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "N":
-                        keybd_event(VK_N, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_N, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_N, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_N, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "O":
-                        keybd_event(VK_O, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_O, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_O, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_O, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                        else
+                        {
+                            keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+                            keybd_event(VK_COMMA, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_COMMA, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "P":
-                        keybd_event(VK_P, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_P, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_P, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_P, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                        else
+                        {
+                            keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+                            keybd_event(VK_DOT, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_DOT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "Q":
@@ -397,7 +577,6 @@ namespace Iap.Keyboards
                         {
                             keybd_event(VK_Q, 0, 0, (UIntPtr)0);
                             keybd_event(VK_Q, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
-                            e.Handled = true;
                         }
                         else
                         {
@@ -408,32 +587,89 @@ namespace Iap.Keyboards
                             keybd_event(VK_BACKTICK, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
 
                             keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
-                            e.Handled = true;
+
+                            keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+                            keybd_event(VK_BACKTICK, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_BACKTICK, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_BACK, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
                         }
+                        e.Handled = true;
                         break;
                     case "R":
-                        keybd_event(VK_R, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_R, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_R, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_R, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                        else
+                        {
+                            keybd_event(VK_MINUS, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_MINUS, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "S":
-                        keybd_event(VK_S, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_S, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_S, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_S, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                        else
+                        {
+                            keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+                            keybd_event(VK_FORSLASH, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_FORSLASH, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "T":
-                        keybd_event(VK_T, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_T, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_T, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_T, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                        else
+                        {
+                            keybd_event(VK_DOT, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_DOT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "U":
-                        keybd_event(VK_U, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_U, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_U, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_U, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                        else
+                        {
+                            keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+                            keybd_event(VK_SEMICOLON, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_SEMICOLON, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "V":
-                        keybd_event(VK_V, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_V, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_V, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_V, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "W":
@@ -456,18 +692,52 @@ namespace Iap.Keyboards
                         }
                         break;
                     case "X":
-                        keybd_event(VK_X, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_X, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_X, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_X, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                        else
+                        {
+                            keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+                            keybd_event(VK_RIGHT_BRACKET, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_RIGHT_BRACKET, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "Y":
-                        keybd_event(VK_Y, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_Y, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_Y, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_Y, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                        else
+                        {
+                            keybd_event(VK_FORSLASH, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_FORSLASH, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                     case "Z":
-                        keybd_event(VK_Z, 0, 0, (UIntPtr)0);
-                        keybd_event(VK_Z, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        if (isAlphnumeric)
+                        {
+                            keybd_event(VK_Z, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_Z, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
+                        else
+                        {
+                            keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+                            keybd_event(VK_LEFT_BRACKET, 0, 0, (UIntPtr)0);
+                            keybd_event(VK_LEFT_BRACKET, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                            keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                        }
                         e.Handled = true;
                         break;
                 }
@@ -554,48 +824,58 @@ namespace Iap.Keyboards
 
         private void changelang_Click(object sender, RoutedEventArgs e)
         {
-              keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
-              keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+            //   keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+            //  keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
 
             // keybd_event(VK_LALT, 0, 0, (UIntPtr)0);
-              keybd_event(VK_LALT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+            //  keybd_event(VK_LALT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
 
             //  keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
-              keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
-
-            ImageBrush myBrush = new ImageBrush();
-            if (isEnghlish)
+            // keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+            if (isAlphnumeric)
             {
-                if (isCaps)
+                keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+                keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+
+                keybd_event(VK_LALT, 0, 0, (UIntPtr)0);
+                keybd_event(VK_LALT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                keybd_event(VK_LSHIFT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+
+                ImageBrush myBrush = new ImageBrush();
+                if (isEnghlish)
                 {
-                    myBrush.ImageSource = new BitmapImage
-                (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-43.png"));
+                    if (isCaps)
+                    {
+                        myBrush.ImageSource = new BitmapImage
+                    (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-43.png"));
+                    }
+                    else
+                    {
+                        myBrush.ImageSource = new BitmapImage
+                    (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-42.png"));
+                    }
+
+                    isEnghlish = false;
+
                 }
                 else
                 {
-                    myBrush.ImageSource = new BitmapImage
-                (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-42.png"));
+                    if (isCaps)
+                    {
+                        myBrush.ImageSource = new BitmapImage
+                        (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-22.png"));
+                    }
+                    else
+                    {
+                        myBrush.ImageSource = new BitmapImage
+                        (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-23.png"));
+                    }
+                    isEnghlish = true;
                 }
 
-                isEnghlish = false;
-                
+                this.KeyboardGrid.Background = myBrush;
             }
-            else
-            {
-                if (isCaps)
-                {
-                    myBrush.ImageSource = new BitmapImage
-                    (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-22.png"));
-                }
-                else
-                {
-                    myBrush.ImageSource = new BitmapImage
-                    (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-23.png"));
-                }
-                isEnghlish = true;
-            }
-
-            this.KeyboardGrid.Background = myBrush;
         }
 
 
@@ -605,39 +885,42 @@ namespace Iap.Keyboards
 
         private void Caps_Click(object sender, RoutedEventArgs e)
         {
-            ImageBrush myBrush = new ImageBrush();
-            if (isCaps)
+            if (isAlphnumeric)
             {
-                if (isEnghlish)
+                ImageBrush myBrush = new ImageBrush();
+                if (isCaps)
                 {
-                    myBrush.ImageSource = new BitmapImage
-                (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-23.png"));
+                    if (isEnghlish)
+                    {
+                        myBrush.ImageSource = new BitmapImage
+                    (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-23.png"));
+                    }
+                    else
+                    {
+                        myBrush.ImageSource = new BitmapImage
+                    (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-42.png"));
+                    }
+
+                    isCaps = false;
                 }
                 else
                 {
-                    myBrush.ImageSource = new BitmapImage
-                (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-42.png"));
+                    if (isEnghlish)
+                    {
+                        myBrush.ImageSource = new BitmapImage
+                        (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-22.png"));
+                    }
+                    else
+                    {
+                        myBrush.ImageSource = new BitmapImage
+                        (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-43.png"));
+                    }
+                    isCaps = true;
                 }
-                
-                isCaps = false;
+                keybd_event(VK_CAPITAL, 0, 0, (UIntPtr)0);
+                keybd_event(VK_CAPITAL, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                this.KeyboardGrid.Background = myBrush;
             }
-            else
-            {
-                if (isEnghlish)
-                {
-                    myBrush.ImageSource = new BitmapImage
-                    (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-22.png"));
-                }
-                else
-                {
-                    myBrush.ImageSource = new BitmapImage
-                    (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-43.png"));
-                }
-                isCaps = true;
-            }
-            keybd_event(VK_CAPITAL, 0, 0, (UIntPtr)0);
-            keybd_event(VK_CAPITAL, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
-            this.KeyboardGrid.Background = myBrush;
         }
 
         private void ViewSymbolicAlphanumeric_Click(object sender, RoutedEventArgs e)
@@ -683,11 +966,31 @@ namespace Iap.Keyboards
             this.KeyboardGrid.Background = myBrush;
         }
 
+        public bool hasCatchToggled = false;
+
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             isEnghlish = true;
             isCaps = false;
             isAlphnumeric = true;
+
+            /* keybd_event(VK_LSHIFT, 0, 0, (UIntPtr)0);
+             keybd_event(VK_LSHIFT, 0, WM_KEYDOWN, (UIntPtr)0);
+             keybd_event(VK_LALT, 0, 0, (UIntPtr)0);
+             keybd_event(VK_LALT, 0, KEYEVENTF_KEYUP, (UIntPtr)0);*/
+            // if(System.Windows.Input.Keyboard.IsKeyDown(Key.LeftShift))
+            //{
+            //  System.Windows.MessageBox.Show("isKeydown");
+            // }
+            if (!hasCatchToggled)
+            {
+                if (System.Windows.Input.Keyboard.GetKeyStates(Key.CapsLock) == KeyStates.Toggled)
+                {
+                    keybd_event(VK_CAPITAL, 0, 0, (UIntPtr)0);
+                    keybd_event(VK_CAPITAL, 0, KEYEVENTF_KEYUP, (UIntPtr)0);
+                }
+                hasCatchToggled = true;
+            }
         }
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)

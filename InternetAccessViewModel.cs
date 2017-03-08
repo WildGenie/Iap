@@ -220,7 +220,7 @@ namespace Iap
         {
             try
             {
-                string script =
+               /* string script =
                                 @"(function ()
                     {
                         var isText = false;
@@ -236,6 +236,22 @@ namespace Iap
                                         isText = true;
                                         }
                                     }
+                                }
+                            }
+                        }
+                        return isText;
+                    })();";*/
+                     string script =
+                                @"(function ()
+                    {
+                        var isText = false;
+                        var activeElement = document.activeElement;
+                        if (activeElement) {
+                            if (activeElement.tagName.toLowerCase() === 'textarea') {                              
+                                isText = true;
+                            } else {
+                                if (activeElement.tagName.toLowerCase() === 'input') {
+                                    isText=true;
                                 }
                             }
                         }
