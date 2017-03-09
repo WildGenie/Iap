@@ -183,6 +183,16 @@ namespace Iap.DynamicEnglishScreens
                                 if (activeElement.tagName.toLowerCase() === 'input') {
                                     isText=true;
                                 }
+                                    if (activeElement.tagName.toLowerCase() === 'iframe') {
+                                    var iframe = document.getElementById(activeElement.id);
+                                    try{
+                                    var doc = iframe.contentDocument? iframe.contentDocument: iframe.contentWindow.document;
+                                        }
+                                     catch(err)
+                                        {
+                                            isText=true; 
+                                        }
+                                }
                             }
                         }
                         return isText;
