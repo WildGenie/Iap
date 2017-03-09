@@ -123,7 +123,7 @@ namespace Iap.Handlers
                 System.Windows.MessageBox.Show(ex.ToString());
             }
 
-            System.Threading.Thread.Sleep(2000);
+            System.Threading.Thread.Sleep(3000);
 
             try {
 
@@ -148,7 +148,7 @@ namespace Iap.Handlers
 
                 iTextSharp.text.pdf.PdfReader pdfReader = new iTextSharp.text.pdf.PdfReader(fileName);
                 int numberOfPages = pdfReader.NumberOfPages;
-
+               
                 if (GlobalCounters.numberOfCurrentPrintings + numberOfPages <= Convert.ToInt32(this.numberOfAvailabelPagesToPrint))
                 {
 
@@ -165,39 +165,44 @@ namespace Iap.Handlers
                     }
                     catch { }
 
-                    System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
-                  //  info.UseShellExecute = true;
-                    info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                    info.Verb = "print";
-                    info.FileName = fileName;
-                    info.CreateNoWindow = true;
-
-
-                    System.Diagnostics.Process p = new System.Diagnostics.Process();
-                    p.StartInfo = info;
-                    p.Start();
-
-                    p.WaitForExit();
-                    p.CloseMainWindow();
-
-
-                    if (false == p.CloseMainWindow())
+                    try
                     {
-                        try
-                        {
-                            p.Kill();
-                        }
-                        catch { }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            p.Kill();
-                        }
-                        catch { }
-                    }
 
+                        System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+                        info.UseShellExecute = true;
+                        info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                        info.Verb = "print";
+                        info.FileName = fileName;
+                        info.CreateNoWindow = true;
+
+
+                        System.Diagnostics.Process p = new System.Diagnostics.Process();
+                        p.StartInfo = info;
+                        p.Start();
+
+                        p.WaitForExit();
+                        p.CloseMainWindow();
+
+
+                        if (false == p.CloseMainWindow())
+                        {
+                            try
+                            {
+                                p.Kill();
+                            }
+                            catch { }
+                        }
+                        else
+                        {
+                            try
+                            {
+                                p.Kill();
+                            }
+                            catch { }
+                        }
+                    }
+                    catch { }
+                   
                     GlobalCounters.numberOfCurrentPrintings += numberOfPages;
 
                     try

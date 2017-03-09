@@ -120,17 +120,6 @@ namespace Iap.Bounds
         {
             try
             {
-
-                /* Thread waitThread = new Thread(() =>
-                 {
-                     PleaseWaitWindow wait = new PleaseWaitWindow();
-
-                     wait.ShowDialog();
-                     wait.Close();
-
-                 });
-                 waitThread.SetApartmentState(ApartmentState.STA);
-                 waitThread.Start();*/
                 this.events.PublishOnUIThread(new ViewStartPrintProgressCommand());
             }
 

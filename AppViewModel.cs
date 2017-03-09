@@ -140,6 +140,12 @@ namespace Iap
 
         protected async override void OnViewLoaded(object view)
         {
+            try
+            {
+                TaskbarManager.HideTaskbar();
+            }
+            catch { }
+
             mainView = ((AppView)view);
             CancellationTokenSource ct = new CancellationTokenSource();
 

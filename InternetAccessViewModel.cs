@@ -107,7 +107,7 @@ namespace Iap
             _internetAccessBrowser.Focus();
 
 
-            GlobalCounters.ResetAll();
+           // GlobalCounters.ResetAll();
 
             
             timer = new DispatcherTimer();
