@@ -47,8 +47,8 @@ namespace Iap.Handlers
 
         public IResponseFilter GetResourceResponseFilter(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response)
         {
-            if(request.Url.EndsWith(".pdf"))
-            {
+            if (request.Url.EndsWith(".pdf"))
+            {               
                 string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
                 browserControl.Load(toNavigate);
             }
@@ -71,7 +71,13 @@ namespace Iap.Handlers
                 browserControl.Load(toNavigate);
             }
 
-            return null;
+           else if (request.Url.EndsWith("cv"))
+            {
+                string toNavigate = "http://docs.google.com/gview?url=" + request.Url + "&embedded=false";
+                browserControl.Load(toNavigate);
+            }
+
+                return null;
         }
 
         public bool OnBeforeBrowse(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, bool isRedirect)
