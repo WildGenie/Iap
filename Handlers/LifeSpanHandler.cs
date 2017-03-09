@@ -175,10 +175,9 @@ namespace Iap.Handlers
 
 
             }
-            catch (Exception ex)
+            catch 
             {
-                System.Windows.MessageBox.Show(ex.ToString());
-                //System.Windows.MessageBox.Show(ex.ToString());
+                
             }
             finally
             {

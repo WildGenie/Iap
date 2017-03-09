@@ -126,7 +126,7 @@ namespace Iap.Handlers
 
             catch(Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.ToString());
+                this.log.Info("InvokingAction: ViewException " + ex.ToString());
             }
 
             System.Threading.Thread.Sleep(3000);
