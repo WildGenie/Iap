@@ -982,6 +982,11 @@ namespace Iap.Keyboards
             //{
             //  System.Windows.MessageBox.Show("isKeydown");
             // }
+            ImageBrush myBrush = new ImageBrush();
+            myBrush.ImageSource = new BitmapImage
+                        (new Uri(@"pack://application:,,,/Images/AIA_FOR PNG-23.png"));
+            this.KeyboardGrid.Background = myBrush;
+
             if (!hasCatchToggled)
             {
                 if (System.Windows.Input.Keyboard.GetKeyStates(Key.CapsLock) == KeyStates.Toggled)
