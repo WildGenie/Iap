@@ -49,15 +49,22 @@ namespace Iap
         private bool isGreekSelected;
         private readonly ILog log;
         private readonly IWindowManager windowManager;
-     
 
         private readonly IGetScreenDetailsService parser;
+        private readonly IBannerService bannerService;
+
         private readonly ILicenceProviderService licenceProvider;
 
-        public AppViewModel(IEventAggregator events, IGetScreenDetailsService parser, ILicenceProviderService licenceProvider, ILog log, IWindowManager windowManager)
+        public AppViewModel(IEventAggregator events,
+                            IGetScreenDetailsService parser,
+                            IBannerService bannerService,
+                            ILicenceProviderService licenceProvider,
+                            ILog log,
+                            IWindowManager windowManager)
         {
             this.events = events;
             this.parser = parser;
+            this.bannerService = bannerService;
             this.licenceProvider = licenceProvider;
             this.log = log;
             this.windowManager = windowManager;
@@ -77,8 +84,6 @@ namespace Iap
         public BuyWifiViewModel BuyWifi { get; set; }
 
         public ScreenSaverViewModel ScreenSaver { get; set; }
-
-     
 
         public DynamicEnShellViewModel DynamicEnShell { get; set; }
         public DynamicEnShell2ViewModel DynamicEnShell2 { get; set; }
@@ -199,6 +204,9 @@ namespace Iap
             get;
             set;
         }
+
+        public IReadOnlyCollection<BannerModel> BannerImages
+            { get; set; }
 
         public IReadOnlyCollection<ButtonLinkModel> tempButtons
         {
@@ -717,12 +725,13 @@ namespace Iap
             try
             {
                 this.buttons = this.parser.GetButtonLinksDetails(this.KioskType);
-
             }
             catch
             {
                 this.buttons = null;
             }
+
+            this.BannerImages = this.bannerService.GetBannerContent();
         }
 
         public void Handle(ViewShutDownCommand message)
