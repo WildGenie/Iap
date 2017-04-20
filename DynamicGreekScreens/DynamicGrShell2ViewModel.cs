@@ -235,10 +235,16 @@ namespace Iap.DynamicGreekScreens
 
         public void ViewAdvertLink()
         {
+            if ((this.BannerImages == null) ||
+                (this.BannerImages[this.activeBannerImage].AdLinkGR == string.Empty))
+            {
+                return;
+            }
+
             this.events.PublishOnBackgroundThread(
                     new ViewDynamicBannerEnCommand(
-                        this.ButtonsDetails,
-                        this.BannerImages[this.activeBannerImage].AdLinkGR
+                                this.ButtonsDetails,
+                                this.BannerImages[this.activeBannerImage].AdLinkGR
                     )
             );
 

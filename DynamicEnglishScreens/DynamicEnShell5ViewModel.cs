@@ -313,10 +313,16 @@ namespace Iap.DynamicEnglishScreens
 
         public void ViewAdvertLink()
         {
+            if ((this.BannerImages == null) ||
+                (this.BannerImages[this.activeBannerImage].AdLinkEN == string.Empty))
+            {
+                return;
+            }
+
             this.events.PublishOnBackgroundThread(
                     new ViewDynamicBannerEnCommand(
-                        this.ButtonsDetails,
-                        this.BannerImages[this.activeBannerImage].AdLinkEN
+                                this.ButtonsDetails,
+                                this.BannerImages[this.activeBannerImage].AdLinkEN
                     )
             );
 

@@ -147,7 +147,7 @@ namespace Iap
         {
             try
             {
-                //TaskbarManager.HideTaskbar();
+                TaskbarManager.HideTaskbar();
             }
             catch { }
 
