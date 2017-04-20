@@ -208,6 +208,9 @@ namespace Iap
         public IReadOnlyCollection<BannerModel> BannerImages
             { get; set; }
 
+        public IReadOnlyCollection<BannerModel> TempBannerImages
+            { get; set; }
+
         public IReadOnlyCollection<ButtonLinkModel> tempButtons
         {
             get;
@@ -309,11 +312,18 @@ namespace Iap
             {
                 this.tempButtons = this.buttons;
                 this.buttons = this.parser.GetButtonLinksDetails(this.KioskType);
-
             }
             catch 
             {
                 this.buttons = tempButtons;
+            }
+
+            this.TempBannerImages = this.BannerImages;
+            this.BannerImages = this.bannerService.GetBannerContent();
+
+            if (this.BannerImages == null)
+            {
+                this.BannerImages = this.TempBannerImages;
             }
 
             base.ActivateItem(this.ScreenSaver);
