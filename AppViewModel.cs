@@ -147,7 +147,7 @@ namespace Iap
         {
             try
             {
-                TaskbarManager.HideTaskbar();
+                //TaskbarManager.HideTaskbar();
             }
             catch { }
 
@@ -361,38 +361,43 @@ namespace Iap
 
                 else
                 {
-
                     List<ButtonLinkModel> ButtonsDetails = this.buttons.ToList();
-
 
                     switch (ButtonsDetails.Count)
                     {
                         case 2:
                             this.DynamicEnShell2.PopulateButtonLinks(ButtonsDetails);
+                            this.DynamicEnShell2.BannerImages = this.BannerImages.ToList();
                             base.ActivateItem(this.DynamicEnShell2);
                             break;
                         case 3:
                             this.DynamicEnShell3.PopulateButtonLinks(ButtonsDetails);
+                            this.DynamicEnShell3.BannerImages = this.BannerImages.ToList();
                             base.ActivateItem(this.DynamicEnShell3);
                             break;
                         case 4:
                             this.DynamicEnShell.PopulateButtonLinks(ButtonsDetails);
+                            this.DynamicEnShell.BannerImages = this.BannerImages.ToList();
                             base.ActivateItem(this.DynamicEnShell);
                             break;
                         case 5:
                             this.DynamicEnShell5.PopulateButtonLinks(ButtonsDetails);
+                            this.DynamicEnShell5.BannerImages = this.BannerImages.ToList();
                             base.ActivateItem(this.DynamicEnShell5);
                             break;
                         case 6:
                             this.DynamicEnShell6.PopulateButtonLinks(ButtonsDetails);
+                            this.DynamicEnShell6.BannerImages = this.BannerImages.ToList();
                             base.ActivateItem(this.DynamicEnShell6);
                             break;
                         case 7:
                             this.DynamicEnShell7.PopulateButtonLinks(ButtonsDetails);
+                            this.DynamicEnShell7.BannerImages = this.BannerImages.ToList();
                             base.ActivateItem(this.DynamicEnShell7);
                             break;
                         case 8:
                             this.DynamicEnShell8.PopulateButtonLinks(ButtonsDetails);
+                            this.DynamicEnShell8.BannerImages = this.BannerImages.ToList();
                             base.ActivateItem(this.DynamicEnShell8);
                             break;
                     }
@@ -557,30 +562,37 @@ namespace Iap
             {
                 case 2:
                     this.DynamicGrShell2.PopulateButtonLinks(ButtonsDetails);
+                    this.DynamicGrShell2.BannerImages = this.BannerImages.ToList();
                     base.ActivateItem(this.DynamicGrShell2);
                     break;
                 case 3:
                     this.DynamicGrShell3.PopulateButtonLinks(ButtonsDetails);
+                    this.DynamicGrShell3.BannerImages = this.BannerImages.ToList();
                     base.ActivateItem(this.DynamicGrShell3);
                     break;
                 case 4:
                     this.DynamicGrShell.PopulateButtonLinks(ButtonsDetails);
+                    this.DynamicGrShell.BannerImages = this.BannerImages.ToList();
                     base.ActivateItem(this.DynamicGrShell);
                     break;
                 case 5:
                     this.DynamicGrShell5.PopulateButtonLinks(ButtonsDetails);
+                    this.DynamicGrShell5.BannerImages = this.BannerImages.ToList();
                     base.ActivateItem(this.DynamicGrShell5);
                     break;
                 case 6:
                     this.DynamicGrShell6.PopulateButtonLinks(ButtonsDetails);
+                    this.DynamicGrShell6.BannerImages = this.BannerImages.ToList();
                     base.ActivateItem(this.DynamicGrShell6);
                     break;
                 case 7:
                     this.DynamicGrShell7.PopulateButtonLinks(ButtonsDetails);
+                    this.DynamicGrShell7.BannerImages = this.BannerImages.ToList();
                     base.ActivateItem(this.DynamicGrShell7);
                     break;
                 case 8:
                     this.DynamicGrShell8.PopulateButtonLinks(ButtonsDetails);
+                    this.DynamicGrShell8.BannerImages = this.BannerImages.ToList();
                     base.ActivateItem(this.DynamicGrShell8);
                     break;
             }
@@ -615,12 +627,14 @@ namespace Iap
                 base.ChangeActiveItem(this.DynamicBannerBrowserGr5, true);
                 this.DynamicBannerBrowserGr5.SelectedPosition = "banner";
                 this.DynamicBannerBrowserGr5.ButtonsDetails = message.ButtonDetails;
+                this.DynamicBannerBrowserGr5.AdLinkGR = message.AdLink;
             }
             else
             {
                 base.ChangeActiveItem(this.DynamicBannerBrowserEn5, true);
                 this.DynamicBannerBrowserEn5.SelectedPosition = "banner";
                 this.DynamicBannerBrowserEn5.ButtonsDetails = message.ButtonDetails;
+                this.DynamicBannerBrowserEn5.AdLinkEN = message.AdLink;
             }
             
         }

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.IO;
 using Iap.Envy;
 using Iap.Handlers;
+using System.Threading;
 
 namespace Iap.DynamicEnglishScreens
 {
@@ -32,6 +33,11 @@ namespace Iap.DynamicEnglishScreens
         private BitmapImage image6;
 
         private readonly ISendStatsService sender;
+
+        private Timer bannerNotifier;
+        private int activeBannerImage;
+
+        private readonly object bannerSyncLock = new object();
 
         public DynamicEnShell6ViewModel(IEventAggregator events, ILog log, ISendStatsService sender)
         {
@@ -130,6 +136,9 @@ namespace Iap.DynamicEnglishScreens
             set;
         }
 
+        public List<BannerModel> BannerImages
+            { get; set; }
+
         public void PopulateButtonLinks(List<ButtonLinkModel> populatedList)
         {
             this.ButtonsDetails = populatedList;
@@ -190,14 +199,24 @@ namespace Iap.DynamicEnglishScreens
 
         public void OpenBanner()
         {
-            var imageFileNames =
-           Path.Combine(
-               Path.GetDirectoryName(
-                   this.GetType().Assembly.Location),
-               "Media")
-           .EnumerateImageFiles()
-           .ToArray();
-            this.BannerBackground = imageFileNames.Where(x => Path.GetFileNameWithoutExtension(x) == "banner").Select(x => new BitmapImage(new Uri(x))).SingleOrDefault();
+            if (this.BannerImages == null)
+            {
+                var imageFileNames = Path.Combine(
+                    Path.GetDirectoryName(
+                        this.GetType().Assembly.Location
+                    ), "Media"
+                ).EnumerateImageFiles().ToArray();
+
+                this.BannerBackground = imageFileNames.Where(
+                    x => Path.GetFileNameWithoutExtension(x) == "banner"
+                ).Select(x => new BitmapImage(new Uri(x))).SingleOrDefault();
+            }
+            else
+            {
+                this.BannerBackground =
+                    this.BannerImages[this.activeBannerImage].AdImageEN;
+            }
+
             this.Arrow = null;
             this.IsBannerVisible = true;
         }
@@ -215,7 +234,16 @@ namespace Iap.DynamicEnglishScreens
             GlobalCounters.ResetAll();
             DeletePdfFiles();
 
-            ((DynamicEnShell6View)view).CloseDisclaimer.Click += CloseDisclaimer_Click;
+            ((DynamicEnShell6View)view).CloseDisclaimer.Click +=
+                                            CloseDisclaimer_Click;
+
+            this.activeBannerImage = 0;
+
+            this.bannerNotifier = new Timer(
+                this.SetActiveBannerImage, null, 0, Timeout.Infinite
+            );
+
+            this.bannerNotifier.Change(3000, 3000);
 
             base.OnViewLoaded(view);
         }
@@ -316,7 +344,13 @@ namespace Iap.DynamicEnglishScreens
 
         public void ViewAdvertLink()
         {
-            this.events.PublishOnBackgroundThread(new ViewDynamicBannerEnCommand(this.ButtonsDetails));
+            this.events.PublishOnBackgroundThread(
+                    new ViewDynamicBannerEnCommand(
+                        this.ButtonsDetails,
+                        this.BannerImages[this.activeBannerImage].AdLinkEN
+                    )
+            );
+
             try
             {
                 this.sender.SendAction("ViewBannerLink.");
@@ -369,6 +403,18 @@ namespace Iap.DynamicEnglishScreens
             get
             {
                 return GlobalText.getDiscalimerEnglishText();
+            }
+        }
+
+        private void SetActiveBannerImage(object state)
+        {
+            lock (this.bannerSyncLock)
+            {
+                if (++this.activeBannerImage ==
+                                this.BannerImages.Count)
+                {
+                    this.activeBannerImage = 0;
+                }
             }
         }
     }

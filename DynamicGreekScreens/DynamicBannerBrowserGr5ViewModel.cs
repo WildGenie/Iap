@@ -65,6 +65,9 @@ namespace Iap.DynamicGreekScreens
             set;
         }
 
+        public string AdLinkGR
+            { get; set; }
+
         public string HomeUrl
         {
             get;
@@ -202,7 +205,14 @@ namespace Iap.DynamicGreekScreens
                 OffScreenTransparentBackground = false,
             };
 
-            _internetAccessBrowser.Load(this.bannerLinkGrApi);
+            if (string.IsNullOrEmpty(this.AdLinkGR))
+            {
+                _internetAccessBrowser.Load(this.bannerLinkGrApi);
+            }
+            else
+            {
+                _internetAccessBrowser.Load(this.AdLinkGR);
+            }
 
             _internetAccessBrowser.BrowserSettings.FileAccessFromFileUrls = CefState.Enabled;
             _internetAccessBrowser.BrowserSettings.UniversalAccessFromFileUrls = CefState.Enabled;

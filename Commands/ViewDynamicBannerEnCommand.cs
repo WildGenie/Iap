@@ -7,9 +7,15 @@ namespace Iap.Commands
     {
         private readonly List<ButtonLinkModel> buttonsDetails;
 
-        public ViewDynamicBannerEnCommand(List<ButtonLinkModel> buttonsDetails)
+        private readonly string adLink;
+
+        public ViewDynamicBannerEnCommand(
+                        List<ButtonLinkModel> buttonsDetails,
+                        string adLink
+        )
         {
             this.buttonsDetails = buttonsDetails;
+            this.adLink = adLink;
         }
 
         public List<ButtonLinkModel> ButtonDetails
@@ -18,6 +24,11 @@ namespace Iap.Commands
             {
                 return this.buttonsDetails;
             }
+        }
+
+        public string AdLink
+        {
+            get { return this.adLink; }
         }
     }
 }

@@ -45,7 +45,13 @@ namespace Iap.DynamicEnglishScreens
         private int TimeElapsed = 30;
         private DispatcherTimer timer;
 
-        public DynamicBannerBrowserEn5ViewModel(IEventAggregator events, string numberOfAvailablePagesToPrint, string bannerLinkEnApi, ILog log, ISendStatsService sender)
+        public DynamicBannerBrowserEn5ViewModel(
+                        IEventAggregator events,
+                        string numberOfAvailablePagesToPrint,
+                        string bannerLinkEnApi,
+                        ILog log,
+                        ISendStatsService sender
+        )
         {
             this.events = events;
             this.numberOfAvailablePagesToPrint = numberOfAvailablePagesToPrint;
@@ -64,6 +70,9 @@ namespace Iap.DynamicEnglishScreens
             get;
             set;
         }
+
+        public string AdLinkEN
+            { get; set; }
 
         public string HomeUrl
         {
@@ -202,7 +211,14 @@ namespace Iap.DynamicEnglishScreens
                 OffScreenTransparentBackground = false,
             };
 
-            _internetAccessBrowser.Load(this.bannerLinkEnApi);
+            if (string.IsNullOrEmpty(this.AdLinkEN))
+            {
+                _internetAccessBrowser.Load(this.bannerLinkEnApi);
+            }
+            else
+            {
+                _internetAccessBrowser.Load(this.AdLinkEN);
+            }
 
             _internetAccessBrowser.BrowserSettings.FileAccessFromFileUrls = CefState.Enabled;
             _internetAccessBrowser.BrowserSettings.UniversalAccessFromFileUrls = CefState.Enabled;

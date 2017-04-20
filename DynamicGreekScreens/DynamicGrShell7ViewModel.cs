@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.IO;
 using Iap.Envy;
 using Iap.Handlers;
+using System.Threading;
 
 namespace Iap.DynamicGreekScreens
 {
@@ -33,6 +34,11 @@ namespace Iap.DynamicGreekScreens
         private BitmapImage image5;
         private BitmapImage image6;
         private BitmapImage image7;
+
+        private Timer bannerNotifier;
+        private int activeBannerImage;
+
+        private readonly object bannerSyncLock = new object();
 
         public DynamicGrShell7ViewModel(IEventAggregator events, ILog log, ISendStatsService sender)
         {
@@ -148,6 +154,9 @@ namespace Iap.DynamicGreekScreens
             set;
         }
 
+        public List<BannerModel> BannerImages
+            { get; set; }
+
         public void PopulateButtonLinks(List<ButtonLinkModel> populatedList)
         {
             this.ButtonsDetails = populatedList;
@@ -201,14 +210,24 @@ namespace Iap.DynamicGreekScreens
 
         public void OpenBanner()
         {
-            var imageFileNames =
-           Path.Combine(
-               Path.GetDirectoryName(
-                   this.GetType().Assembly.Location),
-               "Media")
-           .EnumerateImageFiles()
-           .ToArray();
-            this.BannerBackground = imageFileNames.Where(x => Path.GetFileNameWithoutExtension(x) == "banner").Select(x => new BitmapImage(new Uri(x))).SingleOrDefault();
+            if (this.BannerImages == null)
+            {
+                var imageFileNames = Path.Combine(
+                    Path.GetDirectoryName(
+                        this.GetType().Assembly.Location
+                    ), "Media"
+                ).EnumerateImageFiles().ToArray();
+
+                this.BannerBackground = imageFileNames.Where(
+                    x => Path.GetFileNameWithoutExtension(x) == "banner"
+                ).Select(x => new BitmapImage(new Uri(x))).SingleOrDefault();
+            }
+            else
+            {
+                this.BannerBackground =
+                    this.BannerImages[this.activeBannerImage].AdImageGR;
+            }
+
             this.Arrow = null;
             this.IsBannerVisible = true;
         }
@@ -226,7 +245,16 @@ namespace Iap.DynamicGreekScreens
             GlobalCounters.ResetAll();
             DeletePdfFiles();
 
-            ((DynamicGrShell7View)view).CloseDisclaimer.Click += CloseDisclaimer_Click;
+            ((DynamicGrShell7View)view).CloseDisclaimer.Click +=
+                                            CloseDisclaimer_Click;
+
+            this.activeBannerImage = 0;
+
+            this.bannerNotifier = new Timer(
+                this.SetActiveBannerImage, null, 0, Timeout.Infinite
+            );
+
+            this.bannerNotifier.Change(3000, 3000);
 
             base.OnViewLoaded(view);
         }
@@ -338,7 +366,13 @@ namespace Iap.DynamicGreekScreens
 
         public void ViewAdvertLink()
         {
-            this.events.PublishOnBackgroundThread(new ViewDynamicBannerEnCommand(this.ButtonsDetails));
+            this.events.PublishOnBackgroundThread(
+                    new ViewDynamicBannerEnCommand(
+                        this.ButtonsDetails,
+                        this.BannerImages[this.activeBannerImage].AdLinkGR
+                    )
+            );
+
             try
             {
                 this.sender.SendAction("ViewBannerLink.");
@@ -391,6 +425,18 @@ namespace Iap.DynamicGreekScreens
             get
             {
                 return GlobalText.getDiscalimerGreekText();
+            }
+        }
+
+        private void SetActiveBannerImage(object state)
+        {
+            lock (this.bannerSyncLock)
+            {
+                if (++this.activeBannerImage ==
+                                this.BannerImages.Count)
+                {
+                    this.activeBannerImage = 0;
+                }
             }
         }
     }
