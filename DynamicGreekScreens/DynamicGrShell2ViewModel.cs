@@ -178,7 +178,7 @@ namespace Iap.DynamicGreekScreens
                 this.SetActiveBannerImage, null, 0, Timeout.Infinite
             );
 
-            this.bannerNotifier.Change(3000, 3000);
+            this.bannerNotifier.Change(0, Timeout.Infinite);
 
             base.OnViewLoaded(view);
         }
@@ -305,6 +305,22 @@ namespace Iap.DynamicGreekScreens
                                 this.BannerImages.Count)
                 {
                     this.activeBannerImage = 0;
+                }
+
+                BannerModel data =
+                    this.BannerImages[this.activeBannerImage];
+
+                if (data.AdImageGR == null)
+                {
+                    this.bannerNotifier.Change(0, Timeout.Infinite);
+                }
+                else
+                {
+                    this.BannerBackground = data.AdImageGR;
+
+                    this.bannerNotifier.Change(
+                        (data.AdDelayTime * 1000), Timeout.Infinite
+                    );
                 }
             }
         }

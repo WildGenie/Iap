@@ -243,7 +243,7 @@ namespace Iap.DynamicEnglishScreens
                 this.SetActiveBannerImage, null, 0, Timeout.Infinite
             );
 
-            this.bannerNotifier.Change(3000, 3000);
+            this.bannerNotifier.Change(0, Timeout.Infinite);
 
             base.OnViewLoaded(view);
         }
@@ -414,6 +414,22 @@ namespace Iap.DynamicEnglishScreens
                                 this.BannerImages.Count)
                 {
                     this.activeBannerImage = 0;
+                }
+
+                BannerModel data =
+                    this.BannerImages[this.activeBannerImage];
+
+                if (data.AdImageEN == null)
+                {
+                    this.bannerNotifier.Change(0, Timeout.Infinite);
+                }
+                else
+                {
+                    this.BannerBackground = data.AdImageEN;
+
+                    this.bannerNotifier.Change(
+                        (data.AdDelayTime * 1000), Timeout.Infinite
+                    );
                 }
             }
         }
