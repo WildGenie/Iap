@@ -95,7 +95,18 @@ namespace Iap.Services
                 }
 
                 string adLinkEN = contents["AdvertUrl"].ToString();
+
+                if (adLinkEN == "[]")
+                {
+                    adLinkEN = string.Empty;
+                }
+
                 string adLinkGR = contents["AdvertUrlGr"].ToString();
+
+                if (adLinkGR == "[]")
+                {
+                    adLinkGR = string.Empty;
+                }
 
                 uint adDelayTime;
 
@@ -114,6 +125,8 @@ namespace Iap.Services
         private static BitmapImage DownloadImage(WebClient client,
                                                  string link)
         {
+            MemoryStream stream = null;
+
             try
             {
                 byte[ ] buffer = client.DownloadData(link);
@@ -124,19 +137,20 @@ namespace Iap.Services
 
                 image.CacheOption = BitmapCacheOption.OnLoad;
 
-                using (
-                    MemoryStream stream = new MemoryStream(buffer)
-                )
-                {
-                    image.StreamSource = stream;
-                }
+                stream = new MemoryStream(buffer);
 
+                image.StreamSource = stream;
                 image.EndInit();
 
                 return image;
             }
             catch
             {
+                if (stream != null)
+                {
+                    stream.Close();
+                }
+
                 return null;
             }
         }

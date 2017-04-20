@@ -388,6 +388,7 @@
       <DependentUpon>LoadingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="LoadingViewModel.cs" />
+    <Compile Include="Models\BannerModel.cs" />
     <Compile Include="Models\ButtonLinkModel.cs" />
     <Compile Include="Models\OuterEnglishScreenViewModel.cs" />
     <Compile Include="Models\OuterGreekScreenViewModel.cs" />
@@ -411,7 +412,9 @@
       <DependentUpon>SelectVersionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="SelectVersionViewModel.cs" />
+    <Compile Include="Services\BannerService.cs" />
     <Compile Include="Services\GetScreenDetailsService.cs" />
+    <Compile Include="Services\IBannerService.cs" />
     <Compile Include="Services\IGetScreenDetailsService.cs" />
     <Compile Include="Services\ILicenceProviderService.cs" />
     <Compile Include="Services\ISendStatsService.cs" />
