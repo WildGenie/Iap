@@ -179,7 +179,9 @@
             Width="115" 
             Height="64"/>
 
-        <Grid x:Name="GridBanner" Margin="478 785 478 0">
+        <Grid x:Name="GridBanner"
+              Margin="478 785 478 0"
+              Visibility="{Binding BannerVisible}" >
             <Grid.Background>
                 <ImageBrush ImageSource="{Binding Path=BannerBackground}"/>
             </Grid.Background>
@@ -193,6 +195,7 @@
                 VerticalAlignment="Top"
                 Grid.Row="0"
                 Margin="920,30,0,0"
+                IsEnabled="{Binding IsBannerVisible}"
                 Visibility="{Binding Path=IsBannerVisible,Converter={StaticResource BoolToVis}}"
                 Width="17" Height="19">
                 <Button.Style>
@@ -218,7 +221,10 @@
                 </Button.Style>
                 <Image Source="/Images/AIA_FOR PNG-12.png"/>
             </Button>
-            <Button x:Name="ViewAdvertLink" Margin="0 0 70 0" Background="Transparent"/>
+            <Button x:Name="ViewAdvertLink"
+                    Margin="0 0 70 0"
+                    Background="Transparent"
+                    IsEnabled="{Binding IsBannerVisible}" />
             <Grid Grid.Row="1">
                 <Grid.Background>
                     <ImageBrush ImageSource="{Binding Path=Arrow}"/>

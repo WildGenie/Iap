@@ -20,6 +20,7 @@ namespace Iap.DynamicEnglishScreens
         private readonly IEventAggregator events;
         private ImageSource bannerBackground;
         private bool isBannerVisible;
+        private bool bannerActive;
         private string arrow;
         private bool openDisclaimer;
 
@@ -30,7 +31,6 @@ namespace Iap.DynamicEnglishScreens
         private BitmapImage image2;
         private BitmapImage image3;
         private BitmapImage image4;
-
 
         public DynamicEnShellViewModel(IEventAggregator events, ILog log, ISendStatsService sender)
         {
@@ -158,18 +158,39 @@ namespace Iap.DynamicEnglishScreens
             }
         }
 
+        public bool BannerActive
+        {
+            get { return this.bannerActive; }
+
+            set
+            {
+                this.bannerActive = value;
+
+                base.NotifyOfPropertyChange(() => this.BannerActive);
+            }
+        }
+
         public void OpenBanner()
         {
-            var imageFileNames =
-           Path.Combine(
-               Path.GetDirectoryName(
-                   this.GetType().Assembly.Location),
-               "Media")
-           .EnumerateImageFiles()
-           .ToArray();
-            this.BannerBackground = imageFileNames.Where(x => Path.GetFileNameWithoutExtension(x) == "banner").Select(x => new BitmapImage(new Uri(x))).SingleOrDefault();
-            this.Arrow = null;
-            this.IsBannerVisible = true;
+            var imageFileNames = Path.Combine(Path.GetDirectoryName(
+                                        this.GetType().Assembly.Location
+            ), "Media").EnumerateImageFiles().ToArray();
+
+            this.BannerBackground = imageFileNames.Where(
+                x => Path.GetFileNameWithoutExtension(x) == "banner"
+            ).Select(x => new BitmapImage(new Uri(x))).SingleOrDefault();
+
+            if (this.BannerBackground == null)
+            {
+                this.IsBannerVisible = false;
+                this.BannerActive = false;
+            }
+            else
+            {
+                this.Arrow = null;
+                this.IsBannerVisible = true;
+                this.BannerActive = true;
+            }
         }
 
         public void CloseBanner()

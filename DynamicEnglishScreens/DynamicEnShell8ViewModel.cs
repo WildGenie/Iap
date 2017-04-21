@@ -21,6 +21,7 @@ namespace Iap.DynamicEnglishScreens
         private readonly ILog log;
         private ImageSource bannerBackground;
         private bool isBannerVisible;
+        private bool bannerActive;
         private string arrow;
         private bool openDisclaimer;
 
@@ -214,18 +215,39 @@ namespace Iap.DynamicEnglishScreens
             }
         }
 
+        public bool BannerActive
+        {
+            get { return this.bannerActive; }
+
+            set
+            {
+                this.bannerActive = value;
+
+                base.NotifyOfPropertyChange(() => this.BannerActive);
+            }
+        }
+
         public void OpenBanner()
         {
-            var imageFileNames =
-           Path.Combine(
-               Path.GetDirectoryName(
-                   this.GetType().Assembly.Location),
-               "Media")
-           .EnumerateImageFiles()
-           .ToArray();
-            this.BannerBackground = imageFileNames.Where(x => Path.GetFileNameWithoutExtension(x) == "banner").Select(x => new BitmapImage(new Uri(x))).SingleOrDefault();
-            this.Arrow = null;
-            this.IsBannerVisible = true;
+            var imageFileNames = Path.Combine(Path.GetDirectoryName(
+                                        this.GetType().Assembly.Location
+            ), "Media").EnumerateImageFiles().ToArray();
+
+            this.BannerBackground = imageFileNames.Where(
+                x => Path.GetFileNameWithoutExtension(x) == "banner"
+            ).Select(x => new BitmapImage(new Uri(x))).SingleOrDefault();
+
+            if (this.BannerBackground == null)
+            {
+                this.IsBannerVisible = false;
+                this.BannerActive = false;
+            }
+            else
+            {
+                this.Arrow = null;
+                this.IsBannerVisible = true;
+                this.BannerActive = true;
+            }
         }
 
         public void CloseBanner()
