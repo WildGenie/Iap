@@ -136,7 +136,7 @@ namespace Iap.Gr
             ), "Media").EnumerateImageFiles().ToArray();
 
             this.BannerBackground = imageFileNames.Where(
-                x => Path.GetFileNameWithoutExtension(x) == "banner"
+                x => Path.GetFileNameWithoutExtension(x) == "banner_GR"
             ).Select(x => new BitmapImage(new Uri(x))).SingleOrDefault();
 
             if (this.BannerBackground == null)

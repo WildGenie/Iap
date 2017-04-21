@@ -190,7 +190,7 @@ namespace Iap.DynamicEnglishScreens
                 ).EnumerateImageFiles().ToArray();
 
                 this.BannerBackground = imageFileNames.Where(
-                    x => Path.GetFileNameWithoutExtension(x) == "banner"
+                    x => Path.GetFileNameWithoutExtension(x) == "banner_EN"
                 ).Select(x => new BitmapImage(new Uri(x))).SingleOrDefault();
             }
             else
