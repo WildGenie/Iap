@@ -22,6 +22,7 @@ namespace Iap.DynamicGreekScreens
         private readonly ILog log;
         private ImageSource bannerBackground;
         private bool isBannerVisible;
+        private bool bannerActive;
         private string arrow;
         private bool openDisclaimer;
 
@@ -196,6 +197,18 @@ namespace Iap.DynamicGreekScreens
             }
         }
 
+        public bool BannerActive
+        {
+            get { return this.bannerActive; }
+
+            set
+            {
+                this.bannerActive = value;
+
+                base.NotifyOfPropertyChange(() => this.BannerActive);
+            }
+        }
+
         public void OpenBanner()
         {
             if (this.BannerImages == null)
@@ -216,8 +229,17 @@ namespace Iap.DynamicGreekScreens
                     this.BannerImages[this.activeBannerImage].AdImageGR;
             }
 
-            this.Arrow = null;
-            this.IsBannerVisible = true;
+            if (this.BannerBackground == null)
+            {
+                this.IsBannerVisible = false;
+                this.BannerActive = false;
+            }
+            else
+            {
+                this.Arrow = null;
+                this.IsBannerVisible = true;
+                this.BannerActive = true;
+            }
         }
 
         public void CloseBanner()

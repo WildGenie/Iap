@@ -20,6 +20,7 @@ namespace Iap
         private readonly IEventAggregator events;
         private ImageSource bannerBackground;
         private bool isBannerVisible;
+        private bool bannerActive;
         private string arrow;
         private bool openDisclaimer;
 
@@ -119,18 +120,39 @@ namespace Iap
             }
         }
 
+        public bool BannerActive
+        {
+            get { return this.bannerActive; }
+
+            set
+            {
+                this.bannerActive = value;
+
+                base.NotifyOfPropertyChange(() => this.BannerActive);
+            }
+        }
+
         public void OpenBanner()
         {
-            var imageFileNames =
-           Path.Combine(
-               Path.GetDirectoryName(
-                   this.GetType().Assembly.Location),
-               "Media")
-           .EnumerateImageFiles()
-           .ToArray();
-            this.BannerBackground = imageFileNames.Where(x => Path.GetFileNameWithoutExtension(x) == "banner").Select(x => new BitmapImage(new Uri(x))).SingleOrDefault();
-            this.Arrow = null;
-            this.IsBannerVisible = true;
+            try
+            {
+                var imageFileNames = Path.Combine(Path.GetDirectoryName(
+                                    this.GetType().Assembly.Location
+                ), "Media").EnumerateImageFiles().ToArray();
+
+                this.BannerBackground = imageFileNames.Where(
+                    x => Path.GetFileNameWithoutExtension(x) == "banner"
+                ).Select(x => new BitmapImage(new Uri(x))).SingleOrDefault();
+
+                this.Arrow = null;
+                this.IsBannerVisible = true;
+                this.BannerActive = true;
+            }
+            catch
+            {
+                this.IsBannerVisible = false;
+                this.BannerActive = false;
+            }
         }
 
         public void CloseBanner()
