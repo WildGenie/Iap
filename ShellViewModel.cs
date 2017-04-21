@@ -134,24 +134,24 @@ namespace Iap
 
         public void OpenBanner()
         {
-            try
-            {
-                var imageFileNames = Path.Combine(Path.GetDirectoryName(
-                                    this.GetType().Assembly.Location
-                ), "Media").EnumerateImageFiles().ToArray();
+            var imageFileNames = Path.Combine(Path.GetDirectoryName(
+                                        this.GetType().Assembly.Location
+            ), "Media").EnumerateImageFiles().ToArray();
 
-                this.BannerBackground = imageFileNames.Where(
-                    x => Path.GetFileNameWithoutExtension(x) == "banner"
-                ).Select(x => new BitmapImage(new Uri(x))).SingleOrDefault();
+            this.BannerBackground = imageFileNames.Where(
+                x => Path.GetFileNameWithoutExtension(x) == "banner"
+            ).Select(x => new BitmapImage(new Uri(x))).SingleOrDefault();
 
-                this.Arrow = null;
-                this.IsBannerVisible = true;
-                this.BannerActive = true;
-            }
-            catch
+            if (this.BannerBackground == null)
             {
                 this.IsBannerVisible = false;
                 this.BannerActive = false;
+            }
+            else
+            {
+                this.Arrow = null;
+                this.IsBannerVisible = true;
+                this.BannerActive = true;
             }
         }
 
